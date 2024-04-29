@@ -1,4 +1,12 @@
 {
   "extends": "nx/presets/npm.json",
+  "release": {
+    "changelog": {
+      "projectChangelogs": {
+        "createRelease": "github"
+      }
+    },
+    "projectsRelationship": "independent"
+  },
   "$schema": "./node_modules/nx/schemas/nx-schema.json"
 }
