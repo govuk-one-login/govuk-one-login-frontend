@@ -1,6 +1,6 @@
 # GovUK Frontend Monorepo
 
-This monorepo is designed to house packages and UI components based on the GovUK Frontend design system. It utilizes the Nx workspace for managing multiple projects within a single repository.
+This monorepo is designed to house packages and UI components based on the GovUK Frontend design system. It utilises the Nx workspace for managing multiple projects within a single repository.
 
 ## Features
 
@@ -11,4 +11,14 @@ This monorepo is designed to house packages and UI components based on the GovUK
 
 ## Project Structure
 
-The monorepo is organized using Nx workspace conventions
+The monorepo is organised using Nx workspace conventions
+
+## Continuous Deployment (CD) Workflow
+
+To trigger the CD workflow manually, follow these steps:
+
+- Go to the Actions tab in this repository.
+- Click on the "CD" workflow.
+- Click the "Run workflow" button.
+- Select the target package and the desired increment type.
+- Click the "Run workflow" button to start the deployment process.

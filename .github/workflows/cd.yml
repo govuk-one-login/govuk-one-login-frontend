@@ -1,0 +1,70 @@
+name: CD
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'Release package'
+        required: true
+        type: choice
+        options:
+          - frontend-analytics
+          - frontend-language-toggle
+          - frontend-passthrough-headers
+      increment:
+        description: 'Increment'
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+run-name: Release ${{ github.event.inputs.target }} ${{ github.event.inputs.increment }}
+
+# Needed for nx-set-shas when run on the main branch
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  prepare-branch-for-main:
+    name: Prepare branch for main
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js and cache node modules
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Set SHAs for affected packages
+        uses: nrwl/nx-set-shas@v4
+
+      - name: Print Environment Information
+        run: npx nx report
+
+      - name: Lint, test, and build affected packages
+        run: npx nx affected -t lint,test,build
+        
+      # This line is needed for nx affected to work when CI is running on a PR
+      - name: Set up main branch tracking
+        run: git branch --track main origin/main
+        if: ${{ github.event_name == 'pull_request' }}
+
+      - name: Configure git user
+        run: |
+          git config --global user.email "nick.heal@digital.cabinet-office.gov.uk"
+          git config --global user.name "nickhealGDS"
+
+      - name: Publish packages
+        if: ${{ github.ref == 'refs/heads/main' }} 
+        run: npx nx release ${{ github.event.inputs.increment }} --projects=${{ github.event.inputs.target }} --yes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{secrets.NPM_ACCESS_TOKEN}}
