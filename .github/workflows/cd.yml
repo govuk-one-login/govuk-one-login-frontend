@@ -59,12 +59,12 @@ jobs:
 
       - name: Configure git user
         run: |
-          git config --global user.email "nickhealweb@gmail.com"
-          git config --global user.name "nickheal"
+          git config --global user.email "nick.heal@digital.cabinet-office.gov.uk"
+          git config --global user.name "nickhealGDS"
 
       - name: Publish packages
         if: ${{ github.ref == 'refs/heads/main' }} 
-        run: npx nx release publish ${{ github.event.inputs.increment }} --projects=${{ github.event.inputs.target }} --yes
+        run: npx nx release ${{ github.event.inputs.increment }} --projects=${{ github.event.inputs.target }} --yes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{secrets.NPM_ACCESS_TOKEN}}
