@@ -24,7 +24,9 @@
   - [ ] Tests run for affected packages
   
 - [ ] **Documentation**
-  - [ ] Documentation updated, if applicable
+  - [ ] Confluence Documentation updated, if applicable
+  - [ ] README updated, if applicable
+  - [ ] Ticket updated, if applicable
 
 ### Environment variables or secrets
 - [x] No environment variables or secrets were added or changed
