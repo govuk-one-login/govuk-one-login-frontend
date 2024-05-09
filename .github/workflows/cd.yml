@@ -42,6 +42,9 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+      
+      - name: Run Jest tests
+        run: npm test
 
       - name: Set SHAs for affected packages
         uses: nrwl/nx-set-shas@v4
