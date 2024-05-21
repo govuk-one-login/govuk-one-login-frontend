@@ -1,8 +1,60 @@
 {
-  "name": "frontend-language-toggle",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "author": "",
-  "license": "ISC"
+  "name": "@govuk-one-login-frontend/frontend-language-toggle",
+  "version": "1.1.0",
+  "description": "Reusable language toggle for GDS One Login",
+  "main": "build/cjs/language-param-setter.cjs",
+  "module": "build/esm/language-param-setter.js",
+  "type": "module",
+  "scripts": {
+    "pub": "npm run build; npm publish --access public",
+    "test": "jest",
+    "test:coverage": "jest --coverage src",
+    "build": "rollup -c",
+    "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,md}\""
+  },
+  "files": [
+    "build/",
+    "stylesheet/",
+    "macro.njk",
+    "template.njk",
+    "package.json",
+    "README.md",
+    "language-select.yaml"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/govuk-one-login/govuk-one-login-frontend.git"
+  },
+  "keywords": [
+    "govuk-one-login",
+    "gds",
+    "language",
+    "govuk-onelogin",
+    "govuk one login"
+  ],
+  "author": "DI Frontend Capability Team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/govuk-one-login/govuk-one-login-frontend/issues"
+  },
+  "homepage": "https://github.com/govuk-one-login/govuk-one-login-frontend#readme",
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/jest-axe": "^3.5.9",
+    "@types/nunjucks": "^3.2.6",
+    "jest-axe": "^8.0.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "@typescript-eslint/eslint-plugin": "^7.8.0",
+    "@typescript-eslint/parser": "^7.8.0",
+    "cheerio": "*",
+    "eslint": "8.57.0",
+    "nunjucks": "^3.2.4",
+    "prettier": "^3.0.3",
+    "rollup": "4.14.3",
+    "rollup-plugin-typescript2": "0.36.0",
+    "ts-jest": "^29.1.2",
+    "ts-node": "^10.9.2",
+    "typescript": "5.4.5"
+  },
+  "types": "./build/esm/language-param-setter.d.ts"
 }
