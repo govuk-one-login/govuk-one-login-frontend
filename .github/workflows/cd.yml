@@ -10,6 +10,7 @@ on:
           - frontend-analytics
           - frontend-language-toggle
           - frontend-passthrough-headers
+          - alpha-component
       increment:
         description: 'Increment'
         required: true
