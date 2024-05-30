@@ -10,7 +10,7 @@ on:
           - frontend-analytics
           - frontend-language-toggle
           - frontend-passthrough-headers
-          - @alphatest-12012/alpha-component
+          - '@alphatest-12012/alpha-component'
 
       increment:
         description: 'Increment'
@@ -52,7 +52,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
       
       - name: Run Jest tests
         run: npm test
