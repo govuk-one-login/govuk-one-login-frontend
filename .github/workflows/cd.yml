@@ -10,7 +10,8 @@ on:
           - frontend-analytics
           - frontend-language-toggle
           - frontend-passthrough-headers
-          - alpha-component
+          - '@alphatest-12012/alpha-component'
+
       increment:
         description: 'Increment'
         required: true
@@ -19,6 +20,15 @@ on:
           - patch
           - minor
           - major
+        
+      first_release:
+        description: 'First release'
+        required: true
+        default: 'false'
+        type: choice
+        options:
+          - true
+          - false
 
 run-name: Release ${{ github.event.inputs.target }} ${{ github.event.inputs.increment }}
 
@@ -42,7 +52,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
       
       - name: Run Jest tests
         run: npm test
