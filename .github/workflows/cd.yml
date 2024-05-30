@@ -31,7 +31,7 @@ run-name: Release ${{ github.event.inputs.target }} ${{ github.event.inputs.incr
 
 # Needed for nx-set-shas when run on the main branch
 permissions:
-  actions: read
+  actions: write
   contents: write
 
 jobs:
