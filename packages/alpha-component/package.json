@@ -23,8 +23,7 @@
     "type": "git",
     "url": "git+https://github.com/govuk-one-login/di-fec-ga4.git"
   },
-  "keywords": [
-  ],
+  "keywords": [],
   "author": "DI Frontend Capability Team",
   "license": "ISC",
   "bugs": {
@@ -41,5 +40,9 @@
     "ts-node": "^10.9.2",
     "typescript": "5.4.5"
   },
-  "types": "./build/esm/language-param-setter.d.ts"
+  "types": "./build/esm/language-param-setter.d.ts",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "nunjucks": "^3.2.4"
+  }
 }
