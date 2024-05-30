@@ -24,11 +24,8 @@ on:
       first_release:
         description: 'First release'
         required: true
-        default: 'false'
-        type: choice
-        options:
-          - true
-          - false
+        default: false
+        type: boolean
 
 run-name: Release ${{ github.event.inputs.target }} ${{ github.event.inputs.increment }}
 
@@ -78,7 +75,7 @@ jobs:
 
       - name: Publish packages
         if: ${{ github.ref == 'refs/heads/main' }} 
-        run: npx nx release ${{ github.event.inputs.increment }} --projects=${{ github.event.inputs.target }} --yes
+        run: npx nx release ${{ github.event.inputs.increment }} --projects=${{ github.event.inputs.target }} --yes ${{ github.event.inputs.first_release && '--first-release' || '' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{secrets.NPM_ACCESS_TOKEN}}
