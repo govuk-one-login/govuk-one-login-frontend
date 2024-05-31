@@ -77,5 +77,5 @@ jobs:
         if: ${{ github.ref == 'refs/heads/main' }} 
         run: npx nx release ${{ github.event.inputs.increment }} --projects=${{ github.event.inputs.target }} --yes ${{ github.event.inputs.first_release && '--first-release' || '' }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT }}
           NODE_AUTH_TOKEN: ${{secrets.NPM_ACCESS_TOKEN}}
