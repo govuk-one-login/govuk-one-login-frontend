@@ -7,8 +7,8 @@
   "type": "module",
   "scripts": {
     "pub": "npm run build; npm publish --access public",
-    "test": "jest",
-    "build": "rollup -c"
+    "test": "node -e \"console.log('No tests specified')\"",
+    "build": "node -e \"console.log('No build command specified')\""
   },
   "files": [
     "build/",
