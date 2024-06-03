@@ -1,3 +1,7 @@
+## 0.0.8 (2024-06-03)
+
+This was a version bump only for @alphatest-12012/alpha-component to align it with other projects, there were no code changes.
+
 ## 0.0.7 (2024-05-31)
 
 
