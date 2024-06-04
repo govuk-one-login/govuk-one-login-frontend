@@ -1,6 +1,6 @@
 {
   "name": "@govuk-one-login/alpha-component",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "New blank package",
   "main": "build/cjs/language-param-setter.cjs",
   "module": "build/esm/language-param-setter.js",
