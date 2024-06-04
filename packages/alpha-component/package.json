@@ -1,5 +1,5 @@
 {
-  "name": "@alphatest-12012/alpha-component",
+  "name": "@govuk-one-login/alpha-component",
   "version": "0.0.7",
   "description": "New blank package",
   "main": "build/cjs/language-param-setter.cjs",
