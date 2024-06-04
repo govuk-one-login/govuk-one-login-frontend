@@ -1,3 +1,7 @@
+## 0.0.15 (2024-06-04)
+
+This was a version bump only for @govuk-one-login/alpha-component to align it with other projects, there were no code changes.
+
 ## 0.0.14 (2024-06-04)
 
 This was a version bump only for @alphatest-12012/alpha-component to align it with other projects, there were no code changes.
