@@ -5,6 +5,7 @@
   "scripts": {
     "test": "jest --config=jest.config.js --passWithNoTests"
   },
+  "private": false,
   "dependencies": {
     "jest-environment-jsdom": "^29.7.0",
     "prettier": "^3.2.5"
