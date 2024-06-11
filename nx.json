@@ -1,12 +1,39 @@
 {
   "extends": "nx/presets/npm.json",
-  "release": {
-    "changelog": {
-      "projectChangelogs": {
-        "createRelease": "github"
-      }
+  "workspaceLayout": {
+    "libsDir": "packages"
+  },
+  "targetDefaults": {
+    "build": {
+      "cache": false,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
     },
-    "projectsRelationship": "independent"
+    "lint": {
+      "cache": false,
+      "inputs": [
+        "default",
+        "{workspaceRoot}/.eslintrc.js",
+        "{workspaceRoot}/.eslintignore",
+        "{workspaceRoot}/eslint.config.js"
+      ]
+    },
+    "format": {
+      "cache": false,
+      "inputs": [
+        "default",
+        "{workspaceRoot}/.prettierrc",
+        "{workspaceRoot}/.prettierignore"
+      ]
+    }
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "nx/tasks-runners/default",
+      "options": {
+        "cacheableOperations": ["build", "lint", "test", "e2e"]
+      }
+    }
   },
   "$schema": "./node_modules/nx/schemas/nx-schema.json"
 }

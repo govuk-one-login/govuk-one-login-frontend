@@ -1,0 +1,26 @@
+{
+  "name": "frontend-language-toggle",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/frontend-language-toggle/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["packages/frontend-language-toggle/**/*"]
+      }
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "prettier --write packages/frontend-language-toggle/**/*"
+      }
+    },
+    "format:check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "prettier --check packages/frontend-language-toggle/**/*"
+      }
+    }
+  }
+}
