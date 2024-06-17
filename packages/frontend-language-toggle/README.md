@@ -46,7 +46,7 @@ The GDS One Login Language toggle node package is a shared, reusable nunjuck com
 
 The purpose of this component is to make it as easy as possible for the various pods that make up the One Login journey to configure and add a configurable language toggle.
 
-The package is owned by the DI Frontend Capability team, part of the development of this tool involves ongoing discovery with the pods responsible for maintaining the frontend repositories that make up the One Login journey. As more information is collated, the package and documentation will be updated. As such, it is considered a WIP and the pods will be notified when a stable release is ready.
+The package is owned by the DI Frontend Capability team, part of the development of this tool involves ongoing discovery with the pods responsible for maintaining the frontend repositories that make up the One Login journey. A stable release of the package is now deployed in production.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
