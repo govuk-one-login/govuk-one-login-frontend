@@ -1,0 +1,11 @@
+{
+  "htmlWhitespaceSensitivity": "ignore",
+  "overrides": [
+    {
+      "files": "*.njk",
+      "options": {
+        "parser": "html"
+      }
+    }
+  ]
+}

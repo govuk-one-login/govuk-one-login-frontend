@@ -1,0 +1,28 @@
+{
+  "name": "frontend-passthrough-headers",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/frontend-passthrough-headers/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "packages/frontend-passthrough-headers/**/*.{js,ts,json}"
+        ]
+      }
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "prettier --write packages/frontend-passthrough-headers/**/*"
+      }
+    },
+    "format:check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "prettier --check packages/frontend-passthrough-headers/**/*"
+      }
+    }
+  }
+}

@@ -64,8 +64,8 @@ jobs:
       - name: Print Environment Information
         run: npx nx report
 
-      - name: Lint, test, and build affected packages
-        run: npx nx run-many -t lint,test,build --projects=${{ github.event.inputs.target }}
+      - name: Format, lint, test, and build affected packages
+        run: npx nx run-many -t format,lint,test,build --projects=${{ github.event.inputs.target }}
 
       # This line is needed for nx affected to work when CI is running on a PR
       - name: Set up main branch tracking
