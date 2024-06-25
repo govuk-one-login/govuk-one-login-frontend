@@ -40,3 +40,9 @@ testem.log
 Thumbs.db
 
 .nx/cache
+
+*.d.ts.map
+**/*.d.ts.map
+**/cjs/
+**/esm/
+**/*.md
