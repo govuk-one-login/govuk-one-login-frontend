@@ -1,4 +1,3 @@
-// types.d.ts
 declare module "*.json" {
   interface PackageJson {
     name: string;

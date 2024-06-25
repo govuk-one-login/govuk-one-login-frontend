@@ -1,5 +1,5 @@
 import pino from "pino";
-// @ts-expect-error: TypeScript cannot resolve this import
+// Importing package.json with the declared type
 import pjson from "../package.json";
 
 const logLevelSet = process.env.LOG_LEVEL || process.env.LOGS_LEVEL;
