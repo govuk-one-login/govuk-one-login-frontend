@@ -8,13 +8,13 @@ expect.extend(toHaveNoViolations);
 const nunjucksEnv = nunjucks.configure(
   path.dirname("frontend-language-toggle"),
   {
-    autoescape: true
-  }
+    autoescape: true,
+  },
 );
 
 nunjucksEnv.addGlobal(
   "addLanguageParam",
-  jest.fn((language) => `/?lng=${language}`)
+  jest.fn((language) => `/?lng=${language}`),
 );
 
 describe("languageSelect Component", () => {
@@ -27,14 +27,14 @@ describe("languageSelect Component", () => {
       {
         code: "en",
         text: "English",
-        visuallyHidden: "Change to English"
+        visuallyHidden: "Change to English",
       },
       {
         code: "cy",
         text: "Cymraeg",
-        visuallyHidden: "Newid yr iaith ir Gymraeg"
-      }
-    ]
+        visuallyHidden: "Newid yr iaith ir Gymraeg",
+      },
+    ],
   };
 
   it("has the appropriate accessibility testing", async () => {
@@ -67,14 +67,14 @@ describe("languageSelect Component", () => {
           {
             code: "en",
             text: "English",
-            visuallyHidden: "Change to English"
+            visuallyHidden: "Change to English",
           },
           {
             code: "cy",
             text: "Cymraeg",
-            visuallyHidden: "Newid yr iaith ir Gymraeg"
-          }
-        ]
+            visuallyHidden: "Newid yr iaith ir Gymraeg",
+          },
+        ],
       };
 
       const renderedComponent = render("languageSelect", mockParams);
@@ -85,7 +85,7 @@ describe("languageSelect Component", () => {
 
       // test visually hidden
       const renderedVisuallyHidden = renderedComponent(
-        ".govuk-visually-hidden"
+        ".govuk-visually-hidden",
       );
       expect(renderedVisuallyHidden.text()).toBe("Change to English");
 
@@ -95,7 +95,7 @@ describe("languageSelect Component", () => {
       expect(renderedLink.attr("target")).toEqual(undefined);
       expect(renderedLink.attr("href")).toContain("?lng=en");
       expect(renderedLink.attr("class")).toContain(
-        "govuk-link govuk-link--no-visited-state"
+        "govuk-link govuk-link--no-visited-state",
       );
     });
 
@@ -108,7 +108,7 @@ describe("languageSelect Component", () => {
 
       // test visually hidden
       const renderedVisuallyHidden = renderedComponent(
-        ".govuk-visually-hidden"
+        ".govuk-visually-hidden",
       );
       expect(renderedVisuallyHidden.text()).toBe("Newid yr iaith ir Gymraeg");
 
@@ -118,7 +118,7 @@ describe("languageSelect Component", () => {
       expect(renderedLink.attr("target")).toEqual(undefined);
       expect(renderedLink.attr("href")).toContain("?lng=cy");
       expect(renderedLink.attr("class")).toContain(
-        "govuk-link govuk-link--no-visited-state"
+        "govuk-link govuk-link--no-visited-state",
       );
     });
   });

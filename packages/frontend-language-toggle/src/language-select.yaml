@@ -16,20 +16,20 @@ params:
     required: true
     description: array of languages object
     params:
-    - name: language
-      type: object
-      required: false
-      description: language object
-      params:
-      - name: code
-        type: string
-        required: true
-        description: language code
-      - name: text
-        type: string
-        required: true
-        description: language text
-      - name: visuallyHidden
-        type: string
+      - name: language
+        type: object
         required: false
-        description: language text
+        description: language object
+        params:
+          - name: code
+            type: string
+            required: true
+            description: language code
+          - name: text
+            type: string
+            required: true
+            description: language text
+          - name: visuallyHidden
+            type: string
+            required: false
+            description: language text

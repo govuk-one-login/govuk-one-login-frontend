@@ -5,12 +5,12 @@ export default {
   output: [
     {
       file: "build/cjs/language-param-setter.cjs",
-      format: "cjs"
+      format: "cjs",
     },
     {
       file: "build/esm/language-param-setter.js",
-      format: "es"
-    }
+      format: "es",
+    },
   ],
-  plugins: [typescript()]
+  plugins: [typescript()],
 };
