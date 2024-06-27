@@ -5,3 +5,4 @@ build
 .editorconfig
 .prettierignore
 LICENSE
+coverage

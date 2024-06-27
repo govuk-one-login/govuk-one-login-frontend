@@ -1,0 +1,40 @@
+{
+  "name": "@<%= scope %>/<%= name %>",
+  "version": "1.0.0",
+  "description": "<%= description %>",
+  "main": "index.js",
+  "module": "",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/govuk-one-login/govuk-one-login-frontend.git"
+  },
+  "keywords": [
+    "govuk-one-login",
+    "gds",
+    "govuk-onelogin",
+    "govuk one login"
+  ],
+  "author": "DI Frontend Capability Team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/govuk-one-login/govuk-one-login-frontend/issues"
+  },
+  "homepage": "https://github.com/govuk-one-login/govuk-one-login-frontend#readme",
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/jest-axe": "^3.5.9",
+    "@types/webpack": "^5.28.5",
+    "jest": "^29.5.0", 
+    "rollup": "4.14.3",
+    "rollup-plugin-typescript2": "0.36.0",
+    "ts-jest": "^29.1.2",
+    "ts-node": "^10.9.2",
+    "typescript": "5.4.5",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^4.0.0"
+  }
+}

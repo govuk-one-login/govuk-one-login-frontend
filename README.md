@@ -22,6 +22,34 @@ To trigger the CD workflow manually, follow these steps:
 - Click the "Run workflow" button.
 - Select the target package and the desired increment type.
 - Click the "Run workflow" button to start the deployment process.
+
+# Create a new component
+
+To create a new component, follow these steps:
+
+- Run the following command:
+
+  ```bash
+  nx g automation:generate-component
+  ```
+
+  Or, if you want to specify the package name, run:
+
+  ```bash
+  nx g automation:generate-component package-name
+  ```
+
+- The NX prompt will ask you the following questions:
+
+  - **Name**: What name would you like to use? (required)
+  - **Description**: What is the package about? (optional)
+
+- Answer the prompts accordingly. If you provided the package name in the command, you won't be asked for it.
+
+- After answering the questions, the command will generate the package with the necessary files.
+
+
+
 -
 
 ## Lint the code with eslint+prettier:

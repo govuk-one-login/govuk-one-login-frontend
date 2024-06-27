@@ -1,0 +1,18 @@
+// add file to export here
+
+import typescript from 'rollup-plugin-typescript2';
+
+export default {
+  input: '',
+  output: [
+    {
+      file: '',
+      format: 'cjs',
+    },
+    {
+      file: '',
+      format: 'es',
+    },
+  ],
+  plugins: [typescript()],
+};
