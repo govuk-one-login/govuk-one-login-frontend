@@ -10,7 +10,7 @@
     "build": "rollup -c",
     "test": "jest -c"
   },
-  "author": "Nick Heal",
+  "author": "DI Frontend Capability Team",
   "license": "ISC",
   "repository": {
     "type": "git",

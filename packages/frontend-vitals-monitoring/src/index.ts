@@ -44,6 +44,6 @@ const logMessage = () => {
   logger.info(metricsObject);
 };
 
-export const frontendVitalsInit = (interval: number) => {
+export const frontendVitalsInit = (interval: number = 10000) => {
   setInterval(logMessage, interval);
 };
