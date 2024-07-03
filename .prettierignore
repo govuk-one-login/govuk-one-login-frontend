@@ -6,3 +6,5 @@ build
 .prettierignore
 .gitignore
 LICENSE
+*.d.ts.
+*.md
