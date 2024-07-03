@@ -1,0 +1,62 @@
+{% extends 'common/base.njk' %} {% set title = 'pages.chooseLocation.title' %}
+{% from "govuk/components/select/macro.njk" import govukSelect %} {% from
+"govuk/components/button/macro.njk" import govukButton %} {% from
+"govuk/components/back-link/macro.njk" import govukBackLink %} {% block backLink
+%} {{ govukBackLink({ text: "general.govuk.backLink" | translate, href:
+"/service-description" }) }} {% endblock %} {% block content %}
+
+<form method="post" id="chooseLocationForm">
+  {{ govukSelect({ id: "choose-location", name: "chooseLocation", label: { text:
+  "pages.chooseLocation.content.header" | translate, classes: "govuk-label--l",
+  isPageHeading: true }, hint: { text: "pages.chooseLocation.content.hint" |
+  translate }, errorMessage: { text:
+  "pages.chooseLocation.content.errors.validationError" | translate }if
+  showError, items: [ { value: "", text:
+  "pages.chooseLocation.content.options.chooseLocation" | translate, selected:
+  true }, { value: "East Midlands", text:
+  "pages.chooseLocation.content.options.eastMidlands" | translate }, { value:
+  "East of England", text: "pages.chooseLocation.content.options.eastEngland" |
+  translate }, { value: "London", text:
+  "pages.chooseLocation.content.options.london" | translate }, { value: "North
+  East", text: "pages.chooseLocation.content.options.northEast" | translate }, {
+  value: "North West", text: "pages.chooseLocation.content.options.northWest" |
+  translate }, { value: "South East", text:
+  "pages.chooseLocation.content.options.southEast" | translate }, { value:
+  "South West", text: "pages.chooseLocation.content.options.southWest" |
+  translate }, { value: "West Midlands", text:
+  "pages.chooseLocation.content.options.westMidlands" | translate }, { value:
+  "Yorkshire and the Humber", text:
+  "pages.chooseLocation.content.options.yorkshireAndHumber" | translate } ] })
+  }} {{ govukButton({ text: "general.buttons.continue" | translate, type:
+  "submit" }) }}
+</form>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const storedChooseLocation = localStorage.getItem("chooseLocation");
+    const dropdownToSelect = document.getElementById("choose-location");
+
+    // if check must remain, else default text does not show
+    if (storedChooseLocation) {
+      dropdownToSelect.value = storedChooseLocation;
+    }
+  });
+
+  document
+    .getElementById("chooseLocationForm")
+    .addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const chooseLocation = document.getElementById("choose-location").value;
+
+      localStorage.setItem("chooseLocation", chooseLocation);
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const editQuery = urlParams.get("edit") === "true" ? "?edit=true" : "";
+      document.getElementById("chooseLocationForm").action =
+        `/validate-choose-location${editQuery}`;
+
+      this.submit();
+    });
+</script>
+{% endblock %}

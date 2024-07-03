@@ -7,10 +7,8 @@ on:
         required: true
         type: choice
         options:
-          - frontend-analytics
-          - frontend-language-toggle
-          - frontend-passthrough-headers
           - "@govuk-one-login/alpha-component"
+          - frontend-vitals-monitoring
 
       increment:
         description: "Increment"
