@@ -1,0 +1,44 @@
+{% extends 'common/base.njk' %} {% set title = 'pages.serviceDescription.title'
+%} {% from "govuk/components/textarea/macro.njk" import govukTextarea %} {% from
+"govuk/components/button/macro.njk" import govukButton %} {% from
+"govuk/components/back-link/macro.njk" import govukBackLink %} {% block backLink
+%} {{ govukBackLink({ text: "general.govuk.backLink" | translate, href:
+"/help-with-hint" }) }} {% endblock %} {% block content %}
+
+<form method="post" id="serviceDescriptionForm">
+  {{ govukTextarea({ name: "serviceDescription", id: "service-description",
+  label: { text: "pages.serviceDescription.content.header" | translate, classes:
+  "govuk-label--l", isPageHeading: true }, hint: { text:
+  "pages.serviceDescription.content.hint" | translate }, errorMessage: { text:
+  "pages.serviceDescription.content.errors.validationError" | translate } if
+  showError }) }} {{ govukButton({ text: "general.buttons.continue" | translate,
+  type: "submit" }) }}
+</form>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const storedServiceDescription = localStorage.getItem("serviceDescription");
+    const textField = document.getElementById("service-description");
+
+    textField.value = storedServiceDescription ?? null;
+  });
+
+  document
+    .getElementById("serviceDescriptionForm")
+    .addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const serviceDescription = document.getElementById(
+        "service-description",
+      ).value;
+
+      localStorage.setItem("serviceDescription", serviceDescription);
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const editQuery = urlParams.get("edit") === "true" ? "?edit=true" : "";
+      document.getElementById("serviceDescriptionForm").action =
+        `/validate-service-description${editQuery}`;
+
+      this.submit();
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'common/base.njk' %} {% set title = 'pages.summaryPage.title' %} {%
+from "govuk/components/summary-list/macro.njk" import govukSummaryList %} {% set
+organisationTypeHtml %}
+<div id="organisationTypeContainer"></div>
+{% endset %} {% set helpWithHintsHtml %}
+<div id="helpWithHintContainer"></div>
+{% endset %} {% set serviceDescriptionHtml %}
+<div id="serviceDescriptionContainer"></div>
+{% endset %} {% set chooseLocationHtml %}
+<div id="chooseLocationContainer"></div>
+{% endset %} {% set enterEmailHtml %}
+<div id="enterEmailContainer"></div>
+{% endset %} {% from "govuk/components/back-link/macro.njk" import govukBackLink
+%} {% block backLink %} {{ govukBackLink({ text: "general.govuk.backLink" |
+translate, href: "/enter-email" }) }} {% endblock %} {% block content %}
+
+<h1 class="govuk-heading-l govuk-!-margin-bottom-5">Check answers</h1>
+
+{{ govukSummaryList({ classes: "govuk-summary-list__row--no-actions", fieldset:
+{ legend: { text: "pages.summaryPage.content.header" | translate, isPageHeading:
+true, classes: "govuk-fieldset__legend--l" } }, rows: [ { key: { text:
+"pages.organisationType.content.header" | translate }, value: { html:
+organisationTypeHtml }, actions: { items: [ { href:
+"/organisation-type?edit=true", text: "pages.summaryPage.content.changeLink" |
+translate, visuallyHiddenText: "organisationType" } ] } }, { key: { text:
+"pages.helpWithHint.content.header" | translate }, value: { html:
+helpWithHintsHtml }, actions: { items: [ { href: "/help-with-hint?edit=true",
+text: "pages.summaryPage.content.changeLink" | translate, visuallyHiddenText:
+"helpWithHint" } ] } }, { key: { text: "pages.serviceDescription.content.header"
+| translate }, value: { html: serviceDescriptionHtml }, actions: { items: [ {
+href: "/service-description?edit=true", text:
+"pages.summaryPage.content.changeLink" | translate, visuallyHiddenText: "Service
+description" } ] } }, { key: { text: "pages.chooseLocation.content.header" |
+translate }, value: { html: chooseLocationHtml }, actions: { items: [ { href:
+"/choose-location?edit=true", text: "pages.summaryPage.content.changeLink" |
+translate, visuallyHiddenText: "Choose location" } ] } }, { key: { text:
+"pages.enterEmail.content.header" | translate }, value: { html: enterEmailHtml
+}, actions: { items: [ { href: "/enter-email?edit=true", text:
+"pages.summaryPage.content.changeLink" | translate, visuallyHiddenText: "Enter
+email" } ] } } ] }) }}
+
+<script>
+  document.getElementById("organisationTypeContainer").textContent =
+    localStorage.getItem("organisationType");
+
+  const storedHelpWithHints = localStorage.getItem("helpWithHint");
+
+  if (storedHelpWithHints) {
+    const values = storedHelpWithHints.split("/").map((el) => {
+      return `${el}</br>`;
+    });
+
+    document.getElementById("helpWithHintContainer").innerHTML =
+      values.join("");
+  }
+
+  document.getElementById("serviceDescriptionContainer").textContent =
+    localStorage.getItem("serviceDescription");
+
+  document.getElementById("chooseLocationContainer").textContent =
+    localStorage.getItem("chooseLocation");
+
+  document.getElementById("enterEmailContainer").textContent =
+    localStorage.getItem("enterEmail");
+</script>
+
+{% endblock %}
