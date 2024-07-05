@@ -1,0 +1,225 @@
+{
+  "general": {
+    "header": {
+      "menuLink1": "Menu link 1",
+      "menuLink2": "Menu link 2",
+      "menuLink3": "Menu link 3"
+    },
+    "languageSelect": {
+      "ariaLabel": "Select language"
+    },
+    "buttons": {
+      "startNow": "Start Now",
+      "continue": "Continue",
+      "send": "Send"
+    },
+    "govuk": {
+      "backLink": "Back",
+      "skipLink": "Skip to main content",
+      "phaseBanner": {
+        "tag": "Alpha",
+        "content": "This is a new service - your <a class=\"govuk-link\" rel=\"noopener\" target=\"_blank\" href=\"https://signin.dev.account.gov.uk/contact-us\">feedback</a>  will help us to improve it. For more information, please <a rel=\"noopener\" class=\"govuk-link\" href=\"/welcome\">restart</a>  your journey"
+      }
+    },
+    "cookie": {
+      "cookieBanner": {
+        "title": "Cookies on GA4",
+        "heading": "Cookies on GA4",
+        "paragraph1": "We use some essential cookies to make this service work.",
+        "paragraph2": "We'd like to set additional cookies so we can remember your settings, understand how people use the service and make improvements.",
+        "changeCookiePreferencesLink": "change your cookie settings",
+        "cookieBannerAccept": {
+          "paragraph1": "You've accepted additional cookies. You can",
+          "paragraph2": "at any time."
+        }
+      },
+      "cookieBannerReject": {
+        "paragraph1": "You've rejected additional cookies. You can ",
+        "paragraph2": " at any time."
+      },
+      "buttonAcceptText": "Accept analytics cookies",
+      "buttonRejectText": "Reject analytics cookies",
+      "linkViewCookies": "View cookies",
+      "cookieBannerHideLinkText": "Hide cookie message"
+    },
+    "footer": {
+      "help": {
+        "linkText": "Help"
+      },
+      "cookies": {
+        "linkText": "Cookies"
+      },
+      "contact": {
+        "linkText": "Contact"
+      },
+      "terms": {
+        "linkText": "Terms and conditions"
+      }
+    }
+  },
+
+  "pages": {
+    "journeyGuard": {
+      "title": "Journey Guard",
+      "content": {
+        "header": "Sorry, you can not access OneLogin GOV.UK from this page",
+        "paragraph1": " <a href=\"/welcome\" class=\"govuk-link\"> Go to the GOV.UK OneLogin homepage</a> to find the service you need."
+      }
+    },
+    "home": {
+      "title": "Home",
+      "content": {
+        "header": "Using your GOV.UK One Login",
+        "navHeading": "Contents",
+        "list1": "Sign in to your GOV.UK One Login",
+        "list2": "Test Inbound Link",
+        "list3": "Test Outbound link",
+        "subheading1": "Sign in to your GOV.UK One Login",
+        "paragraph1": "You can use your GOV.UK One Login to access some government services.",
+        "paragraph2": "It does not work with all <a href=\"#\" class=\"govuk-link\">government accounts and services</a> yet (for example Government Gateway or Universal Credit)",
+        "paragraph3": "In the future, you'll be able to use your GOV.UK One Login to access all services on GOV.UK.",
+        "paragraph4": "See the <a href=\"#\" class=\"govuk-link\"> services you can use with GOV.UK One Login.</a>",
+        "insetText": "If you need a GOV.UK One Login to use a service, and you do not already have one, you'll be able to create one when you first use that service.",
+        "paragraph5": "Sign in to:",
+        "list4": "change your sign in details (email address, password or how you get security codes)",
+        "list5": "see and access the services you've used with your GOV.UK One Login",
+        "list6": "delete your GOV.UK One Login",
+        "subheading2": "Report a problem or give feedback",
+        "paragraph6": "To report a problem with your GOV.UK One Login or give feedback,<a href=\"/feedback\" class=\"govuk-link\">contact the GOV.UK One Login team</a >.",
+        "pagination": {
+          "text": "Services you can use with GOV.UK One Login"
+        },
+        "printGuideLinkText": "View a printable version of the whole guide"
+      }
+    },
+    "organisationType": {
+      "title": "Organisation Type",
+      "content": {
+        "header": "What is your organisation type?",
+        "options": {
+          "governmentDepartmentOrMinistry": "Government department or Ministry",
+          "executiveAgency": "Executive Agency",
+          "armsLengthBody": "Arms length body",
+          "other": "Other"
+        },
+        "errors": {
+          "validationError": "Select one option"
+        }
+      }
+    },
+    "feedback": {
+      "title": "Contact GOV.UK One Login",
+      "content": {
+        "feedbackType": {
+          "label": "What is the type of feedback?",
+          "options": {
+            "bug": "Bug",
+            "request": "Request"
+          },
+          "errors": {
+            "validationError": "Select one option"
+          }
+        },
+        "feedbackDescription": {
+          "label": "Give us your feedback",
+          "hint": "Add your comments here",
+          "errors": {
+            "validationError": "Please give us your feedback"
+          }
+        },
+        "feedbackConsent": {
+          "label": "Data protection consent",
+          "hint": "It's mandatory",
+          "options": {
+            "consent": "Yes, I want to share my feedback with GOV.UK One Login"
+          },
+          "errors": {
+            "validationError": "Please give us your consent"
+          }
+        },
+        "feedbackEntity": {
+          "label": "Who are you",
+          "hint": "It's mandatory",
+          "options": {
+            "person": "Person",
+            "company": "Company"
+          },
+          "errors": {
+            "validationError": "Please give us your consent"
+          }
+        }
+      }
+    },
+    "helpWithHint": {
+      "title": "Help With Hint",
+      "content": {
+        "header": "What would you like help with?",
+        "hint": "Tick all that apply - this will help us understand your initial needs",
+        "options": {
+          "accessIntegrationEnvironment": "Getting access to the integration environment to test GOV.UK One Login",
+          "technicalDiscussion": "Having a technical discussion",
+          "onboardingProcess": "Walking through the onboarding process",
+          "moreDetail": "Understanding the GOV.UK One Login programme in more detail",
+          "other": "Other"
+        },
+        "errors": {
+          "validationError": "Select one or more options"
+        }
+      }
+    },
+    "serviceDescription": {
+      "title": "Service Description",
+      "content": {
+        "header": "Describe your service",
+        "hint": "Describe your service, what it does, who it helps and why? Also tell us if it's a new service that has not launched yet.",
+        "errors": {
+          "validationError": "Enter a short description of your service"
+        }
+      }
+    },
+    "chooseLocation": {
+      "title": "chooseLocation",
+      "content": {
+        "header": "Choose your location",
+        "hint": "This can be different to where you went before",
+        "options": {
+          "chooseLocation": "Choose location",
+          "eastMidlands": "East Midlands",
+          "eastEngland": "East of England",
+          "london": "London",
+          "northEast": "North East",
+          "northWest": "North West",
+          "southEast": "South East",
+          "southWest": "South West",
+          "westMidlands": "West Midlands",
+          "yorkshireAndHumber": "Yorkshire and the Humber"
+        },
+        "errors": {
+          "validationError": "Select a location"
+        }
+      }
+    },
+    "enterEmail": {
+      "title": "Enter Email",
+      "content": {
+        "header": "Enter your email address",
+        "errors": {
+          "validationError": "Enter your email address"
+        }
+      }
+    },
+    "summaryPage": {
+      "title": "Summary Page",
+      "content": {
+        "header": "Check answers",
+        "changeLink": "Change"
+      }
+    },
+    "characterPage": {
+      "title": "xDncNmqheVoQoeOTnVmwUnsuByWwKwwAPUZAWRYBnzgrDOCObSzFqMpwAxQRpHMUehzTfzGJjuFJOtWyQBdHQbtpEpxmopVEnghdxyz",
+      "content": {
+        "header": "xDncNmqheVoQoeOTnVmwUnsuByWwKwwAPUZAWRYBnzgrDOCObSzFqMpwAxQRpHMUehzTfzGJjuFJOtWyQBdHQbtpEpxmopVEnghdxyz"
+      }
+    }
+  }
+}
