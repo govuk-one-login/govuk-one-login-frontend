@@ -7,6 +7,11 @@ import {
   getRequestsPerSecondValues,
   trackRequestsPerSecond,
 } from "./metrics/requestsPerSecond";
+import {
+  calculateAvgResponseTime,
+  getAvgDynamicResponseTime,
+  getAvgStaticResponseTime,
+} from "./avgResponseTime/avgResponseTime";
 
 interface IOptions {
   interval: number;
@@ -35,12 +40,21 @@ export const frontendVitalsInit = (
     trackRequestsPerSecond(server, staticPathsRegexp);
   }
 
+  calculateAvgResponseTime(server);
+  
+
   const metricsInterval = setInterval(() => {
     logger.info({
       version: pjson.version,
       ...(metrics.includes("requestsPerSecond")
         ? { requestsPerSecond: getRequestsPerSecondValues(interval) }
         : {}),
+          get avgStaticResponseTime() {
+    return getAvgStaticResponseTime();
+  },
+  get avgDynamicResponseTime() {
+    return getAvgDynamicResponseTime();
+  },
     });
   }, interval);
 
