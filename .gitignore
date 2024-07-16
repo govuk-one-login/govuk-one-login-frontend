@@ -46,7 +46,8 @@ lerna-debug.log*
 .DS_Store
 Thumbs.db
 
-.nx/cache
+# nx
+.nx
 
 # TypeScript declaration files
 *.d.ts

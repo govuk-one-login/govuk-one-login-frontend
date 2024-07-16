@@ -2,45 +2,55 @@ name: Static analysis
 
 on:
   pull_request:
-  push:
-    branches: [main]
-  schedule:
-    # Every Monday at 9am
-    - cron: "0 9 * * 1"
 
 concurrency:
   group: static-analysis-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: true
 
-permissions: {}
+permissions:
+  actions: read
+  contents: read
 
 jobs:
   coverage:
     name: Collect coverage
-    if: ${{ github.event_name != 'pull_request' }}
     uses: ./.github/workflows/tests.yml
-    with:
-      coverage-report: true
 
   sonarcloud:
     name: SonarCloud
     needs: coverage
     runs-on: ubuntu-latest
-    if: ${{ success() || needs.coverage.result == 'skipped' }}
     strategy:
       matrix:
-        TAG: [frontend-vitals-monitoring]
+        TAG: ["frontend-language-toggle", "frontend-vital-signs"]
     steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Cache node_modules
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - run: npm install
+      - uses: nrwl/nx-set-shas@v4
+
       - name: List affected packages
         run: |
-          OUTPUT=$(npx nx show projects --affected)
+          OUTPUT=$(npx nx show projects --affected --json)
           echo "affectedPackages=$OUTPUT" >> $GITHUB_ENV
 
-      - name: Run SonarCloud scan
-        uses: govuk-one-login/github-actions/code-quality/sonarcloud@1205242b48207a3081353984be60e5ae931a2aad
+      - name: Generate test coverage
+        run: npx nx run-many -t test --projects=@govuk-one-login/${{ matrix.TAG }}
+        if: ${{ contains(env.affectedPackages, matrix.TAG) }}
+
+      - name: Scan
+        uses: SonarSource/sonarcloud-github-action@master
         if: ${{ contains(env.affectedPackages, matrix.TAG) }}
         with:
-          sonar-token: ${{ secrets.SONAR_TOKEN }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          coverage-artifact: ${{ needs.coverage.outputs.coverage-artifact || 'coverage' }}
-          projectBaseDir: /packages/${{ matrix.TAG }}
+          projectBaseDir: ./packages/${{ matrix.TAG }}
+        env:
+          GITHUB_TOKEN: ${{ inputs.github-token }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
