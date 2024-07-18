@@ -7,7 +7,7 @@
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": ["packages/frontend-vitals-monitoring/**/*"]
+        "lintFilePatterns": ["packages/frontend-vitals-monitoring/src/**/*"]
       }
     },
     "format": {

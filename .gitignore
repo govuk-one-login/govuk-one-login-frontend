@@ -47,7 +47,7 @@ lerna-debug.log*
 Thumbs.db
 
 # nx
-.nx/cache
+.nx
 
 # TypeScript declaration map files
 *.d.ts.map
