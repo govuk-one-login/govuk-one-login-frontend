@@ -1,49 +1,50 @@
-import pino from "pino";
+import http from "http";
+import https from "https";
 // Importing package.json with the declared type
 import pjson from "../package.json";
+import { getLogger } from "./utils/logger";
+import {
+  getRequestsPerSecondValues,
+  trackRequestsPerSecond,
+} from "./metrics/requestsPerSecond";
 
-const logLevelSet = process.env.LOG_LEVEL || process.env.LOGS_LEVEL;
-
-let logLevel = "";
-let warning = "";
-
-const validLogLevels = [
-  "fatal",
-  "error",
-  "warn",
-  "info",
-  "debug",
-  "trace",
-  "silent",
-];
-
-if (logLevelSet === undefined) {
-  logLevel = "warn"; // Default log level
-  warning = `Log level is undefined. Must be one of ${validLogLevels.join(", ")}`;
-} else if (!validLogLevels.includes(logLevelSet)) {
-  logLevel = "warn"; // Default log level
-  warning = `Invalid log level: ${logLevelSet}. Must be one of ${validLogLevels.join(", ")}`;
-} else {
-  logLevel = logLevelSet; // Valid log level
+interface IOptions {
+  interval: number;
+  metrics: string[];
+  staticPaths: (string | RegExp)[];
 }
 
-const metricsObject = {
-  version: pjson.version,
-};
+export const frontendVitalsInit = (
+  server: http.Server | https.Server,
+  options: Partial<IOptions> = {},
+) => {
+  const {
+    interval = 10000,
+    metrics = ["requestsPerSecond"],
+    staticPaths = [],
+  } = options;
 
-const logger = pino({
-  name: "@govuk-one-login/frontend-vital-signs",
-  level: logLevel,
-});
+  const staticPathsRegexp = staticPaths.map((path) => {
+    if (path instanceof RegExp) return path;
+    return new RegExp(`^${path}`);
+  });
 
-if (warning) {
-  logger.warn(warning);
-}
+  const logger = getLogger();
 
-const logMessage = () => {
-  logger.info(metricsObject);
-};
+  if (metrics.includes("requestsPerSecond")) {
+    trackRequestsPerSecond(server, staticPathsRegexp);
+  }
 
-export const frontendVitalsInit = (interval: number = 10000) => {
-  setInterval(logMessage, interval);
+  const metricsInterval = setInterval(() => {
+    logger.info({
+      version: pjson.version,
+      ...(metrics.includes("requestsPerSecond")
+        ? { requestsPerSecond: getRequestsPerSecondValues(interval) }
+        : {}),
+    });
+  }, interval);
+
+  process.on("exit", () => {
+    clearInterval(metricsInterval);
+  });
 };

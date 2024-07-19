@@ -33,15 +33,11 @@ const i18nextMiddleware = require("i18next-http-middleware");
 const { i18nextConfigurationOptions } = require("./config/i18next");
 const { frontendVitalsInit } = require("@govuk-one-login/frontend-vital-signs");
 
-frontendVitalsInit();
-
 const app = express();
 const port = 3000;
 
 const nodeModules = (modulePath) =>
   `${path.resolve(__dirname, "../../../node_modules/", modulePath)}`;
-
-console.log(nodeModules("govuk-frontend/"));
 
 const APP_VIEWS = [
   path.join(__dirname, "views"),
@@ -139,8 +135,12 @@ app.get(
   },
 );
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
+});
+
+frontendVitalsInit(server, {
+  staticPaths: ["/assets", "/ga4-assets", "/javascript", "/stylesheets"],
 });
 
 app.post("/validate-organisation-type", validateOrganisationType);
