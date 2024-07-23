@@ -138,7 +138,6 @@ app.get(
 const server = app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
-frontendVitalsInit(server);
 
 frontendVitalsInit(server, {
   staticPaths: ["/assets", "/ga4-assets", "/javascript", "/stylesheets"],
