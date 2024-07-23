@@ -1,7 +1,7 @@
 import express from "express";
 import { frontendVitalsInit } from "../src";
 
-const PORT = 3001;
+const PORT = 0;
 
 export function createTestApp(
   options?: Parameters<typeof frontendVitalsInit>[1],
