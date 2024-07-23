@@ -4,32 +4,45 @@ let totalStaticResponseTime = 0;
 let totalDynamicResponseTime = 0;
 let staticRequestCount = 0;
 let dynamicRequestCount = 0;
-let avgStaticResponseTime = 0;
-let avgDynamicResponseTime = 0;
 
-export const calculateAvgResponseTime = (server: http.Server) => {
+export const calculateAvgResponseTime = (
+  server: http.Server,
+  staticPaths: RegExp[],
+) => {
   server.on("request", (req, res) => {
     const startTime = Date.now();
 
     res.on("finish", () => {
       const responseTime = Date.now() - startTime;
-      if (
-        req.url?.match(
-          /\.(html|css|js|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|otf|eot|mp4|mp3|wav|webm|ogg)$/,
-        )
-      ) {
+
+      if (staticPaths.some((path) => path.test(req.url!))) {
         totalStaticResponseTime += responseTime;
         staticRequestCount++;
-        avgStaticResponseTime = totalStaticResponseTime / staticRequestCount;
       } else {
         totalDynamicResponseTime += responseTime;
         dynamicRequestCount++;
-        avgDynamicResponseTime = totalDynamicResponseTime / dynamicRequestCount;
       }
     });
   });
 };
 
 // Getters for average response times
-export const getAvgStaticResponseTime = () => avgStaticResponseTime;
-export const getAvgDynamicResponseTime = () => avgDynamicResponseTime;
+export const getAvgStaticResponseTime = () => {
+  if (staticRequestCount === 0) {
+    return null;
+  }
+  const avgStaticResponseTime = totalStaticResponseTime / staticRequestCount;
+  totalStaticResponseTime = 0;
+  staticRequestCount = 0;
+
+  return avgStaticResponseTime;
+};
+export const getAvgDynamicResponseTime = () => {
+  if (dynamicRequestCount === 0) {
+    return null;
+  }
+  const avgDynamicResponseTime = totalDynamicResponseTime / dynamicRequestCount;
+  totalDynamicResponseTime = 0;
+  dynamicRequestCount = 0;
+  return avgDynamicResponseTime;
+};
