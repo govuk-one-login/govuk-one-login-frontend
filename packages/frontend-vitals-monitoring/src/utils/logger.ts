@@ -1,10 +1,6 @@
-import pino, { type Logger } from "pino";
+import pino from "pino";
 
-let sharedLogger: Logger<never>;
-
-export function getLogger() {
-  if (sharedLogger) return sharedLogger;
-
+export function createLogger() {
   const logLevelSet = process.env.LOG_LEVEL || process.env.LOGS_LEVEL;
 
   let logLevel = "";
@@ -38,8 +34,6 @@ export function getLogger() {
   if (warning) {
     logger.warn(warning);
   }
-
-  sharedLogger = logger;
 
   return logger;
 }
