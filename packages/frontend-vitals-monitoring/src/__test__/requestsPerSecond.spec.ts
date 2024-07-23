@@ -9,7 +9,10 @@ describe("requestsPerSecond", () => {
   let server: Server<typeof IncomingMessage, typeof ServerResponse>;
 
   beforeEach(() => {
-    const testApp = setup();
+    const testApp = setup({
+      metrics: ["requestsPerSecond"],
+      staticPaths: ["/test/static"],
+    });
     logger = testApp.logger;
     server = testApp.server;
   });
