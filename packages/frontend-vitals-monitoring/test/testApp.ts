@@ -1,6 +1,7 @@
 import pino, { type Logger } from "pino";
 import { IncomingMessage, Server, ServerResponse } from "http";
 import { createTestApp } from "./createTestApp";
+import { frontendVitalsInit } from "../src";
 
 jest.mock("pino", () => ({
   ...jest.requireActual("pino"),
@@ -8,7 +9,7 @@ jest.mock("pino", () => ({
   default: jest.fn(),
 }));
 
-export function setup() {
+export function setup(options?: Parameters<typeof frontendVitalsInit>[1]) {
   process.env.LOG_LEVEL = "info";
   jest.useFakeTimers();
 
@@ -19,10 +20,7 @@ export function setup() {
 
   (pino as unknown as jest.Mock).mockReturnValue(logger);
 
-  const server = createTestApp({
-    metrics: ["requestsPerSecond"],
-    staticPaths: ["/test/static"],
-  });
+  const server = createTestApp(options);
 
   return { logger, server };
 }
