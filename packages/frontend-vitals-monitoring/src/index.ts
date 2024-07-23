@@ -2,7 +2,7 @@ import http from "http";
 import https from "https";
 // Importing package.json with the declared type
 import pjson from "../package.json";
-import { getLogger } from "./utils/logger";
+import { createLogger } from "./utils/logger";
 import {
   getRequestsPerSecondValues,
   trackRequestsPerSecond,
@@ -29,7 +29,7 @@ export const frontendVitalsInit = (
     return new RegExp(`^${path}`);
   });
 
-  const logger = getLogger();
+  const logger = createLogger();
 
   if (metrics.includes("requestsPerSecond")) {
     trackRequestsPerSecond(server, staticPathsRegexp);

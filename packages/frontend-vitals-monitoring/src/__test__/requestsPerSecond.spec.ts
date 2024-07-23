@@ -1,37 +1,31 @@
 import request from "supertest";
 import { IncomingMessage, Server, ServerResponse } from "http";
-import { createTestApp } from "../../test/testUtils";
-import { getLogger } from "../utils/logger";
+import { setup, teardown } from "../../test/testApp";
 import pjson from "../../package.json";
-
-let server: Server<typeof IncomingMessage, typeof ServerResponse>;
+import { type Logger } from "pino";
 
 describe("requestsPerSecond", () => {
+  let logger: Logger<never>;
+  let server: Server<typeof IncomingMessage, typeof ServerResponse>;
+
   beforeEach(() => {
-    process.env.LOG_LEVEL = "info";
-    jest.useFakeTimers();
-    server = createTestApp({
-      metrics: ["requestsPerSecond"],
-      staticPaths: ["/test/static"],
-    });
+    const testApp = setup();
+    logger = testApp.logger;
+    server = testApp.server;
   });
 
   afterEach(() => {
-    jest.useRealTimers();
-    server.close();
+    teardown(server);
   });
 
-  it("should correctly list ", async () => {
-    const logger = getLogger();
-    const loggerSpy = jest.spyOn(logger, "info");
-
+  it("should correctly list the proportion of dynamic and static endpoints", async () => {
     await request(server).get("/test/dynamic");
     await request(server).get("/test/static");
     await request(server).get("/test/static");
 
     jest.advanceTimersByTime(15000);
 
-    expect(loggerSpy).toHaveBeenLastCalledWith({
+    expect(logger.info).toHaveBeenLastCalledWith({
       version: pjson.version,
       requestsPerSecond: {
         dynamic: 0.1,
