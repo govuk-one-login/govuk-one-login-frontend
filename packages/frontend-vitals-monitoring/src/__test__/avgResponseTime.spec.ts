@@ -4,13 +4,13 @@ import { setup, teardown } from "../../test/testApp";
 import pjson from "../../package.json";
 import { type Logger } from "pino";
 
-describe("requestsPerSecond", () => {
+describe("averageResponseTime", () => {
   let logger: Logger<never>;
   let server: Server<typeof IncomingMessage, typeof ServerResponse>;
 
   beforeEach(() => {
     const testApp = setup({
-      metrics: ["requestsPerSecond"],
+      metrics: ["avgResponseTime"],
       staticPaths: ["/test/static"],
     });
     logger = testApp.logger;
@@ -21,7 +21,7 @@ describe("requestsPerSecond", () => {
     teardown(server);
   });
 
-  it("should correctly list the proportion of dynamic and static endpoints", async () => {
+  it("should correctly calculate the average response time of dynamic and static endpoints", async () => {
     await request(server).get("/test/dynamic");
     await request(server).get("/test/static");
     await request(server).get("/test/static");
@@ -30,10 +30,17 @@ describe("requestsPerSecond", () => {
 
     expect(logger.info).toHaveBeenLastCalledWith({
       version: pjson.version,
-      requestsPerSecond: {
-        dynamic: 0.1,
-        static: 0.2,
-      },
+      avgStaticResponseTime: 0,
+      avgDynamicResponseTime: 0,
+    });
+  });
+  it("should return null if there are no requests made", async () => {
+    jest.advanceTimersByTime(15000);
+
+    expect(logger.info).toHaveBeenLastCalledWith({
+      version: pjson.version,
+      avgStaticResponseTime: null,
+      avgDynamicResponseTime: null,
     });
   });
 });

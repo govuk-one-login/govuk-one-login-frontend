@@ -8,7 +8,7 @@
     "lint:fix": "nx affected --target=lint --fix",
     "format": "nx affected --target=format",
     "format:check": "nx affected --target=format:check",
-    "prep:commit": "npm run format && npm run lint && git add .",
+    "prep:commit": "npm run format && npm run lint",
     "prepare": "husky"
   },
   "dependencies": {
