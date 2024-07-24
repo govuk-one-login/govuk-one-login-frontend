@@ -1,0 +1,9 @@
+{
+  "generators": {
+    "generate-component": {
+      "factory": "./src/generators/generate-component/generator",
+      "schema": "./src/generators/generate-component/schema.json",
+      "description": "generate-component generator"
+    }
+  }
+}
