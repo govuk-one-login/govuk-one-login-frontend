@@ -40,3 +40,10 @@ testem.log
 Thumbs.db
 
 .nx/cache
+
+# TypeScript declaration files
+*.d.ts
+*.d.ts.map
+# Built files
+cjs/
+esm/
