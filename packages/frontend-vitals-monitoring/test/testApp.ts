@@ -16,7 +16,7 @@ export function setup(options?: Parameters<typeof frontendVitalsInit>[1]) {
   const logger = {
     info: jest.fn(),
     warn: jest.fn(),
-  } as unknown as Logger<never>;
+  };
 
   (pino as unknown as jest.Mock).mockReturnValue(logger);
 

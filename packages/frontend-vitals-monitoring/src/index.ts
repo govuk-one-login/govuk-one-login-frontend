@@ -1,26 +1,32 @@
 import http from "http";
 import https from "https";
+import { type EventLoopUtilization } from "perf_hooks";
 // Importing package.json with the declared type
 import pjson from "../package.json";
 import { createLogger } from "./utils/logger";
 import {
-  getRequestsPerSecondValues,
-  trackRequestsPerSecond,
-} from "./metrics/requestsPerSecond";
-import {
   calculateAvgResponseTime,
   getAvgDynamicResponseTime,
   getAvgStaticResponseTime,
-} from "./avgResponseTime/avgResponseTime";
-
+} from "./metrics/avgResponseTime";
+import { trackEventLoopDelay } from "./metrics/eventLoopDelay";
+import { trackEventLoopUtilization } from "./metrics/eventLoopUtilization";
 import {
   calculateMaxConcurrentConnections,
   getMaxConcurrentConnections,
-} from "./maxConcurrentConnections/maxConcurrentConnections";
+} from "./metrics/maxConcurrentConnections";
+import { trackRequestsPerSecond } from "./metrics/requestsPerSecond";
+
+type TMetric =
+  | "avgResponseTime"
+  | "eventLoopDelay"
+  | "eventLoopUtilization"
+  | "maxConcurrentConnections"
+  | "requestsPerSecond";
 
 interface IOptions {
   interval: number;
-  metrics: string[];
+  metrics: TMetric[];
   staticPaths: (string | RegExp)[];
 }
 
@@ -31,9 +37,11 @@ export const frontendVitalsInit = (
   const {
     interval = 10000,
     metrics = [
-      "requestsPerSecond",
       "avgResponseTime",
+      "eventLoopDelay",
+      "eventLoopUtilization",
       "maxConcurrentConnections",
+      "requestsPerSecond",
     ],
     staticPaths = [],
   } = options;
@@ -45,9 +53,18 @@ export const frontendVitalsInit = (
 
   const logger = createLogger();
 
-  if (metrics.includes("requestsPerSecond")) {
-    trackRequestsPerSecond(server, staticPathsRegexp);
-  }
+  const eventLoopDelay = metrics.includes("eventLoopDelay")
+    ? trackEventLoopDelay()
+    : undefined;
+
+  const getEventLoopUtilization = metrics.includes("eventLoopUtilization")
+    ? trackEventLoopUtilization()
+    : undefined;
+
+  const getRequestsPerSecond = metrics.includes("requestsPerSecond")
+    ? trackRequestsPerSecond(server, staticPathsRegexp)
+    : undefined;
+
   if (metrics.includes("avgResponseTime")) {
     calculateAvgResponseTime(server, staticPathsRegexp);
   }
@@ -62,12 +79,22 @@ export const frontendVitalsInit = (
       avgStaticResponseTime?: number | null;
       avgDynamicResponseTime?: number | null;
       maxConcurrentConnections?: number;
+      eventLoopDelay?: number;
+      eventLoopUtilization?: EventLoopUtilization;
     } = {
       version: pjson.version,
     };
 
-    if (metrics.includes("requestsPerSecond")) {
-      metricsObject.requestsPerSecond = getRequestsPerSecondValues(interval);
+    if (eventLoopDelay) {
+      metricsObject.eventLoopDelay = eventLoopDelay.getEventLoopDelay();
+    }
+
+    if (getEventLoopUtilization) {
+      metricsObject.eventLoopUtilization = getEventLoopUtilization();
+    }
+
+    if (getRequestsPerSecond) {
+      metricsObject.requestsPerSecond = getRequestsPerSecond(interval);
     }
 
     if (metrics.includes("avgResponseTime")) {
@@ -85,7 +112,12 @@ export const frontendVitalsInit = (
     logger.info(metricsObject);
   }, interval);
 
-  process.on("exit", () => {
-    clearInterval(metricsInterval);
-  });
+  function stop() {
+    if (metricsInterval) clearInterval(metricsInterval);
+    if (eventLoopDelay) eventLoopDelay.stop();
+  }
+
+  process.on("exit", stop);
+
+  return stop;
 };

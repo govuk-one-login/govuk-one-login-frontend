@@ -1,15 +1,13 @@
-import { IncomingMessage, Server, ServerResponse } from "http";
 import { setup, teardown } from "../../test/testApp";
 import pjson from "../../package.json";
-import { type Logger } from "pino";
 import {
   calculateMaxConcurrentConnections,
   getMaxConcurrentConnections,
-} from "../maxConcurrentConnections/maxConcurrentConnections";
+} from "../metrics/maxConcurrentConnections";
 
 describe("maxConcurrentConnections", () => {
-  let logger: Logger<never>;
-  let server: Server<typeof IncomingMessage, typeof ServerResponse>;
+  let logger: ReturnType<typeof setup>["logger"];
+  let server: ReturnType<typeof setup>["server"];
   const interval = 10000; // Define interval variable
 
   beforeEach(() => {
