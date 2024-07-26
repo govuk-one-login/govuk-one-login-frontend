@@ -1,5 +1,6 @@
 import nunjucks from "nunjucks";
 import cheerio from "cheerio";
+import path from "path";
 
 export default function render(
   macroName: string,
@@ -14,7 +15,8 @@ export default function render(
 
   const macroParams = JSON.stringify(params, null, 2);
 
-  let macroString = `{%- from "./src/macro.njk" import ${macroName} -%}`;
+  const macroPath = `./${path.relative(process.cwd(), path.resolve(__dirname, "../macro.njk"))}`;
+  let macroString = `{%- from "${macroPath}" import ${macroName} -%}`;
 
   if (children) {
     macroString += `{%- call ${macroName}(${macroParams}) -%}${children}{%- endcall -%}`;
