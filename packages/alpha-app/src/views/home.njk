@@ -1,0 +1,84 @@
+{% extends 'common/base.njk' %} {% set title = 'pages.home.title' %} {% block
+content %}
+
+<h1 class="govuk-heading-xl">{{"pages.home.content.header"| translate}}</h1>
+<aside>
+  <nav>
+    <h2 class="govuk-heading-m">
+      {{"pages.home.content.navHeading"| translate}}
+    </h2>
+    <ol class="govuk-list govuk-list--number">
+      <li>{{"pages.home.content.list1"| translate}}</li>
+      <li>
+        <a href="/service-description" class="govuk-link">
+          {{"pages.home.content.list2"| translate}}
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://apps.apple.com/gb/app/gov-uk-id-check/id1629050566"
+          class="govuk-link"
+        >
+          {{"pages.home.content.list3"| translate}}
+        </a>
+      </li>
+    </ol>
+  </nav>
+</aside>
+<hr
+  class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+/>
+
+<h1 class="govuk-heading-l">{{"pages.home.content.subheading1"| translate}}</h1>
+<p class="govuk-body">{{"pages.home.content.paragraph1"| translate}}</p>
+<p class="govuk-body">{{"pages.home.content.paragraph2"| translate| safe}}</p>
+<p class="govuk-body">{{"pages.home.content.paragraph3"| translate}}</p>
+<p class="govuk-body">{{"pages.home.content.paragraph4"| translate| safe}}</p>
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %} {{
+govukInsetText({ text: "pages.home.content.insetText"| translate }) }}
+
+<p class="govuk-body">{{"pages.home.content.paragraph5"| translate}}</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>{{"pages.home.content.list4"| translate}}</li>
+  <li>{{"pages.home.content.list5"| translate}}</li>
+  <li>{{"pages.home.content.list6"| translate}}</li>
+</ul>
+<details class="govuk-details">
+  <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">First Details Component</span>
+  </summary>
+  <div class="govuk-details__text">
+    We need to know your nationality so we can work out which elections you’re
+    entitled to vote in. If you cannot provide your nationality, you’ll have to
+    send copies of identity documents through the post.
+  </div>
+</details>
+<details class="govuk-details">
+  <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">Second Details Component</span>
+  </summary>
+  <div class="govuk-details__text">
+    We need to know your nationality so we can work out which elections you’re
+    entitled to vote in. If you cannot provide your nationality, you’ll have to
+    send copies of identity documents through the post.
+  </div>
+</details>
+{% from "govuk/components/button/macro.njk" import govukButton %} {{
+govukButton({ text: "general.buttons.startNow"|translate, href:
+"/organisation-type", isStartButton: true }) }}
+
+<h2 class="govuk-heading-m">{{"pages.home.content.subheading2"| translate}}</h2>
+<p class="govuk-body">{{"pages.home.content.paragraph6"| translate| safe}}</p>
+{% from "govuk/components/pagination/macro.njk" import govukPagination %} {{
+govukPagination({ next: { labelText: "pages.home.content.pagination.text"|
+translate, href: "#" } }) }}
+
+<div>
+  <a href="#" class="govuk-link govuk-link--no-visited-state govuk-body">
+    {{"pages.home.content.printGuideLinkText"| translate}}
+  </a>
+</div>
+<script>
+  localStorage.clear();
+</script>
+{% endblock %}

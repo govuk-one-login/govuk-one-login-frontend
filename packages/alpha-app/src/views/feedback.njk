@@ -1,0 +1,47 @@
+{% extends 'common/base.njk' %} {% set title = 'pages.feedback.title' %} {% from
+"govuk/components/back-link/macro.njk" import govukBackLink %} {% from
+"govuk/components/radios/macro.njk" import govukRadios %} {% from
+"govuk/components/textarea/macro.njk" import govukTextarea %} {% from
+"govuk/components/checkboxes/macro.njk" import govukCheckboxes %} {% from
+"govuk/components/select/macro.njk" import govukSelect %} {% from
+"govuk/components/button/macro.njk" import govukButton %} {% block backLink %}
+{{ govukBackLink({ text: "general.govuk.backLink" | translate, href: "/welcome"
+}) }} {% endblock %} {% block content %}
+<h1 class="govuk-heading-xl">{{"pages.feedback.title"| translate}}</h1>
+<form method="post" id="feedbackForm" action="/validate-feedback">
+  {{ govukSelect({ id: "feedback-entity", name: "feedbackEntity", label: { text:
+  "pages.feedback.content.feedbackEntity.label" | translate, classes:
+  "govuk-label--l", isPageHeading: false }, hint: { text:
+  "pages.feedback.content.feedbackEntity.hint" | translate }, errorMessage: {
+  text: "pages.feedback.content.feedbackEntity.errors.validationError" |
+  translate }if showFeedbackEntityError, items: [ { value: "", text: "",
+  selected: true }, { value: "Person", text:
+  "pages.feedback.content.feedbackEntity.options.person" | translate }, { value:
+  "Entity", text: "pages.feedback.content.feedbackEntity.options.company" |
+  translate } ] }) }} {{ govukRadios({ name: "feedbackType", id:
+  "feedback-type", fieldset: { legend: { text:
+  "pages.feedback.content.feedbackType.label" | translate, isPageHeading: false,
+  classes: "govuk-fieldset__legend--l" } }, items: [ { value: "Bug", text:
+  "pages.feedback.content.feedbackType.options.bug" | translate }, { value:
+  "Request", text: "pages.feedback.content.feedbackType.options.request" |
+  translate } ], errorMessage: { text:
+  "pages.feedback.content.feedbackType.errors.validationError" | translate} if
+  showFeedbackTypeError }) }} {{ govukTextarea({ name: "feedbackDescription",
+  id: "feedback-description", label: { text:
+  "pages.feedback.content.feedbackDescription.label" | translate, classes:
+  "govuk-label--l", isPageHeading: false }, hint: { text:
+  "pages.feedback.content.feedbackDescription.hint" | translate }, errorMessage:
+  { text: "pages.feedback.content.feedbackDescription.errors.validationError" |
+  translate } if showFeedbackDescriptionError }) }} {{ govukCheckboxes({ name:
+  "feedbackConsent", fieldset: { legend: { text:
+  "pages.feedback.content.feedbackConsent.label" | translate, isPageHeading:
+  true, classes: "govuk-fieldset__legend--l" } }, hint: { text:
+  "pages.feedback.content.feedbackConsent.hint" | translate }, errorMessage: {
+  text: "pages.feedback.content.feedbackConsent.errors.validationError" |
+  translate } if showFeedbackConsentError, items: [ { value: "yes", text:
+  "pages.feedback.content.feedbackConsent.options.consent" | translate } ] }) }}
+  {{ govukButton({ text: "general.buttons.send" | translate, type: 'submit' })
+  }}
+</form>
+
+{% endblock %}

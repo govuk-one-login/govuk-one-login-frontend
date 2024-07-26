@@ -5,9 +5,13 @@ build
 .editorconfig
 .prettierignore
 LICENSE
-coverage
-*.md
 *.yaml
 *.yml
 *.njk
 *.css
+**/*.d.ts.map
+**/cjs/
+**/esm/
+**/*.md
+**/coverage/
+

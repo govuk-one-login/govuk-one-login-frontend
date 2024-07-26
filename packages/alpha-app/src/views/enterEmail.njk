@@ -1,0 +1,43 @@
+{% extends 'common/base.njk' %} {% set title = 'pages.enterEmail.title' %} {%
+from "govuk/components/input/macro.njk" import govukInput %} {% from
+"govuk/components/button/macro.njk" import govukButton %} {% from
+"govuk/components/back-link/macro.njk" import govukBackLink %} {% block backLink
+%} {{ govukBackLink({ text: "general.govuk.backLink" | translate, href:
+"/choose-location" }) }} {% endblock %} {%block content%}
+
+<form method="post" id="enterEmailForm">
+  {{ govukInput({ label: { text: "pages.enterEmail.content.header" | translate,
+  classes: "govuk-label--l", isPageHeading: true }, id: "enter-email", name:
+  "enterEmail", errorMessage: { text:
+  "pages.enterEmail.content.errors.validationError" | translate } if showError
+  }) }} {{ govukButton({ text: "general.buttons.continue" | translate, type:
+  "submit" }) }}
+</form>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const storedEmail = localStorage.getItem("enterEmail");
+    const textField = document.getElementById("enter-email");
+
+    textField.value = storedEmail ?? null;
+  });
+  document
+    .getElementById("enterEmailForm")
+    .addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const enterEmail = document.getElementById("enter-email").value;
+
+      if (enterEmail) {
+        localStorage.setItem("enterEmail", enterEmail);
+      }
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const editQuery = urlParams.get("edit") === "true" ? "?edit=true" : "";
+      document.getElementById("enterEmailForm").action =
+        `/validate-enter-email${editQuery}`;
+
+      this.submit();
+    });
+</script>
+
+{%endblock%}

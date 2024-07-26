@@ -1,0 +1,219 @@
+{
+  "general": {
+    "header": {
+      "menuLink1": "dewislen 1",
+      "menuLink2": "dewislen 2",
+      "menuLink3": "dewislen 3"
+    },
+    "languageSelect": {
+      "ariaLabel": "Switcher iaith"
+    },
+    "buttons": {
+      "startNow": "Dechrau Nawr",
+      "continue": "Parhau",
+      "send": "Lorem Ipsum"
+    },
+    "govuk": {
+      "backLink": "Yn ôl",
+      "skipLink": "Neidio i'r prif gynnwys",
+      "phaseBanner": {
+        "tag": "Alffa",
+        "content": "Mae hwn yn wasanaeth newydd - bydd eich <a class=\"govuk-link\" rel=\"noopener\" target=\"_blank\" href=\"https://signin.dev.account.gov.uk/contact-us\">adborth</a> yn ein helpu i'w wella. Am fwy o wybodaeth, os gwelwch yn dda <a class=\"govuk-link\" href=\"/welcome\">ailgychwynwch</a> eich taith"
+      }
+    },
+    "cookie": {
+      "cookieBanner": {
+        "title": "Cwcis ar GA4",
+        "heading": "Cwcis ar GA4",
+        "paragraph1": "Rydym yn defnyddio rhai cwcis hanfodol i wneud i'r gwasanaeth hwn weithio.",
+        "paragraph2": "Hoffem osod cwcis ychwanegol er mwyn gallu cofio eich gosodiadau, deall sut mae pobl yn defnyddio'r gwasanaeth a gwneud gwelliannau.",
+        "changeCookiePreferencesLink": "newid eich gosodiadau cwcis",
+        "cookieBannerAccept": {
+          "paragraph1": "Rydych wedi derbyn cwcis ychwanegol. Gallwch",
+          "paragraph2": "ar unrhyw adeg."
+        }
+      },
+      "cookieBannerReject": {
+        "paragraph1": "Rydych wedi gwrthod cwcis ychwanegol. Gallwch",
+        "paragraph2": "ar unrhyw adeg."
+      },
+      "buttonAcceptText": "Derbyn cwcis dadansoddi",
+      "buttonRejectText": "Gwrthod cwcis dadansoddi",
+      "linkViewCookies": "Gweld cwcis",
+      "cookieBannerHideLinkText": "Cuddio'r neges gwcis"
+    },
+    "footer": {
+      "help": {
+        "linkText": "Cymorth"
+      },
+      "cookies": {
+        "linkText": "Cwcis"
+      },
+      "contact": {
+        "linkText": "Cysylltu"
+      },
+      "terms": {
+        "linkText": "Telerau ac Amodau"
+      }
+    }
+  },
+
+  "pages": {
+    "journeyGuard": {
+      "title": "Gofal Taith",
+      "content": {
+        "header": "Yn anffodus, ni allwch gyrchu OneLogin GOV.UK o'r dudalen hon",
+        "paragraph1": " <a href=\"/welcome\" class=\"govuk-link\"> Ewch i dudalen flaenoriaeth OneLogin GOV.UK</a> i ddod o hyd i'r gwasanaeth sydd ei angen arnoch."
+      }
+    },
+    "home": {
+      "title": "Hafan",
+      "content": {
+        "header": "Defnyddio eich Mewngofnod One Login GOV.UK",
+        "navHeading": "Cynnwys",
+        "list1": "Mewngofnodi i'ch Mewngofnod One Login GOV.UK",
+        "list2": "Dolen Inbound Profi",
+        "list3": "Dolen Allgofnodi Profi",
+        "subheading1": "Mewngofnodi i'ch Mewngofnod One Login GOV.UK",
+        "paragraph1": "Gallwch ddefnyddio eich Mewngofnod One Login GOV.UK i gyrchu rhai gwasanaethau'r llywodraeth.",
+        "paragraph2": "Nid yw'n gweithio gyda phob <a href=\"#\" class=\"govuk-link\"> cyfrifon a gwasanaethau llywodraeth</a> eto (er enghraifft, Porth Llywodraethol neu Gredyd Cynhwysol)",
+        "paragraph3": "Yn y dyfodol, byddwch yn gallu defnyddio eich Mewngofnod One Login GOV.UK i gyrchu'r holl wasanaethau ar GOV.UK.",
+        "paragraph4": "Gweler y <a href=\"#\" class=\"govuk-link\"> gwasanaethau y gallwch eu defnyddio gyda Mewngofnod One Login GOV.UK.</a>",
+        "insetText": "Os oes angen Mewngofnod One Login GOV.UK arnoch i ddefnyddio gwasanaeth, ac nad oes gennych un eisoes, byddwch yn gallu creu un pan fyddwch yn defnyddio'r gwasanaeth hwnnw am y tro cyntaf.",
+        "paragraph5": "Mewngofnodi i:",
+        "list4": "newid eich manylion mewngofnodi (cyfeiriad e-bost, cyfrinair neu sut rydych yn cael codau diogelwch)",
+        "list5": "gweld a chael mynediad at y gwasanaethau rydych wedi'u defnyddio gyda'ch Mewngofnod One Login GOV.UK",
+        "list6": "dileu eich Mewngofnod One Login GOV.UK",
+        "subheading2": "Adrodd problem neu roi adborth",
+        "paragraph6": "I adrodd problem gyda'ch Mewngofnod One Login GOV.UK neu roi adborth, <a href=\"/feedback\" class=\"govuk-link\">cysylltwch â thîm Mewngofnod One Login GOV.UK</a>.",
+        "pagination": {
+          "text": "Gwasanaethau y gallwch eu defnyddio gyda Mewngofnod One Login GOV.UK"
+        },
+        "printGuideLinkText": "Gweld fersiwn argraffu cyflawn y canllaw"
+      }
+    },
+    "organisationType": {
+      "title": "Math o Fudiad",
+      "content": {
+        "header": "Beth yw math o fudiad yr ydych chi?",
+        "options": {
+          "governmentDepartmentOrMinistry": "Adran neu Weinidogiaeth Llywodraethol",
+          "executiveAgency": "Asiantaeth Weithredol",
+          "armsLengthBody": "Corff ar Gael yn Annibynnol",
+          "other": "Arall"
+        },
+        "errors": {
+          "validationError": "Dewiswch un opsiwn"
+        }
+      }
+    },
+    "feedback": {
+      "title": "Lorem ipsum dolor sit amet",
+      "content": {
+        "feedbackType": {
+          "label": "Lorem ipsum dolor sit amet?",
+          "options": {
+            "bug": "Lorem ipsum dolor sit amet",
+            "request": "Lorem ipsum dolor sit amet"
+          },
+          "errors": {
+            "validationError": "Lorem ipsum dolor sit amet"
+          }
+        },
+        "feedbackDescription": {
+          "label": "Lorem ipsum dolor sit amet",
+          "hint": "Lorem ipsum dolor sit amet",
+          "errors": {
+            "validationError": "Lorem ipsum dolor sit amet"
+          }
+        },
+        "feedbackConsent": {
+          "label": "Lorem ipsum dolor sit amet",
+          "hint": "Lorem ipsum dolor sit amet",
+          "options": {
+            "consent": "Lorem ipsum dolor sit amet"
+          },
+          "errors": {
+            "validationError": "Lorem ipsum dolor sit amet"
+          }
+        },
+        "feedbackEntity": {
+          "label": "Lorem ipsum dolor sit amet",
+          "hint": "Lorem ipsum dolor sit amet",
+          "options": {
+            "person": "Lorem ipsum dolor sit amet",
+            "company": "Lorem ipsum dolor sit amet"
+          },
+          "errors": {
+            "validationError": "Lorem ipsum dolor sit amet"
+          }
+        }
+      }
+    },
+    "helpWithHint": {
+      "title": "Cymorth Gyda Chyffyrdd",
+      "content": {
+        "header": "Beth hoffech chi gael cymorth gyda?",
+        "hint": "Ticiwch bob un sy'n berthnasol - bydd hyn yn ein helpu i ddeall eich anghenion cychwynnol",
+        "options": {
+          "accessIntegrationEnvironment": "Cael mynediad at yr amgylchedd integreiddio i brofi Mewngofnod One Login GOV.UK",
+          "technicalDiscussion": "Cael trafodaeth dechnegol",
+          "onboardingProcess": "Cerdded trwy'r broses ymuno",
+          "moreDetail": "Deall rhagor am raglen Mewngofnod One Login GOV.UK",
+          "other": "Arall"
+        },
+        "errors": {
+          "validationError": "Dewiswch un neu fwy o opsiynau"
+        }
+      }
+    },
+    "serviceDescription": {
+      "title": "Disgrifiad Gwasanaeth",
+      "content": {
+        "header": "Disgrifiwch eich gwasanaeth",
+        "hint": "Disgrifiwch eich gwasanaeth, yr hyn y mae'n ei wneud, pwy mae'n helpu ac am beth? Dywedwch hefyd os yw'n wasanaeth newydd nad yw wedi'i lansio eto.",
+        "errors": {
+          "validationError": "Rhowch grynodeb byr o'ch gwasanaeth"
+        }
+      }
+    },
+    "chooseLocation": {
+      "title": "Dewiswch eich Lleoliad",
+      "content": {
+        "header": "Dewiswch eich lleoliad",
+        "hint": "Gall hyn fod yn wahanol i ble aethoch o'r blaen",
+        "options": {
+          "chooseLocation": "Dewiswch leoliad",
+          "eastMidlands": "Canolbarth Dwyrain",
+          "eastEngland": "Dwyrain Lloegr",
+          "london": "Llundain",
+          "northEast": "Gogledd Ddwyrain",
+          "northWest": "Gogledd Orllewin",
+          "southEast": "De Ddwyrain",
+          "southWest": "De Orllewin",
+          "westMidlands": "Canolbarth Orllewin",
+          "yorkshireAndHumber": "Efrog a Humber"
+        },
+        "errors": {
+          "validationError": "Dewiswch leoliad"
+        }
+      }
+    },
+    "enterEmail": {
+      "title": "Rhowch eich Cyfeiriad E-bost",
+      "content": {
+        "header": "Rhowch eich cyfeiriad e-bost",
+        "errors": {
+          "validationError": "Rhowch eich cyfeiriad e-bost"
+        }
+      }
+    },
+    "summaryPage": {
+      "title": "Tudalen Crynodeb",
+      "content": {
+        "header": "Gwirio atebion",
+        "changeLink": "Newid"
+      }
+    }
+  }
+}
