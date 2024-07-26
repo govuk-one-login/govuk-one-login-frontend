@@ -9,6 +9,8 @@ LICENSE
 *.yml
 *.njk
 *.css
+coverage
+*.d.ts.map
 **/*.d.ts.map
 **/cjs/
 **/esm/
