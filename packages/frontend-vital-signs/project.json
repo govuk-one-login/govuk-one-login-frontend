@@ -1,0 +1,26 @@
+{
+  "name": "@govuk-one-login/frontend-vital-signs",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/frontend-vital-signs/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["packages/frontend-vital-signs/src/**/*"]
+      }
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "prettier --write packages/frontend-vital-signs/src/**/*"
+      }
+    },
+    "format:check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "prettier --check packages/frontend-vital-signs/src/**/*"
+      }
+    }
+  }
+}

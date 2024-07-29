@@ -1,4 +1,4 @@
-import pino, { type Logger } from "pino";
+import pino from "pino";
 import { IncomingMessage, Server, ServerResponse } from "http";
 import { createTestApp } from "./createTestApp";
 import { frontendVitalSignsInit } from "../src";
