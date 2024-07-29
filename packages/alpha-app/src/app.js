@@ -31,7 +31,7 @@ const i18next = require("i18next");
 const Backend = require("i18next-fs-backend");
 const i18nextMiddleware = require("i18next-http-middleware");
 const { i18nextConfigurationOptions } = require("./config/i18next");
-const { frontendVitalsInit } = require("@govuk-one-login/frontend-vital-signs");
+const { frontendVitalSignsInit } = require("@govuk-one-login/frontend-vital-signs");
 
 const app = express();
 const port = 3000;
@@ -139,7 +139,7 @@ const server = app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
 
-frontendVitalsInit(server, {
+frontendVitalSignsInit(server, {
   staticPaths: ["/assets", "/ga4-assets", "/javascript", "/stylesheets"],
 });
 

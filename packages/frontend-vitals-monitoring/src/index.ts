@@ -1,6 +1,7 @@
 import http from "http";
 import https from "https";
 import { type EventLoopUtilization } from "perf_hooks";
+import { type Express } from "express";
 // Importing package.json with the declared type
 import pjson from "../package.json";
 import { createLogger } from "./utils/logger";
@@ -30,7 +31,7 @@ interface IOptions {
   staticPaths: (string | RegExp)[];
 }
 
-export const frontendVitalsInit = (
+export const frontendVitalSignsInit = (
   server: http.Server | https.Server,
   options: Partial<IOptions> = {},
 ) => {
@@ -121,3 +122,31 @@ export const frontendVitalsInit = (
 
   return stop;
 };
+
+/**
+ * This function allows us to attach the FE vitals package to an Express.Application for situations
+ * where we don't have direct access to the HTTP/S server returned by app.listen. It must be called
+ * before app.listen is called.
+ *
+ * @example
+ * const app = express();
+ * frontendVitalSignsInitFromApp(app);
+ * app.listen(port, () => {
+ *   console.log(`Example app listening on port ${port}`);
+ * });
+ *
+ * @param app - An Express.Application that has not yet been started—ie. app.listen hasn't yet been called.
+ * @param options - Configuration options for the frontend vitals package.
+ */
+export function frontendVitalSignsInitFromApp(
+  app: Express,
+  options: Partial<IOptions> = {},
+) {
+  const originalListen = app.listen;
+
+  app.listen = function (...args: Parameters<typeof originalListen>) {
+    const server = originalListen.apply(app, args);
+    frontendVitalSignsInit(server, options);
+    return server;
+  } as typeof originalListen;
+}

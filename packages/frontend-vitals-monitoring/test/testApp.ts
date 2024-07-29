@@ -1,7 +1,7 @@
 import pino, { type Logger } from "pino";
 import { IncomingMessage, Server, ServerResponse } from "http";
 import { createTestApp } from "./createTestApp";
-import { frontendVitalsInit } from "../src";
+import { frontendVitalSignsInit } from "../src";
 
 jest.mock("pino", () => ({
   ...jest.requireActual("pino"),
@@ -9,7 +9,7 @@ jest.mock("pino", () => ({
   default: jest.fn(),
 }));
 
-export function setup(options?: Parameters<typeof frontendVitalsInit>[1]) {
+export function setup(options?: Parameters<typeof frontendVitalSignsInit>[1]) {
   process.env.LOG_LEVEL = "info";
   jest.useFakeTimers();
 
