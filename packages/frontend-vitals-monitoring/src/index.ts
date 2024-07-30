@@ -13,6 +13,11 @@ import {
   getAvgStaticResponseTime,
 } from "./avgResponseTime/avgResponseTime";
 
+import {
+  calculateMaxConcurrentConnections,
+  getMaxConcurrentConnections,
+} from "./maxConcurrentConnections/maxConcurrentConnections";
+
 interface IOptions {
   interval: number;
   metrics: string[];
@@ -25,7 +30,11 @@ export const frontendVitalsInit = (
 ) => {
   const {
     interval = 10000,
-    metrics = ["requestsPerSecond", "avgResponseTime"],
+    metrics = [
+      "requestsPerSecond",
+      "avgResponseTime",
+      "maxConcurrentConnections",
+    ],
     staticPaths = [],
   } = options;
 
@@ -42,6 +51,9 @@ export const frontendVitalsInit = (
   if (metrics.includes("avgResponseTime")) {
     calculateAvgResponseTime(server, staticPathsRegexp);
   }
+  if (metrics.includes("maxConcurrentConnections")) {
+    calculateMaxConcurrentConnections(server);
+  }
 
   const metricsInterval = setInterval(() => {
     const metricsObject: {
@@ -49,6 +61,7 @@ export const frontendVitalsInit = (
       requestsPerSecond?: { static: number; dynamic: number };
       avgStaticResponseTime?: number | null;
       avgDynamicResponseTime?: number | null;
+      maxConcurrentConnections?: number;
     } = {
       version: pjson.version,
     };
@@ -63,6 +76,10 @@ export const frontendVitalsInit = (
 
     if (metrics.includes("avgResponseTime")) {
       metricsObject.avgDynamicResponseTime = getAvgDynamicResponseTime();
+    }
+
+    if (metrics.includes("maxConcurrentConnections")) {
+      metricsObject.maxConcurrentConnections = getMaxConcurrentConnections();
     }
 
     logger.info(metricsObject);
