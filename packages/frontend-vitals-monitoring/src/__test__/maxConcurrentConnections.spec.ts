@@ -34,7 +34,7 @@ describe("maxConcurrentConnections", () => {
     });
 
     // Call the function to calculate max concurrent connections
-    calculateMaxConcurrentConnections(server, interval);
+    calculateMaxConcurrentConnections(server);
 
     jest.advanceTimersByTime(15000);
     expect(getMaxConcurrentConnections()).toBe(5);
@@ -47,7 +47,7 @@ describe("maxConcurrentConnections", () => {
   });
   it("should return 0 if there are no requests made", async () => {
     // Call the function to calculate max concurrent connections
-    calculateMaxConcurrentConnections(server, interval);
+    calculateMaxConcurrentConnections(server);
 
     jest.advanceTimersByTime(15000);
 

@@ -52,7 +52,7 @@ export const frontendVitalsInit = (
     calculateAvgResponseTime(server, staticPathsRegexp);
   }
   if (metrics.includes("maxConcurrentConnections")) {
-    calculateMaxConcurrentConnections(server, interval);
+    calculateMaxConcurrentConnections(server);
   }
 
   const metricsInterval = setInterval(() => {
