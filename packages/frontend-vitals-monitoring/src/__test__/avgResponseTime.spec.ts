@@ -1,12 +1,10 @@
 import request from "supertest";
-import { IncomingMessage, Server, ServerResponse } from "http";
 import { setup, teardown } from "../../test/testApp";
 import pjson from "../../package.json";
-import { type Logger } from "pino";
 
 describe("averageResponseTime", () => {
-  let logger: Logger<never>;
-  let server: Server<typeof IncomingMessage, typeof ServerResponse>;
+  let logger: ReturnType<typeof setup>["logger"];
+  let server: ReturnType<typeof setup>["server"];
 
   beforeEach(() => {
     const testApp = setup({

@@ -1,15 +1,13 @@
 import request from "supertest";
 import { setup, teardown } from "../../test/testApp";
-import pjson from "../../package.json";
 
-describe("requestsPerSecond", () => {
+describe("eventLoopDelay", () => {
   let logger: ReturnType<typeof setup>["logger"];
   let server: ReturnType<typeof setup>["server"];
 
   beforeEach(() => {
     const testApp = setup({
-      metrics: ["requestsPerSecond"],
-      staticPaths: ["/test/static"],
+      metrics: ["eventLoopDelay"],
     });
     logger = testApp.logger;
     server = testApp.server;
@@ -19,19 +17,16 @@ describe("requestsPerSecond", () => {
     teardown(server);
   });
 
-  it("should correctly list the proportion of dynamic and static endpoints", async () => {
+  it("should log an event loop delay number when the metric is turned on", async () => {
     await request(server).get("/test/dynamic");
     await request(server).get("/test/static");
     await request(server).get("/test/static");
 
     jest.advanceTimersByTime(15000);
 
-    expect(logger.info).toHaveBeenLastCalledWith({
-      version: pjson.version,
-      requestsPerSecond: {
-        dynamic: 0.1,
-        static: 0.2,
-      },
-    });
+    expect(typeof logger.info.mock.calls[0][0].eventLoopDelay).toBe("number");
+    expect(logger.info.mock.calls[0][0].eventLoopDelay).toBeGreaterThanOrEqual(
+      0,
+    );
   });
 });
