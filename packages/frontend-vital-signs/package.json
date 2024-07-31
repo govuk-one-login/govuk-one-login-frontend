@@ -2,6 +2,9 @@
   "name": "@govuk-one-login/frontend-vital-signs",
   "version": "0.0.2",
   "description": "",
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "esnext": "src/index.ts",
   "main": "cjs/index.cjs",
