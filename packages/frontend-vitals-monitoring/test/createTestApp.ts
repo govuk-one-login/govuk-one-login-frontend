@@ -1,10 +1,10 @@
 import express from "express";
-import { frontendVitalsInit } from "../src";
+import { frontendVitalSignsInit } from "../src";
 
 const PORT = 0;
 
 export function createTestApp(
-  options?: Parameters<typeof frontendVitalsInit>[1],
+  options?: Parameters<typeof frontendVitalSignsInit>[1],
 ) {
   const app = express();
 
@@ -20,7 +20,7 @@ export function createTestApp(
     console.log(`Test app listening on port ${PORT}`);
   });
 
-  frontendVitalsInit(server, options);
+  frontendVitalSignsInit(server, options);
 
   return server;
 }
