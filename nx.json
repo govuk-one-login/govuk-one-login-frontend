@@ -8,6 +8,14 @@
   "workspaceLayout": {
     "libsDir": "packages"
   },
+  "release": {
+    "changelog": {
+      "projectChangelogs": {
+        "createRelease": "github"
+      }
+    },
+    "projectsRelationship": "independent"
+  },
   "targetDefaults": {
     "@nx/js:tsc": {
       "cache": true,
