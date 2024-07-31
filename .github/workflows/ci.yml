@@ -28,9 +28,8 @@ jobs:
           cache: "npm"
       - run: npm install
       - uses: nrwl/nx-set-shas@v4
-      - run: npm test
 
       - run: git branch --track main origin/main
         if: ${{ github.event_name == 'pull_request' }}
 
-      # - run: npx nx affected -t lint build
+      - run: npx nx affected -t lint test build
