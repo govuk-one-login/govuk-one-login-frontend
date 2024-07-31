@@ -1,25 +1,25 @@
 {
-  "name": "frontend-vitals-monitoring",
+  "name": "@govuk-one-login/alpha-component",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/frontend-vitals-monitoring/src",
+  "sourceRoot": "packages/alpha-component/src",
   "projectType": "library",
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": ["packages/frontend-vitals-monitoring/src/**/*"]
+        "lintFilePatterns": ["packages/alpha-component/src/**/*.js"]
       }
     },
     "format": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "prettier --write packages/frontend-vitals-monitoring/**/*"
+        "command": "prettier --write packages/alpha-component/src/**/*"
       }
     },
     "format:check": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "prettier --check packages/frontend-vitals-monitoring/**/*"
+        "command": "prettier --check packages/alpha-component/src/**/*"
       }
     }
   }

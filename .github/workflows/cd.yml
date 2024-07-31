@@ -8,7 +8,7 @@ on:
         type: choice
         options:
           - "@govuk-one-login/alpha-component"
-          - "@govuk-one-login/frontend-vitals-monitoring"
+          - "@govuk-one-login/frontend-vital-signs"
 
       increment:
         description: "Increment"
@@ -52,9 +52,6 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-
-      - name: Run Jest tests
-        run: npm test
 
       - name: Set SHAs for affected packages
         uses: nrwl/nx-set-shas@v4

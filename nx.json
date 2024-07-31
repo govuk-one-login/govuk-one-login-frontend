@@ -36,11 +36,6 @@
         }
       }
     },
-    "build": {
-      "cache": false,
-      "dependsOn": ["^build"],
-      "inputs": ["production", "^production"]
-    },
     "lint": {
       "cache": false,
       "inputs": [
@@ -59,12 +54,11 @@
       ]
     }
   },
-
   "tasksRunnerOptions": {
     "default": {
       "runner": "nx/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "cacheableOperations": ["lint", "test", "e2e"]
       }
     }
   },
