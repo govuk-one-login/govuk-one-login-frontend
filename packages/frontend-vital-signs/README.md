@@ -6,7 +6,7 @@
 <br />
 <div align="center">
   
-<h3 align="center">GOV.UK Frontend Vitals Monitoring</h3>
+<h3 align="center">GOV.UK Frontend Vitals Signs</h3>
   <p align="center">
     This package enables GOV UK LOGIN frontend Node.js applications add frontend vitals monitoring.
     <br />
@@ -38,7 +38,7 @@
 
 ## About The Project
 
-The GDS Frontend Vitals Monitoring node package exposes custom metrics (vital-signs) about the health of our Node applications.
+The GDS Frontend Vitals Signs node package exposes custom metrics (vital-signs) about the health of our Node applications.
 
 The purpose of this package is to make it easy for our FE services to scale in response to demand.
 
@@ -55,7 +55,7 @@ The package is owned by the DI Frontend Capability team, part of the development
 1. Install NPM package
 
    ```sh
-   npm install @govuk-one-login/frontend-vitals-monitoring
+   npm install @govuk-one-login/frontend-vitals-signs
    ```
 2. Import the package in your Node.js application's startup file (example: app.js or index.js):
 
@@ -90,7 +90,7 @@ The package is owned by the DI Frontend Capability team, part of the development
     "time": 1722420636051,
     "pid": 25367,
     "hostname": "GDS12516",
-    "name": "@govuk-one-login/frontend-vitals-monitoring",
+    "name": "@govuk-one-login/frontend-vitals-signs",
     "version": "0.0.1",
     "requestsPerSecond": {
       "dynamic": 1,
