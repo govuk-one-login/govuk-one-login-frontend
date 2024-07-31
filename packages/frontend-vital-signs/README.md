@@ -8,7 +8,7 @@
   
 <h3 align="center">GOV.UK Frontend Vitals Signs</h3>
   <p align="center">
-    This package enables GOV UK LOGIN frontend Node.js applications add frontend vitals monitoring.
+  This package enables GOV UK LOGIN frontend Node.js applications to add frontend vital signs monitoring
     <br />
     <a href=""><strong>Explore the docs »</strong></a>
     <br />
@@ -42,7 +42,7 @@ The GDS Frontend Vitals Signs node package exposes custom metrics (vital-signs) 
 
 The purpose of this package is to make it easy for our FE services to scale in response to demand.
 
-The package is owned by the DI Frontend Capability team, part of the development of this tool involves ongoing discovery with the pods responsible for maintaining the frontend repositories that make up the One Login journey. A stable release of the package is now deployed in production.
+The package is owned by the DI Frontend Capability team, part of the development of this tool involves ongoing discovery with the pods responsible for maintaining the frontend repositories that make up the One Login journey. 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -63,7 +63,13 @@ The package is owned by the DI Frontend Capability team, part of the development
    const { frontendVitalsInit } = require("@govuk-one-login/frontend-vital-signs");
    ```
 
-  [!WARNING] Verify the path to your node module folder is the correct.[!WARNING]
+  If using TypeScript:
+
+   ```ts
+   import frontendVitalsInit from "@govuk-one-login/frontend-vital-signs";
+   ```
+
+ 
 
 3. In your .env file, add the LOG_LEVEL variable and set it to the desired log level. The   available log levels are:
 
@@ -115,7 +121,7 @@ The package is owned by the DI Frontend Capability team, part of the development
   frontendVitalsInit(server, {
     interval: 10000, 
     metrics: ["requestsPerSecond", "avgResponseTime"],
-    staticPaths: ["/assets", "/ga4-assets", "/javascript", "/stylesheets"], 
+    staticPaths: [/^\/assets\/.*/, "/ga4-assets", "/javascript", "/stylesheets"], 
   });
 
    ```
@@ -144,6 +150,8 @@ The package is owned by the DI Frontend Capability team, part of the development
 
   - **`staticPaths`** (optional, array): 
     An array of strings or regular expressions representing paths to your static files. These paths are used to differentiate between static and dynamic requests.
+    
+    - Strings provided are converted to regular expressions with the format ^{string_value}, meaning the path is treated as the starting part of the URL. For example, the string '/static' is treated as '^/static' and will match any URL that starts with /static.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
