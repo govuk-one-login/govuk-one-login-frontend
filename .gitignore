@@ -68,8 +68,6 @@ esm/
 cjs/
 esm/
 
-# Markdown files
-**/*.md
 
 # Logs
 logs
