@@ -1,3 +1,15 @@
+## 0.0.4 (2024-08-01)
+
+
+### 🩹 Fixes
+
+- **DFC-634:** fix eventLoopDelay metric so that it refreshes ([66b24fd](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/66b24fd))
+
+
+### ❤️  Thank You
+
+- nickhealGDS
+
 ## 0.0.3 (2024-08-01)
 
 
