@@ -28,8 +28,10 @@ describe("averageResponseTime", () => {
 
     expect(logger.info).toHaveBeenLastCalledWith({
       version: pjson.version,
-      avgStaticResponseTime: 0,
-      avgDynamicResponseTime: 0,
+      avgResponseTime: {
+        dynamic: 0,
+        static: 0,
+      },
     });
   });
   it("should return null if there are no requests made", async () => {
@@ -37,8 +39,10 @@ describe("averageResponseTime", () => {
 
     expect(logger.info).toHaveBeenLastCalledWith({
       version: pjson.version,
-      avgStaticResponseTime: null,
-      avgDynamicResponseTime: null,
+      avgResponseTime: {
+        dynamic: null,
+        static: null,
+      },
     });
   });
 });

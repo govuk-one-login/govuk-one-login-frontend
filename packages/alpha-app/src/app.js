@@ -142,6 +142,7 @@ const server = app.listen(port, () => {
 });
 
 frontendVitalSignsInit(server, {
+  logLevel: process.env.LOG_LEVEL,
   staticPaths: ["/assets", "/ga4-assets", "/javascript", "/stylesheets"],
 });
 

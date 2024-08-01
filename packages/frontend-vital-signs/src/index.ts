@@ -4,7 +4,7 @@ import { type EventLoopUtilization } from "perf_hooks";
 import { type Express } from "express";
 // Importing package.json with the declared type
 import pjson from "../package.json";
-import { createLogger } from "./utils/logger";
+import { createLogger, TLogLevel } from "./utils/logger";
 import {
   calculateAvgResponseTime,
   getAvgDynamicResponseTime,
@@ -27,6 +27,7 @@ type TMetric =
 
 interface IOptions {
   interval: number;
+  logLevel: TLogLevel;
   metrics: TMetric[];
   staticPaths: (string | RegExp)[];
 }
@@ -37,6 +38,7 @@ export const frontendVitalSignsInit = (
 ) => {
   const {
     interval = 10000,
+    logLevel = "info",
     metrics = [
       "avgResponseTime",
       "eventLoopDelay",
@@ -52,7 +54,7 @@ export const frontendVitalSignsInit = (
     return new RegExp(`^${path}`);
   });
 
-  const logger = createLogger();
+  const logger = createLogger(logLevel);
 
   const eventLoopDelay = metrics.includes("eventLoopDelay")
     ? trackEventLoopDelay()
@@ -76,12 +78,14 @@ export const frontendVitalSignsInit = (
   const metricsInterval = setInterval(() => {
     const metricsObject: {
       version: string;
-      requestsPerSecond?: { static: number; dynamic: number };
-      avgStaticResponseTime?: number | null;
-      avgDynamicResponseTime?: number | null;
-      maxConcurrentConnections?: number;
+      avgResponseTime?: {
+        dynamic: number | null;
+        static: number | null;
+      };
       eventLoopDelay?: number;
       eventLoopUtilization?: EventLoopUtilization;
+      maxConcurrentConnections?: number;
+      requestsPerSecond?: { static: number; dynamic: number };
     } = {
       version: pjson.version,
     };
@@ -99,11 +103,10 @@ export const frontendVitalSignsInit = (
     }
 
     if (metrics.includes("avgResponseTime")) {
-      metricsObject.avgStaticResponseTime = getAvgStaticResponseTime();
-    }
-
-    if (metrics.includes("avgResponseTime")) {
-      metricsObject.avgDynamicResponseTime = getAvgDynamicResponseTime();
+      metricsObject.avgResponseTime = {
+        dynamic: getAvgDynamicResponseTime(),
+        static: getAvgStaticResponseTime(),
+      };
     }
 
     if (metrics.includes("maxConcurrentConnections")) {
