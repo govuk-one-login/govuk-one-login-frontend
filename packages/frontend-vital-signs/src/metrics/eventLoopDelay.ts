@@ -1,16 +1,18 @@
-import { monitorEventLoopDelay } from "perf_hooks";
+import { IntervalHistogram, monitorEventLoopDelay } from "perf_hooks";
 
 export const trackEventLoopDelay = () => {
-  const eventLoopDelayMonitor = monitorEventLoopDelay({ resolution: 10 });
+  let eventLoopDelayMonitor = monitorEventLoopDelay({ resolution: 10 });
   eventLoopDelayMonitor.enable();
 
   return {
     getEventLoopDelay() {
-      if (!isNaN(eventLoopDelayMonitor.mean)) {
-        return eventLoopDelayMonitor.mean / 1e6;
-      } else {
-        return 0;
-      }
+      const values: IntervalHistogram = JSON.parse(
+        JSON.stringify(eventLoopDelayMonitor),
+      );
+      eventLoopDelayMonitor.disable();
+      eventLoopDelayMonitor = monitorEventLoopDelay({ resolution: 10 });
+      eventLoopDelayMonitor.enable();
+      return values.mean / 1e6;
     },
     stop() {
       eventLoopDelayMonitor.disable();

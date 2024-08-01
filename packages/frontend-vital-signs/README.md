@@ -63,52 +63,13 @@ The package is owned by the DI Frontend Capability team, part of the development
    const { frontendVitalsInit } = require("@govuk-one-login/frontend-vital-signs");
    ```
 
-  If using TypeScript:
+   If using ES6 Imports or TypeScript:
 
    ```ts
    import frontendVitalsInit from "@govuk-one-login/frontend-vital-signs";
    ```
 
- 
-
-3. In your .env file, add the LOG_LEVEL variable and set it to the desired log level. The   available log levels are:
-
-   - fatal: Logs critical errors that may cause the application to crash.
-   - error: Logs error messages indicating something went wrong.
-   - warn: Logs warnings about potential issues that are not errors but might need attention.
-   - info: Logs informational messages about the application's operation.
-   - debug: Logs debug information useful for development.
-   - trace: Logs detailed information for debugging purposes.
-   - silent: Suppresses all logging output.
-
-  Example:
-
-  Setting the log level to info will log informational messages and errors. To view the logs of our metric object, set it as follows:
-
-  ```dotenv
-  LOG_LEVEL=info
-
-  Example Log:
-
-   ```json
-  {
-    "level": 30,
-    "time": 1722420636051,
-    "pid": 25367,
-    "hostname": "GDS12516",
-    "name": "@govuk-one-login/frontend-vitals-signs",
-    "version": "0.0.1",
-    "requestsPerSecond": {
-      "dynamic": 1,
-      "static": 0.6
-    },
-    "avgStaticResponseTime": 1.5,
-    "avgDynamicResponseTime": 14.5
-  }
-
-   ```
-
-4. Configure the server to use the frontendVitalsInit function. This function initialises the frontend vitals monitoring.
+3. Configure the server to use the frontendVitalsInit function. This function initialises the frontend vitals monitoring.
 
   Example:
 
@@ -120,9 +81,34 @@ The package is owned by the DI Frontend Capability team, part of the development
   
   frontendVitalsInit(server, {
     interval: 10000, 
+    logLevel: "info",
     metrics: ["requestsPerSecond", "avgResponseTime"],
     staticPaths: [/^\/assets\/.*/, "/ga4-assets", "/javascript", "/stylesheets"], 
   });
+
+   ```
+
+  Example Log:
+
+   ```json
+  {
+    "level": 30,
+    "time": 1722506607855,
+    "pid": 22457,
+    "hostname": "GDS...",
+    "name": "@govuk-one-login/frontend-vital-signs",
+    "version": "0.0.3",
+    "eventLoopDelay": 10.982777381738174,
+    "eventLoopUtilization": {
+      "idle": 9972.082872000003,
+      "active": 29.954044017529668,
+      "utilization": 0.002994794387287299
+    },
+    "requestsPerSecond": { "dynamic": 0, "static": 0 },
+    "avgResponseTime": { "dynamic": null, "static": null },
+    "maxConcurrentConnections": 0
+  }
+
 
    ```
 
@@ -139,6 +125,16 @@ The package is owned by the DI Frontend Capability team, part of the development
   
   - **`interval`** (optional, number): 
     The interval in milliseconds for logging metrics. The default value is `10000` (10 seconds).
+
+  - **`logLevel`** (optional, string):
+    The log level for the metrics logger. The default value is 'info', which is the level that the metrics are logged at. The available log levels are:
+    - fatal: Logs critical errors that may cause the application to crash.
+    - error: Logs error messages indicating something went wrong.
+    - warn: Logs warnings about potential issues that are not errors but might need attention.
+    - info: Logs informational messages about the application's operation.
+    - debug: Logs debug information useful for development.
+    - trace: Logs detailed information for debugging purposes.
+    - silent: Suppresses all logging output.
 
   - **`metrics`** (optional, array): 
     An array of strings specifying which metrics to log. Possible values include:
