@@ -1,25 +1,25 @@
 {
-  "name": "@govuk-one-login/alpha-component",
+  "name": "@govuk-one-login/frontend-language-toggle",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/alpha-component/src",
+  "sourceRoot": "packages/frontend-language-toggle/src",
   "projectType": "library",
   "targets": {
     "lint": {
       "executor": "@nx/eslint:lint",
       "options": {
-        "lintFilePatterns": ["packages/alpha-component/src/**/*.js"]
+        "lintFilePatterns": ["packages/frontend-language-toggle/src/**/*"]
       }
     },
     "format": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "prettier --write packages/alpha-component/src/**/*"
+        "command": "prettier --write packages/frontend-language-toggle/src/**/*"
       }
     },
     "format:check": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "prettier --check packages/alpha-component/src/**/*"
+        "command": "prettier --check packages/frontend-language-toggle/src/**/*"
       }
     }
   }
