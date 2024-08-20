@@ -1,6 +1,6 @@
 {
   "include": ["./src", "types.d.ts"],
-  "exclude": ["./src/**/__test__/**/*"],
+  "exclude": ["**/*.test.ts", "**/*.spec.ts"],
   "no-var-requires": true,
   "compilerOptions": {
     /* Basic Options */

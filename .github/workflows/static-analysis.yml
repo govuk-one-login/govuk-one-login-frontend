@@ -1,0 +1,56 @@
+name: Static analysis
+
+on:
+  pull_request:
+
+concurrency:
+  group: static-analysis-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  coverage:
+    name: Collect coverage
+    uses: ./.github/workflows/tests.yml
+
+  sonarcloud:
+    name: SonarCloud
+    needs: coverage
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        TAG: ["frontend-language-toggle", "frontend-vital-signs"]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Cache node_modules
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - run: npm install
+      - uses: nrwl/nx-set-shas@v4
+
+      - name: List affected packages
+        run: |
+          OUTPUT=$(npx nx show projects --affected --json)
+          echo "affectedPackages=$OUTPUT" >> $GITHUB_ENV
+
+      - name: Generate test coverage
+        run: npx nx run-many -t test --projects=@govuk-one-login/${{ matrix.TAG }}
+        if: ${{ contains(env.affectedPackages, matrix.TAG) }}
+
+      - name: Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        if: ${{ contains(env.affectedPackages, matrix.TAG) }}
+        with:
+          projectBaseDir: ./packages/${{ matrix.TAG }}
+        env:
+          GITHUB_TOKEN: ${{ inputs.github-token }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
