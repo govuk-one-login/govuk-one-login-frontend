@@ -34,7 +34,7 @@
   },
   "homepage": "https://github.com/govuk-one-login/di-fec-ga4-demo#readme",
   "devDependencies": {
-    "@types/jest": "^29.5.12",
+    "@types/jest": "^29.5.13",
     "@types/jest-axe": "^3.5.9",
     "@types/nunjucks": "^3.2.6",
     "rollup": "4.22.5",
