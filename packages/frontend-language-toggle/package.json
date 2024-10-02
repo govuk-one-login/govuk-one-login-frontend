@@ -23,7 +23,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/govuk-one-login/govuk-one-login-frontend.git"
+    "url": "https://github.com/govuk-one-login/govuk-one-login-frontend.git"
   },
   "keywords": [
     "govuk-one-login",
@@ -42,12 +42,13 @@
     "@types/jest": "^29.5.13",
     "@types/jest-axe": "^3.5.9",
     "@types/nunjucks": "^3.2.6",
-    "jest-axe": "^9.0.0",
-    "jest-environment-jsdom": "^29.7.0",
     "@typescript-eslint/eslint-plugin": "^7.8.0",
     "@typescript-eslint/parser": "^7.8.0",
-    "cheerio": "*",
+    "cheerio": "^0.22.0",
     "eslint": "8.57.0",
+    "jest-axe": "^9.0.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "lodash": "^4.17.21",
     "nunjucks": "^3.2.4",
     "prettier": "^3.0.3",
     "rollup": "4.24.0",

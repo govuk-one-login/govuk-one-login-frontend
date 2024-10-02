@@ -1,0 +1,26 @@
+{
+  "name": "@govuk-one-login/frontend-passthrough-headers",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/frontend-passthrough-headers/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["packages/frontend-passthrough-headers/src/**/*"]
+      }
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "prettier --write packages/frontend-passthrough-headers/src/**/*"
+      }
+    },
+    "format:check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "prettier --check packages/frontend-passthrough-headers/src/**/*"
+      }
+    }
+  }
+}
