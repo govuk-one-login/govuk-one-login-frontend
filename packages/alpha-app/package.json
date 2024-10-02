@@ -16,7 +16,7 @@
     "@govuk-one-login/frontend-vital-signs": "0.0.4",
     "@govuk-one-login/one-login-analytics": "^0.0.10",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2",
+    "express": "^4.21.0",
     "govuk-frontend": "^4.7.0",
     "govuk-prototype-kit": "13.16.1",
     "i18next": "^23.7.7",
