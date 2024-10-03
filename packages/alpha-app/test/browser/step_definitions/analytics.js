@@ -2,6 +2,7 @@ const { Given, Then } = require("@cucumber/cucumber");
 const { expect } = require("chai");
 const chai = require("chai");
 const chaiSubset = require("chai-subset");
+
 chai.use(chaiSubset);
 
 const DATA_LAYER_PUSH_PREFIX = "window.dataLayer.push";
@@ -26,11 +27,13 @@ Given(
 
 Then("The dataLayer is empty", async function () {
   const dataLayer = await this.page.evaluate("window.dataLayer");
+  // eslint-disable-next-line no-unused-expressions
   expect(dataLayer).to.be.empty;
 });
 
 Then("The google tag manager script is not loaded", async function () {
   const gaScript = await this.page.evaluate("window.ga");
+  // eslint-disable-next-line no-unused-expressions
   expect(gaScript).to.be.undefined;
 });
 
@@ -232,7 +235,7 @@ Then("The dataLayer includes the summary page view event", async function () {
 });
 
 Then("The dataLayer includes the navigation button event", async function () {
-  const dataLayer = this.context.dataLayer;
+  const { dataLayer } = this.context;
   const eventData = dataLayer.find(
     (eventItem) => eventItem.event === "event_data",
   ).event_data;
@@ -256,7 +259,7 @@ Then("The dataLayer includes the navigation button event", async function () {
 Then(
   "The dataLayer includes the navigation inbound link event",
   async function () {
-    const dataLayer = this.context.dataLayer;
+    const { dataLayer } = this.context;
     const eventData = dataLayer.find(
       (eventItem) => eventItem.event === "event_data",
     ).event_data;
@@ -281,7 +284,7 @@ Then(
 Then(
   "The dataLayer includes the navigation outbound link event",
   async function () {
-    const dataLayer = this.context.dataLayer;
+    const { dataLayer } = this.context;
     const eventData = dataLayer.find(
       (eventItem) => eventItem.event === "event_data",
     ).event_data;
@@ -306,7 +309,7 @@ Then(
 Then(
   "The dataLayer includes the navigation back link event",
   async function () {
-    const dataLayer = this.context.dataLayer;
+    const { dataLayer } = this.context;
     const eventData = dataLayer.find(
       (eventItem) => eventItem.event === "event_data",
     ).event_data;
@@ -329,7 +332,7 @@ Then(
 );
 
 Then("The dataLayer includes the navigation logo event", async function () {
-  const dataLayer = this.context.dataLayer;
+  const { dataLayer } = this.context;
   const eventData = dataLayer.find(
     (eventItem) => eventItem.event === "event_data",
   ).event_data;
@@ -353,7 +356,7 @@ Then("The dataLayer includes the navigation logo event", async function () {
 Then(
   "The dataLayer includes the navigation banner link event",
   async function () {
-    const dataLayer = this.context.dataLayer;
+    const { dataLayer } = this.context;
     const eventData = dataLayer.find(
       (eventItem) => eventItem.event === "event_data",
     ).event_data;
@@ -378,7 +381,7 @@ Then(
 Then(
   "The dataLayer includes the navigation footer link event",
   async function () {
-    const dataLayer = this.context.dataLayer;
+    const { dataLayer } = this.context;
     const eventData = dataLayer.find(
       (eventItem) => eventItem.event === "event_data",
     ).event_data;
@@ -403,7 +406,7 @@ Then(
 Then(
   "The dataLayer includes the navigation footer licence link event",
   async function () {
-    const dataLayer = this.context.dataLayer;
+    const { dataLayer } = this.context;
     const eventData = dataLayer.find(
       (eventItem) => eventItem.event === "event_data",
     ).event_data;
@@ -428,7 +431,7 @@ Then(
 Then(
   "The dataLayer includes the navigation footer copyright link event",
   async function () {
-    const dataLayer = this.context.dataLayer;
+    const { dataLayer } = this.context;
     const eventData = dataLayer.find(
       (eventItem) => eventItem.event === "event_data",
     ).event_data;
@@ -454,7 +457,7 @@ Then(
 Then(
   "The dataLayer includes the navigation menu link event",
   async function () {
-    const dataLayer = this.context.dataLayer;
+    const { dataLayer } = this.context;
     const eventData = dataLayer.find(
       (eventItem) => eventItem.event === "event_data",
     ).event_data;
@@ -479,7 +482,7 @@ Then(
 Then(
   "The dataLayer includes the very long navigation menu link event",
   async function () {
-    const dataLayer = this.context.dataLayer;
+    const { dataLayer } = this.context;
     const eventData = dataLayer.find(
       (eventItem) => eventItem.event === "event_data",
     ).event_data;
@@ -652,7 +655,7 @@ Then(
 Then(
   "The dataLayer includes the organisation type form response event",
   async function () {
-    const dataLayer = this.context.dataLayer;
+    const { dataLayer } = this.context;
     const eventData = dataLayer.find(
       (eventItem) => eventItem.event === "event_data",
     ).event_data;
@@ -677,7 +680,7 @@ Then(
 Then(
   "The dataLayer includes the help with hint form response event",
   async function () {
-    const dataLayer = this.context.dataLayer;
+    const { dataLayer } = this.context;
     const eventData = dataLayer.find(
       (eventItem) => eventItem.event === "event_data",
     ).event_data;
@@ -702,7 +705,7 @@ Then(
 Then(
   "The dataLayer includes the service description form response event",
   async function () {
-    const dataLayer = this.context.dataLayer;
+    const { dataLayer } = this.context;
     const eventData = dataLayer.find(
       (eventItem) => eventItem.event === "event_data",
     ).event_data;
@@ -727,7 +730,7 @@ Then(
 Then(
   "The dataLayer includes the enter email form response event",
   async function () {
-    const dataLayer = this.context.dataLayer;
+    const { dataLayer } = this.context;
     const eventData = dataLayer.find(
       (eventItem) => eventItem.event === "event_data",
     ).event_data;
@@ -752,7 +755,7 @@ Then(
 Then(
   "The dataLayer includes the choose location form response event",
   async function () {
-    const dataLayer = this.context.dataLayer;
+    const { dataLayer } = this.context;
     const eventData = dataLayer.find(
       (eventItem) => eventItem.event === "event_data",
     ).event_data;
@@ -783,10 +786,10 @@ Given("I set up a listener for the data layer push", async function () {
       // Given an array of strings, create an object whose properties are exactly these strings and each with
       //  a value of undefined
       function createObjectWithKeys(keys) {
-        return keys.reduce((accumulator, value) => {
-          return { ...accumulator, [value]: undefined };
-        }, {});
-      }
+        return keys.reduce((accumulator, value) => 
+          // eslint-disable-next-line no-sequences
+          ({ ...accumulator, [value]: undefined }, {})
+      )}
 
       const deconstructedEvent = JSON.parse(stringifiedEvent);
       const undefinedValuesObject = createObjectWithKeys(
@@ -837,7 +840,6 @@ Given("I set up a listener for the data layer push", async function () {
           parsedObject: JSON.parse(JSON.stringify(arg)),
         };
         deconstructedEvent.undefinedValues = getUndefinedValues(arg.event_data);
-        /* eslint-disable-next-line no-console */
         console.log(dataLayerPushPrefix, JSON.stringify(deconstructedEvent));
       });
     };

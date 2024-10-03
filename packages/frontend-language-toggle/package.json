@@ -38,6 +38,10 @@
     "url": "https://github.com/govuk-one-login/govuk-one-login-frontend/issues"
   },
   "homepage": "https://github.com/govuk-one-login/govuk-one-login-frontend#readme",
+  "dependencies": {
+    "cheerio": "*",
+    "nunjucks": "^3.2.4"
+  },
   "devDependencies": {
     "@types/jest": "^29.5.13",
     "@types/jest-axe": "^3.5.9",

@@ -8,10 +8,8 @@ export const calculateMaxConcurrentConnections = (server: http.Server) => {
     server.getConnections((err, count) => {
       if (err) {
         console.error("Error getting connections:", err);
-      } else {
-        if (count > maxConcurrentConnections) {
-          maxConcurrentConnections = count;
-        }
+      } else if (count > maxConcurrentConnections) {
+        maxConcurrentConnections = count;
       }
     });
   }, 1000);
