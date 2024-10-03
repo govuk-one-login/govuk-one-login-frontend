@@ -145,9 +145,9 @@ export function frontendVitalSignsInitFromApp(
   app: Express,
   options: Partial<IOptions> = {},
 ) {
-  const originalListen = app.listen;
-
-  app.listen = function (...args: Parameters<typeof originalListen>) {
+  let { listen } = app;
+  const originalListen = listen;
+  listen = function (...args: Parameters<typeof originalListen>) {
     const server = originalListen.apply(app, args);
     frontendVitalSignsInit(server, options);
     return server;

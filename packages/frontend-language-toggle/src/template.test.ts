@@ -18,7 +18,7 @@ nunjucksEnv.addGlobal(
 );
 
 describe("languageSelect Component", () => {
-  const mockParams = {
+  let mockParams = {
     ariaLabel: "test-aria",
     url: "http://localhost:3000/",
     activeLanguage: "en",
@@ -58,7 +58,7 @@ describe("languageSelect Component", () => {
 
   describe("renders active language as a span, and inactive language as a link", () => {
     it("displays cy active language as a span, and inactive language as a link", () => {
-      const mockParams = {
+      mockParams = {
         ariaLabel: "test-aria",
         url: "http://localhost:3000/",
         activeLanguage: "cy",

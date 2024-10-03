@@ -1,32 +1,63 @@
 {
-  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
-  "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint"],
-  "env": {
-    "es2020": true,
-    "node": true
+  "parserOptions": {
+    "parser": "@typescript-eslint/parser",
+    "sourceType": "module",
+    "ecmaVersion": 2022
   },
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "airbnb/base",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
   "rules": {
-    "semi": ["error", "always"],
-    "no-var-requires": "off"
+    "@typescript-eslint/ban-ts-comment": 0,
+    "@typescript-eslint/no-explicit-any": 0,
+    "arrow-parens": 0,
+    "func-names": 0,
+    "import/extensions": 0,
+    "import/prefer-default-export": 0,
+    "linebreak-style": 0,
+    "no-console": 0,
+    "no-param-reassign": 0,
+    "lines-between-class-members": [
+      "error",
+      {
+        "enforce": [
+          {
+            "blankLine": "never",
+            "prev": "field",
+            "next": "field"
+          }
+        ]
+      }
+    ],
+    "max-len": 0,
+    "no-plusplus": 0
   },
   "overrides": [
     {
-      "files": ["*.json"],
+      "files": ["*.spec.ts", "*.test.ts", "*.json"],
       "rules": {
-        "semi": "off",
-        "quotes": ["error", "double"]
-      }
-    },
-    {
-      "files": ["*.njk"],
-      "rules": {}
-    },
-    {
-      "files": ["**/*.test.ts"],
-      "env": {
-        "jest": true
+        "import/no-extraneous-dependencies": 0,
+        "no-new": 0,
+        "no-undef": 0
       }
     }
-  ]
+  ],
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".js"]
+    },
+    "import/resolver": {
+      "node": {
+        "paths": ["src"],
+        "extensions": [".js", ".ts"]
+      }
+    }
+  }
 }

@@ -2,8 +2,6 @@ window.DI = window.DI || {};
 window.DI.analyticsUa = window.DI.analyticsUa || {};
 
 (function (analytics) {
-  "use strict";
-
   function initGtm() {
     const sendData = window.DI.analyticsGa4.pageViewTracker.pushToDataLayer;
 
