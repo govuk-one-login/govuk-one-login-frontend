@@ -1,9 +1,9 @@
 const { Given, When, Then } = require("@cucumber/cucumber");
 const { expect } = require("chai");
 
-const getSessionIdCookieValue = (cookies) => {
-  return cookies.find((cookie) => cookie.name === "sessionId").value;
-};
+const getSessionIdCookieValue = (cookies) => (
+  cookies.find((cookie) => cookie.name === "sessionId").value
+);
 
 Given(
   "I visit the {word} page",
@@ -33,7 +33,7 @@ When("I fill {word} field", async function (text) {
 });
 
 When("I choose {word} value", async function (text) {
-  //await this.page.locator(`[name="chooseLocation"]`).select_option(text);
+  // await this.page.locator(`[name="chooseLocation"]`).select_option(text);
   await this.page.evaluate(
     `document.querySelector('option[value="${text}"]').selected = true`,
   );
@@ -117,7 +117,7 @@ Then(
   "The {word} cookie is set to {word}",
   async function (cookieName, cookieValue) {
     const cookies = await this.context.cookies();
-    const cookie = cookies.find((cookie) => cookie.name === cookieName);
+    const cookie = cookies.find((c) => c.name === cookieName);
     if (cookieName === "cookies_preferences_set") {
       expect(cookie.value).to.equal(`%7B%22analytics%22%3A${cookieValue}%7D`);
     } else {

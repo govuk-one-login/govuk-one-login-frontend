@@ -4,7 +4,6 @@
 
 import { stripPIIFromString } from "./pii-remover";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function validateParameter(parameter: any, maxLength: number) {
   let validatedParameter = parameter || "undefined";
   const { length } = parameter;

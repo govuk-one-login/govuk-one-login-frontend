@@ -17,7 +17,7 @@ Given(
     await this.context.addCookies([
       {
         name: cookieName,
-        value: value,
+        value,
         path: "/",
         domain: process.env.SERVICE_COOKIE_DOMAIN,
       },

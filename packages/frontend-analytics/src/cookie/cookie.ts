@@ -173,7 +173,6 @@ export class Cookie {
    */
   static setCookie(
     name: string,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     values: any,
     domain: string,
     lifetimeInDays?: number,

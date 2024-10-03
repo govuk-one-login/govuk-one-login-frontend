@@ -1,7 +1,7 @@
 const { expect } = require("chai");
 
 async function findItem(page, pwItem) {
-  return await page.locator(`[data-pw=${pwItem}]`);
+  return page.locator(`[data-pw=${pwItem}]`);
 }
 
 async function clickItem(item) {
@@ -26,9 +26,9 @@ async function checkElementVisible(element) {
 }
 
 async function checkElementsVisible(elements) {
-  for (const element of elements) {
-    await checkElementVisible(element);
-  }
+  elements.forEach((element) => {
+    checkElementVisible(element);
+  });
 }
 
 async function goToUrl(page, url) {
@@ -41,7 +41,7 @@ async function goToPage(page, path) {
 
 async function getUrlOnItem(page, pwItem) {
   const item = await findItem(page, pwItem);
-  return await item.getAttribute("href");
+  return item.getAttribute("href");
 }
 
 async function checkOnRightPage(page, path) {

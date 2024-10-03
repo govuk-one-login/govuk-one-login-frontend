@@ -14,7 +14,7 @@ const setGa4ContainerId = (req, res, next) => {
 };
 
 // This function makes sure that the UA Container ID is accessible to all pages,
-//so we don't have to repeat it in every route
+// so we don't have to repeat it in every route
 
 const setUaContainerId = (req, res, next) => {
   //     Set the UA Container ID in (locals) that all pages can see.
@@ -30,7 +30,7 @@ const setStatusCode = (req, res, next) => {
 
 // Middleware to instantiate the values for taxonomy levels 1 and 2 for the On Page Load tracker
 const setTaxonomyValues = (req, res, next) => {
-  const url = req.url;
+  const { url } = req;
   const pathFound = ROUTE_INFO.find(
     (route) => route.path === url.split("?")[0],
   );
@@ -48,7 +48,7 @@ const setTaxonomyValues = (req, res, next) => {
 
 // Middleware to instantiate the value for the pageTitle for the On Page Load tracker
 const setPageTitle = (req, res, next) => {
-  const url = req.url;
+  const { url } = req;
   const pathFound = ROUTE_INFO.find(
     (route) => route.path === url.split("?")[0],
   );
@@ -65,7 +65,7 @@ const setPageTitle = (req, res, next) => {
 
 // Middleware to instantiate the value for the pageTitle for the On Page Load tracker
 const setContentId = (req, res, next) => {
-  const url = req.url;
+  const { url } = req;
   const pathFound = ROUTE_INFO.find(
     (route) => route.path === url.split("?")[0],
   );

@@ -191,7 +191,7 @@ describe("FormTracker", () => {
     document.body.appendChild(label);
 
     instance.processCheckbox(element);
-    // @ts-expect-error will remove after refactor
+    // @ts-ignore
     expect(instance.selectedFields).toEqual([
       {
         id: "checkboxId",
@@ -230,7 +230,7 @@ describe("FormTracker", () => {
     document.body.appendChild(label2);
 
     instance.processCheckbox(element);
-    // @ts-expect-error will remove after refactor
+    // @ts-ignore
     expect(instance.selectedFields).toEqual([
       {
         id: "checkboxId",
@@ -271,7 +271,7 @@ describe("FormTracker", () => {
 
     instance.processCheckbox(element);
     instance.processCheckbox(secondElement);
-    // @ts-expect-error will remove after refactor
+    // @ts-ignore
     expect(instance.selectedFields).toEqual([
       {
         id: "checkboxId",
@@ -300,7 +300,7 @@ describe("FormTracker", () => {
     document.body.appendChild(label);
 
     instance.processCheckbox(element);
-    // @ts-expect-error will remove after refactor
+    // @ts-ignore
     expect(instance.selectedFields).toEqual([
       {
         id: "radioId",
@@ -323,7 +323,7 @@ describe("FormTracker", () => {
     document.body.appendChild(element);
 
     instance.processTextElement(element);
-    // @ts-expect-error will remove after refactor
+    // @ts-ignore
     expect(instance.selectedFields).toEqual([
       {
         id: "textId",
@@ -343,7 +343,7 @@ describe("FormTracker", () => {
     document.body.appendChild(element);
 
     instance.processTextElement(element);
-    // @ts-expect-error will remove after refactor
+    // @ts-ignore
     expect(instance.selectedFields).toEqual([
       {
         id: "textareaId",
@@ -377,7 +377,7 @@ describe("FormTracker", () => {
     element.selectedIndex = 1;
 
     instance.processSelectOne(element);
-    // @ts-expect-error will remove after refactor
+    // @ts-ignore
     expect(instance.selectedFields).toEqual([
       {
         id: "selectId",

@@ -9,8 +9,14 @@
     "lint:fix": "nx affected --target=lint --fix",
     "format": "nx affected --target=format",
     "format:check": "nx affected --target=format:check",
-    "prep:commit": "npm run format && npm run lint",
-    "prepare": "husky"
+    "prep:commit": "npm run format && npm run lint"
+  },
+  "dependencies": {
+    "@nx/jest": "^19.8.3",
+    "eslint-plugin-chai-friendly": "^1.0.1",
+    "jest-environment-jsdom": "^29.7.0",
+    "nunjucks": "^3.2.4",
+    "prettier": "^3.2.5"
   },
   "devDependencies": {
     "@nrwl/cli": "^15.9.3",

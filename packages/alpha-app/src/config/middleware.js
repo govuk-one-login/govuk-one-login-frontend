@@ -1,3 +1,4 @@
+// eslint-disable-next-line consistent-return
 const checkSessionAndRedirect = (req, res, next) => {
   // Check if the user has an active session
   const hasSession =

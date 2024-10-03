@@ -8,7 +8,7 @@ const dirname = path.dirname(filename);
 const config = {
   entry: "./src/index.ts",
   output: {
-    path: path.resolve(dirname, "lib"),
+    path: path.resolve(dirname, "dist/lib"),
     filename: "analytics.js",
   },
   plugins: [
