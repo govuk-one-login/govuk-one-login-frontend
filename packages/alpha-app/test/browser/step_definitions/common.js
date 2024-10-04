@@ -1,9 +1,8 @@
 const { Given, When, Then } = require("@cucumber/cucumber");
 const { expect } = require("chai");
 
-const getSessionIdCookieValue = (cookies) => (
-  cookies.find((cookie) => cookie.name === "sessionId").value
-);
+const getSessionIdCookieValue = (cookies) =>
+  cookies.find((cookie) => cookie.name === "sessionId").value;
 
 Given(
   "I visit the {word} page",
