@@ -786,10 +786,13 @@ Given("I set up a listener for the data layer push", async function () {
       // Given an array of strings, create an object whose properties are exactly these strings and each with
       //  a value of undefined
       function createObjectWithKeys(keys) {
-        return keys.reduce((accumulator, value) => 
-          // eslint-disable-next-line no-sequences
-          ({ ...accumulator, [value]: undefined }, {})
-      )}
+        return keys.reduce(
+          (accumulator, value) =>
+            (
+              { ...accumulator, [value]: undefined }
+            ), {}
+        );
+      }
 
       const deconstructedEvent = JSON.parse(stringifiedEvent);
       const undefinedValuesObject = createObjectWithKeys(
