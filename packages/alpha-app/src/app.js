@@ -46,7 +46,7 @@ const APP_VIEWS = [
   path.join(__dirname, "components"),
   nodeModules("govuk-frontend/"),
   nodeModules("@govuk-prototype-kit/templates"),
-  nodeModules("@govuk-one-login"),
+  nodeModules("@govuk-one-login/"),
 ];
 
 app.set("view engine", configureNunjucks(app, APP_VIEWS));
