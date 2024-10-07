@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "test": "jest --config=jest.config.js --passWithNoTests",
+    "test": "jest --config=jest.config.ts --passWithNoTests",
     "lint": "nx affected --target=lint",
     "lint:fix": "nx affected --target=lint --fix",
     "format": "nx affected --target=format",
