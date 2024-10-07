@@ -58,24 +58,7 @@ describe("languageSelect Component", () => {
 
   describe("renders active language as a span, and inactive language as a link", () => {
     it("displays cy active language as a span, and inactive language as a link", () => {
-      mockParams = {
-        ariaLabel: "test-aria",
-        url: "http://localhost:3000/",
-        activeLanguage: "cy",
-        class: "test-class",
-        languages: [
-          {
-            code: "en",
-            text: "English",
-            visuallyHidden: "Change to English",
-          },
-          {
-            code: "cy",
-            text: "Cymraeg",
-            visuallyHidden: "Newid yr iaith ir Gymraeg",
-          },
-        ],
-      };
+      mockParams = {...mockParams, activeLanguage: "cy"}
 
       const renderedComponent = render("languageSelect", mockParams);
 
@@ -100,6 +83,7 @@ describe("languageSelect Component", () => {
     });
 
     it("displays en as active language as a span, and inactive language as a link", () => {
+      mockParams = {...mockParams, activeLanguage: "en"}
       const renderedComponent = render("languageSelect", mockParams);
 
       // test span

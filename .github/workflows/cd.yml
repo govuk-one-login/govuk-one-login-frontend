@@ -9,6 +9,7 @@ on:
         options:
           - "@govuk-one-login/alpha-component"
           - "@govuk-one-login/frontend-vital-signs"
+          - "@govuk-one-login/frontend-analytics"
 
       increment:
         description: "Increment"
