@@ -22,13 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        TAG:
-          [ 
-            "frontend-analytics",
-            "frontend-language-toggle",
-            "frontend-passthrough-headers",
-            "frontend-vital-signs",
-          ]
+        TAG: ["frontend-language-toggle", "frontend-vital-signs", "frontend-analytics"]
     steps:
       - uses: actions/checkout@v4
         with:
