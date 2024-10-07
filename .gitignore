@@ -5,6 +5,7 @@ dist
 tmp
 /out-tsc
 coverage/
+packages/frontend-language-toggle/build
 
 # dependencies
 node_modules
@@ -156,3 +157,5 @@ web_modules/
 
 # TernJS port file
 .tern-port
+
+
