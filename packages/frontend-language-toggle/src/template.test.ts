@@ -40,8 +40,8 @@ describe("languageSelect Component", () => {
   it("has the appropriate accessibility testing", async () => {
     const renderedComponent = render("languageSelect", mockParams);
 
-    const results = await axe(renderedComponent.html());
-    expect(results).toHaveNoViolations();
+    const html = renderedComponent.html();
+    expect(await axe(html)).toHaveNoViolations();
   });
 
   it("renders the class from params", () => {

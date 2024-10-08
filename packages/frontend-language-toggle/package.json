@@ -39,15 +39,16 @@
   },
   "homepage": "https://github.com/govuk-one-login/govuk-one-login-frontend#readme",
   "devDependencies": {
+    "@babel/preset-typescript": "^7.25.7",
     "@types/jest": "^29.5.13",
     "@types/jest-axe": "^3.5.9",
     "@types/nunjucks": "^3.2.6",
-    "jest-axe": "^9.0.0",
-    "jest-environment-jsdom": "^29.7.0",
     "@typescript-eslint/eslint-plugin": "^7.8.0",
     "@typescript-eslint/parser": "^7.8.0",
-    "cheerio": "*",
+    "babel-jest": "^29.7.0",
     "eslint": "8.57.0",
+    "jest-axe": "^9.0.0",
+    "jest-environment-jsdom": "^29.7.0",
     "nunjucks": "^3.2.4",
     "prettier": "^3.0.3",
     "rollup": "4.24.0",
@@ -56,5 +57,9 @@
     "ts-node": "^10.9.2",
     "typescript": "5.4.5"
   },
-  "types": "./build/esm/language-param-setter.d.ts"
+  "types": "./build/esm/language-param-setter.d.ts",
+  "dependencies": {
+    "cheerio": "^1.0.0",
+    "text-encoding": "^0.7.0"
+  }
 }

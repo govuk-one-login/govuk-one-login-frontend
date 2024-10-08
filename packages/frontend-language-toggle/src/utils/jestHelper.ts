@@ -1,5 +1,5 @@
 import nunjucks from "nunjucks";
-import cheerio from "cheerio";
+import * as cheerio from "cheerio";
 import path from "path";
 
 export default function render(
