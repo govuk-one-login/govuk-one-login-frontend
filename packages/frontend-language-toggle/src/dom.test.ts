@@ -20,7 +20,7 @@ nunjucksEnv.addGlobal(
   jest.fn((language) => `/?lng=${language}`),
 );
 
-describe("languageSelect Component", ()=> {
+describe("languageSelect Component", () => {
   const mockParams = {
     ariaLabel: "test-aria",
     url: "http://localhost:3000/",
@@ -40,7 +40,7 @@ describe("languageSelect Component", ()=> {
     ],
   };
 
-    it("has the appropriate accessibility testing", async () => {
+  it("has the appropriate accessibility testing", async () => {
     const renderedComponent = render("languageSelect", mockParams);
 
     const results = await axe(renderedComponent.html());
