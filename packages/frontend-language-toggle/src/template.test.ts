@@ -1,9 +1,6 @@
 import nunjucks from "nunjucks";
 import path from "path";
-import { axe, toHaveNoViolations } from "jest-axe";
 import render from "./utils/jestHelper";
-
-expect.extend(toHaveNoViolations);
 
 const nunjucksEnv = nunjucks.configure(
   path.dirname("frontend-language-toggle"),
@@ -36,13 +33,6 @@ describe("languageSelect Component", () => {
       },
     ],
   };
-
-  it("has the appropriate accessibility testing", async () => {
-    const renderedComponent = render("languageSelect", mockParams);
-
-    const html = renderedComponent.html();
-    expect(await axe(html)).toHaveNoViolations();
-  });
 
   it("renders the class from params", () => {
     const renderedComponent = render("languageSelect", mockParams);

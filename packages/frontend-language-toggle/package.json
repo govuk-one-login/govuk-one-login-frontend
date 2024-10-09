@@ -46,6 +46,7 @@
     "@typescript-eslint/eslint-plugin": "^7.8.0",
     "@typescript-eslint/parser": "^7.8.0",
     "babel-jest": "^29.7.0",
+    "cheerio": "^0.22.0",
     "eslint": "8.57.0",
     "jest-axe": "^9.0.0",
     "jest-environment-jsdom": "^29.7.0",
@@ -59,7 +60,6 @@
   },
   "types": "./build/esm/language-param-setter.d.ts",
   "dependencies": {
-    "cheerio": "^1.0.0",
     "text-encoding": "^0.7.0"
   }
 }

@@ -1,5 +1,5 @@
 import nunjucks from "nunjucks";
-import * as cheerio from "cheerio";
+import { load } from "cheerio";
 import path from "path";
 
 export default function render(
@@ -26,5 +26,5 @@ export default function render(
 
   const output = nunjucks.renderString(macroString, {});
 
-  return cheerio.load(output);
+  return load(output);
 }
