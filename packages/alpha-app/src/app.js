@@ -1,9 +1,21 @@
 const dotenv = require("dotenv");
+
 dotenv.config();
 
 const express = require("express");
 const path = require("path");
 const session = require("express-session");
+
+// Must occur BEFORE import of `./config/nunjucks`
+const crypto = require("crypto");
+const i18next = require("i18next");
+const Backend = require("i18next-fs-backend");
+const i18nextMiddleware = require("i18next-http-middleware");
+
+const {
+  frontendVitalSignsInit,
+} = require("@govuk-one-login/frontend-vital-signs");
+
 const { configureNunjucks } = require("./config/nunjucks");
 const {
   validateOrganisationType,
@@ -16,7 +28,6 @@ const { validateChooseLocation } = require("./journeys/chooseLocationService");
 const { validateEnterEmail } = require("./journeys/enterEmailService");
 const { validateFeedback } = require("./journeys/feedbackService");
 
-const crypto = require("crypto");
 const sessionId = crypto.randomBytes(16).toString("hex");
 const {
   setGa4ContainerId,
@@ -27,13 +38,7 @@ const {
   setContentId,
 } = require("./config/gtmMiddleware.js");
 const { checkSessionAndRedirect } = require("./config/middleware");
-const i18next = require("i18next");
-const Backend = require("i18next-fs-backend");
-const i18nextMiddleware = require("i18next-http-middleware");
 const { i18nextConfigurationOptions } = require("./config/i18next");
-const {
-  frontendVitalSignsInit,
-} = require("@govuk-one-login/frontend-vital-signs");
 
 const app = express();
 const port = 3000;
@@ -82,7 +87,7 @@ app.use((req, res, next) => {
     res.locals.pageTitleLang = req.i18n.language;
     res.locals.mainLang = req.i18n.language;
     res.locals.currentUrl = new URL(
-      req.protocol + "://" + req.get("host") + req.originalUrl,
+      `${req.protocol}://${req.get("host")}${req.originalUrl}`,
     );
     next();
   }

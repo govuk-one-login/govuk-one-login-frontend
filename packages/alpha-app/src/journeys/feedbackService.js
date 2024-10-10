@@ -12,22 +12,22 @@ function validateFeedback(req, res) {
     let showFeedbackConsentError = false;
     let showFeedbackEntityError = false;
 
-    //Check feedbackEntity field value
+    // Check feedbackEntity field value
     if (!feedbackEntity || feedbackEntity === "") {
       showFeedbackEntityError = true;
     }
 
-    //Check feedbackType field value
+    // Check feedbackType field value
     if (!feedbackType || feedbackType === "") {
       showFeedbackTypeError = true;
     }
 
-    //Check feedbackDescription field value
+    // Check feedbackDescription field value
     if (!feedbackDescription || feedbackDescription === "") {
       showFeedbackDescriptionError = true;
     }
 
-    //Check feedbackConsent field value
+    // Check feedbackConsent field value
     if (!feedbackConsent || feedbackConsent === "") {
       showFeedbackConsentError = true;
     }

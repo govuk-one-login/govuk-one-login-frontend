@@ -16,4 +16,5 @@ coverage
 **/esm/
 **/*.md
 **/coverage/
-
+*.json
+pull_request_template

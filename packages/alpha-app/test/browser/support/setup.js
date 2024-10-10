@@ -1,7 +1,7 @@
 const { Before, BeforeAll, AfterAll, After } = require("@cucumber/cucumber");
 const { chromium } = require("playwright");
 
-BeforeAll(async function () {
+BeforeAll(async () => {
   global.browser = await chromium.launch({
     // Not headless so we can watch test runs
     headless: true,
@@ -16,7 +16,7 @@ Before(async function () {
   this.page = await this.context.newPage();
 });
 
-AfterAll(async function () {
+AfterAll(async () => {
   await global.browser.close();
 });
 

@@ -12,6 +12,11 @@ jspm_packages/
 bower_components
 web_modules/
 
+# Analytics
+packages/frontend-analytics/coverage
+packages/frontend-analytics/dist
+packages/frontend-analytics/node_modules
+
 # IDEs and editors
 /.idea
 .project
