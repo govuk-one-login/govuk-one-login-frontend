@@ -7,7 +7,7 @@ export default function render(
   params = {},
   children = false,
 ) {
-  if (typeof params === "undefined") {
+  if (Object.keys(params).length === 0 && params.constructor === Object) {
     throw new Error(
       "Parameters passed to `render` should be an object but are undefined",
     );
