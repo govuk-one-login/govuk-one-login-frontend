@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, jest, test } from "@jest/globals";
 import { Cookie } from "./cookie";
+import { setLocalCookieVarMiddleware } from "./setCookieEnvVar";
 
 window.DI = {
   analyticsGa4: { loadGtmScript: () => {}, cookie: { consent: true } },
@@ -180,5 +181,34 @@ describe("setCookie", () => {
       365,
     );
     expect(document.cookie).toBe(cookie);
+  });
+
+  describe("Dynamic Cookie Domain Assignment", () => {
+    interface MockResponse {
+      locals: {
+        [key: string]: string;
+      };
+    }
+
+    let res: MockResponse;
+
+    beforeEach(() => {
+      res = { locals: {} };
+    });
+
+    test("should set the cookie domain with the value provided by target repo's env file", () => {
+      setLocalCookieVarMiddleware(res);
+      const instance = new Cookie(res.locals.cookieDomain);
+
+      // Expect the cookieDomain to be 'test_domain'
+      expect(instance.cookieDomain).toBe("test_domain");
+    });
+
+    test("should set the cookie domain to default, if no middleware has been added in target repo to handle cookie domain assignment", () => {
+      const instance = new Cookie(cookieDomain);
+
+      // Expect the cookieDomain to be 'account.gov.uk'
+      expect(instance.cookieDomain).toBe("account.gov.uk");
+    });
   });
 });
