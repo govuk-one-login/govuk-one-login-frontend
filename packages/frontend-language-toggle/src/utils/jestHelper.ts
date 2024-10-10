@@ -5,7 +5,6 @@ import path from "path";
 export default function render(
   macroName: string,
   params = {},
-  children = false,
 ) {
   if (Object.keys(params).length === 0 && params.constructor === Object) {
     throw new Error(
@@ -18,11 +17,7 @@ export default function render(
   const macroPath = `./${path.relative(process.cwd(), path.resolve(__dirname, "../macro.njk"))}`;
   let macroString = `{%- from "${macroPath}" import ${macroName} -%}`;
 
-  if (children) {
-    macroString += `{%- call ${macroName}(${macroParams}) -%}${children}{%- endcall -%}`;
-  } else {
-    macroString += `{{- ${macroName}(${macroParams}) -}}`;
-  }
+  macroString += `{{- ${macroName}(${macroParams}) -}}`;
 
   const output = nunjucks.renderString(macroString, {});
 
