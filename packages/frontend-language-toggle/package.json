@@ -9,7 +9,7 @@
     "dev": "rollup -c --watch",
     "test": "jest",
     "test:coverage": "jest --coverage src",
-    "build": "rollup -c && cp ./src/template.njk ./build/template.njk && cp ./src/macro.njk ./build/macro.njk",
+    "build": "rollup -c && cp ./src/template.njk ./src/macro.njk ./build/",
     "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,md}\""
   },
   "files": [
