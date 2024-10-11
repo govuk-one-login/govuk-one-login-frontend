@@ -1,6 +1,6 @@
 import nunjucks from "nunjucks";
 import path from "path";
-import render from "./utils/jestHelper";
+import render from "../../test/jestHelper";
 
 const nunjucksEnv = nunjucks.configure(
   path.dirname("frontend-language-toggle"),

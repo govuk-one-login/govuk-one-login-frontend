@@ -5,7 +5,7 @@
 import { axe, toHaveNoViolations } from "jest-axe";
 import nunjucks from "nunjucks";
 import path from "path";
-import render from "./utils/jestHelper";
+import render from "../../test/jestHelper";
 expect.extend(toHaveNoViolations);
 
 const nunjucksEnv = nunjucks.configure(
