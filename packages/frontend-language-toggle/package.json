@@ -48,7 +48,6 @@
     "eslint": "8.57.0",
     "jest-axe": "^9.0.0",
     "jest-environment-jsdom": "^29.7.0",
-    "lodash": "^4.17.21",
     "nunjucks": "^3.2.4",
     "prettier": "^3.0.3",
     "rollup": "4.24.0",

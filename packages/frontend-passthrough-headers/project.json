@@ -4,12 +4,6 @@
   "sourceRoot": "packages/frontend-passthrough-headers/src",
   "projectType": "library",
   "targets": {
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": ["packages/frontend-passthrough-headers/src/**/*"]
-      }
-    },
     "format": {
       "executor": "nx:run-commands",
       "options": {
@@ -20,6 +14,18 @@
       "executor": "nx:run-commands",
       "options": {
         "command": "prettier --check packages/frontend-passthrough-headers/src/**/*"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["packages/frontend-passthrough-headers/src/**/*"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "packages/frontend-passthrough-headers/jest.config.ts"
       }
     }
   }
