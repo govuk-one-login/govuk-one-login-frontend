@@ -16,4 +16,4 @@ coverage
 **/esm/
 **/*.md
 **/coverage/
-
+**/*.json
