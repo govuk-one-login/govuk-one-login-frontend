@@ -19,7 +19,7 @@
     "express": "^4.21.0",
     "govuk-frontend": "^4.7.0",
     "govuk-prototype-kit": "13.16.1",
-    "i18next": "^23.7.7",
+    "i18next": "^23.16.0",
     "i18next-fs-backend": "^2.3.0",
     "i18next-http-middleware": "^3.5.0",
     "nunjucks": "^3.2.4",
