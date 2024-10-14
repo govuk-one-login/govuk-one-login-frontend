@@ -8,6 +8,7 @@ on:
         type: choice
         options:
           - "@govuk-one-login/alpha-component"
+          - "@govuk-one-login/frontend-passthrough-headers"
           - "@govuk-one-login/frontend-vital-signs"
 
       increment:
