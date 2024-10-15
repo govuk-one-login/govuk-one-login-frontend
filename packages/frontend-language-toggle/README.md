@@ -71,7 +71,7 @@ The package is owned by the DI Frontend Capability team, part of the development
 3. Import this macro into your base nunjucks template:
 
    ```js
-    {% from "frontend-language-toggle/macro.njk" import languageSelect %}
+    {% from "frontend-language-toggle/build/macro.njk" import languageSelect %}
    ```
 
 4. Add the nunjuck component where you need:
