@@ -6,13 +6,13 @@
 "govuk/components/header/macro.njk" import govukHeader %} {% from
 "govuk/components/footer/macro.njk" import govukFooter %} {% from
 "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %} {% from
-"frontend-language-toggle/macro.njk" import languageSelect %} {% block skipLink
-%} {{ govukSkipLink({ href: "#main-content", text: "general.govuk.skipLink" |
-translate }) }} {% endblock %} {% block bodyStart %} {% include "./banner.njk"
-%} {% endblock %} {% block header %} {{ govukHeader({ homepageUrl: "/welcome",
-navigation: [{ href: "/organisation-type", text: 'general.header.menuLink1' |
-translate }, { href: "/organisation-type", text: 'general.header.menuLink2' |
-translate }, { href:
+"frontend-language-toggle/build/macro.njk" import languageSelect %} {% block
+skipLink %} {{ govukSkipLink({ href: "#main-content", text:
+"general.govuk.skipLink" | translate }) }} {% endblock %} {% block bodyStart %}
+{% include "./banner.njk" %} {% endblock %} {% block header %} {{ govukHeader({
+homepageUrl: "/welcome", navigation: [{ href: "/organisation-type", text:
+'general.header.menuLink1' | translate }, { href: "/organisation-type", text:
+'general.header.menuLink2' | translate }, { href:
 "/xDncNmqheVoQoeOTnVmwUnsuByWwKwwAPUZAWRYBnzgrDOCObSzFqMpwAxQRpHMUehzTfzGJjuFJOtWyQBdHQbtpEpxmopVEnghdxyz",
 text: 'general.header.menuLink3' | translate }] }) }} {% endblock %} {% block
 main %}

@@ -1,6 +1,6 @@
 {
-  "name": "@govuk-one-login-frontend/frontend-language-toggle",
-  "version": "2.0.0",
+  "name": "@govuk-one-login/frontend-language-toggle",
+  "version": "1.1.0",
   "description": "Reusable language toggle for GDS One Login",
   "main": "build/cjs/language-param-setter.cjs",
   "module": "build/esm/language-param-setter.js",
@@ -9,7 +9,7 @@
     "dev": "rollup -c --watch",
     "test": "jest",
     "test:coverage": "jest --coverage src",
-    "build": "rollup -c && cp ./src/template.njk ./src/macro.njk ./build/",
+    "build": "rollup -c",
     "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,md}\""
   },
   "files": [
@@ -56,5 +56,8 @@
     "ts-node": "^10.9.2",
     "typescript": "5.4.5"
   },
-  "types": "./build/esm/language-param-setter.d.ts"
+  "types": "./build/esm/language-param-setter.d.ts",
+  "dependencies": {
+    "rollup-plugin-copy": "^3.5.0"
+  }
 }
