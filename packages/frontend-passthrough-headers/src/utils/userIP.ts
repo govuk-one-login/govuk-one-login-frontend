@@ -1,13 +1,14 @@
 import { type Request } from "express";
 import forwardedParse from "forwarded-parse";
-import { logger } from "./logger";
 import { APIGatewayProxyEvent } from "aws-lambda";
+import { logger } from "./logger";
 import { getHeader } from "./getHeader";
 
 const HEADER_CLOUDFRONT_VIEWER = "cloudfront-viewer-address";
 const HEADER_FORWARDED = "forwarded";
 const HEADER_X_FORWARDED = "x-forwarded-for";
 
+// eslint-disable-next-line no-shadow
 enum IPSources {
   Cloudfront,
   Forwarded,
@@ -77,9 +78,8 @@ function handleXForwardedForIP(req: Request | APIGatewayProxyEvent) {
       const firstIP = getFirstOrOnly(header);
       const ip = firstIP.split(",")[0];
       return parseIP(ip);
-    } else {
-      return req.ip ?? null;
     }
+    return req.ip ?? null;
   } catch (e) {
     logger.warn(
       `Request received with invalid content in "${HEADER_X_FORWARDED}" header.`,

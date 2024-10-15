@@ -1,7 +1,7 @@
 import { type Request } from "express";
+import { APIGatewayProxyEvent } from "aws-lambda";
 import { logger } from "./utils/logger";
 import { processUserIP } from "./utils/userIP";
-import { APIGatewayProxyEvent } from "aws-lambda";
 import { getHeader } from "./utils/getHeader";
 
 const HEADERS = {
