@@ -1,4 +1,5 @@
 import { performance } from "perf_hooks";
+
 const { eventLoopUtilization } = performance;
 
 export const trackEventLoopUtilization = () => {

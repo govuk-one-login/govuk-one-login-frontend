@@ -8,8 +8,7 @@
     "lint:fix": "nx affected --target=lint --fix",
     "format": "nx affected --target=format",
     "format:check": "nx affected --target=format:check",
-    "prep:commit": "npm run format && npm run lint",
-    "prepare": "husky"
+    "prep:commit": "npm run format && npm run lint"
   },
   "devDependencies": {
     "@nrwl/cli": "^15.9.3",
