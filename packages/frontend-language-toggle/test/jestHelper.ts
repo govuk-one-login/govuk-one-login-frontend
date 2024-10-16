@@ -5,9 +5,8 @@ import path from "path";
 export default function render(
   macroName: string,
   params = {},
-  children = false,
 ) {
-  if (typeof params === "undefined") {
+  if (Object.keys(params).length === 0 && params.constructor === Object) {
     throw new Error(
       "Parameters passed to `render` should be an object but are undefined",
     );
@@ -15,14 +14,9 @@ export default function render(
 
   const macroParams = JSON.stringify(params, null, 2);
 
-  const macroPath = `./${path.relative(process.cwd(), path.resolve(__dirname, "../macro.njk"))}`;
+  const macroPath = `./${path.relative(process.cwd(), path.resolve(__dirname, "../src/macro.njk"))}`;
   let macroString = `{%- from "${macroPath}" import ${macroName} -%}`;
-
-  if (children) {
-    macroString += `{%- call ${macroName}(${macroParams}) -%}${children}{%- endcall -%}`;
-  } else {
-    macroString += `{{- ${macroName}(${macroParams}) -}}`;
-  }
+  macroString += `{{- ${macroName}(${macroParams}) -}}`;
 
   const output = nunjucks.renderString(macroString, {});
 

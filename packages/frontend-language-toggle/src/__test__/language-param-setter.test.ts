@@ -1,4 +1,4 @@
-import addLanguageParam from "./language-param-setter";
+import addLanguageParam from "../language-param-setter";
 
 describe("addLanguageParam function", () => {
   it("should add language parameter to URL", () => {
