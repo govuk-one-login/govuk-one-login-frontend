@@ -23,7 +23,8 @@ jobs:
     strategy:
       matrix:
         TAG:
-          [
+          [ 
+            "frontend-analytics",
             "frontend-language-toggle",
             "frontend-passthrough-headers",
             "frontend-vital-signs",
