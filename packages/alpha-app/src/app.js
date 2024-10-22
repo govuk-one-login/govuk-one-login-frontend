@@ -15,10 +15,8 @@ const {
 const { validateChooseLocation } = require("./journeys/chooseLocationService");
 const { validateEnterEmail } = require("./journeys/enterEmailService");
 const { validateFeedback } = require("./journeys/feedbackService");
-const { loadAssets } = require("./utils/loadAssets.js");
-const { testFunction } = require("@govuk-one-login/cached-asset-loader/build/cjs/index.cjs");
-
-testFunction();
+// const { loadAssets } = require("./utils/loadAssets.js");
+const { loadAssets } = require("@govuk-one-login/cached-asset-loader/build/cjs/index.cjs");
 
 const crypto = require("crypto");
 const sessionId = crypto.randomBytes(16).toString("hex");

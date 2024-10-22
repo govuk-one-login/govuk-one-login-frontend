@@ -14,7 +14,7 @@ function loadAssets(app, assetPath, hashBetween = { start: "-", end: "." }) {
     const fileName = hashedFileName.split(hashBetween.start)[0];
     const hashedExtension = hashedFileName.split(hashBetween.start)[1];
     const extension = hashedExtension.substring(
-      hashedExtension.indexOf(hashBetween.end) + 1
+      hashedExtension.indexOf(hashBetween.end) + 1,
     );
     return { hashedFileName, fileName: `${fileName}.${extension}` };
   });
