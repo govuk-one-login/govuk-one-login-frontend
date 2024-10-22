@@ -15,6 +15,10 @@ const {
 const { validateChooseLocation } = require("./journeys/chooseLocationService");
 const { validateEnterEmail } = require("./journeys/enterEmailService");
 const { validateFeedback } = require("./journeys/feedbackService");
+const { loadAssets } = require("./utils/loadAssets.js");
+const { testFunction } = require("@govuk-one-login/cached-asset-loader/build/cjs/index.cjs");
+
+testFunction();
 
 const crypto = require("crypto");
 const sessionId = crypto.randomBytes(16).toString("hex");
@@ -89,6 +93,9 @@ app.use((req, res, next) => {
 });
 
 app.use(express.static("public"));
+
+loadAssets(app, "public/**/*");
+
 app.use(express.urlencoded({ extended: true }));
 app.use(setGa4ContainerId);
 app.use(setUaContainerId);

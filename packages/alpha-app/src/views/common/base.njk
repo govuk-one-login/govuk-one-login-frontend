@@ -1,12 +1,12 @@
 {% block head %}
-<link rel="stylesheet" href="/stylesheets/govuk-frontend-4.7.0.min.css" />
-<link rel="stylesheet" href="/stylesheets/application.css" />
+<link rel="stylesheet" href="/stylesheets/{{ assets['stylesheet.css'] }}" />
+<link rel="stylesheet" href="/stylesheets/{{ assets['application.css'] }}" />
 {% endblock %} {% extends "govuk/template.njk" %} {% from
 "govuk/components/skip-link/macro.njk" import govukSkipLink %} {% from
 "govuk/components/header/macro.njk" import govukHeader %} {% from
 "govuk/components/footer/macro.njk" import govukFooter %} {% from
 "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %} {% from
-"frontend-language-toggle/build/macro.njk" import languageSelect %} {% block
+"frontend-language-toggle/src/macro.njk" import languageSelect %} {% block
 skipLink %} {{ govukSkipLink({ href: "#main-content", text:
 "general.govuk.skipLink" | translate }) }} {% endblock %} {% block bodyStart %}
 {% include "./banner.njk" %} {% endblock %} {% block header %} {{ govukHeader({
@@ -33,7 +33,7 @@ main %}
     </div>
   </main>
 </div>
-<script src="/javascript/ua/init.js"></script>
+<script src="/javascript/ua/{{ assets['init.js'] }}"></script>
 <script src="/ga4-assets/analytics.js"></script>
 <script>
   window.DI.appInit(
