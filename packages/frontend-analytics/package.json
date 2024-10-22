@@ -8,11 +8,9 @@
     ".": "./lib/analytics.js"
   },
   "scripts": {
-    "build": "npm run prettier && webpack --config webpack.config.js --mode production",
+    "build": "webpack --config webpack.config.js --mode production",
     "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,md}\"",
     "eslint": "eslint .",
-    "precommit": "npm run eslint && npm run prettier",
-    "pub": "cp PACKAGE-README.md dist/README.md && cp package.json dist && cd dist && npm publish --access public",
     "test": "jest",
     "test:coverage": "jest --coverage src"
   },
