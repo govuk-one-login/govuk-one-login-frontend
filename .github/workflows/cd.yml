@@ -23,7 +23,13 @@ on:
           - major
 
       first_release:
-        description: "First release"
+        description: "First release (from this repo)"
+        required: true
+        default: false
+        type: boolean
+
+      dry_run:
+        description: "Dry run?"
         required: true
         default: false
         type: boolean
@@ -77,7 +83,7 @@ jobs:
 
       - name: Publish packages
         if: ${{ github.ref == 'refs/heads/main' }}
-        run: npx nx release ${{ github.event.inputs.increment }} --projects=${{ github.event.inputs.target }} --yes ${{ github.event.inputs.first_release == 'true' && '--first-release' || '' }}
+        run: npx nx release ${{ github.event.inputs.increment }} --projects=${{ github.event.inputs.target }} --yes ${{ github.event.inputs.first_release == 'true' && '--first-release' || '' }} ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
           NODE_AUTH_TOKEN: ${{secrets.NPM_ACCESS_TOKEN}}
