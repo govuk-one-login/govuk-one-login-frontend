@@ -158,3 +158,11 @@ The package is owned by the DI Frontend Capability team, part of the development
 - Having define translation value for ariaLabel property.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Upgrading to V2
+
+As part of the upgrade to version 2 onwards, the location of the `macro.njk` file has relocated to a build folder, please ensure any references to the macro file is updated to:
+
+```js
+    {% from "frontend-language-toggle/build/macro.njk" import languageSelect %}
+```
