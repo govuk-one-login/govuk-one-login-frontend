@@ -21,14 +21,20 @@ Add to your project using `npm i @govuk-one-login/frontend-passthrough-headers`
 > [!WARNING]
 > This function extracts headers that contain Personal Data. It must not be passed through to API calls to external services.
 
+#### Optional: Custom Logger
+
+You can pass a custom logger to the createPersonalDataHeaders function if needed. This is useful if your repo uses custom log levels which our built-in logger doesn't support.
+The custom logger must have a trace method that accepts a string.
+
 ```javascript
 import { createPersonalDataHeaders } from "@govuk-one-login/frontend-passthrough-headers";
+import { customLogger } from "./customLogger"; // Optional: Import your own logger
 
 async function routeHandler(req, res, next) {
   const url = "https://internal-service.com/do-something";
 
   const headers = {
-    ...createPersonalDataHeaders(url, req),
+    ...createPersonalDataHeaders(url, req, customLogger),
   };
 
   const res = await axios.get(url, {
