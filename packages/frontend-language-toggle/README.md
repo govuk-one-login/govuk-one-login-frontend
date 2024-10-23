@@ -166,3 +166,5 @@ As part of the upgrade to version 2 onwards, the location of the `macro.njk` fil
 ```js
     {% from "frontend-language-toggle/build/macro.njk" import languageSelect %}
 ```
+
+For full details on this change, see: https://github.com/govuk-one-login/govuk-one-login-frontend/pull/84 
