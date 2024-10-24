@@ -1,3 +1,4 @@
+// eslint-disable @typescript-eslint/no-require-imports
 const nunjucks = require("nunjucks");
 const i18next = require("i18next");
 const addLanguageParam = require("@govuk-one-login/frontend-language-toggle/build/cjs/language-param-setter.cjs");

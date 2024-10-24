@@ -22,7 +22,6 @@ describe("addLanguageParam function", () => {
     expect(result).toContain("/path?");
     expect(result).toContain("lng=en");
   });
-  ``;
 
   it("should not duplicate the language parameter in URL", () => {
     const result = addLanguageParam(

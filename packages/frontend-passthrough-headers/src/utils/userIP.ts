@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { type Request } from "express";
 import forwardedParse from "forwarded-parse";
 import { logger } from "./logger";
