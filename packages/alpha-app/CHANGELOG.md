@@ -1,3 +1,22 @@
+## 0.0.3 (2024-10-24)
+
+### 🚀 Features
+
+- add ability to dry run release
+- **DFC-245:** Add sonarcloud scanning
+- **DFC-594:** add workaround for HMPO
+- **DFC-597:** add requests-per-second metric
+- add alpha app for testing
+
+### 🩹 Fixes
+
+- **DFC-634:** fix eventLoopDelay metric so that it refreshes
+
+### ❤️  Thank You
+
+- Nick Heal
+- nickhealGDS
+
 ## 0.0.2 (2024-10-23)
 
 ### 🚀 Features
