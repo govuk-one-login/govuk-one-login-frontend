@@ -1,6 +1,6 @@
 {
   "name": "@govuk-one-login/alpha-app",
-  "version": "0.0.3",
+  "version": "0.0.2",
   "scripts": {
     "start": "npm-run-all build-sass --parallel dev gulp-watch",
     "dev": "node --watch src/app.js",
