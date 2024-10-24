@@ -3,6 +3,7 @@ import { logger } from "./utils/logger";
 import { processUserIP } from "./utils/userIP";
 import { APIGatewayProxyEvent } from "aws-lambda";
 import { getHeader } from "./utils/getHeader";
+import { CustomLogger } from "./utils/logger";
 
 const HEADERS = {
   HEADER_TXMA: "txma-audit-encoded",
@@ -27,7 +28,7 @@ export interface PersonalDataHeaders {
 export function createPersonalDataHeaders(
   url: string,
   req: Request | APIGatewayProxyEvent,
-  customLogger?: { trace: (message: string) => void }
+  customLogger?: CustomLogger
 ): PersonalDataHeaders {
   const domain = new URL(url).hostname;
   const personalDataHeaders: PersonalDataHeaders = {};
@@ -42,7 +43,7 @@ export function createPersonalDataHeaders(
     );
   }
 
-  const userIP = processUserIP(req);
+  const userIP = processUserIP(req,loggerToUse);
   if (userIP) {
     personalDataHeaders[HEADERS.OUTBOUND_FORWARDED_HEADER] = userIP;
     loggerToUse.trace(

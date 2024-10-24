@@ -24,7 +24,7 @@ Add to your project using `npm i @govuk-one-login/frontend-passthrough-headers`
 #### Optional: Custom Logger
 
 You can pass a custom logger to the createPersonalDataHeaders function if needed. This is useful if your repo uses custom log levels which our built-in logger doesn't support.
-The custom logger must have a trace method that accepts a string.
+The custom logger must have trace and warn methods that accepts a string.
 
 ```javascript
 import { createPersonalDataHeaders } from "@govuk-one-login/frontend-passthrough-headers";

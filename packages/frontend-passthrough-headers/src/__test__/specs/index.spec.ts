@@ -361,6 +361,7 @@ describe("createPersonalDataHeaders", () => {
     it("should use the custom logger if provided", () => {
       const mockCustomLogger = {
         trace: jest.fn(),
+        warn: jest.fn(),
       };
       const spyLogger = jest.spyOn(logger, "trace");
       createPersonalDataHeaders(
