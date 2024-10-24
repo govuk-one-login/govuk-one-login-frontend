@@ -1,6 +1,9 @@
 name: Static analysis
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
 
 concurrency:
@@ -23,7 +26,7 @@ jobs:
     strategy:
       matrix:
         TAG:
-          [ 
+          [
             "frontend-analytics",
             "frontend-language-toggle",
             "frontend-passthrough-headers",
@@ -50,11 +53,11 @@ jobs:
 
       - name: Generate test coverage
         run: npx nx run-many -t test --projects=@govuk-one-login/${{ matrix.TAG }}
-        if: ${{ contains(env.affectedPackages, matrix.TAG) }}
+        if: github.event_name == 'push' || contains(env.affectedPackages, matrix.TAG)
 
       - name: Scan
         uses: SonarSource/sonarcloud-github-action@master
-        if: ${{ contains(env.affectedPackages, matrix.TAG) }}
+        if: github.event_name == 'push' || contains(env.affectedPackages, matrix.TAG)
         with:
           projectBaseDir: ./packages/${{ matrix.TAG }}
         env:
