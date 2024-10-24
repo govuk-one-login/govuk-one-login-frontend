@@ -356,4 +356,37 @@ describe("createPersonalDataHeaders", () => {
       });
     });
   });
+
+  describe("logger functionality", () => {
+    it("should use the custom logger if provided", () => {
+      const mockCustomLogger = {
+        trace: jest.fn(),
+        warn: jest.fn(),
+      };
+      const spyLogger = jest.spyOn(logger, "trace");
+      createPersonalDataHeaders(
+        "https://account.gov.uk",
+        {
+          headers: { ["Txma-Audit-Encoded"]: "dummy-txma-header" },
+        } as unknown as Request,
+        mockCustomLogger,
+      );
+
+      expect(mockCustomLogger.trace).toHaveBeenCalledWith(
+        `Personal Data header "txma-audit-encoded" is being forwarded to domain "account.gov.uk"`,
+      );
+      expect(spyLogger).not.toHaveBeenCalled();
+    });
+
+    it("should use default logger, if custom logger is not provided", () => {
+      const spyLogger = jest.spyOn(logger, "trace");
+      createPersonalDataHeaders("https://account.gov.uk", {
+        headers: { ["Txma-Audit-Encoded"]: "dummy-txma-header" },
+      } as unknown as Request);
+
+      expect(spyLogger).toHaveBeenCalledWith(
+        `Personal Data header "txma-audit-encoded" is being forwarded to domain "account.gov.uk"`,
+      );
+    });
+  });
 });
