@@ -1,3 +1,7 @@
+## 2.0.1 (2024-10-24)
+
+This was a version bump only for @govuk-one-login/frontend-language-toggle to align it with other projects, there were no code changes.
+
 # 2.0.0 (2024-10-23)
 
 ### 🚀 Features

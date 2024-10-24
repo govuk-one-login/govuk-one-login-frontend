@@ -1,3 +1,9 @@
+## 0.0.3 (2024-10-24)
+
+### 🧱 Updated Dependencies
+
+- Updated @govuk-one-login/frontend-language-toggle to 2.0.1
+
 ## 0.0.2 (2024-10-23)
 
 ### 🚀 Features
