@@ -1,9 +1,8 @@
 import { type Request } from "express";
-import { logger } from "./utils/logger";
+import { logger, CustomLogger } from "./utils/logger";
 import { processUserIP } from "./utils/userIP";
 import { APIGatewayProxyEvent } from "aws-lambda";
 import { getHeader } from "./utils/getHeader";
-import { CustomLogger } from "./utils/logger";
 
 const HEADERS = {
   HEADER_TXMA: "txma-audit-encoded",

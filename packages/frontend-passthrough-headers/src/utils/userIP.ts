@@ -1,9 +1,8 @@
 import { type Request } from "express";
 import forwardedParse from "forwarded-parse";
-import { logger } from "./logger";
+import { logger, CustomLogger } from "./logger";
 import { APIGatewayProxyEvent } from "aws-lambda";
 import { getHeader } from "./getHeader";
-import { CustomLogger } from "./logger";
 
 const HEADER_CLOUDFRONT_VIEWER = "cloudfront-viewer-address";
 const HEADER_FORWARDED = "forwarded";
