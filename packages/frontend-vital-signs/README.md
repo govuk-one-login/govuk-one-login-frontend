@@ -55,21 +55,21 @@ The package is owned by the DI Frontend Capability team, part of the development
 1. Install NPM package
 
    ```sh
-   npm install @govuk-one-login/frontend-vitals-signs
+   npm install @govuk-one-login/frontend-vital-signs
    ```
 2. Import the package in your Node.js application's startup file (example: app.js or index.js):
 
    ```js
-   const { frontendVitalsInit } = require("@govuk-one-login/frontend-vital-signs");
+   const { frontendVitalSignsInit } = require("@govuk-one-login/frontend-vital-signs");
    ```
 
    If using ES6 Imports or TypeScript:
 
    ```ts
-   import frontendVitalsInit from "@govuk-one-login/frontend-vital-signs";
+   import frontendVitalSignsInit from "@govuk-one-login/frontend-vital-signs";
    ```
 
-3. Configure the server to use the frontendVitalsInit function. This function initialises the frontend vitals monitoring.
+3. Configure the server to use the frontendVitalSignsInit function. This function initialises the frontend vitals monitoring.
 
   Example:
 
@@ -79,7 +79,7 @@ The package is owned by the DI Frontend Capability team, part of the development
     console.log(`Example app listening on port ${port}`);
   });
   
-  frontendVitalsInit(server, {
+  frontendVitalSignsInit(server, {
     interval: 10000, 
     logLevel: "info",
     metrics: ["requestsPerSecond", "avgResponseTime"],
@@ -113,7 +113,7 @@ The package is owned by the DI Frontend Capability team, part of the development
    ```
 
  
-## `frontendVitalsInit(server, options)`
+## `frontendVitalSignsInit(server, options)`
 
 ### Parameters
 
