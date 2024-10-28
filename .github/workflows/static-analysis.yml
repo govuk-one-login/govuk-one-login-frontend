@@ -38,7 +38,7 @@ jobs:
           fetch-depth: 0
 
       # Cache node_modules
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: "npm"
@@ -56,7 +56,7 @@ jobs:
         if: github.event_name == 'push' || contains(env.affectedPackages, matrix.TAG)
 
       - name: Scan
-        uses: SonarSource/sonarcloud-github-action@master
+        uses: SonarSource/sonarcloud-github-action@v3.1.0
         if: github.event_name == 'push' || contains(env.affectedPackages, matrix.TAG)
         with:
           projectBaseDir: ./packages/${{ matrix.TAG }}

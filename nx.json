@@ -1,10 +1,5 @@
 {
   "neverConnectToCloud": true,
-  "pluginsConfig": {
-    "@nx/js": {
-      "analyzeSourceFiles": true
-    }
-  },
   "extends": "nx/presets/npm.json",
   "workspaceLayout": {
     "libsDir": "packages"
@@ -61,14 +56,6 @@
         "{workspaceRoot}/.prettierrc",
         "{workspaceRoot}/.prettierignore"
       ]
-    }
-  },
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "nx/tasks-runners/default",
-      "options": {
-        "cacheableOperations": ["lint", "test", "e2e"]
-      }
     }
   },
   "$schema": "./node_modules/nx/schemas/nx-schema.json"
