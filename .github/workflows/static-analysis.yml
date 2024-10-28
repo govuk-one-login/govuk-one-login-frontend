@@ -17,7 +17,32 @@ permissions:
 jobs:
   coverage:
     name: Collect coverage
-    uses: ./.github/workflows/tests.yml
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - run: npm ci
+
+      - uses: nrwl/nx-set-shas@v4
+
+      - run: git branch --track main origin/main
+        if: ${{ github.event_name == 'pull_request' }}
+
+      - run: npx nx affected -t lint test build
+
+      - name: Cache test coverage reports
+        id: cache-coverage-reports
+        uses: actions/cache@v4
+        with:
+          path: "**/coverage"
+          key: ${{ runner.os }}-${{ github.run_id }}-coverage-reports
 
   sonarcloud:
     name: SonarCloud
@@ -37,7 +62,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      # Cache node_modules
       - uses: actions/setup-node@v4
         with:
           node-version: 20
