@@ -6,18 +6,16 @@
 <br />
 <div align="center">
   
-<h3 align="center">GOV.UK One Login GA4 Implementation</h3>
+<h3 align="center">GOV.UK Frontend Analytics Implementation</h3>
   <p align="center">
     This package enables GOV UK LOGIN frontend Node.js applications to use Google Tag Manager and Google Analytics 4.
     <br />
-    <a href="https://govukverify.atlassian.net/wiki/spaces/DIFC/pages/3801317710/Analytics+package+One-login-ga4"><strong>Explore the docs »</strong></a>
+    <a href="https://govukverify.atlassian.net/wiki/spaces/DIFC/pages/4641358026/Frontend+Analytics"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/govuk-one-login/di-fec-ga4-demo">View Demo</a>
+    <a href="https://github.com/govuk-one-login/govuk-one-login-frontend/issues">Report Bug</a>
     ·
-    <a href="https://github.com/govuk-one-login/di-fec-ga4/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/govuk-one-login/di-fec-ga4/issues">Request Feature</a>
+    <a href="https://github.com/govuk-one-login/govuk-one-login-frontend/issues">Request Feature</a>
   </p>
 </div>
 
