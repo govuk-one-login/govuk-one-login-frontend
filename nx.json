@@ -33,7 +33,7 @@
       ]
     },
     "@nx/jest:jest": {
-      "cache": true,
+      "cache": false,
       "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"],
       "options": {
         "passWithNoTests": true

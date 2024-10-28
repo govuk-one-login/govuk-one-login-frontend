@@ -21,12 +21,6 @@
       "options": {
         "lintFilePatterns": ["packages/frontend-passthrough-headers/src/**/*"]
       }
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "options": {
-        "jestConfig": "packages/frontend-passthrough-headers/jest.config.ts"
-      }
     }
   }
 }

@@ -8,7 +8,7 @@
   "module": "esm/index.js",
   "scripts": {
     "build": "rollup -c",
-    "test": "jest -c"
+    "test": "jest -c --coverage"
   },
   "author": "Nick Heal",
   "license": "ISC",
