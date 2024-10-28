@@ -43,7 +43,7 @@ jobs:
           node-version: 20
           cache: "npm"
 
-      - run: npm install
+      - run: npm ci
 
       - uses: nrwl/nx-set-shas@v4
 
