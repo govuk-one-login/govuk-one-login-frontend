@@ -23,10 +23,19 @@ jobs:
         with:
           node-version: 20
           cache: "npm"
+
       - run: npm install
+
       - uses: nrwl/nx-set-shas@v4
 
       - run: git branch --track main origin/main
         if: ${{ github.event_name == 'pull_request' }}
 
       - run: npx nx affected -t lint test build
+
+      - name: Cache test coverage reports
+        id: cache-coverage-reports
+        uses: actions/cache@v4
+        with:
+          path: "**/coverage"
+          key: ${{ runner.os }}-${{ github.run_id }}-coverage-reports

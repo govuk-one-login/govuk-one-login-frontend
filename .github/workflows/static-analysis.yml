@@ -44,6 +44,7 @@ jobs:
           cache: "npm"
 
       - run: npm install
+
       - uses: nrwl/nx-set-shas@v4
 
       - name: List affected packages
@@ -51,9 +52,12 @@ jobs:
           OUTPUT=$(npx nx show projects --affected --json)
           echo "affectedPackages=$OUTPUT" >> $GITHUB_ENV
 
-      - name: Generate test coverage
-        run: npx nx run-many -t test --projects=@govuk-one-login/${{ matrix.TAG }}
-        if: github.event_name == 'push' || contains(env.affectedPackages, matrix.TAG)
+      - name: Restore cached coverage reports
+        id: cache-coverage-reports-restore
+        uses: actions/cache/restore@v4
+        with:
+          path: "**/coverage"
+          key: ${{ runner.os }}-${{ github.run_id }}-coverage-reports
 
       - name: Scan
         uses: SonarSource/sonarcloud-github-action@v3.1.0
