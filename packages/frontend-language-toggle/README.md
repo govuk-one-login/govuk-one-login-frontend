@@ -13,11 +13,9 @@
     <a href=""><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/govuk-one-login/di-fec-ga4-demo">View Demo</a>
+    <a href="https://github.com/govuk-one-login/govuk-one-login-frontend/issues">Report Bug</a>
     ·
-    <a href="https://github.com/govuk-one-login/di-fec-ga4-demo/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/govuk-one-login/di-fec-ga4-demo/issues">Request Feature</a>
+    <a href="https://github.com/govuk-one-login/govuk-one-login-frontend/issues">Request Feature</a>
   </p>
 </div>
 

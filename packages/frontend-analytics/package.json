@@ -31,7 +31,7 @@
   "bugs": {
     "url": "https://github.com/govuk-one-login/govuk-one-login-frontend/issues"
   },
-  "homepage": "https://github.com/govuk-one-login/govuk-one-login-frontend/tree/main/packages/frontend-vital-signs#readme",
+  "homepage": "https://github.com/govuk-one-login/govuk-one-login-frontend/tree/main/packages/frontend-analytics#readme",
   "devDependencies": {
     "@babel/cli": "^7.23.0",
     "@babel/core": "^7.23.2",

@@ -2,8 +2,6 @@
   "name": "@govuk-one-login/alpha-component",
   "version": "0.0.23",
   "description": "New blank package",
-  "main": "build/cjs/language-param-setter.cjs",
-  "module": "build/esm/language-param-setter.js",
   "type": "module",
   "publishConfig": {
     "access": "public"
@@ -22,17 +20,9 @@
     "README.md",
     "language-select.yaml"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/govuk-one-login/di-fec-ga4.git"
-  },
   "keywords": [],
   "author": "DI Frontend Capability Team",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/govuk-one-login/di-fec-ga4-demo/issues"
-  },
-  "homepage": "https://github.com/govuk-one-login/di-fec-ga4-demo#readme",
   "devDependencies": {
     "@types/jest": "^29.5.13",
     "@types/jest-axe": "^3.5.9",
