@@ -55,7 +55,7 @@ The package is owned by the DI Frontend Capability team, part of the development
 1. Install NPM package
 
    ```sh
-   npm install @govuk-one-login/frontend-vitals-signs
+   npm install @govuk-one-login/frontend-vital-signs
    ```
 2. Import the package in your Node.js application's startup file (example: app.js or index.js):
 
