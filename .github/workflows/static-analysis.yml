@@ -17,7 +17,32 @@ permissions:
 jobs:
   coverage:
     name: Collect coverage
-    uses: ./.github/workflows/tests.yml
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - run: npm ci
+
+      - uses: nrwl/nx-set-shas@v4
+
+      - run: git branch --track main origin/main
+        if: ${{ github.event_name == 'pull_request' }}
+
+      - run: npx nx affected -t lint test build
+
+      - name: Cache test coverage reports
+        id: cache-coverage-reports
+        uses: actions/cache@v4
+        with:
+          path: "**/coverage"
+          key: ${{ runner.os }}-${{ github.run_id }}-coverage-reports
 
   sonarcloud:
     name: SonarCloud
@@ -37,13 +62,13 @@ jobs:
         with:
           fetch-depth: 0
 
-      # Cache node_modules
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: "npm"
 
-      - run: npm install
+      - run: npm ci
+
       - uses: nrwl/nx-set-shas@v4
 
       - name: List affected packages
@@ -51,12 +76,15 @@ jobs:
           OUTPUT=$(npx nx show projects --affected --json)
           echo "affectedPackages=$OUTPUT" >> $GITHUB_ENV
 
-      - name: Generate test coverage
-        run: npx nx run-many -t test --projects=@govuk-one-login/${{ matrix.TAG }}
-        if: github.event_name == 'push' || contains(env.affectedPackages, matrix.TAG)
+      - name: Restore cached coverage reports
+        id: cache-coverage-reports-restore
+        uses: actions/cache/restore@v4
+        with:
+          path: "**/coverage"
+          key: ${{ runner.os }}-${{ github.run_id }}-coverage-reports
 
       - name: Scan
-        uses: SonarSource/sonarcloud-github-action@master
+        uses: SonarSource/sonarcloud-github-action@v3.1.0
         if: github.event_name == 'push' || contains(env.affectedPackages, matrix.TAG)
         with:
           projectBaseDir: ./packages/${{ matrix.TAG }}
