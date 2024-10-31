@@ -1,4 +1,5 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const nxPreset = require("@nx/jest/preset").default;
+import preset from "@nx/jest/preset.js";
 
-module.exports = { ...nxPreset };
+const nxPreset = preset.default;
+
+export default { ...nxPreset };
