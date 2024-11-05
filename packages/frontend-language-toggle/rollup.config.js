@@ -1,5 +1,6 @@
 import typescript from "rollup-plugin-typescript2";
-import copy from 'rollup-plugin-copy';
+import copy from "rollup-plugin-copy";
+import CleanCSS from "clean-css";
 
 export default {
   input: "./src/language-param-setter.ts",
@@ -13,12 +14,18 @@ export default {
       format: "es",
     },
   ],
-  plugins: [typescript(),
+  plugins: [
+    typescript(),
     copy({
       targets: [
-        { src: "./src/macro.njk", dest: "./build/" },
-        { src: "./src/template.njk", dest: "./build/" },
-        { src: "./build/cjs/language-param-setter.d.ts", dest: "./build/cjs/", rename: "language-param-setter.d.cts" }
+        {
+          src: "./src/stylesheet/styles.css",
+          dest: "./build/stylesheet/",
+          transform: (contents) => new CleanCSS().minify(contents).styles,
+        },
+        { src: "./src/macro.njk", dest: "./build" },
+        { src: "./src/template.njk", dest: "./build" },
+        { src: "./src/language-select.yaml", dest: "./build" },
       ],
       hook: "closeBundle"
     }),

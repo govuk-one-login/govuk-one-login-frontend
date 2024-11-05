@@ -155,14 +155,20 @@ The package is owned by the DI Frontend Capability team, part of the development
 - Having set the local variable htmlLang in your app.js file or in a middleware function.
 - Having define translation value for ariaLabel property.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 ### Upgrading to V2
 
-As part of the upgrade to version 2 onwards, the location of the `macro.njk` file has relocated to a build folder, please ensure any references to the macro file is updated to:
+As part of the upgrade to version 2 onwards, the location of the `macro.njk` file has relocated to a build folder, please observe the folder structure and ensure any file paths are updated.
 
 ```js
     {% from "frontend-language-toggle/build/macro.njk" import languageSelect %}
 ```
 
+Additionally, please ensure stylesheet file paths are updated
+
+```js
+    @import "../../../node_modules/@govuk-one-login/frontend-language-toggle/build/stylesheet/styles";
+```
+
 For full details on this change, see: https://github.com/govuk-one-login/govuk-one-login-frontend/pull/84 
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>

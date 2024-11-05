@@ -14,12 +14,8 @@
   },
   "files": [
     "build/",
-    "stylesheet/",
-    "macro.njk",
-    "template.njk",
     "package.json",
-    "README.md",
-    "language-select.yaml"
+    "README.md"
   ],
   "repository": {
     "type": "git",
@@ -45,6 +41,7 @@
     "@typescript-eslint/eslint-plugin": "^8.8.1",
     "@typescript-eslint/parser": "^7.8.0",
     "cheerio": "^0.22.0",
+    "clean-css": "^5.3.3",
     "eslint": "8.57.0",
     "jest-axe": "^9.0.0",
     "jest-environment-jsdom": "^29.7.0",
