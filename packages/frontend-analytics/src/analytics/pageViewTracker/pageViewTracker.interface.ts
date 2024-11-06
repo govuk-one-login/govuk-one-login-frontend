@@ -16,6 +16,9 @@ export interface PageViewEventInterface {
     first_published_at?: string;
     updated_at?: string;
     relying_party?: string;
+    taxonomy_level3?: string;
+    taxonomy_level4?: string;
+    taxonomy_level5?: string;
   };
 }
 
@@ -27,6 +30,9 @@ export interface PageViewParametersInterface {
   content_id: string;
   logged_in_status: boolean;
   dynamic: boolean;
+  taxonomy_level3?: string;
+  taxonomy_level4?: string;
+  taxonomy_level5?: string;
 }
 
 export interface GTMInitInterface {
@@ -34,4 +40,12 @@ export interface GTMInitInterface {
   "gtm.allowlist": string[];
   "gtm.blocklist": string[];
   "gtm.start": number;
+}
+
+export interface PersistedTaxonomies {
+  taxonomyLevel1: string;
+  taxonomyLevel2: string;
+  taxonomyLevel3: string;
+  taxonomyLevel4: string;
+  taxonomyLevel5: string;
 }

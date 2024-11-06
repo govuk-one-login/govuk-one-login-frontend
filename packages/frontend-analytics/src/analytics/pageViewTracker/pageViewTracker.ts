@@ -54,13 +54,20 @@ export class PageViewTracker extends BaseTracker {
     }
 
     // check for persisted taxonomies
-    let taxonomyLevel2: string = parameters.taxonomy_level2;
-    if (taxonomyLevel2 === "persisted from previous page") {
-      taxonomyLevel2 = localStorage.getItem("taxonomyLevel2")!;
-    } else {
-      // if taxonomy is not "persisted from...", then store this into localStorage
-      localStorage.setItem("taxonomyLevel2", taxonomyLevel2);
-    }
+    // const { taxonomy_level1, taxonomy_level2, taxonomy_level3, taxonomy_level4, taxonomy_level5 } = parameters;
+    // const persistedTaxonomies = {
+    //   level1: taxonomy_level1,
+    //   level2: taxonomy_level2,
+    //   level3: taxonomy_level3,
+    //   level4: taxonomy_level4,
+    //   level5: taxonomy_level5,
+    // };
+    // if (taxonomy_level2 === "persisted from previous page") {
+    //   taxonomyLevel2 = localStorage.getItem("taxonomyLevel2")!; 
+    // } else {
+    //   // if taxonomy is not "persisted from...", then store this into localStorage
+    //   localStorage.setItem("taxonomyLevel2", taxonomyLevel2);
+    // }
 
     const pageViewTrackerEvent: PageViewEventInterface = {
       event: this.eventName,
@@ -82,6 +89,9 @@ export class PageViewTracker extends BaseTracker {
         first_published_at: PageViewTracker.getFirstPublishedAt(),
         updated_at: PageViewTracker.getUpdatedAt(),
         relying_party: PageViewTracker.getRelyingParty(),
+        taxonomy_level3: validateParameter(parameters.taxonomy_level3, 100) ?? "undefined",
+        taxonomy_level4: validateParameter(parameters.taxonomy_level4, 100) ?? "undefined",
+        taxonomy_level5: validateParameter(parameters.taxonomy_level5, 100) ?? "undefined",
       },
     };
 
