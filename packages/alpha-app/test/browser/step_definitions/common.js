@@ -64,6 +64,11 @@ When("I click logo", async function () {
   await this.page.waitForLoadState("networkidle"); // Wait for network calls to finish
 });
 
+When("I click Back", async function () {
+  await this.page.locator('a.govuk-back-link:text-is("Back")').click();
+  await this.page.waitForLoadState("networkidle"); // Wait for network calls to finish
+});
+
 When("I click {word} {word}", async function (text, element) {
   if (element === "link") element = "a";
   await this.page
