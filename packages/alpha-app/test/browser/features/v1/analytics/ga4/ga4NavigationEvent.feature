@@ -71,3 +71,10 @@ Scenario: GA4 navigation link event is pushed when user clicks on a very long me
   When I click Menu link 3 link
   Then The dataLayer includes the very long navigation menu link event
 
+Scenario: GA4 navigation link event is pushed when user clicks on Back Link
+  Given I visit the welcome page
+  And I accept analytics cookies
+  And I click Start Now link
+  And I set up a listener for the data layer push
+  When I click Back
+  Then The dataLayer includes the navigation back link event
