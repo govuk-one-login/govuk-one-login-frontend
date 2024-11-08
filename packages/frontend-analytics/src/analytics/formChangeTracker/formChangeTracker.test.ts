@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, jest, test } from "@jest/globals";
 import { FormChangeTracker } from "./formChangeTracker";
-import { BaseTracker } from "../baseTracker/baseTracker";
+import * as pushToDataLayer from "../../utils/pushToDataLayer";
 
 function createForm() {
   document.body.innerHTML = `
@@ -26,7 +26,7 @@ describe("FormChangeTracker", () => {
 
     window.DI = { analyticsGa4: { cookie: { consent: true } } };
 
-    jest.spyOn(BaseTracker, "pushToDataLayer");
+    jest.spyOn(pushToDataLayer, "pushToDataLayer");
     jest.spyOn(FormChangeTracker.prototype, "initialiseEventListener");
     jest.spyOn(FormChangeTracker.prototype, "trackFormChange");
 
@@ -51,7 +51,7 @@ describe("FormChangeTracker", () => {
   test("pushToDataLayer is called", () => {
     const { changeLink } = createForm();
     changeLink.dispatchEvent(action);
-    expect(BaseTracker.pushToDataLayer).toBeCalledWith({
+    expect(pushToDataLayer.pushToDataLayer).toBeCalledWith({
       event: "event_data",
       event_data: {
         action: "change response",
@@ -75,7 +75,7 @@ describe("FormChangeTracker", () => {
     window.DI.analyticsGa4.cookie.consent = false;
     const { changeLink } = createForm();
     changeLink.dispatchEvent(action);
-    expect(BaseTracker.pushToDataLayer).not.toHaveBeenCalled();
+    expect(pushToDataLayer.pushToDataLayer).not.toHaveBeenCalled();
   });
 
   test("trackFormChange should return false if not a change link", () => {
@@ -87,20 +87,20 @@ describe("FormChangeTracker", () => {
 
     href.dispatchEvent(action);
 
-    expect(BaseTracker.pushToDataLayer).not.toHaveBeenCalled();
+    expect(pushToDataLayer.pushToDataLayer).not.toHaveBeenCalled();
   });
 
   test("trackFormChange should return true if a Change link", () => {
     const { changeLink } = createForm();
     changeLink.dispatchEvent(action);
-    expect(BaseTracker.pushToDataLayer).toHaveBeenCalled();
+    expect(pushToDataLayer.pushToDataLayer).toHaveBeenCalled();
   });
 
   test("trackFormChange should return false if it is a Lang Toggle link", () => {
     const { changeLink } = createForm();
     changeLink.setAttribute("hreflang", "en");
     changeLink.dispatchEvent(action);
-    expect(BaseTracker.pushToDataLayer).not.toHaveBeenCalled();
+    expect(pushToDataLayer.pushToDataLayer).not.toHaveBeenCalled();
   });
 
   test("should return 'undefined' if parent element does not exist", () => {

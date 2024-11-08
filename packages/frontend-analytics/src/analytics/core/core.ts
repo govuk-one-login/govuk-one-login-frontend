@@ -6,7 +6,7 @@ import { NavigationTracker } from "../navigationTracker/navigationTracker";
 import { PageViewTracker } from "../pageViewTracker/pageViewTracker";
 import { SelectContentTracker } from "../selectContentTracker/selectContentTracker";
 import { OptionsInterface } from "./core.interface";
-import { BaseTracker } from "../baseTracker/baseTracker";
+import { pushToDataLayer } from "../../utils/pushToDataLayer";
 
 export class Analytics {
   gtmId: string;
@@ -55,7 +55,7 @@ export class Analytics {
     });
 
     if (options.enableGa4Tracking) {
-      BaseTracker.pushToDataLayer({
+      pushToDataLayer({
         "gtm.allowlist": ["google"],
         "gtm.blocklist": ["adm", "awct", "sp", "gclidw", "gcs", "opt"],
         "gtm.start": new Date().getTime(),

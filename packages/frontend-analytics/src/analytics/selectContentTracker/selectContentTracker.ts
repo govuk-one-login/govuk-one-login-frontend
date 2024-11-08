@@ -1,14 +1,13 @@
 import logger from "loglevel";
-import { BaseTracker } from "../baseTracker/baseTracker";
 import { SelectContentEventInterface } from "./selectContentTracker.interface";
+import { pushToDataLayer } from "../../utils/pushToDataLayer";
 
-export class SelectContentTracker extends BaseTracker {
+export class SelectContentTracker {
   eventName: string = "select_content";
   eventType: string = "event_data";
   enableSelectContentTracking: boolean;
 
   constructor(enableSelectContentTracking: boolean) {
-    super();
     this.enableSelectContentTracking = enableSelectContentTracking;
     this.initialiseEventListener();
   }
@@ -65,7 +64,7 @@ export class SelectContentTracker extends BaseTracker {
       },
     };
     try {
-      BaseTracker.pushToDataLayer(SelectContentEvent);
+      pushToDataLayer(SelectContentEvent);
       return true;
     } catch (err) {
       logger.error("Error in trackSelectContent", err);

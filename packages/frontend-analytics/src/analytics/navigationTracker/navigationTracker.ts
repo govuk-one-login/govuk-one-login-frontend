@@ -1,14 +1,18 @@
 import logger from "loglevel";
-import { BaseTracker } from "../baseTracker/baseTracker";
 import { NavigationEventInterface } from "./navigationTracker.interface";
 import { validateParameter } from "../../utils/validateParameter";
+import {
+  getDomain,
+  getDomainPath,
+  isChangeLink,
+} from "../../utils/dataScrapers";
+import { pushToDataLayer } from "../../utils/pushToDataLayer";
 
-export class NavigationTracker extends BaseTracker {
+export class NavigationTracker {
   eventName: string = "event_data";
   enableNavigationTracking: boolean;
 
   constructor(enableNavigationTracking: boolean) {
-    super();
     this.enableNavigationTracking = enableNavigationTracking;
     this.initialiseEventListener();
   }
@@ -94,7 +98,7 @@ export class NavigationTracker extends BaseTracker {
     }
 
     // Ignore change links
-    if (BaseTracker.isChangeLink(element)) {
+    if (isChangeLink(element)) {
       return false;
     }
 
@@ -112,17 +116,17 @@ export class NavigationTracker extends BaseTracker {
         external: NavigationTracker.isExternalLink(element.href)
           ? "true"
           : "false",
-        link_domain: BaseTracker.getDomain(element.href),
-        "link_path_parts.1": BaseTracker.getDomainPath(element.href, 0),
-        "link_path_parts.2": BaseTracker.getDomainPath(element.href, 1),
-        "link_path_parts.3": BaseTracker.getDomainPath(element.href, 2),
-        "link_path_parts.4": BaseTracker.getDomainPath(element.href, 3),
-        "link_path_parts.5": BaseTracker.getDomainPath(element.href, 4),
+        link_domain: getDomain(element.href),
+        "link_path_parts.1": getDomainPath(element.href, 0),
+        "link_path_parts.2": getDomainPath(element.href, 1),
+        "link_path_parts.3": getDomainPath(element.href, 2),
+        "link_path_parts.4": getDomainPath(element.href, 3),
+        "link_path_parts.5": getDomainPath(element.href, 4),
       },
     };
 
     try {
-      BaseTracker.pushToDataLayer(navigationTrackerEvent);
+      pushToDataLayer(navigationTrackerEvent);
       return true;
     } catch (err) {
       logger.error("Error in trackNavigation", err);

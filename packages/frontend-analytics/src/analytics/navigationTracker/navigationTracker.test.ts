@@ -1,6 +1,6 @@
 import { describe, expect, jest, test } from "@jest/globals";
 import { NavigationTracker } from "./navigationTracker";
-import { BaseTracker } from "../baseTracker/baseTracker";
+import * as pushToDataLayer from "../../utils/pushToDataLayer";
 
 window.DI = { analyticsGa4: { cookie: { consent: true } } };
 
@@ -12,7 +12,7 @@ describe("navigationTracker", () => {
     bubbles: true,
     cancelable: true,
   });
-  jest.spyOn(BaseTracker, "pushToDataLayer");
+  jest.spyOn(pushToDataLayer, "pushToDataLayer");
   jest.spyOn(NavigationTracker.prototype, "trackNavigation");
   jest.spyOn(NavigationTracker.prototype, "initialiseEventListener");
 
@@ -42,7 +42,7 @@ describe("navigationTracker", () => {
 
     clickedElement.dispatchEvent(action);
     clickedElement.addEventListener("click", () => {
-      expect(BaseTracker.pushToDataLayer).toBeCalled();
+      expect(pushToDataLayer.pushToDataLayer).toBeCalled();
     });
   });
 
@@ -56,7 +56,7 @@ describe("navigationTracker", () => {
 
     element.dispatchEvent(action);
     element.addEventListener("click", () => {
-      expect(BaseTracker.pushToDataLayer).toBeCalled();
+      expect(pushToDataLayer.pushToDataLayer).toBeCalled();
     });
   });
 
@@ -143,7 +143,7 @@ describe("navigationTracker", () => {
       newInstance.trackNavigation(event);
     });
     element.dispatchEvent(action);
-    expect(BaseTracker.pushToDataLayer).not.toBeCalled();
+    expect(pushToDataLayer.pushToDataLayer).not.toBeCalled();
   });
 });
 

@@ -1,7 +1,7 @@
 import { describe, expect, jest, test, beforeEach } from "@jest/globals";
 import { FormResponseTracker } from "./formResponseTracker";
 import { FormEventInterface } from "../formTracker/formTracker.interface";
-import { BaseTracker } from "../baseTracker/baseTracker";
+import * as pushToDataLayer from "../../utils/pushToDataLayer";
 
 window.DI = { analyticsGa4: { cookie: { consent: true } } };
 
@@ -16,7 +16,7 @@ describe("form with multiple fields", () => {
     document.body.innerHTML = "";
   });
 
-  jest.spyOn(BaseTracker, "pushToDataLayer");
+  jest.spyOn(pushToDataLayer, "pushToDataLayer");
 
   test("trackFormResponse should return false if tracking is deactivated", () => {
     window.DI.analyticsGa4.cookie.consent = true;
@@ -183,12 +183,20 @@ describe("form with multiple fields", () => {
         "link_path_parts.5": "undefined",
       },
     };
-    expect(BaseTracker.pushToDataLayer).toBeCalledWith(dataLayerEventCheckbox);
-    expect(BaseTracker.pushToDataLayer).toBeCalledWith(dataLayerEventDropdown);
-    expect(BaseTracker.pushToDataLayer).toBeCalledWith(dataLayerEventText);
-    expect(BaseTracker.pushToDataLayer).toBeCalledWith(dataLayerEventPassword);
-    expect(BaseTracker.pushToDataLayer).toBeCalledWith(dataLayerEventRadio);
-    expect(BaseTracker.pushToDataLayer).toBeCalledWith(dataLayerEventTextarea);
+    expect(pushToDataLayer.pushToDataLayer).toBeCalledWith(
+      dataLayerEventCheckbox,
+    );
+    expect(pushToDataLayer.pushToDataLayer).toBeCalledWith(
+      dataLayerEventDropdown,
+    );
+    expect(pushToDataLayer.pushToDataLayer).toBeCalledWith(dataLayerEventText);
+    expect(pushToDataLayer.pushToDataLayer).toBeCalledWith(
+      dataLayerEventPassword,
+    );
+    expect(pushToDataLayer.pushToDataLayer).toBeCalledWith(dataLayerEventRadio);
+    expect(pushToDataLayer.pushToDataLayer).toBeCalledWith(
+      dataLayerEventTextarea,
+    );
   });
 });
 
@@ -198,7 +206,7 @@ describe("FormResponseTracker", () => {
     cancelable: true,
   });
 
-  jest.spyOn(BaseTracker, "pushToDataLayer");
+  jest.spyOn(pushToDataLayer, "pushToDataLayer");
   jest.spyOn(FormResponseTracker.prototype, "initialiseEventListener");
 
   test("new instance should call initialiseEventListener", () => {
@@ -213,7 +221,7 @@ describe("form with radio buttons", () => {
     cancelable: true,
   });
 
-  jest.spyOn(BaseTracker, "pushToDataLayer");
+  jest.spyOn(pushToDataLayer, "pushToDataLayer");
 
   test("datalayer event should be defined as default", () => {
     const isDataSensitive = false;
@@ -251,7 +259,7 @@ describe("form with radio buttons", () => {
         "link_path_parts.5": "undefined",
       },
     };
-    expect(BaseTracker.pushToDataLayer).toBeCalledWith(dataLayerEvent);
+    expect(pushToDataLayer.pushToDataLayer).toBeCalledWith(dataLayerEvent);
   });
 
   test("datalayer event should redact information if data is flagged as sensitive", () => {
@@ -293,7 +301,7 @@ describe("form with radio buttons", () => {
         "link_path_parts.5": "undefined",
       },
     };
-    expect(BaseTracker.pushToDataLayer).toBeCalledWith(dataLayerEvent);
+    expect(pushToDataLayer.pushToDataLayer).toBeCalledWith(dataLayerEvent);
   });
 });
 
@@ -303,7 +311,7 @@ describe("form with input checkbox", () => {
     cancelable: true,
   });
 
-  jest.spyOn(BaseTracker, "pushToDataLayer");
+  jest.spyOn(pushToDataLayer, "pushToDataLayer");
 
   test("datalayer event should be defined", () => {
     const isDataSensitive = false;
@@ -344,7 +352,7 @@ describe("form with input checkbox", () => {
         "link_path_parts.5": "undefined",
       },
     };
-    expect(BaseTracker.pushToDataLayer).toBeCalledWith(dataLayerEvent);
+    expect(pushToDataLayer.pushToDataLayer).toBeCalledWith(dataLayerEvent);
   });
 });
 describe("form with input text", () => {
@@ -353,7 +361,7 @@ describe("form with input text", () => {
     cancelable: true,
   });
 
-  jest.spyOn(BaseTracker, "pushToDataLayer");
+  jest.spyOn(pushToDataLayer, "pushToDataLayer");
 
   test("datalayer event should be defined", () => {
     const isDataSensitive = false;
@@ -389,7 +397,7 @@ describe("form with input text", () => {
         "link_path_parts.5": "undefined",
       },
     };
-    expect(BaseTracker.pushToDataLayer).toBeCalledWith(dataLayerEvent);
+    expect(pushToDataLayer.pushToDataLayer).toBeCalledWith(dataLayerEvent);
   });
 });
 
@@ -399,7 +407,7 @@ describe("form with input textarea", () => {
     cancelable: true,
   });
 
-  jest.spyOn(BaseTracker, "pushToDataLayer");
+  jest.spyOn(pushToDataLayer, "pushToDataLayer");
 
   test("datalayer event should be defined", () => {
     const isDataSensitive = false;
@@ -435,7 +443,7 @@ describe("form with input textarea", () => {
         "link_path_parts.5": "undefined",
       },
     };
-    expect(BaseTracker.pushToDataLayer).toBeCalledWith(dataLayerEvent);
+    expect(pushToDataLayer.pushToDataLayer).toBeCalledWith(dataLayerEvent);
   });
 });
 
@@ -445,7 +453,7 @@ describe("form with dropdown", () => {
     cancelable: true,
   });
 
-  jest.spyOn(BaseTracker, "pushToDataLayer");
+  jest.spyOn(pushToDataLayer, "pushToDataLayer");
 
   test("datalayer event should be defined", () => {
     const isDataSensitive = false;
@@ -478,7 +486,7 @@ describe("form with dropdown", () => {
         "link_path_parts.5": "undefined",
       },
     };
-    expect(BaseTracker.pushToDataLayer).toBeCalledWith(dataLayerEvent);
+    expect(pushToDataLayer.pushToDataLayer).toBeCalledWith(dataLayerEvent);
   });
 });
 

@@ -5,7 +5,8 @@ import {
   FormEventInterface,
   FormField,
 } from "../formTracker/formTracker.interface";
-import { BaseTracker } from "../baseTracker/baseTracker";
+import { getDomain, getDomainPath } from "../../utils/dataScrapers";
+import { pushToDataLayer } from "../../utils/pushToDataLayer";
 
 export class FormErrorTracker extends FormTracker {
   eventName: string = "form_error";
@@ -55,15 +56,15 @@ export class FormErrorTracker extends FormTracker {
             section: validateParameter(FormTracker.getSectionValue(field), 100),
             action: "error",
             external: "false",
-            link_domain: BaseTracker.getDomain(submitUrl),
-            "link_path_parts.1": BaseTracker.getDomainPath(submitUrl, 0),
-            "link_path_parts.2": BaseTracker.getDomainPath(submitUrl, 1),
-            "link_path_parts.3": BaseTracker.getDomainPath(submitUrl, 2),
-            "link_path_parts.4": BaseTracker.getDomainPath(submitUrl, 3),
-            "link_path_parts.5": BaseTracker.getDomainPath(submitUrl, 4),
+            link_domain: getDomain(submitUrl),
+            "link_path_parts.1": getDomainPath(submitUrl, 0),
+            "link_path_parts.2": getDomainPath(submitUrl, 1),
+            "link_path_parts.3": getDomainPath(submitUrl, 2),
+            "link_path_parts.4": getDomainPath(submitUrl, 3),
+            "link_path_parts.5": getDomainPath(submitUrl, 4),
           },
         };
-        BaseTracker.pushToDataLayer(formErrorTrackerEvent);
+        pushToDataLayer(formErrorTrackerEvent);
       });
       return true;
     } catch (err) {

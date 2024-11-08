@@ -1,7 +1,6 @@
-import { BaseTracker } from "../baseTracker/baseTracker";
 import { FormField } from "./formTracker.interface";
 
-export class FormTracker extends BaseTracker {
+export class FormTracker {
   FREE_TEXT_FIELD_TYPE = "free text field";
   DROPDOWN_FIELD_TYPE = "drop-down list";
   RADIO_FIELD_TYPE = "radio buttons";
