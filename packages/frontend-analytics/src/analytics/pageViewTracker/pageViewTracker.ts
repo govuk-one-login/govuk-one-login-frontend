@@ -7,6 +7,7 @@ import {
 import { validateParameter } from "../../utils/validateParameter";
 import { FormErrorTracker } from "../formErrorTracker/formErrorTracker";
 import { OptionsInterface } from "../core/core.interface";
+import { getTaxonomy, setTaxonomies } from "../../utils/taxonomyUtils";
 
 export class PageViewTracker extends BaseTracker {
   eventName: string = "page_view_ga4";
@@ -53,20 +54,7 @@ export class PageViewTracker extends BaseTracker {
       return false;
     }
 
-    // check for persisted taxonomies
-    // const { taxonomy_level1, taxonomy_level2, taxonomy_level3, taxonomy_level4, taxonomy_level5 } = parameters;
-    // const persistedTaxonomies = {
-    //   level2: taxonomy_level2,
-    //   level3: taxonomy_level3,
-    //   level4: taxonomy_level4,
-    //   level5: taxonomy_level5,
-    // };
-    if (taxonomy_level2 === "persisted from previous page") {
-      taxonomyLevel2 = localStorage.getItem("taxonomyLevel2")!;
-    } else {
-      // if taxonomy is not "persisted from...", then store this into localStorage
-      localStorage.setItem("taxonomyLevel2", taxonomyLevel2);
-    }
+    setTaxonomies(parameters);
 
     const pageViewTrackerEvent: PageViewEventInterface = {
       event: this.eventName,
@@ -79,7 +67,10 @@ export class PageViewTracker extends BaseTracker {
         status_code: validateParameter(parameters.statusCode.toString(), 3),
         title: validateParameter(parameters.englishPageTitle, 300),
         taxonomy_level1: validateParameter(parameters.taxonomy_level1, 100),
-        taxonomy_level2: validateParameter(taxonomyLevel2, 100),
+        taxonomy_level2: validateParameter(
+          getTaxonomy(parameters.taxonomy_level2, "Level2"),
+          100,
+        ),
         content_id: validateParameter(parameters.content_id, 100),
         logged_in_status: PageViewTracker.getLoggedInStatus(
           parameters.logged_in_status,
@@ -88,12 +79,18 @@ export class PageViewTracker extends BaseTracker {
         first_published_at: PageViewTracker.getFirstPublishedAt(),
         updated_at: PageViewTracker.getUpdatedAt(),
         relying_party: PageViewTracker.getRelyingParty(),
-        taxonomy_level3:
-          validateParameter(parameters.taxonomy_level3, 100) ?? "undefined",
-        taxonomy_level4:
-          validateParameter(parameters.taxonomy_level4, 100) ?? "undefined",
-        taxonomy_level5:
-          validateParameter(parameters.taxonomy_level5, 100) ?? "undefined",
+        taxonomy_level3: validateParameter(
+          getTaxonomy(parameters.taxonomy_level3, "Level3"),
+          100,
+        ),
+        taxonomy_level4: validateParameter(
+          getTaxonomy(parameters.taxonomy_level4, "Level4"),
+          100,
+        ),
+        taxonomy_level5: validateParameter(
+          getTaxonomy(parameters.taxonomy_level5, "Level5"),
+          100,
+        ),
       },
     };
 

@@ -156,6 +156,9 @@ It takes as a unique parameter an object define by :
 - englishPageTitle (string): English version of the page title.
 - taxonomy_level1 (string): Taxonomies are hierarchical tool that allows us to filter data for reporting and insights purposes.
 - taxonomy_level2 (string): Taxonomies are hierarchical tool that allows us to filter data for reporting and insights purposes.
+- taxonomy_level3 (string): Taxonomies are hierarchical tool that allows us to filter data for reporting and insights purposes.
+- taxonomy_level4 (string): Taxonomies are hierarchical tool that allows us to filter data for reporting and insights purposes.
+- taxonomy_level5 (string): Taxonomies are hierarchical tool that allows us to filter data for reporting and insights purposes.
 - content_id (string): Content ID is a unique ID for each front end display on a given page.
 - logged_in_status (boolean): Whether a user is logged in or logged out.
 - dynamic (boolean): This parameter indicates whether the page has multiple versions and uses the same URL.
@@ -168,6 +171,9 @@ window.DI.analyticsGa4.pageViewTracker.trackOnPageLoad({
   englishPageTitle: "english version of the page title",
   taxonomy_level1: "test tax1",
   taxonomy_level2: "test tax2",
+  taxonomy_level3: "test tax3",
+  taxonomy_level4: "test tax4",
+  taxonomy_level5: "test tax5",
   content_id: "<e4a3603d-2d3c-4ff1-9b80-d72c1e6b7a58>",
   logged_in_status: true,
   dynamic: true,
@@ -192,6 +198,9 @@ Example:
       englishPageTitle: pageTitleName,
       taxonomyLevel1: "authentication",
       taxonomyLevel2: "feedback",
+      taxonomyLevel3: "",
+      taxonomyLevel4: "",
+      taxonomyLevel5: "",
       contentId: "e08d04e6-b24f-4bad-9955-1eb860771747",
       loggedInStatus: false,
       dynamic: false,

@@ -13,12 +13,12 @@ export interface PageViewEventInterface {
     content_id: string;
     logged_in_status: string;
     dynamic: string;
-    first_published_at?: string;
-    updated_at?: string;
-    relying_party?: string;
     taxonomy_level3?: string;
     taxonomy_level4?: string;
     taxonomy_level5?: string;
+    first_published_at?: string;
+    updated_at?: string;
+    relying_party?: string;
   };
 }
 
@@ -42,10 +42,10 @@ export interface GTMInitInterface {
   "gtm.start": number;
 }
 
-export interface PersistedTaxonomies {
-  taxonomyLevel1: string;
-  taxonomyLevel2: string;
-  taxonomyLevel3: string;
-  taxonomyLevel4: string;
-  taxonomyLevel5: string;
+export enum TaxonomyLevels {
+  Level1 = "taxonomy_level1",
+  Level2 = "taxonomy_level2",
+  Level3 = "taxonomy_level3",
+  Level4 = "taxonomy_level4",
+  Level5 = "taxonomy_level5",
 }
