@@ -171,10 +171,21 @@ For example:
 - `fix(ticket-number): correct header alignment issue`
 - `docs(ticket-number): update README with contribution guidelines`
 
+
+When pushing commits, avoid `git push -f` to prevent overwriting others' changes. Use `git push --force-with-lease` to ensure remote changes aren’t accidentally overwritten.
+
+We also encourage squashing each merge to main using conventional commits. This keeps the git log clean and organised.
+
 7. **Open a Pull Request**
 
 We use a PR template to ensure all necessary details are captured. Simply fill in the details and check the relevant checkboxes. 
 
 8. **Review and Approval**
 
-Your PR needs to be reviewed by a member of the code owners, the digital-identity-frontend-capability team.Once approved can be merged into main.
+Your PR needs to be reviewed by a member of the code owners, the digital-identity-frontend-capability team. Once approved can be merged into main, but the branch should not be deleted.
+
+## Useful Links
+
+- [The GDS Way](https://gds-way.digital.cabinet-office.gov.uk/)
+- [GOV.UK Design System](https://design-system.service.gov.uk/)
+- [The Frontend Capability Team's Coding Standards](https://govukverify.atlassian.net/wiki/spaces/DIFC/pages/3779199166/Coding+Standards)
