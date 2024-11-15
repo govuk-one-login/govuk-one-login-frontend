@@ -10,7 +10,10 @@
         "createRelease": "github"
       }
     },
-    "projectsRelationship": "independent"
+    "projectsRelationship": "independent",
+    "version": {
+      "conventionalCommits": true
+    }
   },
   "targetDefaults": {
     "@nx/js:tsc": {

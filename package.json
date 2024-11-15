@@ -2,6 +2,7 @@
   "name": "govuk-one-login-frontend",
   "version": "0.0.0",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "build": "nx run-many --target=build",
     "test": "nx affected --target=test",
@@ -13,9 +14,11 @@
     "prepare": "husky"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
     "@nrwl/cli": "^15.9.3",
-    "@nx/eslint-plugin": "20.0.2",
     "@nx/eslint": "20.0.2",
+    "@nx/eslint-plugin": "20.0.2",
     "@nx/jest": "20.0.2",
     "@nx/js": "20.0.2",
     "@nx/node": "20.0.2",
