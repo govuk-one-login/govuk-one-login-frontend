@@ -53,6 +53,7 @@ jobs:
         TAG:
           [
             "frontend-analytics",
+            "frontend-asset-loader",
             "frontend-language-toggle",
             "frontend-passthrough-headers",
             "frontend-vital-signs",
