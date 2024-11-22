@@ -35,6 +35,12 @@ jobs:
       - run: git branch --track main origin/main
         if: ${{ github.event_name == 'pull_request' }}
 
+      - name: Set NX_BASE
+        run: echo "NX_BASE=${{ github.event.pull_request.base.sha }}" >> $GITHUB_ENV
+        if: ${{ github.event_name == 'pull_request' }}
+      - name: Set NX_HEAD
+        run: echo "NX_HEAD=${{ github.sha }}" >> $GITHUB_ENV 
+
       - run: npx nx affected -t lint test build
 
       - name: Cache test coverage reports
