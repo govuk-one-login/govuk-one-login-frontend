@@ -1,4 +1,4 @@
-import { parseAssets } from "../index";
+import { parseAssets } from "../utils/utils";
 
 describe("parseAssets", () => {
   const input = [
