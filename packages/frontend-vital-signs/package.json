@@ -2,13 +2,13 @@
   "name": "@govuk-one-login/frontend-vital-signs",
   "version": "0.0.4",
   "description": "",
-  "publishConfig": {
-    "access": "public"
-  },
   "type": "module",
   "esnext": "src/index.ts",
   "main": "cjs/index.cjs",
   "module": "esm/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c --watch",
