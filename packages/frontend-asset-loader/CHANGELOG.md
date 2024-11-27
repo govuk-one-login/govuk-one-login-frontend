@@ -1,3 +1,13 @@
+## 0.0.3 (2024-11-27)
+
+### 🩹 Fixes
+
+- switch npm ci to npm install ([33562c8](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/33562c8))
+
+### ❤️  Thank You
+
+- nickhealGDS
+
 ## 0.0.2 (2024-11-27)
 
 ### 🚀 Features
