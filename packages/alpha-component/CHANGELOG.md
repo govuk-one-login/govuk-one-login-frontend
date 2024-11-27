@@ -1,3 +1,7 @@
+## 0.0.25 (2024-11-27)
+
+This was a version bump only for @govuk-one-login/alpha-component to align it with other projects, there were no code changes.
+
 ## 0.0.24 (2024-11-27)
 
 ### 🚀 Features
