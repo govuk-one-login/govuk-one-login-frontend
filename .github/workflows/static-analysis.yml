@@ -35,7 +35,7 @@ jobs:
       - run: git branch --track main origin/main
         if: ${{ github.event_name == 'pull_request' }}
 
-      - run: npx nx affected -t lint test build
+      - run: npx nx affected -t lint test build --verbose
 
       - name: Cache test coverage reports
         id: cache-coverage-reports
@@ -53,6 +53,7 @@ jobs:
         TAG:
           [
             "frontend-analytics",
+            "frontend-asset-loader",
             "frontend-language-toggle",
             "frontend-passthrough-headers",
             "frontend-vital-signs",

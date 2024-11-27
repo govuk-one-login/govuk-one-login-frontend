@@ -1,0 +1,8 @@
+{
+  "name": "@govuk-one-login/frontend-asset-loader",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/frontend-asset-loader/src",
+  "// targets": "to see all targets run: nx show project frontend-asset-loader --web",
+  "targets": {}
+}
