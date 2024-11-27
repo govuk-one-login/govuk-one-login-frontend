@@ -169,6 +169,24 @@ Additionally, please ensure stylesheet file paths are updated
     @import "../../../node_modules/@govuk-one-login/frontend-language-toggle/build/stylesheet/styles";
 ```
 
+### ⚠️ Breaking Change
+
+As part of the upgrade to version 2 onwards, the import path for the addLanguageParam function has changed.
+
+In your Nunjucks configuration file (e.g., nunjucks.js), ensure the folder structure reflects the updated import paths:
+
+For **CommonJS**:
+
+```javascript
+const addLanguageParam = require("@govuk-one-login/frontend-language-toggle");
+```
+For **ES6/Typescript**:
+
+```typescript
+import addLanguageParam from "@govuk-one-login/frontend-language-toggle";
+```
+Please update your code accordingly to avoid compatibility issues.
+
 For full details on this change, see: https://github.com/govuk-one-login/govuk-one-login-frontend/pull/84 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
