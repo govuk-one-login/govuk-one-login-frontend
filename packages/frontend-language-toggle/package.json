@@ -5,6 +5,9 @@
   "main": "build/cjs/language-param-setter.cjs",
   "module": "build/esm/language-param-setter.js",
   "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "dev": "rollup -c --watch",
     "test": "jest",
