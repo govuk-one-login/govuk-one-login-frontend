@@ -1,4 +1,4 @@
-name: CD
+name: Release
 on:
   workflow_dispatch:
     inputs:
@@ -61,7 +61,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Set SHAs for affected packages
         uses: nrwl/nx-set-shas@v4
