@@ -4,6 +4,9 @@
   "description": "Reusable language toggle for GDS One Login",
   "main": "build/cjs/language-param-setter.cjs",
   "module": "build/esm/language-param-setter.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "scripts": {
     "dev": "rollup -c --watch",

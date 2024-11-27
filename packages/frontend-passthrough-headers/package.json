@@ -10,6 +10,9 @@
     "build": "rollup -c",
     "test": "jest -c --coverage"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "author": "Nick Heal",
   "license": "ISC",
   "repository": {

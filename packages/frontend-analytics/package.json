@@ -4,6 +4,9 @@
   "description": "Reusable GA4 package for GDS One Login",
   "main": "lib/analytics.js",
   "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
   "exports": {
     ".": "./lib/analytics.js"
   },
