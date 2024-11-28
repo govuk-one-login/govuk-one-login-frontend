@@ -1,3 +1,7 @@
+## 0.0.4 (2024-11-28)
+
+This was a version bump only for @govuk-one-login/frontend-asset-loader to align it with other projects, there were no code changes.
+
 ## 0.0.3 (2024-11-27)
 
 ### 🩹 Fixes
