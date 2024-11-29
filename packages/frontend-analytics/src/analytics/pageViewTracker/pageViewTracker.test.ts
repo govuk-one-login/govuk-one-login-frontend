@@ -20,6 +20,9 @@ const getParameters = (
   englishPageTitle: "home",
   taxonomy_level1: "taxo1",
   taxonomy_level2: "taxo2",
+  taxonomy_level3: "taxo3",
+  taxonomy_level4: "taxo4",
+  taxonomy_level5: "taxo5",
   content_id: "<e4a3603d-2d3c-4ff1-9b80-d72c1e6b7a58>",
   logged_in_status: true,
   dynamic: true,
@@ -90,6 +93,9 @@ describe("pageViewTracker", () => {
         title: parameters.englishPageTitle,
         taxonomy_level1: parameters.taxonomy_level1,
         taxonomy_level2: parameters.taxonomy_level2,
+        taxonomy_level3: parameters.taxonomy_level3,
+        taxonomy_level4: parameters.taxonomy_level4,
+        taxonomy_level5: parameters.taxonomy_level5,
         content_id: parameters.content_id,
         logged_in_status: PageViewTracker.getLoggedInStatus(
           parameters.logged_in_status,
@@ -119,6 +125,9 @@ describe("pageViewTracker", () => {
         title: parameters.englishPageTitle,
         taxonomy_level1: parameters.taxonomy_level1,
         taxonomy_level2: parameters.taxonomy_level2,
+        taxonomy_level3: parameters.taxonomy_level3,
+        taxonomy_level4: parameters.taxonomy_level4,
+        taxonomy_level5: parameters.taxonomy_level5,
         content_id: parameters.content_id,
         logged_in_status: PageViewTracker.getLoggedInStatus(
           parameters.logged_in_status,
@@ -303,7 +312,7 @@ describe("Form Error Tracker Trigger", () => {
   });
 });
 
-describe("Persisting taxonomy level 2 values", () => {
+describe("Persisting taxonomy level values", () => {
   beforeEach(() => {
     window.DI = {
       analyticsGa4: { cookie: { consent: true } },
@@ -313,12 +322,15 @@ describe("Persisting taxonomy level 2 values", () => {
     jest.spyOn(BaseTracker, "pushToDataLayer");
   });
 
-  test("Taxonomy level 2 is persisted from previous page", () => {
+  test("Taxonomy levels are persisted from previous page", () => {
     const instance = new PageViewTracker(getOptions());
     instance.trackOnPageLoad(getParameters());
     instance.trackOnPageLoad(
       getParameters({
         taxonomy_level2: "persisted from previous page",
+        taxonomy_level3: "persisted from previous page",
+        taxonomy_level4: "persisted from previous page",
+        taxonomy_level5: "persisted from previous page",
       }),
     );
     expect(BaseTracker.pushToDataLayer).toHaveBeenNthCalledWith(1, {
@@ -338,6 +350,9 @@ describe("Persisting taxonomy level 2 values", () => {
         status_code: "200",
         taxonomy_level1: "taxo1",
         taxonomy_level2: "taxo2",
+        taxonomy_level3: "taxo3",
+        taxonomy_level4: "taxo4",
+        taxonomy_level5: "taxo5",
         title: "home",
         updated_at: PageViewTracker.getUpdatedAt(),
       },
@@ -359,26 +374,44 @@ describe("Persisting taxonomy level 2 values", () => {
         status_code: "200",
         taxonomy_level1: "taxo1",
         taxonomy_level2: "taxo2",
+        taxonomy_level3: "taxo3",
+        taxonomy_level4: "taxo4",
+        taxonomy_level5: "taxo5",
         title: "home",
         updated_at: PageViewTracker.getUpdatedAt(),
       },
     });
   });
 
-  test("Taxonomy level 2 is saved to localStorage", () => {
+  test("Taxonomy levels are saved to localStorage", () => {
     const instance = new PageViewTracker(getOptions());
     instance.trackOnPageLoad(getParameters());
-    expect(localStorage.getItem("taxonomyLevel2")).toBe("taxo2");
+    expect(localStorage.getItem("taxonomy_level2")).toBe("taxo2");
+    expect(localStorage.getItem("taxonomy_level3")).toBe("taxo3");
+    expect(localStorage.getItem("taxonomy_level4")).toBe("taxo4");
+    expect(localStorage.getItem("taxonomy_level5")).toBe("taxo5");
   });
 
-  test("Taxonomy level 2 is not saved to localStorage if value === 'persisted from previous page'", () => {
+  test("Taxonomy levels are not saved to localStorage if value === 'persisted from previous page'", () => {
     const instance = new PageViewTracker(getOptions());
     instance.trackOnPageLoad(
       getParameters({
         taxonomy_level2: "persisted from previous page",
+        taxonomy_level3: "persisted from previous page",
+        taxonomy_level4: "persisted from previous page",
+        taxonomy_level5: "persisted from previous page",
       }),
     );
-    expect(localStorage.getItem("taxonomyLevel2")).not.toBe(
+    expect(localStorage.getItem("taxonomy_level2")).not.toBe(
+      "persisted from previous page",
+    );
+    expect(localStorage.getItem("taxonomy_level3")).not.toBe(
+      "persisted from previous page",
+    );
+    expect(localStorage.getItem("taxonomy_level4")).not.toBe(
+      "persisted from previous page",
+    );
+    expect(localStorage.getItem("taxonomy_level5")).not.toBe(
       "persisted from previous page",
     );
   });
