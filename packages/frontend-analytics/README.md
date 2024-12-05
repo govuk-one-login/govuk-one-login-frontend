@@ -114,7 +114,7 @@ window.DI.appInit(
 );
 ```
 
-[!NOTE] PII redact 
+[!NOTE] Redacting personally identifiable information can be configured at a global level or page level [!NOTE] 
 
 1. Global Configuration 
 
@@ -124,7 +124,7 @@ In your base Nunjucks template, the default isDataSensitive setting should remai
 
 In your view templates where you need to collect PII (use with caution):
 - Use Nunjucks templating to set the variable (e.g., isDataSensitive) to "false" 
-- Pass the variable to appInit: Include this variable in your window.DI.appInit call [!NOTE] 
+- Pass the variable to appInit: Include this variable in your window.DI.appInit call 
 
 [!NOTE] window.DI.appInit is a function loaded from analytics.js. That will create a new instance of our analytics library and store into window.DI.analyticsGa4 [!NOTE]
 
