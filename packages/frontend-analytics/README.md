@@ -114,6 +114,18 @@ window.DI.appInit(
 );
 ```
 
+[!NOTE] Redacting personally identifiable information can be configured at a global level or page level [!NOTE] 
+
+1. Global Configuration 
+
+In your base Nunjucks template, the default isDataSensitive setting should remain true or be omitted (as true is the default). This ensures that PII is redacted by default for all pages.
+
+2. Page-Specific Configuration (Optionally Allow PII)
+
+In your view templates where you need to collect PII (use with caution):
+- Use Nunjucks templating to set the variable (e.g., isDataSensitive) to "false" 
+- Pass the variable to appInit: Include this variable in your window.DI.appInit call 
+
 [!NOTE] window.DI.appInit is a function loaded from analytics.js. That will create a new instance of our analytics library and store into window.DI.analyticsGa4 [!NOTE]
 
 ### Analytics Cookie Consent
