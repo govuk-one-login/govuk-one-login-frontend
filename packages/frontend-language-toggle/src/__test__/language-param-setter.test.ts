@@ -33,4 +33,8 @@ describe("addLanguageParam function", () => {
     expect(result).toContain("lng=cy");
     expect(result.split("lng=").length - 1).toEqual(1); // ensures 'lng' parameter appears only once
   });
+  it("should return #invalid-url-lang-toggle if url is undefined", () => {
+    const result = addLanguageParam("en", undefined);
+    expect(result).toContain("#invalid-url-lang-toggle");
+  });
 });
