@@ -68,7 +68,7 @@ app.use("/assets", express.static(nodeModules("govuk-frontend/govuk/assets")));
 /** GA4 assets */
 app.use(
   "/ga4-assets",
-  express.static(nodeModules("@govuk-one-login/one-login-analytics/lib")),
+  express.static(nodeModules("@govuk-one-login/frontend-analytics/lib")),
 );
 app.use(
   session({
