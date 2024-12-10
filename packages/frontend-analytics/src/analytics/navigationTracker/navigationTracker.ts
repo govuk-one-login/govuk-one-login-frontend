@@ -1,11 +1,15 @@
 import logger from "loglevel";
 import { BaseTracker } from "../baseTracker/baseTracker";
-import { NavigationEventInterface } from "./navigationTracker.interface";
+import {
+  NavigationElement,
+  NavigationEventInterface,
+} from "./navigationTracker.interface";
 import { validateParameter } from "../../utils/validateParameter";
 
 export class NavigationTracker extends BaseTracker {
   eventName: string = "event_data";
   enableNavigationTracking: boolean;
+  targetUrl: string = "";
 
   constructor(enableNavigationTracking: boolean) {
     super();
@@ -37,7 +41,7 @@ export class NavigationTracker extends BaseTracker {
       return false;
     }
 
-    let element: HTMLLinkElement = event.target as HTMLLinkElement;
+    let element: NavigationElement = event.target as NavigationElement;
     element = NavigationTracker.getParentElementIfSpecificClass(element, [
       "govuk-header__logotype",
       "govuk-header__logotype-crown",
@@ -76,19 +80,21 @@ export class NavigationTracker extends BaseTracker {
     ) {
       const dataLinkValue = element.attributes.getNamedItem("data-link")?.value;
       if (dataLinkValue) {
-        element.href = `${window.location.protocol}//${window.location.host}${dataLinkValue}`;
+        this.targetUrl = `${window.location.protocol}//${window.location.host}${dataLinkValue}`;
       } else {
-        element.href = "undefined";
+        this.targetUrl = "undefined";
       }
     }
 
     // Ignore links that don't have an inbound or outbound href
     if (
-      !element.href?.length ||
-      element.href === "#" ||
-      element.href === `${window.location.href}#`
+      (element instanceof HTMLAnchorElement ||
+        element instanceof HTMLLinkElement) &&
+      (!element.href?.length ||
+        element.href === "#" ||
+        element.href === `${window.location.href}#`)
     ) {
-      element.href = "undefined";
+      this.targetUrl = "undefined";
     }
 
     // Ignore change links
@@ -101,21 +107,21 @@ export class NavigationTracker extends BaseTracker {
       event_data: {
         event_name: "navigation",
         type: NavigationTracker.getLinkType(element),
-        url: validateParameter(element.href, 500),
+        url: validateParameter(this.targetUrl, 500),
         text: element.textContent
           ? validateParameter(element.textContent.trim(), 100)
           : "undefined",
         section: NavigationTracker.getSection(element),
         action: "undefined",
-        external: NavigationTracker.isExternalLink(element.href)
+        external: NavigationTracker.isExternalLink(this.targetUrl)
           ? "true"
           : "false",
-        link_domain: BaseTracker.getDomain(element.href),
-        "link_path_parts.1": BaseTracker.getDomainPath(element.href, 0),
-        "link_path_parts.2": BaseTracker.getDomainPath(element.href, 1),
-        "link_path_parts.3": BaseTracker.getDomainPath(element.href, 2),
-        "link_path_parts.4": BaseTracker.getDomainPath(element.href, 3),
-        "link_path_parts.5": BaseTracker.getDomainPath(element.href, 4),
+        link_domain: BaseTracker.getDomain(this.targetUrl),
+        "link_path_parts.1": BaseTracker.getDomainPath(this.targetUrl, 0),
+        "link_path_parts.2": BaseTracker.getDomainPath(this.targetUrl, 1),
+        "link_path_parts.3": BaseTracker.getDomainPath(this.targetUrl, 2),
+        "link_path_parts.4": BaseTracker.getDomainPath(this.targetUrl, 3),
+        "link_path_parts.5": BaseTracker.getDomainPath(this.targetUrl, 4),
       },
     };
 
@@ -131,20 +137,20 @@ export class NavigationTracker extends BaseTracker {
   /**
    * Returns the parent element of the given HTMLLinkElement if it has a specific class.
    *
-   * @param {HTMLLinkElement} element - The HTMLLinkElement to check for a specific class.
+   * @param {NavigationElement} element - The NavigationElement to check for a specific class.
    * @param {string[]} classes - An array of classes to check against the parent element's class.
-   * @return {HTMLLinkElement} - The parent element of the parent element of the given HTMLLinkElement if it has a specific class, otherwise returns the original element.
+   * @return {NavigationElement} - The parent element of the parent element of the given HTMLLinkElement if it has a specific class, otherwise returns the original element.
    */
   static getParentElementIfSpecificClass(
-    element: HTMLLinkElement,
+    element: NavigationElement,
     classes: string[],
-  ): HTMLLinkElement {
+  ): NavigationElement {
     if (
       element.parentElement &&
       classes.includes(element.parentElement.className) &&
       element.parentElement.parentElement?.tagName === "A"
     ) {
-      return element.parentElement.parentElement as HTMLLinkElement;
+      return element.parentElement.parentElement as NavigationElement;
     }
     return element;
   }
@@ -166,10 +172,10 @@ export class NavigationTracker extends BaseTracker {
   /**
    * Returns the type of link based on the given HTML link element.
    *
-   * @param {HTMLLinkElement} element - The HTML link element to get the type of.
+   * @param {NavigationElement} element - The HTML link element to get the type of.
    * @return {string} The type of link: "footer", "header menu bar", "generic link", "generic button", or "undefined".
    */
-  static getLinkType(element: HTMLLinkElement): string {
+  static getLinkType(element: NavigationElement): string {
     switch (element.tagName) {
       case "A":
         switch (true) {
@@ -195,10 +201,10 @@ export class NavigationTracker extends BaseTracker {
   /**
    * Returns the type of section based on the given HTML link element.
    *
-   * @param {HTMLLinkElement} element - The HTML link element to get the type of.
+   * @param {NavigationElement} element - The HTML link element to get the type of.
    * @return {string} The section: "logo", "phase banner", "menu links", "support links", "licence", "copyright" or "undefined".
    */
-  static getSection(element: HTMLElement): string {
+  static getSection(element: NavigationElement): string {
     // if header
     if (NavigationTracker.isLogoLink(element)) {
       return "logo";
@@ -227,7 +233,7 @@ export class NavigationTracker extends BaseTracker {
    * @param {string} element - The HTML link element to get the type of.
    * @return {boolean} Returns true if the footer tag contains this element, false otherwise.
    */
-  static isFooterLink(element: HTMLElement): boolean {
+  static isFooterLink(element: NavigationElement): boolean {
     const footer = document.getElementsByTagName("footer")[0];
     return footer && footer.contains(element);
   }
@@ -238,7 +244,7 @@ export class NavigationTracker extends BaseTracker {
    * @param {string} element - The HTML link element to get the type of.
    * @return {boolean} Returns true if the header or nav tag contains this element, false otherwise.
    */
-  static isHeaderMenuBarLink(element: HTMLElement): boolean {
+  static isHeaderMenuBarLink(element: NavigationElement): boolean {
     const header = document.querySelector("header");
     const nav = document.querySelector("nav");
 
@@ -251,7 +257,7 @@ export class NavigationTracker extends BaseTracker {
    * @param {string} element - The HTML link element to get the type of.
    * @return {boolean} Returns true if the class name of this element includes "govuk-phase-banner", false otherwise.
    */
-  static isPhaseBannerLink(element: HTMLElement): boolean {
+  static isPhaseBannerLink(element: NavigationElement): boolean {
     const phaseBanner =
       document.getElementsByClassName("govuk-phase-banner")[0];
     return phaseBanner && phaseBanner.contains(element);
@@ -263,7 +269,7 @@ export class NavigationTracker extends BaseTracker {
    * @param {string} element - The HTML link element to get the type of.
    * @return {boolean} Returns true if the class name of this element includes "govuk-back-link", false otherwise.
    */
-  static isBackLink(element: HTMLElement): boolean {
+  static isBackLink(element: NavigationElement): boolean {
     const elementClassName: string = element.className;
     return elementClassName.includes("govuk-back-link");
   }
@@ -274,7 +280,7 @@ export class NavigationTracker extends BaseTracker {
    * @param {string} element - The HTML link element to get the type of.
    * @return {boolean} Returns true if the class name of this element includes "govuk-header__logo", false otherwise.
    */
-  static isLogoLink(element: HTMLElement): boolean {
+  static isLogoLink(element: NavigationElement): boolean {
     const logo = document.getElementsByClassName("govuk-header__logo")[0];
     return logo && logo.contains(element);
   }
@@ -285,7 +291,7 @@ export class NavigationTracker extends BaseTracker {
    * @param {string} element - The HTML link element to get the type of.
    * @return {boolean} Returns true if the nav tag contains this element, false otherwise.
    */
-  static isNavLink(element: HTMLElement): boolean {
+  static isNavLink(element: NavigationElement): boolean {
     const elementClassName: string = element.className;
     const isLink = elementClassName.includes("govuk-link");
     const header = document.getElementsByTagName("header")[0];
@@ -299,7 +305,7 @@ export class NavigationTracker extends BaseTracker {
    * @param {string} element - The HTML link element to get the type of.
    * @return {boolean} Returns true if the class name of this element includes "govuk-footer__inline-list", false otherwise.
    */
-  static isSupportLink(element: HTMLElement): boolean {
+  static isSupportLink(element: NavigationElement): boolean {
     const supportLinks = document.getElementsByClassName(
       "govuk-footer__inline-list",
     )[0];
@@ -312,7 +318,7 @@ export class NavigationTracker extends BaseTracker {
    * @param {string} element - The HTML link element to get the type of.
    * @return {boolean} Returns true if the class name of this element includes "govuk-footer__licence-description", false otherwise.
    */
-  static isLicenceLink(element: HTMLElement): boolean {
+  static isLicenceLink(element: NavigationElement): boolean {
     const supportLinks = document.getElementsByClassName(
       "govuk-footer__licence-description",
     )[0];
@@ -325,7 +331,7 @@ export class NavigationTracker extends BaseTracker {
    * @param {string} element - The HTML link element to get the type of.
    * @return {boolean} Returns true if the class name of this element includes "govuk-footer__copyright-logo", false otherwise.
    */
-  static isCopyright(element: HTMLElement): boolean {
+  static isCopyright(element: NavigationElement): boolean {
     const licenceLinks = document.getElementsByClassName(
       "govuk-footer__copyright-logo",
     )[0];
