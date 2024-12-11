@@ -17,6 +17,15 @@
     "test": "jest",
     "test:coverage": "jest --coverage src"
   },
+  "files": [
+    "components/",
+    "docs/",
+    "jest.config.js",
+    "lib/",
+    "package.json",
+    "src/",
+    "README.md"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/govuk-one-login/govuk-one-login-frontend.git"

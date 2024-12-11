@@ -14,6 +14,21 @@
     "dev": "rollup -c --watch",
     "test": "jest -c"
   },
+  "files": [
+    ".babelrc",
+    ".nvmrc",
+    "CHANGELOG.md",
+    "README.md",
+    "cjs/index.cjs",
+    "jest.config.ts",
+    "package.json",
+    "project.json",
+    "rollup.config.js",
+    "sonar-project.properties",
+    "/src",
+    "/test",
+    "tsconfig.json"
+  ],
   "author": "DI Frontend Capability Team",
   "license": "ISC",
   "repository": {
