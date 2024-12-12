@@ -26,6 +26,7 @@ export default {
         { src: "./src/macro.njk", dest: "./build" },
         { src: "./src/template.njk", dest: "./build" },
         { src: "./src/language-select.yaml", dest: "./build" },
+        { src: "./build/cjs/language-param-setter.d.ts", dest: "./build/cjs/", rename: "language-param-setter.d.cts" },
       ],
       hook: "closeBundle"
     }),
