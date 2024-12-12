@@ -59,6 +59,10 @@
     "tslib": "2.7.0",
     "typescript": "5.4.5"
   },
+  "exports": {
+    "import": "./esm/index.js",
+    "require": "./cjs/index.cjs"
+  },
   "types": "./esm/index.d.ts",
   "dependencies": {
     "pino": "^8.20.0"
