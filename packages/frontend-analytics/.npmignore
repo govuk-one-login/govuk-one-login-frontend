@@ -1,8 +1,0 @@
-/coverage/
-/node_modules/
-
-jest.config.jest
-project.json
-sonar-project.properties
-tsconfig.json
-webpack.config.js
