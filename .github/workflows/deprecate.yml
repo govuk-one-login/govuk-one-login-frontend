@@ -1,0 +1,40 @@
+name: Deprecate
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Deprecate package"
+        required: true
+        type: choice
+        options:
+          - "@govuk-one-login/alpha-component"
+          - "@govuk-one-login/frontend-analytics"
+          - "@govuk-one-login/frontend-language-toggle"
+          - "@govuk-one-login/frontend-passthrough-headers"
+          - "@govuk-one-login/frontend-vital-signs"
+          - "@govuk-one-login/frontend-asset-loader"
+          
+      version:
+        description: "Package Version"
+        required: true
+        type: string
+
+run-name: Deprecate ${{ github.event.inputs.target }}@${{ github.event.inputs.version }}
+
+jobs:
+  prepare-version-for-deprecation:
+    name: Prepare version for deprecation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Node.js and cache node modules
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+          registry-url: https://registry.npmjs.org/
+
+      - name: Deprecate Package Version
+        run: |
+            npm deprecate ${{ github.event.inputs.target }}@${{ github.event.inputs.version }} "This version is deprecated. Please upgrade to the latest version."
+        env:
+            NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
