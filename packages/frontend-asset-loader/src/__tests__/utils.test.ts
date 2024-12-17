@@ -5,10 +5,6 @@ jest.mock("../utils/logger", () => ({
   getLogger: jest.fn(),
 }));
 
-(getLogger as jest.Mock).mockReturnValue({
-  trace: jest.fn(),
-  warn: jest.fn(),
-});
 
 describe("isValidHashName", () => {
   it("returns true when valid hash name", () => {

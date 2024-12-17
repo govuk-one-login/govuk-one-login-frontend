@@ -1,5 +1,5 @@
 import { type Request } from "express";
-import { logger, CustomLogger } from "./utils/logger";
+import { CustomLogger, getLogger, setLogger } from "./utils/logger";
 import { processUserIP } from "./utils/userIP";
 import { APIGatewayProxyEvent } from "aws-lambda";
 import { getHeader } from "./utils/getHeader";
@@ -29,23 +29,24 @@ export function createPersonalDataHeaders(
   req: Request | APIGatewayProxyEvent,
   customLogger?: CustomLogger
 ): PersonalDataHeaders {
+  setLogger(customLogger);
   const domain = new URL(url).hostname;
   const personalDataHeaders: PersonalDataHeaders = {};
 
   const txmaAuditEncodedHeader = getHeader(req, HEADERS.HEADER_TXMA) as string;
-  const loggerToUse = customLogger || logger;
+  const logger = getLogger();
 
   if (txmaAuditEncodedHeader) {
     personalDataHeaders[HEADERS.HEADER_TXMA] = txmaAuditEncodedHeader;
-    loggerToUse.trace(
+    logger.trace(
       `Personal Data header "${HEADERS.HEADER_TXMA}" is being forwarded to domain "${domain}"`,
     );
   }
 
-  const userIP = processUserIP(req,loggerToUse);
+  const userIP = processUserIP(req,logger);
   if (userIP) {
     personalDataHeaders[HEADERS.OUTBOUND_FORWARDED_HEADER] = userIP;
-    loggerToUse.trace(
+    logger.trace(
       `Personal Data header "${HEADERS.OUTBOUND_FORWARDED_HEADER}" is being forwarded to domain "${domain}"`,
     );
   }
