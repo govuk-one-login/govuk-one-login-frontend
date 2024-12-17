@@ -4,12 +4,13 @@
   "scripts": {
     "start": "npm-run-all build-sass --parallel dev gulp-watch",
     "dev": "node --watch src/app.js",
-    "build-sass": "rm -rf public/style.css && sass --no-source-map ../../node_modules/@govuk-one-login/frontend-language-toggle/src/stylesheet/style.css  public/stylesheets/application.css --style compressed",
+    "build-sass": "rm -rf public/styles.css && sass --no-source-map ../../node_modules/@govuk-one-login/frontend-language-toggle/src/stylesheet/styles.css  public/stylesheets/application-ifsdjkn.css --style compressed",
     "gulp-watch": "gulp watch",
     "format": "npx eslint src/**/*.js --fix",
     "serve": "nodemon serve",
     "precommit": "npm run test && npm run format && git add .",
     "test": "node -e \"console.log('No tests currently defined');\"",
+    "test:integration:ci": "npx playwright install && start-server-and-test start http://localhost:3000 test:integration",
     "test:integration": "cucumber-js test/browser/features/v1/analytics --require test/browser/support/setup.js --require test/browser/step_definitions/**/*.js cucumber --tags 'not @skip'"
   },
   "dependencies": {
@@ -49,7 +50,8 @@
     "jest-environment-jsdom": "^29.7.0",
     "npm-run-all": "^4.1.5",
     "playwright": "1.47.2",
-    "prettier": "^3.0.3"
+    "prettier": "^3.0.3",
+    "start-server-and-test": "^2.0.9"
   },
   "husky": {
     "hooks": {
