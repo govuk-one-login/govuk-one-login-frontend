@@ -97,10 +97,10 @@ To ensure that NX is running the latest versions of all packages within the mono
 
 ## Publishing Packages
 
-To release a package from the monorepo, use the **GitHub Actions CD workflow**. This workflow automates versioning and package publishing to NPM. Follow these steps to initiate a release:
+To release a package from the monorepo, use the **GitHub Actions Release workflow**. This workflow automates versioning and package publishing to NPM. Follow these steps to initiate a release:
 
 1. **Trigger the Workflow**  
-   Go to the **Actions** tab in the GitHub repository, select the **CD** workflow, and click **Run workflow**.
+   Go to the **Actions** tab in the GitHub repository, select the **Release** workflow, and click **Run workflow**.
 
 2. **Fill in the Required Inputs**:
    - **Target**: Choose the package you want to release from the list of options:
@@ -121,6 +121,29 @@ To release a package from the monorepo, use the **GitHub Actions CD workflow**. 
 
 4. **Verify the Release**  
    Once the workflow completes, confirm the package has been published on the NPM registry.
+
+## Deprecating Packages
+
+To deprecate a specific package version from the monorepo, use the **GitHub Actions Deprecate workflow**. This workflow automates deprecating packages in NPM:
+
+1. **Trigger the Workflow**
+   Go to the **Actions** tab in the GitHub repository, select the **Deprecate** workflow, and click **Run workflow**.
+
+2. **Fill in the Required Inputs**:
+   - **Target**: Choose the package you want to release from the list of options:
+     - `@govuk-one-login/alpha-component`
+     - `@govuk-one-login/frontend-analytics`
+     - `@govuk-one-login/frontend-language-toggle`
+     - `@govuk-one-login/frontend-passthrough-headers`
+     - `@govuk-one-login/frontend-vital-signs`
+     - `@govuk-one-login/frontend-asset-loader`
+   - **Version**: Enter the version you want to deprecate (eg `0.0.1`, `0.1.1`, `1.0.1`)
+
+3. **Deprecation Process**
+   The workflow will automatically run the `npm deprecate` command with the input values you have selected.
+
+4. **Verify the Deprecated**
+   Once the workflow completes, confirm the package has been deprecated on the NPM registry with an appropriate message.
 
 ## Contributing Code
 
