@@ -88,7 +88,7 @@ app.use((req, res, next) => {
         req.protocol + "://" + req.get("host") + req.originalUrl,
       );
     } catch (error) {
-      console.warn("Failed to set currentUrl:", error.message);
+      console.error("Failed to set currentUrl:", error.message);
     }
     next();
   }
