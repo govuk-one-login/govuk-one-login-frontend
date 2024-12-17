@@ -110,7 +110,7 @@ The package is owned by the DI Frontend Capability team, part of the development
    );
    ```
 
-6. To make the current URL available, add a local variable within your  middleware. It's recommended to wrap this in a try-catch block to catch any errors and ensure you’re notified if the current URL cannot be retrieved.
+6. To make the current URL available, add a local variable within your  middleware. Wrap this logic in a try-catch block to handle potential errors gracefully. Use your logger of choice to ensure any issues are logged and addressed if the current URL cannot be retrieved.
 
    ```js
    app.use((req, res, next) => {
