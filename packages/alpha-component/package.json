@@ -1,6 +1,6 @@
 {
   "name": "@govuk-one-login/alpha-component",
-  "version": "0.0.27",
+  "version": "0.0.28",
   "description": "New blank package",
   "type": "module",
   "publishConfig": {
