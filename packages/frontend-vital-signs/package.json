@@ -1,6 +1,6 @@
 {
   "name": "@govuk-one-login/frontend-vital-signs",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "",
   "type": "module",
   "esnext": "src/index.ts",
@@ -39,7 +39,7 @@
     "url": "https://github.com/govuk-one-login/govuk-one-login-frontend/issues"
   },
   "homepage": "https://github.com/govuk-one-login/govuk-one-login-frontend/tree/main/packages/frontend-vital-signs#readme",
-  "devDependencies": { 
+  "devDependencies": {
     "@babel/core": "7.24.4",
     "@babel/preset-env": "7.24.4",
     "@rollup/plugin-json": "^6.1.0",
