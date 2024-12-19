@@ -41,7 +41,12 @@ main %}
       uaContainerId: "{{ uaContainerId }}",
       ga4ContainerId: "{{ ga4ContainerId }}",
     },
-    { cookieDomain: "localhost" },
+    {
+      isDataSensitive: false,
+      enableGa4Tracking: true,
+      enableUaTracking: true,
+      cookieDomain: "localhost",
+    },
   );
   window.DI.analyticsGa4.pageViewTracker.trackOnPageLoad({
     statusCode: "{{statusCode}}", // Access status code
