@@ -83,9 +83,13 @@ app.use((req, res, next) => {
     res.locals.htmlLang = req.i18n.language;
     res.locals.pageTitleLang = req.i18n.language;
     res.locals.mainLang = req.i18n.language;
-    res.locals.currentUrl = new URL(
-      req.protocol + "://" + req.get("host") + req.originalUrl,
-    );
+    try {
+      res.locals.currentUrl = new URL(
+        req.protocol + "://" + req.get("host") + req.originalUrl,
+      );
+    } catch (error) {
+      console.error("Failed to set currentUrl:", error.message);
+    }
     next();
   }
 });

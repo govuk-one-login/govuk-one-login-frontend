@@ -110,7 +110,7 @@ The package is owned by the DI Frontend Capability team, part of the development
    );
    ```
 
-6. Add local variable to set the current URL locally
+6. To make the current URL available, add a local variable within your  middleware. Wrap this logic in a try-catch block to handle potential errors gracefully. Use your logger of choice to ensure any issues are logged and addressed if the current URL cannot be retrieved.
 
    ```js
    app.use((req, res, next) => {
@@ -118,9 +118,15 @@ The package is owned by the DI Frontend Capability team, part of the development
        res.locals.htmlLang = req.i18n.language;
        res.locals.pageTitleLang = req.i18n.language;
        res.locals.mainLang = req.i18n.language;
-       // New line to be added
-       res.locals.currentUrl =
-         req.protocol + "://" + req.get("host") + req.originalUrl;
+
+      // New line to be added
+      try {
+      res.locals.currentUrl =
+        req.protocol + "://" + req.get("host") + req.originalUrl;
+      } catch (error) {
+      console.error("Error retrieving current URL:", error.message);
+      // Handle the error as needed
+      }
        next();
      }
    });
