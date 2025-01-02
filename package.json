@@ -45,5 +45,8 @@
     "hooks": {
       "pre-commit": "npm run precommit"
     }
+  },
+  "dependencies": {
+    "find-up": "^7.0.0"
   }
 }
