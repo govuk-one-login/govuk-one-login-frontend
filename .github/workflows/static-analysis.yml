@@ -29,6 +29,8 @@ jobs:
           cache: "npm"
       - run: npm install
 
+      - run: npm i @rollup/rollup-linux-x64-gnu
+
       - uses: nrwl/nx-set-shas@v4
 
       - run: git branch --track main origin/main
