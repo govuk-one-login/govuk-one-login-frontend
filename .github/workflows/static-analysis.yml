@@ -28,7 +28,8 @@ jobs:
           node-version: 20
           cache: "npm"
 
-      - run: npm install 
+      - run: npm install --verbose
+
       # Needed for github architecture as different to local machine set up
       - run: npm i @rollup/rollup-linux-x64-gnu
 
