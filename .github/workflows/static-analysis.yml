@@ -28,18 +28,11 @@ jobs:
           node-version: 20
           cache: "npm"
 
-      - run: npm install --verbose
+      - run: npm ci --verbose
 
-      # Needed for github architecture as different to local machine set up
       - run: npm i @rollup/rollup-linux-x64-gnu
 
-      - name: Rebuild native modules
-        run: npm rebuild
-
-      - uses: nrwl/nx-set-shas@v4
-
-      - run: git branch --track main origin/main
-        if: ${{ github.event_name == 'pull_request' }}
+      - run: npm rebuild
 
       - run: npx nx run-many -t build
 
