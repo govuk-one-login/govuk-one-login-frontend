@@ -45,6 +45,8 @@ jobs:
 
       - run: npx nx affected -t lint test test:integration:ci --verbose
         env:
+          env:
+          NX_DISABLE_DAEMON: true
           NX_DISABLE_DB: true
       
       - name: Cache test coverage reports
