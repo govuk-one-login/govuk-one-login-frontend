@@ -1,4 +1,4 @@
-import { getLogger } from "../../utils/logger";
+import { getLogger } from "../logger";
 
 jest.mock("../../utils/logger.ts", () => ({
   getLogger: jest.fn(),
