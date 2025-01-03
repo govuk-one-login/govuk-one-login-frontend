@@ -28,7 +28,7 @@ jobs:
           node-version: 20
           cache: "npm"
 
-      - run: npm ci --verbose
+      - run: npm install --verbose
 
       - run: npm i @rollup/rollup-linux-x64-gnu
 
