@@ -35,7 +35,7 @@
   },
   "types": "./build/esm/language-param-setter.d.ts",
   "dependencies": {
-    "cheerio": "^1.0.0-rc.12",
+    "cheerio": "0.22.0",
     "nunjucks": "^3.2.4"
   }
 }

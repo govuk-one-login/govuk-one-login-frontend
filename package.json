@@ -47,7 +47,6 @@
     }
   },
   "dependencies": {
-    "@rollup/rollup-linux-x64-gnu": "^4.29.1",
     "find-up": "^7.0.0"
   }
 }
