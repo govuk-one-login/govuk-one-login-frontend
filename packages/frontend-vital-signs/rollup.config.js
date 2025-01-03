@@ -7,11 +7,11 @@ export default {
   input: "src/index.ts",
   output: [
     {
-      file: "cjs/index.cjs",
+      file: "build/cjs/index.cjs",
       format: "cjs",
     },
     {
-      file: "esm/index.js",
+      file: "build/esm/index.js",
       format: "es",
     },
   ],
@@ -20,7 +20,7 @@ export default {
     json(),
     copy({
       targets: [
-        { src: "./cjs/index.d.ts", dest: "./cjs/", rename: "index.d.cts" }
+        { src: "./build/cjs/index.d.ts", dest: "./build/cjs/", rename: "index.d.cts" }
       ],
       hook: "closeBundle"
     }),

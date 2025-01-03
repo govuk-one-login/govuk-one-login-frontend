@@ -15,19 +15,9 @@
     "test": "jest -c"
   },
   "files": [
-    ".babelrc",
-    ".nvmrc",
-    "CHANGELOG.md",
-    "README.md",
-    "cjs/index.cjs",
-    "jest.config.ts",
+    "build/",
     "package.json",
-    "project.json",
-    "rollup.config.js",
-    "sonar-project.properties",
-    "/src",
-    "/test",
-    "tsconfig.json"
+    "README.md"
   ],
   "author": "DI Frontend Capability Team",
   "license": "ISC",
@@ -60,8 +50,8 @@
     "typescript": "5.4.5"
   },
   "exports": {
-    "import": "./esm/index.js",
-    "require": "./cjs/index.cjs"
+    "import": "./build/esm/index.js",
+    "require": "./build/cjs/index.cjs"
   },
   "types": "./esm/index.d.ts",
   "dependencies": {
