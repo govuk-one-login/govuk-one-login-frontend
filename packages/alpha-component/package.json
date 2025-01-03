@@ -24,6 +24,7 @@
   "author": "DI Frontend Capability Team",
   "license": "ISC",
   "devDependencies": {
+    "@types/cheerio": "^0.22.35",
     "@types/jest": "^29.5.13",
     "@types/jest-axe": "^3.5.9",
     "@types/nunjucks": "^3.2.6",
