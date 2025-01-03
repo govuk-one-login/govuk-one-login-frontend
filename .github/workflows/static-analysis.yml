@@ -33,6 +33,9 @@ jobs:
       # Needed for github architecture as different to local machine set up
       - run: npm i @rollup/rollup-linux-x64-gnu
 
+      - name: Rebuild native modules
+        run: npm rebuild
+
       - uses: nrwl/nx-set-shas@v4
 
       - run: git branch --track main origin/main
