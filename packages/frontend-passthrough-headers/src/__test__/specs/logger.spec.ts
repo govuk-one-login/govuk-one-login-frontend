@@ -1,10 +1,10 @@
-import { getLogger } from "../logger";
+import { getLogger, setLogger } from "../../utils/logger";
 
 jest.mock("../../utils/logger.ts", () => ({
   getLogger: jest.fn(),
 }));
 
-describe("logger functionality", () => {
+describe("getLogger functionality", () => {
   const mockTraceMessage = "warning message";
   (getLogger as jest.Mock).mockReturnValue({
     trace: jest.fn(),
@@ -32,4 +32,8 @@ describe("logger functionality", () => {
 
     expect(getLogger().warn).toHaveBeenCalledWith(mockTraceMessage);
   });
+});
+
+describe("setLogger functionality", () => {
+  setLogger();
 });
