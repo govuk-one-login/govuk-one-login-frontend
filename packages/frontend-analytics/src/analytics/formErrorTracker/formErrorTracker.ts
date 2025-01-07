@@ -5,8 +5,8 @@ import {
   FormEventInterface,
   FormField,
 } from "../formTracker/formTracker.interface";
-import { BaseTracker } from "../baseTracker/baseTracker";
 import { getDomain, getDomainPath } from "../../utils/dataScrapers";
+import { pushToDataLayer } from "../../utils/pushToDataLayer";
 
 export class FormErrorTracker extends FormTracker {
   eventName: string = "form_error";
@@ -64,7 +64,7 @@ export class FormErrorTracker extends FormTracker {
             "link_path_parts.5": getDomainPath(submitUrl, 4),
           },
         };
-        BaseTracker.pushToDataLayer(formErrorTrackerEvent);
+        pushToDataLayer(formErrorTrackerEvent);
       });
       return true;
     } catch (err) {

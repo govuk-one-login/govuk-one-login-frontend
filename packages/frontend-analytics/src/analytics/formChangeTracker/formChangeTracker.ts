@@ -2,12 +2,12 @@ import logger from "loglevel";
 import { validateParameter } from "../../utils/validateParameter";
 import { FormTracker } from "../formTracker/formTracker";
 import { FormEventInterface } from "../formTracker/formTracker.interface";
-import { BaseTracker } from "../baseTracker/baseTracker";
 import {
   getDomain,
   getDomainPath,
   isChangeLink,
 } from "../../utils/dataScrapers";
+import { pushToDataLayer } from "../../utils/pushToDataLayer";
 
 export class FormChangeTracker extends FormTracker {
   eventName: string = "form_change_response";
@@ -75,7 +75,7 @@ export class FormChangeTracker extends FormTracker {
     };
 
     try {
-      BaseTracker.pushToDataLayer(formChangeTrackerEvent);
+      pushToDataLayer(formChangeTrackerEvent);
       return true;
     } catch (err) {
       logger.error("Error in trackFormChange", err);

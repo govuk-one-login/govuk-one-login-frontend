@@ -106,67 +106,6 @@ describe("pageViewTracker", () => {
         relying_party: PageViewTracker.getRelyingParty(),
       },
     };
-    instance.trackOnPageLoad(getParameters());
-    expect(pushToDataLayer.pushToDataLayer).toBeCalledWith(dataLayerEvent);
-  });
-
-  test("pushToDataLayer is called with the good data", () => {
-    const parameters = getParameters();
-    const dataLayerEvent: PageViewEventInterface = {
-      event: instance.eventName,
-      page_view: {
-        language: PageViewTracker.getLanguage(),
-        location: PageViewTracker.getLocation(),
-        organisations: instance.organisations,
-        primary_publishing_organisation:
-          instance.primary_publishing_organisation,
-        referrer: PageViewTracker.getReferrer(),
-        status_code: parameters.statusCode.toString(),
-        title: parameters.englishPageTitle,
-        taxonomy_level1: parameters.taxonomy_level1,
-        taxonomy_level2: parameters.taxonomy_level2,
-        taxonomy_level3: parameters.taxonomy_level3,
-        taxonomy_level4: parameters.taxonomy_level4,
-        taxonomy_level5: parameters.taxonomy_level5,
-        content_id: parameters.content_id,
-        logged_in_status: PageViewTracker.getLoggedInStatus(
-          parameters.logged_in_status,
-        ),
-        dynamic: parameters.dynamic.toString(),
-        first_published_at: PageViewTracker.getFirstPublishedAt(),
-        updated_at: PageViewTracker.getUpdatedAt(),
-        relying_party: PageViewTracker.getRelyingParty(),
-      },
-    };
-    instance.trackOnPageLoad(parameters);
-    expect(pushToDataLayer.pushToDataLayer).toBeCalledWith(dataLayerEvent);
-  });
-
-  test("pushToDataLayer is called with the good data", () => {
-    const parameters = getParameters();
-    const dataLayerEvent: PageViewEventInterface = {
-      event: instance.eventName,
-      page_view: {
-        language: PageViewTracker.getLanguage(),
-        location: PageViewTracker.getLocation(),
-        organisations: instance.organisations,
-        primary_publishing_organisation:
-          instance.primary_publishing_organisation,
-        referrer: PageViewTracker.getReferrer(),
-        status_code: parameters.statusCode.toString(),
-        title: parameters.englishPageTitle,
-        taxonomy_level1: parameters.taxonomy_level1,
-        taxonomy_level2: parameters.taxonomy_level2,
-        content_id: parameters.content_id,
-        logged_in_status: PageViewTracker.getLoggedInStatus(
-          parameters.logged_in_status,
-        ),
-        dynamic: parameters.dynamic.toString(),
-        first_published_at: PageViewTracker.getFirstPublishedAt(),
-        updated_at: PageViewTracker.getUpdatedAt(),
-        relying_party: PageViewTracker.getRelyingParty(),
-      },
-    };
     instance.trackOnPageLoad(parameters);
     expect(pushToDataLayer.pushToDataLayer).toBeCalledWith(dataLayerEvent);
   });
@@ -433,5 +372,37 @@ describe("Persisting taxonomy level values", () => {
     expect(localStorage.getItem("taxonomy_level5")).not.toBe(
       "persisted from previous page",
     );
+  });
+});
+
+describe("datalayer population", () => {
+  test("Get Language from html tag", () => {
+    document.documentElement.lang = "ws";
+    const languageCode = PageViewTracker.getLanguage();
+    expect(languageCode).toEqual(document.documentElement.lang);
+  });
+
+  test("Get en as a default Language", () => {
+    document.documentElement.lang = "";
+    const languageCode = PageViewTracker.getLanguage();
+    expect(languageCode).toEqual("undefined");
+  });
+
+  test("Get location from DOM", () => {
+    Object.defineProperty(window, "location", {
+      value: new URL("http://localhost/"),
+      configurable: true,
+    });
+    const location = PageViewTracker.getLocation();
+    expect(location).toEqual(window.location.href);
+  });
+
+  test("Get referrer from DOM", () => {
+    Object.defineProperty(window, "referrer", {
+      value: new URL("http://localhost/"),
+      configurable: true,
+    });
+    const location = PageViewTracker.getLocation();
+    expect(location).toEqual(window.location.href);
   });
 });

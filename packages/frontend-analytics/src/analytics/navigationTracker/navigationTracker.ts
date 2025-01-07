@@ -1,5 +1,4 @@
 import logger from "loglevel";
-import { BaseTracker } from "../baseTracker/baseTracker";
 import { NavigationEventInterface } from "./navigationTracker.interface";
 import { validateParameter } from "../../utils/validateParameter";
 import {
@@ -7,13 +6,13 @@ import {
   getDomainPath,
   isChangeLink,
 } from "../../utils/dataScrapers";
+import { pushToDataLayer } from "../../utils/pushToDataLayer";
 
-export class NavigationTracker extends BaseTracker {
+export class NavigationTracker {
   eventName: string = "event_data";
   enableNavigationTracking: boolean;
 
   constructor(enableNavigationTracking: boolean) {
-    super();
     this.enableNavigationTracking = enableNavigationTracking;
     this.initialiseEventListener();
   }
@@ -125,7 +124,7 @@ export class NavigationTracker extends BaseTracker {
     };
 
     try {
-      BaseTracker.pushToDataLayer(navigationTrackerEvent);
+      pushToDataLayer(navigationTrackerEvent);
       return true;
     } catch (err) {
       logger.error("Error in trackNavigation", err);

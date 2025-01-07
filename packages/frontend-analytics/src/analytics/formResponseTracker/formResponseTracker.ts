@@ -5,8 +5,8 @@ import {
   FormEventInterface,
   FormField,
 } from "../formTracker/formTracker.interface";
-import { BaseTracker } from "../baseTracker/baseTracker";
 import { getDomain, getDomainPath } from "../../utils/dataScrapers";
+import { pushToDataLayer } from "../../utils/pushToDataLayer";
 
 export class FormResponseTracker extends FormTracker {
   eventName: string = "form_response";
@@ -110,7 +110,7 @@ export class FormResponseTracker extends FormTracker {
         };
 
         // Push the event to the data layer for each field
-        BaseTracker.pushToDataLayer(formResponseTrackerEvent);
+        pushToDataLayer(formResponseTrackerEvent);
       });
 
       return true;
