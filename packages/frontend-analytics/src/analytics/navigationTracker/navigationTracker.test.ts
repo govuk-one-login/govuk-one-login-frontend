@@ -1,6 +1,6 @@
 import { describe, expect, jest, test } from "@jest/globals";
 import { NavigationTracker } from "./navigationTracker";
-import { BaseTracker } from "../baseTracker/baseTracker";
+import * as pushToDataLayer from "../../utils/pushToDataLayer";
 
 window.DI = { analyticsGa4: { cookie: { consent: true } } };
 
@@ -12,7 +12,7 @@ describe("navigationTracker", () => {
     bubbles: true,
     cancelable: true,
   });
-  jest.spyOn(BaseTracker, "pushToDataLayer");
+  jest.spyOn(pushToDataLayer, "pushToDataLayer");
   jest.spyOn(NavigationTracker.prototype, "trackNavigation");
   jest.spyOn(NavigationTracker.prototype, "initialiseEventListener");
 
@@ -38,7 +38,7 @@ describe("navigationTracker", () => {
     header.appendChild(element);
     element.dispatchEvent(action);
     element.addEventListener("click", () => {
-      expect(BaseTracker.pushToDataLayer).toBeCalled();
+      expect(pushToDataLayer.pushToDataLayer).toBeCalled();
     });
   });
   test("should push data into data layer if click on logo icon within core", () => {
@@ -49,7 +49,7 @@ describe("navigationTracker", () => {
     header.appendChild(element);
     element.dispatchEvent(action);
     element.addEventListener("click", () => {
-      expect(BaseTracker.pushToDataLayer).toBeCalled();
+      expect(pushToDataLayer.pushToDataLayer).toBeCalled();
     });
   });
   // test trackNavigation return false if tracker is deactivated
@@ -134,7 +134,7 @@ describe("navigationTracker", () => {
       newInstance.trackNavigation(event);
     });
     href.dispatchEvent(action);
-    expect(BaseTracker.pushToDataLayer).toBeCalled();
+    expect(pushToDataLayer.pushToDataLayer).toBeCalled();
   });
 });
 
