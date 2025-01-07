@@ -1,35 +1,26 @@
-import { getLogger } from "../../utils/logger";
+import { getLogger, setLogger, CustomLogger } from "../../utils/logger";
 
-jest.mock("../../utils/logger.ts", () => ({
-  getLogger: jest.fn(),
-}));
-
-describe("getLogger functionality", () => {
-  const mockTraceMessage = "warning message";
-  (getLogger as jest.Mock).mockReturnValue({
+describe("getLogger", () => {
+  let consoleWarnSpy: jest.SpyInstance;
+  const customLogger: CustomLogger = {
     trace: jest.fn(),
     warn: jest.fn(),
+  };
+  beforeEach(() => {
+    consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
   });
-
   afterEach(() => {
-    jest.clearAllMocks();
+    consoleWarnSpy.mockRestore();
+    jest.resetModules();
   });
-
-  it("should use the custom logger if provided", () => {
-    const mockCustomLogger = {
-      trace: jest.fn(),
-      warn: jest.fn(),
-    };
-
-    mockCustomLogger.trace(mockTraceMessage);
-
-    expect(mockCustomLogger.trace).toHaveBeenCalledWith(mockTraceMessage);
-    expect(getLogger().trace).not.toHaveBeenCalled();
+  it("should return console when no logger is set", () => {
+    const logger = getLogger();
+    expect(consoleWarnSpy).toHaveBeenCalledWith("Warning: Logger is undefined");
+    expect(logger).toBe(console);
   });
-
-  it("should use default logger if custom logger is not provided", () => {
-    getLogger().warn(mockTraceMessage);
-
-    expect(getLogger().warn).toHaveBeenCalledWith(mockTraceMessage);
+  it("should return the custom logger when set", () => {
+    setLogger(customLogger);
+    const logger = getLogger();
+    expect(logger).toBe(customLogger);
   });
 });
