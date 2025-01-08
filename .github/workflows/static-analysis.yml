@@ -35,7 +35,11 @@ jobs:
       - run: git branch --track main origin/main
         if: ${{ github.event_name == 'pull_request' }}
 
-      - run: npx nx affected -t lint test build test:integration:ci --verbose
+      - run: npx nx run-many -t build
+
+      - run: npx nx affected -t lint test test:integration:ci --verbose
+        env:
+          NX_DISABLE_DB: true
       
       - name: Cache test coverage reports
         id: cache-coverage-reports

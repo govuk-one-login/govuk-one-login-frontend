@@ -11,18 +11,9 @@
     "test": "jest -c --coverage"
   },
   "files": [
-    ".babelrc",
-    ".nvmrc",
-    "cjs/index.cjs",
-    "cjs/index.d.cts",
-    "jest.config.ts",
+    "build/",
     "package.json",
-    "project.json",
-    "rollup.config.js",
-    "sonar-project.properties",
-    "/src",
-    "README.md",
-    "tsconfig.json"
+    "README.md"
   ],
   "publishConfig": {
     "access": "public"
