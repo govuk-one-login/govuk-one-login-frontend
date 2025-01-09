@@ -1,3 +1,13 @@
+## 0.1.1 (2025-01-09)
+
+### 🩹 Fixes
+
+- **vitals and headers:** update build config to include required release files ([17efb2b](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/17efb2b))
+
+### ❤️  Thank You
+
+- di-aholme
+
 ## 0.1.0 (2024-12-17)
 
 ### 🚀 Features
