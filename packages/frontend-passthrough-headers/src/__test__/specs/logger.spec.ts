@@ -1,9 +1,14 @@
 import pino from "pino";
-import { CustomLogger, getLogger, setLogger, resetLogger } from "../../utils/logger";
+import {
+  CustomLogger,
+  getLogger,
+  setLogger,
+  resetLogger,
+} from "../../utils/logger";
 
 jest.mock("pino");
 
-describe("getLogger functionality", () => {
+describe("Logger functionality", () => {
   let consoleWarnSpy: jest.SpyInstance;
 
   const customLogger: CustomLogger = {
@@ -11,7 +16,7 @@ describe("getLogger functionality", () => {
     warn: jest.fn(),
   };
 
-  beforeEach(()=> {
+  beforeEach(() => {
     resetLogger();
     consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
   });
@@ -21,41 +26,44 @@ describe("getLogger functionality", () => {
     jest.clearAllMocks();
   });
 
-  it("should return console when no logger is set", () => {
-    const logger = getLogger();
-    expect(consoleWarnSpy).toHaveBeenCalledWith("Warning: Logger is undefined");
-    expect(logger).toBe(console);
+  describe("getLogger", () => {
+    it("should return console when no logger is set", () => {
+      const logger = getLogger();
+      expect(consoleWarnSpy).toHaveBeenCalledWith(
+        "Warning: Logger is undefined",
+      );
+      expect(logger).toBe(console);
+    });
+
+    it("should return the custom logger when set", () => {
+      setLogger(customLogger);
+      const logger = getLogger();
+      expect(logger).toBe(customLogger);
+    });
   });
 
-  it("should return the custom logger when set", () => {
-    setLogger(customLogger);
-    const logger = getLogger();
-    expect(logger).toBe(customLogger);
-  });
-});
+  describe("setLogger", () => {
+    it("sets the logger as default pino logger if no custom logger is provided", () => {
+      const mockPinoLogger = {
+        trace: jest.fn(),
+        warn: jest.fn(),
+      };
 
-describe("setLogger", () => {
-  it("sets the logger as custom logger if provided", () => {
-    const mockPinoLogger = {
-      trace: jest.fn(),
-      warn: jest.fn(),
-    };
+      (pino as unknown as jest.Mock).mockReturnValue(mockPinoLogger);
 
-    (pino as unknown as jest.Mock).mockReturnValue(mockPinoLogger);
+      setLogger();
+      const logger = getLogger();
 
-    setLogger();
-    const logger = getLogger();
+      logger.trace("Test trace message");
+      logger.warn("Test warn message");
 
-    logger.trace("Test trace message");
-    logger.warn("Test warn message");
+      expect(mockPinoLogger.trace).toHaveBeenCalledWith("Test trace message");
+      expect(mockPinoLogger.warn).toHaveBeenCalledWith("Test warn message");
 
-    expect(mockPinoLogger.trace).toHaveBeenCalledWith("Test trace message");
-    expect(mockPinoLogger.warn).toHaveBeenCalledWith("Test warn message");
-
-    // Ensure `pino` was called with the correct configuration
-    expect(pino).toHaveBeenCalledWith({
-      name: "@govuk-one-login/frontend-passthrough-headers",
-      level: expect.any(String)
+      expect(pino).toHaveBeenCalledWith({
+        name: "@govuk-one-login/frontend-passthrough-headers",
+        level: expect.any(String),
+      });
     });
   });
 });
