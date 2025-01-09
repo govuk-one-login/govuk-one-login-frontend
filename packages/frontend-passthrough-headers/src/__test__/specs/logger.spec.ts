@@ -36,17 +36,16 @@ describe("setLogger", () => {
   it("sets the logger as custom logger if provided", () => {
     const customLogger = {
       trace: jest.fn(),
-      warn: jest.fn()
+      warn: jest.fn(),
     };
-  
+
     setLogger(customLogger);
     const logger = getLogger();
 
     logger.trace("Custom trace message");
     expect(customLogger.trace).toHaveBeenCalledWith("Custom trace message");
-  
+
     logger.warn("Custom warn message");
     expect(customLogger.warn).toHaveBeenCalledWith("Custom warn message");
   });
-  
 });
