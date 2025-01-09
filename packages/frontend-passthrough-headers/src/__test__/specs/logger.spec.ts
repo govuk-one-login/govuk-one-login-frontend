@@ -1,8 +1,9 @@
-import { getLogger, setLogger, CustomLogger } from "../../utils/logger";
+import pino from "pino";
+import { CustomLogger, getLogger, setLogger, resetLogger } from "../../utils/logger";
 
 jest.mock("pino");
 
-describe("getLogger funcioality", () => {
+describe("getLogger functionality", () => {
   let consoleWarnSpy: jest.SpyInstance;
 
   const customLogger: CustomLogger = {
@@ -10,13 +11,14 @@ describe("getLogger funcioality", () => {
     warn: jest.fn(),
   };
 
-  beforeEach(() => {
+  beforeEach(()=> {
+    resetLogger();
     consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
   });
 
   afterEach(() => {
     consoleWarnSpy.mockRestore();
-    jest.resetModules();
+    jest.clearAllMocks();
   });
 
   it("should return console when no logger is set", () => {
@@ -34,18 +36,26 @@ describe("getLogger funcioality", () => {
 
 describe("setLogger", () => {
   it("sets the logger as custom logger if provided", () => {
-    const customLogger = {
+    const mockPinoLogger = {
       trace: jest.fn(),
       warn: jest.fn(),
     };
 
-    setLogger(customLogger);
+    (pino as unknown as jest.Mock).mockReturnValue(mockPinoLogger);
+
+    setLogger();
     const logger = getLogger();
 
-    logger.trace("Custom trace message");
-    expect(customLogger.trace).toHaveBeenCalledWith("Custom trace message");
+    logger.trace("Test trace message");
+    logger.warn("Test warn message");
 
-    logger.warn("Custom warn message");
-    expect(customLogger.warn).toHaveBeenCalledWith("Custom warn message");
+    expect(mockPinoLogger.trace).toHaveBeenCalledWith("Test trace message");
+    expect(mockPinoLogger.warn).toHaveBeenCalledWith("Test warn message");
+
+    // Ensure `pino` was called with the correct configuration
+    expect(pino).toHaveBeenCalledWith({
+      name: "@govuk-one-login/frontend-passthrough-headers",
+      level: expect.any(String)
+    });
   });
 });

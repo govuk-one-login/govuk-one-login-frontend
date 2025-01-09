@@ -31,3 +31,7 @@ export const getLogger = (): pino.Logger | CustomLogger => {
   }
   return logger;
 };
+
+export const resetLogger = () => {
+  logger = undefined;
+};
