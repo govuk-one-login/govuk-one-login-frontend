@@ -65,5 +65,23 @@ describe("Logger functionality", () => {
         level: expect.any(String),
       });
     });
+
+    it("returns warning if logger already exists", () => {
+      setLogger(customLogger);
+
+      const customLoggerDupe: CustomLogger = {
+        trace: jest.fn(),
+        warn: jest.fn(),
+      };
+
+      setLogger(customLoggerDupe);
+      const logger = getLogger();
+
+      expect(logger).toBe(customLogger);
+      expect(logger).not.toBe(customLoggerDupe);
+      expect(logger.warn).toHaveBeenCalledWith(
+        "Warning: Logging instance already exists",
+      );
+    });
   });
 });
