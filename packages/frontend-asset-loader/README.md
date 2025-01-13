@@ -1,9 +1,8 @@
 <!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 
- [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=govuk-one-login_frontend-asset-loader&metric=coverage)](https://sonarcloud.io/summary/overall?id=govuk-one-login_frontend-asset-loader)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=govuk-one-login_frontend-asset-loader&metric=coverage)](https://sonarcloud.io/summary/overall?id=govuk-one-login_frontend-asset-loader)
 
 <a name="readme-top"></a>
-
 
 <!-- PROJECT LOGO -->
 <br />

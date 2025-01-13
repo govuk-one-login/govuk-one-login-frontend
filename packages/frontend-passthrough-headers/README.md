@@ -1,4 +1,4 @@
- [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=govuk-one-login_frontend-passthrough-headers&metric=coverage)](https://sonarcloud.io/summary/overall?id=govuk-one-login_frontend-passthrough-headers)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=govuk-one-login_frontend-passthrough-headers&metric=coverage)](https://sonarcloud.io/summary/overall?id=govuk-one-login_frontend-passthrough-headers)
 
 
 # @govuk-one-login/frontend-passthrough-headers
