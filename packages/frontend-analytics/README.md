@@ -1,5 +1,7 @@
 <!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 
+ [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=govuk-one-login_di-fec-ga4&metric=coverage)](https://sonarcloud.io/summary/overall?id=govuk-one-login_di-fec-ga4)
+
 <a name="readme-top"></a>
 
 <!-- PROJECT LOGO -->
