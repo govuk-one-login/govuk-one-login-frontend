@@ -32,6 +32,7 @@ jobs:
       # required set up steps for Github architecture
       - run: npm i @rollup/rollup-linux-x64-gnu
       - run: npm i @nx/nx-linux-x64-gnu
+      - run: npm i ajv-keywords@3.5.2
 
       - uses: nrwl/nx-set-shas@v4
 
