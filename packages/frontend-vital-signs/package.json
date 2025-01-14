@@ -3,9 +3,8 @@
   "version": "0.1.1",
   "description": "",
   "type": "module",
-  "esnext": "src/index.ts",
-  "main": "cjs/index.cjs",
-  "module": "esm/index.js",
+  "main": "build/cjs/index.cjs",
+  "module": "build/esm/index.js",
   "publishConfig": {
     "access": "public"
   },
@@ -53,7 +52,7 @@
     "import": "./build/esm/index.js",
     "require": "./build/cjs/index.cjs"
   },
-  "types": "./esm/index.d.ts",
+  "types": "./build/esm/index.d.ts",
   "dependencies": {
     "pino": "^8.20.0"
   }
