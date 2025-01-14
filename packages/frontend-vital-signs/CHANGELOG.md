@@ -1,3 +1,15 @@
+## 0.1.2 (2025-01-14)
+
+### 🩹 Fixes
+
+- update import paths for vital signs ([5160e07](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/5160e07))
+- **dfc-714:** specify cache-dependency-path for lock files ([f0581c3](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/f0581c3))
+
+### ❤️  Thank You
+
+- di-aholme
+- nickhealGDS
+
 ## 0.1.1 (2025-01-09)
 
 ### 🩹 Fixes

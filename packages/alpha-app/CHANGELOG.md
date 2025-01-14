@@ -1,3 +1,42 @@
+## 0.0.13 (2025-01-14)
+
+### 🚀 Features
+
+- **DFC-581:** update middleware in alpha-app app.js to handle errors with currentUrl construction ([d6556bc](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/d6556bc))
+- **673:** update package-lock.json file ([86f164b](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/86f164b))
+- **673:** update package-lock.json file ([1a71749](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/1a71749))
+- **673:** refactor utils functions out of index file ([a9204d2](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/a9204d2))
+- **DFC-673:** update package-lock.json to sync with workflows ([d5a9ab6](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/d5a9ab6))
+- **DFC-673:** update package-lock.json alpha app to use cheerio v0.22.0 ([042be85](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/042be85))
+- **DFC-673:** update package-lock.json ([f4e80ce](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/f4e80ce))
+- **DFC-673:** undo change to nx affected and add verbose ([5c88da5](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/5c88da5))
+- **DFC-673:** remove caret update in alpha-app ([f94e83f](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/f94e83f))
+- **673:** undo pipeline change ([1f3f798](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/1f3f798))
+- **673:** undo pipeline change ([455874d](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/455874d))
+- **DFC-673:** add pipeline changes ([1707fea](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/1707fea))
+- **DFC-673:** add cached asset loader functionality ([cdfd966](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/cdfd966))
+- **DFC-704:** add commitlint ([2a67b52](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/2a67b52))
+- **DFC-704:** add commitlint ([f064481](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/f064481))
+- run SonarCloud scans on main branch ([5398e84](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/5398e84))
+
+### 🩹 Fixes
+
+- **dfc-714:** specify cache-dependency-path for lock files ([f0581c3](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/f0581c3))
+- **vitals and headers:** update build config to include required release files ([17efb2b](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/17efb2b))
+- switch npm ci to npm install ([33562c8](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/33562c8))
+- **LT - DFC-712:** update rollup config to include stylesheet, template, macro, and yaml select ([73d0c3b](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/73d0c3b))
+
+### 🧱 Updated Dependencies
+
+- Updated @govuk-one-login/frontend-vital-signs to 0.1.2
+
+### ❤️  Thank You
+
+- di-aholme
+- Joanneyoung01
+- nickhealGDS
+- SophiaDWokoma @SophiaDWokoma
+
 ## 0.0.12 (2025-01-09)
 
 ### 🚀 Features
