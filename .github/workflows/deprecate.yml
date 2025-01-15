@@ -7,19 +7,19 @@ on:
         required: true
         type: choice
         options:
-          - "alpha-component"
-          - "frontend-analytics"
-          - "frontend-language-toggle"
-          - "frontend-passthrough-headers"
-          - "frontend-vital-signs"
-          - "frontend-asset-loader"
+          - "@govuk-one-login/alpha-component"
+          - "@govuk-one-login/frontend-analytics"
+          - "@govuk-one-login/frontend-language-toggle"
+          - "@govuk-one-login/frontend-passthrough-headers"
+          - "@govuk-one-login/frontend-vital-signs"
+          - "@govuk-one-login/frontend-asset-loader"
           
       version:
         description: "Package Version"
         required: true
         type: string
 
-run-name: Deprecate @govuk-one-login/${{ github.event.inputs.target }}@${{ github.event.inputs.version }}
+run-name: Deprecate ${{ github.event.inputs.target }}@${{ github.event.inputs.version }}
 
 jobs:
   prepare-version-for-deprecation:
@@ -32,19 +32,15 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.PAT }}
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Set up Node.js and cache node modules
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: "npm"
-          cache-dependency-path: packages/${{ github.event.inputs.target }}/package-lock.json
           registry-url: https://registry.npmjs.org/
+          token: ${{ secrets.NPM_ACCESS_TOKEN }}
 
       - name: Deprecate Package Version
         run: |
-            npm deprecate @govuk-one-login/${{ github.event.inputs.target }}@${{ github.event.inputs.version }} "This version is deprecated. Please upgrade to the latest version."
+            npm deprecate ${{ github.event.inputs.target }}@${{ github.event.inputs.version }} "This version is deprecated. Please upgrade to the latest version."
         env:
-            NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
+          NODE_AUTH_TOKEN: ${{secrets.NPM_ACCESS_TOKEN}}
