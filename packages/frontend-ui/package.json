@@ -9,8 +9,14 @@
     "access": "public"
   },
   "scripts": {
+    "build": "rollup -c",
     "test": "echo \"Error: no test specified\""
   },
+  "files": [
+    "build/",
+    "package.json",
+    "README.md"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/govuk-one-login/govuk-one-login-frontend.git"
