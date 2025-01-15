@@ -12,6 +12,7 @@ on:
           - "frontend-language-toggle"
           - "frontend-passthrough-headers"
           - "frontend-vital-signs"
+          - "frontend-ui"
           - "frontend-asset-loader"
           
       version:

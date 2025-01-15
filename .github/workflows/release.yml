@@ -12,6 +12,7 @@ on:
           - "@govuk-one-login/frontend-language-toggle"
           - "@govuk-one-login/frontend-passthrough-headers"
           - "@govuk-one-login/frontend-vital-signs"
+          - "@govuk-one-login/frontend-ui"
           - "@govuk-one-login/frontend-asset-loader"
           
       increment:

@@ -60,6 +60,7 @@ jobs:
             "frontend-asset-loader",
             "frontend-language-toggle",
             "frontend-passthrough-headers",
+            "frontend-ui",
             "frontend-vital-signs",
           ]
     steps:

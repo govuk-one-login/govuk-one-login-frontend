@@ -1,16 +1,15 @@
-// add file to export here
-
 import typescript from "rollup-plugin-typescript2";
 
 export default {
-  input: "",
+  external: ["forwarded-parse", "pino"],
+  input: "src/index.ts",
   output: [
     {
-      file: "",
+      file: "build/cjs/index.cjs",
       format: "cjs",
     },
     {
-      file: "",
+      file: "build/esm/index.js",
       format: "es",
     },
   ],
