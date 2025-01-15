@@ -24,6 +24,7 @@
   "author": "DI Frontend Capability Team",
   "license": "ISC",
   "devDependencies": {
+    "@types/cheerio": "^0.22.35",
     "@types/jest": "^29.5.13",
     "@types/jest-axe": "^3.5.9",
     "@types/nunjucks": "^3.2.6",
@@ -35,7 +36,7 @@
   },
   "types": "./build/esm/language-param-setter.d.ts",
   "dependencies": {
-    "cheerio": "^1.0.0-rc.12",
+    "cheerio": "0.22.0",
     "nunjucks": "^3.2.4"
   }
 }
