@@ -1,5 +1,5 @@
 {
-  "name": "@govuk-one-login-frontend/frontend-ui",
+  "name": "@govuk-one-login/frontend-ui",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
