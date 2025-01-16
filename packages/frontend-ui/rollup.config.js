@@ -1,7 +1,6 @@
 import typescript from "rollup-plugin-typescript2";
 
 export default {
-  external: ["forwarded-parse", "pino"],
   input: "src/index.ts",
   output: [
     {
