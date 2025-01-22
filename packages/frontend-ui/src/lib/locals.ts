@@ -1,8 +1,8 @@
-import { Request, Response, NextFunction } from 'express';
-import { getLogger, CustomLogger, setLogger } from "../utils/logger";
+import { Request, Response, NextFunction } from "express";
+import { getLogger, CustomLogger, setCustomLogger } from "../utils/logger";
 
 export default {
-  getGTM: function (req:Request, res:Response, next:NextFunction) {
+  getGTM: function (req: Request, res: Response, next: NextFunction) {
     res.locals.ga4ContainerId = req.app.get("APP.GTM.GA4_CONTAINER_ID");
     res.locals.uaContainerId = req.app.get("APP.GTM.UA_CONTAINER_ID");
     res.locals.analyticsCookieDomain = req.app.get(
@@ -32,16 +32,22 @@ export default {
       "APP.GTM.GA4_SELECT_CONTENT_ENABLED",
     );
     next();
-    
   },
 
-  getAssetPath: function (req:Request, res:Response, next:NextFunction) {
+  getAssetPath: function (req: Request, res: Response, next: NextFunction) {
     res.locals.assetPath = req.app.get("APP.ASSET_PATH");
     next();
   },
-  
-  getLanguageToggle: function (req:Request&{i18n:{language:string}}, res:Response, next:NextFunction, customLogger?:CustomLogger) {
-    setLogger(customLogger);
+
+  getLanguageToggle: function (
+    req: Request & { i18n: { language: string } },
+    res: Response,
+    next: NextFunction,
+    customLogger?: CustomLogger,
+  ) {
+    if (customLogger) {
+      setCustomLogger(customLogger);
+    }
     const logger = getLogger();
     const toggleValue = req.app.get("APP.LANGUAGE_TOGGLE_ENABLED");
     res.locals.showLanguageToggle = toggleValue && toggleValue === "1";
@@ -50,9 +56,9 @@ export default {
       res.locals.currentUrl = new URL(
         req.protocol + "://" + req.get("host") + req.originalUrl,
       );
-    } catch (e:unknown) {
-      if(e instanceof Error){
-      logger.warn("Error constructing url for language toggle", e.message);
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        logger.warn("Error constructing url for language toggle", e.message);
       }
     }
     next();
