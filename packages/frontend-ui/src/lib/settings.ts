@@ -1,4 +1,4 @@
-import type {Express} from 'express';
+import type { Express } from 'express';
 
 interface SetGTM{
   app: Express,
