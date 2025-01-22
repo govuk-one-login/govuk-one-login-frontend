@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { getLogger, CustomLogger, setLogger } from "../utils/logger";
 
 export default {
   getGTM: function (req:Request, res:Response, next:NextFunction) {
@@ -31,13 +32,17 @@ export default {
       "APP.GTM.GA4_SELECT_CONTENT_ENABLED",
     );
     next();
+    
   },
 
   getAssetPath: function (req:Request, res:Response, next:NextFunction) {
     res.locals.assetPath = req.app.get("APP.ASSET_PATH");
     next();
   },
-  getLanguageToggle: function (req:Request&{i18n:{language:string}}, res:Response, next:NextFunction) {
+  
+  getLanguageToggle: function (req:Request&{i18n:{language:string}}, res:Response, next:NextFunction, customLogger?:CustomLogger) {
+    setLogger(customLogger);
+    const logger = getLogger();
     const toggleValue = req.app.get("APP.LANGUAGE_TOGGLE_ENABLED");
     res.locals.showLanguageToggle = toggleValue && toggleValue === "1";
     res.locals.htmlLang = req.i18n.language;
@@ -47,7 +52,7 @@ export default {
       );
     } catch (e:unknown) {
       if(e instanceof Error){
-      console.error("Error constructing url for language toggle", e.message); //Replace with different logger
+      logger.warn("Error constructing url for language toggle", e.message);
       }
     }
     next();
