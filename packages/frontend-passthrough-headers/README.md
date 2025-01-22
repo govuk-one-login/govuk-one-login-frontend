@@ -24,29 +24,45 @@ Add to your project using `npm i @govuk-one-login/frontend-passthrough-headers`
 > [!WARNING]
 > This function extracts headers that contain Personal Data. It must not be passed through to API calls to external services.
 
-#### Optional: Custom Logger
+#### Optional: Logger Configuration
 
-You can pass a custom logger to the createPersonalDataHeaders function if needed. This is useful if your repo uses custom log levels which our built-in logger doesn't support.
-The custom logger must have trace and warn methods that accepts a string.
+The frontend-passthrough-headers library allows you to set a custom logger or use the default pino logger.
 
-```javascript
-import { createPersonalDataHeaders } from "@govuk-one-login/frontend-passthrough-headers";
-import { customLogger } from "./customLogger"; // Optional: Import your own logger
+Setting a Custom Logger
 
-async function routeHandler(req, res, next) {
-  const url = "https://internal-service.com/do-something";
+Use the setCustomLogger function to configure a custom logger. The custom logger must implement the following interface:
 
-  const headers = {
-    ...createPersonalDataHeaders(url, req, customLogger),
-  };
-
-  const res = await axios.get(url, {
-    headers,
-  });
-
-  return res.data;
-}
 ```
+export type CustomLogger = {
+  trace: (message: string) => void;
+  warn: (message: string) => void;
+};
+
+```
+
+Example:
+
+```
+
+import { setCustomLogger } from "@govuk-one-login/frontend-passthrough-headers";
+
+const customLogger = {
+  trace: (message: string) => console.log(`TRACE: ${message}`),
+  warn: (message: string) => console.warn(`WARN: ${message}`),
+};
+
+setCustomLogger(customLogger);
+
+```
+
+Default Logger
+
+If no custom logger is set, a pino logger is used with:
+	•	Name: @govuk-one-login/frontend-passthrough-headers
+	•	Log Level: process.env.LOG_LEVEL or process.env.LOGS_LEVEL (defaults to warn).
+
+
+By default, the logger is initialised only once, and calling setCustomLogger again will log a warning.
 
 ## Issues
 

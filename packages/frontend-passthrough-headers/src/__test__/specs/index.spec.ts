@@ -1,6 +1,6 @@
 import { type Request } from "express";
 import { createPersonalDataHeaders } from "../../index";
-import { logger } from "../../utils/logger";
+import { getLogger } from "../../utils/logger";
 import { APIGatewayProxyEvent } from "aws-lambda";
 
 const MOCK_CLOUDFRONT_VIEWER_IPV4 = "198.51.100.10:46532";
@@ -12,7 +12,18 @@ const MOCK_FORWARDED_IPV6 =
 const MOCK_X_FORWARDED_FOR_IPV4 = "198.51.100.13, 2004:db8:cafe::17";
 const MOCK_X_FORWARDED_FOR_IPV6 = "2005:db8:cafe::17, 198.51.100.13";
 
+jest.mock("../../utils/logger.ts", () => ({
+  getLogger: jest.fn(),
+}));
+
 describe("createPersonalDataHeaders", () => {
+  beforeEach(() => {
+    (getLogger as jest.Mock).mockReturnValue({
+      trace: jest.fn(),
+      warn: jest.fn(),
+    });
+  });
+
   afterEach(() => {
     jest.restoreAllMocks();
   });
@@ -110,7 +121,7 @@ describe("createPersonalDataHeaders", () => {
       });
 
       it("should log a warning and not return the header on an invalid 'cloudfront-viewer-address' header - lower case", () => {
-        const spyLogger = jest.spyOn(logger, "warn");
+        const spyLogger = jest.spyOn(getLogger(), "warn");
         const headers = createPersonalDataHeaders("https://account.gov.uk", {
           headers: {
             "cloudfront-viewer-address": "fgfgn4t428fcxcz'][]/.",
@@ -126,7 +137,7 @@ describe("createPersonalDataHeaders", () => {
       });
 
       it("should log a warning and not return the header on an invalid 'cloudfront-viewer-address' header - upper case", () => {
-        const spyLogger = jest.spyOn(logger, "warn");
+        const spyLogger = jest.spyOn(getLogger(), "warn");
         const headers = createPersonalDataHeaders("https://account.gov.uk", {
           headers: {
             "Cloudfront-Viewer-Address": "fgfgn4t428fcxcz'][]/.",
@@ -200,7 +211,7 @@ describe("createPersonalDataHeaders", () => {
       });
 
       it("should log a warning and not return a header on an invalid 'forwarded' header - lower case", () => {
-        const spyLogger = jest.spyOn(logger, "warn");
+        const spyLogger = jest.spyOn(getLogger(), "warn");
         const headers = createPersonalDataHeaders("https://account.gov.uk", {
           headers: {
             forwarded: "fgfgn4t428fcxcz'][]/.",
@@ -215,7 +226,7 @@ describe("createPersonalDataHeaders", () => {
       });
 
       it("should log a warning and not return a header on an invalid 'forwarded' header - upper case", () => {
-        const spyLogger = jest.spyOn(logger, "warn");
+        const spyLogger = jest.spyOn(getLogger(), "warn");
         const headers = createPersonalDataHeaders("https://account.gov.uk", {
           headers: {
             Forwarded: "fgfgn4t428fcxcz'][]/.",
@@ -354,39 +365,6 @@ describe("createPersonalDataHeaders", () => {
 
         expect(headers).toEqual({});
       });
-    });
-  });
-
-  describe("logger functionality", () => {
-    it("should use the custom logger if provided", () => {
-      const mockCustomLogger = {
-        trace: jest.fn(),
-        warn: jest.fn(),
-      };
-      const spyLogger = jest.spyOn(logger, "trace");
-      createPersonalDataHeaders(
-        "https://account.gov.uk",
-        {
-          headers: { ["Txma-Audit-Encoded"]: "dummy-txma-header" },
-        } as unknown as Request,
-        mockCustomLogger,
-      );
-
-      expect(mockCustomLogger.trace).toHaveBeenCalledWith(
-        `Personal Data header "txma-audit-encoded" is being forwarded to domain "account.gov.uk"`,
-      );
-      expect(spyLogger).not.toHaveBeenCalled();
-    });
-
-    it("should use default logger, if custom logger is not provided", () => {
-      const spyLogger = jest.spyOn(logger, "trace");
-      createPersonalDataHeaders("https://account.gov.uk", {
-        headers: { ["Txma-Audit-Encoded"]: "dummy-txma-header" },
-      } as unknown as Request);
-
-      expect(spyLogger).toHaveBeenCalledWith(
-        `Personal Data header "txma-audit-encoded" is being forwarded to domain "account.gov.uk"`,
-      );
     });
   });
 });
