@@ -27,8 +27,11 @@ jobs:
         with:
           node-version: 20
           cache: "npm"
-
       - run: npm install
+
+      # required set up steps for Github architecture
+      - run: npm i @rollup/rollup-linux-x64-gnu
+      - run: npm i @nx/nx-linux-x64-gnu
 
       - uses: nrwl/nx-set-shas@v4
 

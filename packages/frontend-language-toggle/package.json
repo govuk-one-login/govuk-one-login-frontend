@@ -38,6 +38,7 @@
   },
   "homepage": "https://github.com/govuk-one-login/govuk-one-login-frontend/tree/main/packages/frontend-language-toggle#readme",
   "devDependencies": {
+    "@types/cheerio": "^0.22.35",
     "@types/jest": "^29.5.13",
     "@types/jest-axe": "^3.5.9",
     "@types/nunjucks": "^3.2.6",
