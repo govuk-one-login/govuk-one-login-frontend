@@ -1,8 +1,7 @@
-const { PACKAGE_NAME } = require("../lib/constants");
-const logger = require("hmpo-logger").get(PACKAGE_NAME);
+import { Request, Response, NextFunction } from 'express';
 
-module.exports = {
-  getGTM: function (req, res, next) {
+export default {
+  getGTM: function (req:Request, res:Response, next:NextFunction) {
     res.locals.ga4ContainerId = req.app.get("APP.GTM.GA4_CONTAINER_ID");
     res.locals.uaContainerId = req.app.get("APP.GTM.UA_CONTAINER_ID");
     res.locals.analyticsCookieDomain = req.app.get(
@@ -34,11 +33,11 @@ module.exports = {
     next();
   },
 
-  getAssetPath: function (req, res, next) {
+  getAssetPath: function (req:Request, res:Response, next:NextFunction) {
     res.locals.assetPath = req.app.get("APP.ASSET_PATH");
     next();
   },
-  getLanguageToggle: function (req, res, next) {
+  getLanguageToggle: function (req:Request&{i18n:{language:string}}, res:Response, next:NextFunction) {
     const toggleValue = req.app.get("APP.LANGUAGE_TOGGLE_ENABLED");
     res.locals.showLanguageToggle = toggleValue && toggleValue === "1";
     res.locals.htmlLang = req.i18n.language;
@@ -46,8 +45,10 @@ module.exports = {
       res.locals.currentUrl = new URL(
         req.protocol + "://" + req.get("host") + req.originalUrl,
       );
-    } catch (e) {
-      logger.error("Error constructing url for language toggle", e.message);
+    } catch (e:unknown) {
+      if(e instanceof Error){
+      console.error("Error constructing url for language toggle", e.message); //Replace with different logger
+      }
     }
     next();
   },

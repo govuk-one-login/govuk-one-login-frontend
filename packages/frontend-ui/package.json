@@ -2,8 +2,8 @@
   "name": "@govuk-one-login/frontend-ui",
   "version": "0.0.2",
   "description": "",
-  "main": "index.js",
-  "module": "",
+  "main": "build/cjs/index.cjs",
+  "module": "build/esm/index.js",
   "type": "module",
   "publishConfig": {
     "access": "public"
@@ -45,5 +45,9 @@
     "typescript": "5.4.5",
     "webpack": "^5.91.0",
     "webpack-cli": "^4.0.0"
+  },
+  "dependencies": {
+    "@types/express": "^5.0.0",
+    "express": "^4.21.2"
   }
 }
