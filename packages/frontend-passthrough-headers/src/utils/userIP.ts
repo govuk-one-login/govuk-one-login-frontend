@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { type Request } from "express";
 import forwardedParse from "forwarded-parse";
-import { getLogger, CustomLogger } from "./logger";
+import { getLogger } from "./logger";
 import { APIGatewayProxyEvent } from "aws-lambda";
 import { getHeader } from "./getHeader";
 
@@ -97,7 +97,6 @@ function handleXForwardedForIP(req: Request | APIGatewayProxyEvent) {
 export function processUserIP(
   req: Request | APIGatewayProxyEvent,
 ): string | null {
-  const logger = getLogger();
   const userIPSource = getUserIPSource(req);
 
   switch (userIPSource) {
