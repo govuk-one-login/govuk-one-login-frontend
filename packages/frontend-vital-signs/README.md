@@ -143,7 +143,7 @@ The package is owned by the DI Frontend Capability team, part of the development
     - `"requestsPerSecond"`: Logs the number of requests per second.
     - `"avgResponseTime"`: Logs the average response time.
     - `"maxConcurrentConnections"`: Logs the maximum number of concurrent connections.
-    - `"eventLoopDelay"`: Logs lag building up due to Node's event loop getting overloaded by asynchronous operations.
+    - `"eventLoopDelay"`: Logs the maximum event loop delay recorded within the interval. This is lag building up due to Node's event loop getting overloaded by asynchronous operations.
     - `"eventLoopUtilization"`: Logs the time the event loop spends in active and idle states.
 
   - **`staticPaths`** (optional, array): 
