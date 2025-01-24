@@ -128,6 +128,27 @@ In your view templates where you need to collect PII (use with caution):
 - Use Nunjucks templating to set the variable (e.g., isDataSensitive) to "false" 
 - Pass the variable to appInit: Include this variable in your window.DI.appInit call 
 
+Page Level:
+```js
+{% set analyticsDataSensitive = true %}
+```
+
+Base Page/Form:
+```js
+window.DI.appInit(
+  {
+    ga4ContainerId: "{{ga4ContainerId}}",
+    uaContainerId: "{{ uaContainerId }}",
+  },
+  {
+    isDataSensitive: {{ analyticsDataSensitive }},
+    enableGa4Tracking: true,
+    enableUaTracking: true,
+    cookieDomain: "{{ cookieDomain }}",
+  },
+);
+```
+
 [!NOTE] window.DI.appInit is a function loaded from analytics.js. That will create a new instance of our analytics library and store into window.DI.analyticsGa4 [!NOTE]
 
 ### Analytics Cookie Consent
