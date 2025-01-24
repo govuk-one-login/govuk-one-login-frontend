@@ -1,3 +1,26 @@
+## 2.2.1 (2025-01-24)
+
+### 🚀 Features
+
+- **716:** add custom logger functionality to frontend-passthrough-headers ([1ade362](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/1ade362))
+- **DFC-738:** adding frontend-ui to github workflows and adding additional files to the package ([c5afb8d](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/c5afb8d))
+
+### 🩹 Fixes
+
+- fixed typo in workflow ([4a5bf82](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/4a5bf82))
+- remove export from rollup and update readme ([bf2f0f0](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/bf2f0f0))
+- **766:** update styling on language toggle ([d990f5e](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/d990f5e))
+- **dfc-714:** specify cache-dependency-path for lock files ([f0581c3](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/f0581c3))
+- **vitals and headers:** update build config to include required release files ([17efb2b](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/17efb2b))
+- **DFC-581:** add error handling for adding/setting lang param in the URL ([2372195](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/2372195))
+
+### ❤️  Thank You
+
+- DavidMcMichaelGov
+- di-aholme
+- Joanneyoung01
+- SophiaDWokoma @SophiaDWokoma
+
 ## 2.2.0 (2024-12-16)
 
 ### 🚀 Features
