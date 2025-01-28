@@ -10,7 +10,8 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "test": "echo \"Error: no test specified\""
+    "test": "jest",
+    "test:coverage": "jest --coverage src"
   },
   "files": [
     "build/",
@@ -40,12 +41,12 @@
     "jest": "^29.5.0",
     "rollup": "4.14.3",
     "rollup-plugin-typescript2": "0.36.0",
-    "ts-jest": "^29.1.2",
+    "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "typescript": "5.4.5",
     "webpack": "^5.91.0",
     "webpack-cli": "^4.0.0"
-},
+  },
   "dependencies": {
     "@types/express": "^5.0.0",
     "express": "^4.21.2",
