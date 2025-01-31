@@ -9,15 +9,16 @@
     "format": "npx eslint src/**/*.js --fix",
     "serve": "nodemon serve",
     "precommit": "npm run test && npm run format && git add .",
+    "prod": "export NODE_ENV=production && node src/app.js",
     "test": "node -e \"console.log('No tests currently defined');\"",
     "test:integration:ci": "npx playwright install && start-server-and-test start http://localhost:3000 test:integration",
     "test:integration": "cucumber-js test/browser/features/v1/analytics --require test/browser/support/setup.js --require test/browser/step_definitions/**/*.js cucumber --tags 'not @skip'"
   },
   "dependencies": {
     "@govuk-one-login/frontend-analytics": "3.1.0",
+    "@govuk-one-login/frontend-asset-loader": "0.0.5",
     "@govuk-one-login/frontend-language-toggle": "2.2.1",
     "@govuk-one-login/frontend-vital-signs": "0.1.2",
-    "@govuk-one-login/frontend-asset-loader": "0.0.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
     "govuk-frontend": "^4.7.0",
@@ -26,6 +27,7 @@
     "i18next-fs-backend": "^2.3.0",
     "i18next-http-middleware": "^3.5.0",
     "nunjucks": "^3.2.4",
+    "overload-protection": "^1.2.3",
     "sass": "^1.79.4"
   },
   "engines": {
