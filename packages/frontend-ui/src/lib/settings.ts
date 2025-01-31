@@ -1,17 +1,17 @@
-import type { Express } from 'express';
+import type { Express } from "express";
 
-interface SetGTM{
-  app: Express,
-  ga4ContainerId : string,
-  analyticsCookieDomain :string,
-  ga4Enabled: boolean,
-  ga4PageViewEnabled: boolean,
-  ga4FormResponseEnabled: boolean,
-  ga4FormErrorEnabled: boolean,
-  ga4FormChangeEnabled: boolean,
-  ga4NavigationEnabled: boolean,
-  ga4SelectContentEnabled: boolean,
-  analyticsDataSensitive: boolean
+interface SetGTM {
+  app: Express;
+  ga4ContainerId: string;
+  analyticsCookieDomain: string;
+  ga4Enabled: boolean;
+  ga4PageViewEnabled: boolean;
+  ga4FormResponseEnabled: boolean;
+  ga4FormErrorEnabled: boolean;
+  ga4FormChangeEnabled: boolean;
+  ga4NavigationEnabled: boolean;
+  ga4SelectContentEnabled: boolean;
+  analyticsDataSensitive: boolean;
 }
 
 const setGTM = ({
@@ -26,7 +26,7 @@ const setGTM = ({
   ga4NavigationEnabled,
   ga4SelectContentEnabled,
   analyticsDataSensitive,
-}:SetGTM) => {
+}: SetGTM) => {
   app.set("APP.GTM.GA4_CONTAINER_ID", ga4ContainerId);
   app.set("APP.GTM.ANALYTICS_COOKIE_DOMAIN", analyticsCookieDomain);
   app.set("APP.GTM.GA4_ENABLED", ga4Enabled);
@@ -39,11 +39,14 @@ const setGTM = ({
   app.set("APP.GTM.ANALYTICS_DATA_SENSITIVE", analyticsDataSensitive ?? true);
 };
 
-const setLanguageToggle = ({ app, showLanguageToggle }:{app:Express, showLanguageToggle:boolean}) => {
+const setLanguageToggle = ({
+  app,
+  showLanguageToggle,
+}: {
+  app: Express;
+  showLanguageToggle: boolean;
+}) => {
   app.set("APP.LANGUAGE_TOGGLE_ENABLED", showLanguageToggle);
 };
 
-export {
-setGTM,
-setLanguageToggle
-};
+export { setGTM, setLanguageToggle };

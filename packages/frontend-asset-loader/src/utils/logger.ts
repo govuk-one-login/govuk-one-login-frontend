@@ -7,7 +7,7 @@ export type CustomLogger = {
   warn: (message: string) => void;
 };
 
-export const setLogger = (customLogger?: CustomLogger)  => {
+export const setLogger = (customLogger?: CustomLogger) => {
   if (logger) {
     logger.warn("Warning: Logging instance already exists");
     return;
@@ -16,7 +16,7 @@ export const setLogger = (customLogger?: CustomLogger)  => {
   if (customLogger) {
     logger = customLogger;
     return;
-  } 
+  }
 
   logger = pino({
     name: "@govuk-one-login/frontend-asset-loader",

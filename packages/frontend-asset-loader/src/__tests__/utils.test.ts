@@ -5,7 +5,6 @@ jest.mock("../utils/logger", () => ({
   getLogger: jest.fn(),
 }));
 
-
 describe("isValidHashName", () => {
   it("returns true when valid hash name", () => {
     expect(isValidHashName("application-ifsdjkn.css", "-", ".")).toEqual(true);
@@ -18,7 +17,7 @@ describe("isValidHashName", () => {
       (getLogger as jest.Mock).mockReturnValue({
         trace: jest.fn(),
         warn: jest.fn(),
-      });    
+      });
     });
 
     afterEach(() => {
@@ -59,22 +58,22 @@ describe("isValidHashName", () => {
 
     describe("hashEnd error cases", () => {
       it("returns false and logs warning if multiple instances of hashEnd", () => {
-        expect(
-          isValidHashName("app-dsdf4.min.js.extra", "-", "."),
-        ).toEqual(false);
+        expect(isValidHashName("app-dsdf4.min.js.extra", "-", ".")).toEqual(
+          false,
+        );
 
         expect(getLogger().warn).toHaveBeenCalledWith(
-         'Warning: Too many hash end "." identifers found in app-dsdf4.min.js.extra',
+          'Warning: Too many hash end "." identifers found in app-dsdf4.min.js.extra',
         );
       });
 
       it("returns false and logs warning if no instances of hashEnd", () => {
-        expect(
-          isValidHashName("app-dsdf4minjsextracss", "-", "."),
-        ).toEqual(false);
+        expect(isValidHashName("app-dsdf4minjsextracss", "-", ".")).toEqual(
+          false,
+        );
 
         expect(getLogger().warn).toHaveBeenCalledWith(
-         'Warning: No hash end "." identifer found in app-dsdf4minjsextracss',
+          'Warning: No hash end "." identifer found in app-dsdf4minjsextracss',
         );
       });
     });

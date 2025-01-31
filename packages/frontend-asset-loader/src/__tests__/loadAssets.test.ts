@@ -5,7 +5,7 @@ import { loadAssets } from "../index";
 import * as utils from "../utils/utils";
 
 jest.mock("fast-glob", () => ({
-  __esModule: true,  
+  __esModule: true,
   default: { sync: jest.fn() },
 }));
 
@@ -41,7 +41,9 @@ describe("loadAssets", () => {
     loadAssets(app, assetPath, hashBetween);
 
     expect(fg.sync).toHaveBeenCalledWith(assetPath);
-    expect(utils.getDuplicateHashedFileName).toHaveBeenCalledWith(pathsAndFiles);
+    expect(utils.getDuplicateHashedFileName).toHaveBeenCalledWith(
+      pathsAndFiles,
+    );
     expect(app.locals.assets).toEqual({
       "asset1.js": "asset1-1234.js",
       "asset2.js": "asset2-5678.js",
