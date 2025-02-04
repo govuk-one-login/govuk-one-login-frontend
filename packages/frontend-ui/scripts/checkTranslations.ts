@@ -15,7 +15,7 @@ type languageFile = {
   [key: string]: { [key: string]: string; } | string;
 };
 
-type misingLanguage = {
+type missingLanguage = {
   issues: string[];
   warnings: string[];
 };
@@ -118,8 +118,8 @@ function compareContent(set1: languageFile, set2: languageFile, parent?:string) 
   await i18next.changeLanguage("en");
   const englishContent = i18next.getDataByLanguage("en");
 
-  let missingEnglish: misingLanguage;
-  let missingWelsh: misingLanguage;
+  let missingEnglish: missingLanguage;
+  let missingWelsh: missingLanguage;
 
   if ((welshContent !== undefined) && (englishContent !== undefined))
   {
