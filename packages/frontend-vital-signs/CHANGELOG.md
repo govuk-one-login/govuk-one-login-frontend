@@ -1,3 +1,22 @@
+## 0.1.3 (2025-01-31)
+
+### 🚀 Features
+
+- **716:** add custom logger functionality to frontend-passthrough-headers ([1ade362](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/1ade362))
+- **DFC-738:** adding frontend-ui to github workflows and adding additional files to the package ([c5afb8d](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/c5afb8d))
+
+### 🩹 Fixes
+
+- **DFC-776:** use max event loop delay in interval rather than mean ([8d41bee](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/8d41bee))
+- fixed typo in workflow ([4a5bf82](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/4a5bf82))
+- remove export from rollup and update readme ([bf2f0f0](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/bf2f0f0))
+
+### ❤️  Thank You
+
+- DavidMcMichaelGov
+- Joanneyoung01
+- nickhealGDS
+
 ## 0.1.2 (2025-01-14)
 
 ### 🩹 Fixes

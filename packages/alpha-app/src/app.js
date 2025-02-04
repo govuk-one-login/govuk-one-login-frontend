@@ -38,6 +38,12 @@ const {
 } = require("@govuk-one-login/frontend-vital-signs");
 
 const app = express();
+const protect = require("overload-protection")("express", {
+  production: process.env.NODE_ENV === "production",
+  maxEventLoopDelay: 400,
+  logging: console.warn,
+});
+app.use(protect);
 const port = 3000;
 
 const nodeModules = (modulePath) =>
