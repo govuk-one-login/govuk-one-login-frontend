@@ -2,7 +2,7 @@ import { PathAndFile } from "./utils.types";
 import { getLogger } from "../utils/logger";
 import { Express } from "express";
 
-declare module 'express' {
+declare module "express" {
   interface Application {
     locals: { [key: string]: unknown };
   }
@@ -60,29 +60,38 @@ export const isValidHashName = (
   return true;
 };
 
-
-export const parseAssets = (assets: string[], hashBetween: { start: string; end: string }): PathAndFile[] => {
+export const parseAssets = (
+  assets: string[],
+  hashBetween: { start: string; end: string },
+): PathAndFile[] => {
   return assets.map((asset) => {
     const pathParts = asset.split("/");
     const hashedFileName = pathParts[pathParts.length - 1];
 
-    if (isValidHashName(hashedFileName, hashBetween.start, hashBetween.end)){
-      
-      const [fileName, hashedExtension] = hashedFileName.split(hashBetween.start);
+    if (isValidHashName(hashedFileName, hashBetween.start, hashBetween.end)) {
+      const [fileName, hashedExtension] = hashedFileName.split(
+        hashBetween.start,
+      );
       const [hash, extension] = hashedExtension.split(hashBetween.end);
-      return { hashedFileName, hash: hash, fileName: `${fileName}.${extension}`};
+      return {
+        hashedFileName,
+        hash: hash,
+        fileName: `${fileName}.${extension}`,
+      };
     }
 
     return { hashedFileName, fileName: hashedFileName };
   });
 };
 
-export const mapAssetsToLocal = (app: Express, pathsAndFiles: PathAndFile[]) => {
-  app.locals = app.locals || {}; 
+export const mapAssetsToLocal = (
+  app: Express,
+  pathsAndFiles: PathAndFile[],
+) => {
+  app.locals = app.locals || {};
 
   pathsAndFiles.forEach((pathAndFile) => {
     app.locals.assets = app.locals.assets || {};
     app.locals.assets[pathAndFile.fileName] = pathAndFile.hashedFileName;
   });
 };
-

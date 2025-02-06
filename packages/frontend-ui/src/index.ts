@@ -1,1 +1,1 @@
-// export your public components here
+export * as lib from "./lib";
