@@ -31,28 +31,36 @@ describe("navigationTracker", () => {
   });
 
   test("should push data into data layer if click on logo icon", () => {
-    const element = document.createElement("span");
-    element.className = "govuk-header__logotype";
+    const clickedElement = document.createElement("svg");
+    const containerElement = document.createElement("A");
+    containerElement.className = "govuk-header__link";
+    containerElement.appendChild(clickedElement);
+
     document.body.innerHTML = "<header></header>";
     const header = document.getElementsByTagName("header")[0];
-    header.appendChild(element);
-    element.dispatchEvent(action);
-    element.addEventListener("click", () => {
+    header.appendChild(containerElement);
+
+    clickedElement.dispatchEvent(action);
+    clickedElement.addEventListener("click", () => {
       expect(BaseTracker.pushToDataLayer).toBeCalled();
     });
   });
+
   test("should push data into data layer if click on logo icon within core", () => {
     const element = document.createElement("span");
     element.className = "govuk-header__logotype-crown";
+
     document.body.innerHTML = "<header></header>";
     const header = document.getElementsByTagName("header")[0];
     header.appendChild(element);
+
     element.dispatchEvent(action);
     element.addEventListener("click", () => {
       expect(BaseTracker.pushToDataLayer).toBeCalled();
     });
   });
-  // test trackNavigation return false if tracker is deactivated
+
+  // // test trackNavigation return false if tracker is deactivated
   test("trackNavigation return false if tracker is deactivated", () => {
     const instance = new NavigationTracker(false);
     const href = document.createElement("BUTTON");
@@ -65,6 +73,7 @@ describe("navigationTracker", () => {
     });
     href.dispatchEvent(action);
   });
+
   // test trackNavigation doesn't accept anything except button or link
   test("trackNavigation should return false if not a link or a button", () => {
     const href = document.createElement("div");
@@ -126,15 +135,15 @@ describe("navigationTracker", () => {
     href.dispatchEvent(action);
   });
 
-  // test pushToDataLayer is called
-  test("pushToDataLayer is called", () => {
-    const href = document.createElement("A");
-    href.className = "govuk-footer__link";
-    href.addEventListener("click", (event) => {
+  // // test pushToDataLayer is called
+  test("pushToDataLayer is not called without a href", () => {
+    const element = document.createElement("A");
+    element.className = "govuk-footer__link";
+    element.addEventListener("click", (event) => {
       newInstance.trackNavigation(event);
     });
-    href.dispatchEvent(action);
-    expect(BaseTracker.pushToDataLayer).toBeCalled();
+    element.dispatchEvent(action);
+    expect(BaseTracker.pushToDataLayer).not.toBeCalled();
   });
 });
 
