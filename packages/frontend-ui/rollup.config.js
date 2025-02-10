@@ -1,4 +1,5 @@
 import typescript from "rollup-plugin-typescript2";
+import copy from "rollup-plugin-copy";
 
 export default {
   input: "src/index.ts",
@@ -12,5 +13,18 @@ export default {
       format: "es",
     },
   ],
-  plugins: [typescript()],
+  plugins: [
+    typescript(),
+    copy({
+      targets: [
+        { src: "./src/macro.njk", dest: "./build" },
+        { src: "./src/template.njk", dest: "./build" },
+        {
+          src: "./components/",
+          dest: "./build/",
+        },
+      ],
+      hook: "closeBundle",
+    }),
+  ],
 };
