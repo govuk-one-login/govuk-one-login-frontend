@@ -1,4 +1,4 @@
-// eslint-disable @typescript-eslint/no-require-imports
+/* eslint-disable @typescript-eslint/no-require-imports */
 const {
   GA4_CONTAINER_ID,
   UA_CONTAINER_ID,

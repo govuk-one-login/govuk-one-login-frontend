@@ -30,8 +30,8 @@ const {
 } = require("./config/gtmMiddleware.js");
 const { checkSessionAndRedirect } = require("./config/middleware");
 const i18next = require("i18next");
-const Backend = require("i18next-fs-backend");
 const i18nextMiddleware = require("i18next-http-middleware");
+const i18nextResourcesToBackend = require("i18next-resources-to-backend");
 const { i18nextConfigurationOptions } = require("./config/i18next");
 const {
   frontendVitalSignsInit,
@@ -58,17 +58,57 @@ const APP_VIEWS = [
 ];
 
 app.set("view engine", configureNunjucks(app, APP_VIEWS));
+
+const publicLocalesPath = path.join(__dirname, "../public/locales");
+const defaultLocalesPath = path.join(__dirname, "locales");
+
+const loadTranslations = i18nextResourcesToBackend((lng, ns, callback) => {
+  try {
+    const overridingTranslations = require(
+      path.join(publicLocalesPath, lng, `${ns}.json`),
+    );
+
+    const defaultTranslations = require(
+      path.join(defaultLocalesPath, lng, `${ns}.json`),
+    );
+
+    const mergedTranslations = {
+      ...defaultTranslations,
+      ...overridingTranslations,
+    };
+
+    callback(null, mergedTranslations);
+  } catch (error) {
+    console.error(`Error loading translations for ${lng}/${ns}:`, error);
+    callback(error, null);
+  }
+});
+
 i18next
-  .use(Backend)
+  .use(loadTranslations)
   .use(i18nextMiddleware.LanguageDetector)
   .init(
-    i18nextConfigurationOptions(
-      path.join(__dirname, "locales/{{lng}}/{{ns}}.json"),
-    ),
+    {
+      ...i18nextConfigurationOptions(__dirname),
+    },
+    (err) => {
+      if (err) {
+        console.error("i18next init failed:", err);
+      } else {
+        console.log("✅ i18next successfully initialised");
+        console.log(
+          "🔹 Loaded translations (CY):",
+          i18next.getResourceBundle("cy", "translation"),
+        );
+        console.log(
+          "🔹 Loaded translations (EN):",
+          i18next.getResourceBundle("en", "translation"),
+        );
+      }
+    },
   );
 
 app.use(i18nextMiddleware.handle(i18next));
-
 app.use("/assets", express.static(nodeModules("govuk-frontend/govuk/assets")));
 
 /** GA4 assets */
