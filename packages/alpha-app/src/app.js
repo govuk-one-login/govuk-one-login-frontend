@@ -31,7 +31,7 @@ const {
 const { checkSessionAndRedirect } = require("./config/middleware");
 const i18next = require("i18next");
 const i18nextMiddleware = require("i18next-http-middleware");
-const i18nextResourcesToBackend = require("i18next-resources-to-backend");
+const Backend = require("i18next-fs-backend");
 const { i18nextConfigurationOptions } = require("./config/i18next");
 const {
   frontendVitalSignsInit,
@@ -59,55 +59,85 @@ const APP_VIEWS = [
 
 app.set("view engine", configureNunjucks(app, APP_VIEWS));
 
+// const defaultLocalesPath = path.join(__dirname, "locales");
+// const nodeModuleLocalesPath = path.join(
+//   nodeModules("@govuk-one-login/frontend-ui/components/cookie-banner/locales"),
+// );
 
-const defaultLocalesPath = path.join(__dirname, "locales");
-const nodeModuleLocalesPath = path.join(nodeModules("@govuk-one-login/frontend-ui/components/cookie-banner/locales"));
+// const loadTranslations = i18nextResourcesToBackend((lng, ns, callback) => {
+//   try {
+//     const cookieBannerTranslations = require(
+//       path.join(nodeModuleLocalesPath, lng, `${ns}.json`),
+//     );
 
-const loadTranslations = i18nextResourcesToBackend((lng, ns, callback) => {
-  try {
-    const cookieBannerTranslations = require(
-      path.join(nodeModuleLocalesPath, lng, `${ns}.json`),
-    );
+//     // const defaultTranslations = require(
+//     //   path.join(defaultLocalesPath, lng, `${ns}.json`),
+//     // );
 
-    const defaultTranslations = require(
-      path.join(defaultLocalesPath, lng, `${ns}.json`),
-    );
+//     const mergedTranslations = {
+//       // ...defaultTranslations,
+//       ...cookieBannerTranslations,
+//     };
 
-    const mergedTranslations = {
-      ...defaultTranslations,
-      ...cookieBannerTranslations,
-    };
-
-    callback(null, mergedTranslations);
-  } catch (error) {
-    console.error(`Error loading translations for ${lng}/${ns}:`, error);
-    callback(error, null);
-  }
-});
+//     callback(null, mergedTranslations);
+//   } catch (error) {
+//     console.error(`Error loading translations for ${lng}/${ns}:`, error);
+//     callback(error, null);
+//   }
+// });
 
 i18next
-  .use(loadTranslations)
+  // .use(loadTranslations)
+  .use(Backend)
   .use(i18nextMiddleware.LanguageDetector)
   .init(
     {
-      ...i18nextConfigurationOptions(__dirname),
+      ...i18nextConfigurationOptions(path.join(__dirname, "locales/{{lng}}/{{ns}}.json")),
     },
     (err) => {
+      i18next.addResourceBundle('en', 'translation', {
+        "cookieBanner": {
+          "body1": "We use some essential cookies to make this service work.",
+          "body2": "We'd like to set additional cookies so we can remember your settings, understand how people use the service and make improvements.",
+          "ariaLabel": "Cookies on ",
+          "headingText": "Cookies on ",
+          "acceptAdditionalCookies": "Accept additional cookies",
+          "rejectAdditionalCookies": "Reject additional cookies",
+          "viewCookies": "View cookies",
+          "cookieBannerAccept": {
+            "body1": "You've accepted additional cookies. You can ",
+            "body2": " at any time."
+          },
+          "cookieBannerReject": {
+            "body1": "You've rejected additional cookies. You can ",
+            "body2": " at any time."
+          },
+          "changeCookiePreferencesLink": "change your cookie settings",
+          "hideCookieMessage": "Hide cookie message",
+          "viewCookiesLink": "https://signin.account.gov.uk/cookies"
+        }
+      }, true, false);
+
       if (err) {
         console.error("i18next init failed:", err);
       } else {
         console.log("✅ i18next successfully initialised");
         console.log(
           "🔹 Loaded translations (CY):",
+          
           i18next.getResourceBundle("cy", "translation"),
+          // i18next.getResourceBundle("cy", "uiComponents"),
         );
         console.log(
           "🔹 Loaded translations (EN):",
           i18next.getResourceBundle("en", "translation"),
+          // i18next.getResourceBundle("en", "uiComponents"),
         );
       }
     },
   );
+
+    
 
 app.use(i18nextMiddleware.handle(i18next));
 app.use("/assets", express.static(nodeModules("govuk-frontend/govuk/assets")));
