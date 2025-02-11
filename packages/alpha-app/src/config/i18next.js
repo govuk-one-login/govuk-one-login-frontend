@@ -6,6 +6,10 @@ module.exports = {
       // to if a translation is not available in the requested language
       preload: ["en", "cy"], // An array of languages to preload, typically the default and supported languages
       supportedLngs: ["en", "cy"], // An array of supported languages
+      // backend: {
+      //   loadPath:  path, // The path pattern to load translations from, e.g., locales/{{lng}}/{{ns}}.json
+      //   allowMultiLoading: true, // Whether to allow loading multiple namespaces at once
+      // },
       detection: {
         lookupCookie: "lng", // The name of the cookie to look for language information
         lookupQuerystring: "lng", // The query string parameter to look for language information
