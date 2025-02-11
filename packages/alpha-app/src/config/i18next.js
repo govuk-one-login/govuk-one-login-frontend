@@ -8,7 +8,7 @@ module.exports = {
       preload: ["en", "cy"], // An array of languages to preload, typically the default and supported languages
       supportedLngs: ["en", "cy"], // An array of supported languages
       backend: {
-        loadPath:  path, // The path pattern to load translations from, e.g., locales/{{lng}}/{{ns}}.json
+        loadPath: path, // The path pattern to load translations from, e.g., locales/{{lng}}/{{ns}}.json
         allowMultiLoading: true, // Whether to allow loading multiple namespaces at once
       },
       detection: {

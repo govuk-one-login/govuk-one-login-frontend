@@ -60,9 +60,6 @@ const APP_VIEWS = [
 app.set("view engine", configureNunjucks(app, APP_VIEWS));
 
 // const defaultLocalesPath = path.join(__dirname, "locales");
-// const nodeModuleLocalesPath = path.join(
-//   nodeModules("@govuk-one-login/frontend-ui/components/cookie-banner/locales"),
-// );
 
 // const loadTranslations = i18nextResourcesToBackend((lng, ns, callback) => {
 //   try {
@@ -86,37 +83,40 @@ app.set("view engine", configureNunjucks(app, APP_VIEWS));
 //   }
 // });
 
+const nodeModuleLocalesPath = path.join(
+  nodeModules("@govuk-one-login/frontend-ui/components/cookie-banner/locales"),
+);
+
 i18next
   // .use(loadTranslations)
   .use(Backend)
   .use(i18nextMiddleware.LanguageDetector)
   .init(
     {
-      ...i18nextConfigurationOptions(path.join(__dirname, "locales/{{lng}}/{{ns}}.json")),
+      ...i18nextConfigurationOptions(
+        path.join(__dirname, "locales/{{lng}}/{{ns}}.json"),
+      ),
     },
     (err) => {
-      i18next.addResourceBundle('en', 'translation', {
-        "cookieBanner": {
-          "body1": "We use some essential cookies to make this service work.",
-          "body2": "We'd like to set additional cookies so we can remember your settings, understand how people use the service and make improvements.",
-          "ariaLabel": "Cookies on ",
-          "headingText": "Cookies on ",
-          "acceptAdditionalCookies": "Accept additional cookies",
-          "rejectAdditionalCookies": "Reject additional cookies",
-          "viewCookies": "View cookies",
-          "cookieBannerAccept": {
-            "body1": "You've accepted additional cookies. You can ",
-            "body2": " at any time."
-          },
-          "cookieBannerReject": {
-            "body1": "You've rejected additional cookies. You can ",
-            "body2": " at any time."
-          },
-          "changeCookiePreferencesLink": "change your cookie settings",
-          "hideCookieMessage": "Hide cookie message",
-          "viewCookiesLink": "https://signin.account.gov.uk/cookies"
-        }
-      }, true, false);
+      i18next.addResourceBundle(
+        "en",
+        "translation",
+        require(
+          path.join(path.join(nodeModuleLocalesPath, "en", `translation.json`)),
+        ),
+        true,
+        false,
+      );
+
+      i18next.addResourceBundle(
+        "cy",
+        "translation",
+        require(
+          path.join(path.join(nodeModuleLocalesPath, "cy", `translation.json`)),
+        ),
+        true,
+        false,
+      );
 
       if (err) {
         console.error("i18next init failed:", err);
@@ -124,7 +124,7 @@ i18next
         console.log("✅ i18next successfully initialised");
         console.log(
           "🔹 Loaded translations (CY):",
-          
+
           i18next.getResourceBundle("cy", "translation"),
           // i18next.getResourceBundle("cy", "uiComponents"),
         );
@@ -136,8 +136,6 @@ i18next
       }
     },
   );
-
-    
 
 app.use(i18nextMiddleware.handle(i18next));
 app.use("/assets", express.static(nodeModules("govuk-frontend/govuk/assets")));
