@@ -53,13 +53,14 @@ const APP_VIEWS = [
 
 app.set("view engine", configureNunjucks(app, APP_VIEWS));
 
-const publicLocalesPath = path.join(__dirname, "../public/locales");
+
 const defaultLocalesPath = path.join(__dirname, "locales");
+const nodeModuleLocalesPath = path.join(nodeModules("@govuk-one-login/frontend-ui/components/cookie-banner/locales"));
 
 const loadTranslations = i18nextResourcesToBackend((lng, ns, callback) => {
   try {
-    const overridingTranslations = require(
-      path.join(publicLocalesPath, lng, `${ns}.json`),
+    const cookieBannerTranslations = require(
+      path.join(nodeModuleLocalesPath, lng, `${ns}.json`),
     );
 
     const defaultTranslations = require(
@@ -68,7 +69,7 @@ const loadTranslations = i18nextResourcesToBackend((lng, ns, callback) => {
 
     const mergedTranslations = {
       ...defaultTranslations,
-      ...overridingTranslations,
+      ...cookieBannerTranslations,
     };
 
     callback(null, mergedTranslations);

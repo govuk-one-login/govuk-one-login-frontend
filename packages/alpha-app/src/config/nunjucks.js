@@ -14,7 +14,6 @@ module.exports = {
     nunjucksEnv.addGlobal("addLanguageParam", addLanguageParam);
 
     nunjucksEnv.addFilter("translate", function (key, options) {
-      console.log(options);
       const languages = ["en", "cy"];
       if (languages.includes(options)) {
         const translate = i18next.getFixedT(options);
