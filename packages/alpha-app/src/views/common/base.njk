@@ -1,65 +1,121 @@
-{% block head %}
-<link rel="stylesheet" href="/stylesheets/{{ assets['stylesheet.css'] }}" />
-<link rel="stylesheet" href="/stylesheets/{{ assets['application.css'] }}" />
-{% endblock %} {% extends "govuk/template.njk" %} {% from
-"govuk/components/skip-link/macro.njk" import govukSkipLink %} {% from
-"govuk/components/header/macro.njk" import govukHeader %} {% from
-"govuk/components/footer/macro.njk" import govukFooter %} {% from
-"govuk/components/phase-banner/macro.njk" import govukPhaseBanner %} {% from
-"frontend-language-toggle/src/macro.njk" import languageSelect %} {% block
-skipLink %} {{ govukSkipLink({ href: "#main-content", text:
-"general.govuk.skipLink" | translate }) }} {% endblock %} {% block bodyStart %}
-{% include "./banner.njk" %} {% endblock %} {% block header %} {{ govukHeader({
-homepageUrl: "/welcome", navigation: [{ href: "/organisation-type", text:
-'general.header.menuLink1' | translate }, { href: "/organisation-type", text:
-'general.header.menuLink2' | translate }, { href:
-"/xDncNmqheVoQoeOTnVmwUnsuByWwKwwAPUZAWRYBnzgrDOCObSzFqMpwAxQRpHMUehzTfzGJjuFJOtWyQBdHQbtpEpxmopVEnghdxyz",
-text: 'general.header.menuLink3' | translate }] }) }} {% endblock %} {% block
-main %}
-<div class="govuk-width-container">
-  {{ govukPhaseBanner({ tag: { text: "general.govuk.phaseBanner.tag" | translate
-  }, html:"general.govuk.phaseBanner.content" | translate | safe }) }} {{
-  languageSelect({ ariaLabel:'general.languageSelect.ariaLabel' | translate,
-  url: currentUrl, activeLanguage: htmlLang, class:'', languages: [ { code:
-  'en', text: 'English', visuallyHidden: 'Change to English' }, { code:'cy',
-  text: 'Cymraeg', visuallyHidden: 'Newid yr iaith ir Gymraeg' } ] }) }} {%
-  block backLink %}{% endblock %}
+{% extends "govuk/template.njk" %}
 
-  <main id="main-content" class="govuk-main-wrapper govuk-!-padding-top-3">
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds">
-        {% block content %}{% endblock %}
+{% block head %}
+  <link rel="stylesheet" href="/stylesheets/{{ assets['stylesheet.css'] }}"/>
+  <link rel="stylesheet" href="/stylesheets/{{ assets['application.css'] }}"/>
+{% endblock %}
+
+{% from "govuk/components/skip-link/macro.njk" import govukSkipLink %}
+{% from "govuk/components/header/macro.njk" import govukHeader %}
+{% from "govuk/components/footer/macro.njk" import govukFooter %}
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+{% from "frontend-language-toggle/src/macro.njk" import languageSelect %}
+{% from "frontend-ui/build/components/cookie-banner/macro.njk" import cookieBanner %}
+
+{% block skipLink %}
+  {{ govukSkipLink({
+    href: "#main-content",
+    text: "general.govuk.skipLink" | translate
+  }) }}
+{% endblock %}
+
+{% block bodyStart %}
+  {{ cookieBanner({
+    language: htmlLang,
+    serviceName: {
+      en: "GOV.UK One Login",
+      cy: "Profi pwy ydych chi"
+    }
+  }
+  )}}
+{% endblock %}
+
+{% block header %}
+  {{ govukHeader({
+    homepageUrl: "/welcome", 
+    navigation: [
+      { 
+        href: "/organisation-type", 
+        text: "general.header.menuLink1" | translate 
+      },
+      { 
+        href: "/organisation-type", 
+        text: "general.header.menuLink2" | translate 
+      },
+      { 
+        href: "/some-valid-url", 
+        text: "general.header.menuLink3" | translate 
+      }
+    ]
+  }) }}
+{% endblock %}
+
+{% block main %}
+  <div class="govuk-width-container">
+    {{ govukPhaseBanner({
+      tag: { text: "general.govuk.phaseBanner.tag" | translate },
+      html: "general.govuk.phaseBanner.content" | translate | safe
+    }) }}
+
+    {{ languageSelect({
+      ariaLabel: "general.languageSelect.ariaLabel" | translate,
+      url: currentUrl,
+      activeLanguage: htmlLang,
+      class: "",
+      languages: [
+        { code: "en", text: "English", visuallyHidden: "Change to English" },
+        { code: "cy", text: "Cymraeg", visuallyHidden: "Newid yr iaith ir Gymraeg" }
+      ]
+    }) }}
+
+    {% block backLink %}{% endblock %}
+
+    <main id="main-content" class="govuk-main-wrapper govuk-!-padding-top-3">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          {% block content %}{% endblock %}
+        </div>
       </div>
-    </div>
-  </main>
-</div>
-<script src="/javascript/ua/{{ assets['init.js'] }}"></script>
-<script src="/ga4-assets/analytics.js"></script>
-<script>
-  window.DI.appInit(
-    {
-      uaContainerId: "{{ uaContainerId }}",
-      ga4ContainerId: "{{ ga4ContainerId }}",
-    },
-    {
-      isDataSensitive: false,
-      enableGa4Tracking: true,
-      enableUaTracking: true,
-      cookieDomain: "localhost",
-    },
-  );
-  window.DI.analyticsGa4.pageViewTracker.trackOnPageLoad({
-    statusCode: "{{statusCode}}", // Access status code
-    englishPageTitle: "{{englishPageTitle}}",
-    taxonomy_level1: "{{ taxonomyLevel1 }}", // Access taxonomy level 1
-    taxonomy_level2: "{{ taxonomyLevel2 }}", // Access taxonomy level 2
-    content_id: "{{contentId}}",
-    logged_in_status: false,
-    dynamic: false,
-  });
-</script>
-{% endblock %} {% block footer %} {{ govukFooter({ meta: { items: [ { href: "#",
-text: "general.footer.help.linkText" | translate }, { href: "#", text:
-"general.footer.cookies.linkText" | translate }, { href: "#", text:
-"general.footer.contact.linkText" | translate}, { href: "#", text:
-"general.footer.terms.linkText" | translate } ] } }) }} {% endblock %}
+    </main>
+  </div>
+
+  <script src="/javascript/ua/{{ assets['init.js'] }}"></script>
+  <script src="/ga4-assets/analytics.js"></script>
+  <script>
+    window.DI.appInit(
+      {
+        uaContainerId: "{{ uaContainerId }}",
+        ga4ContainerId: "{{ ga4ContainerId }}"
+      },
+      {
+        isDataSensitive: false,
+        enableGa4Tracking: true,
+        enableUaTracking: true,
+        cookieDomain: "localhost"
+      }
+    );
+
+    window.DI.analyticsGa4.pageViewTracker.trackOnPageLoad({
+      statusCode: "{{statusCode}}",
+      englishPageTitle: "{{englishPageTitle}}",
+      taxonomy_level1: "{{taxonomyLevel1}}",
+      taxonomy_level2: "{{taxonomyLevel2}}",
+      content_id: "{{contentId}}",
+      logged_in_status: false,
+      dynamic: false
+    });
+  </script>
+{% endblock %}
+
+{% block footer %}
+  {{ govukFooter({
+    meta: {
+      items: [
+        { href: "#", text: "general.footer.help.linkText" | translate },
+        { href: "#", text: "general.footer.cookies.linkText" | translate },
+        { href: "#", text: "general.footer.contact.linkText" | translate },
+        { href: "#", text: "general.footer.terms.linkText" | translate }
+      ]
+    }
+  }) }}
+{% endblock %}

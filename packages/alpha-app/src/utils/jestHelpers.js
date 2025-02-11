@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const cheerio = require("cheerio");
 const nunjucks = require("nunjucks");
 

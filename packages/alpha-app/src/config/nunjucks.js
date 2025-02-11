@@ -1,4 +1,4 @@
-// eslint-disable @typescript-eslint/no-require-imports
+/* eslint-disable @typescript-eslint/no-require-imports */
 const nunjucks = require("nunjucks");
 const i18next = require("i18next");
 const addLanguageParam = require("@govuk-one-login/frontend-language-toggle");
@@ -14,8 +14,15 @@ module.exports = {
     nunjucksEnv.addGlobal("addLanguageParam", addLanguageParam);
 
     nunjucksEnv.addFilter("translate", function (key, options) {
-      const translate = i18next.getFixedT(this.ctx.i18n.language);
-      return translate(key, options);
+      console.log(options);
+      const languages = ["en", "cy"];
+      if (languages.includes(options)) {
+        const translate = i18next.getFixedT(options);
+        return translate(key, options);
+      } else {
+        const translate = i18next.getFixedT(this.ctx.i18n.language);
+        return translate(key, options);
+      }
     });
 
     return nunjucksEnv;

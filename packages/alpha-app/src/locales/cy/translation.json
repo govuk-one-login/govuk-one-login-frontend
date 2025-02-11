@@ -21,27 +21,6 @@
         "content": "Mae hwn yn wasanaeth newydd - bydd eich <a class=\"govuk-link\" rel=\"noopener\" target=\"_blank\" href=\"https://signin.dev.account.gov.uk/contact-us\">adborth</a> yn ein helpu i'w wella. Am fwy o wybodaeth, os gwelwch yn dda <a class=\"govuk-link\" href=\"/welcome\">ailgychwynwch</a> eich taith"
       }
     },
-    "cookie": {
-      "cookieBanner": {
-        "title": "Cwcis ar GA4",
-        "heading": "Cwcis ar GA4",
-        "paragraph1": "Rydym yn defnyddio rhai cwcis hanfodol i wneud i'r gwasanaeth hwn weithio.",
-        "paragraph2": "Hoffem osod cwcis ychwanegol er mwyn gallu cofio eich gosodiadau, deall sut mae pobl yn defnyddio'r gwasanaeth a gwneud gwelliannau.",
-        "changeCookiePreferencesLink": "newid eich gosodiadau cwcis",
-        "cookieBannerAccept": {
-          "paragraph1": "Rydych wedi derbyn cwcis ychwanegol. Gallwch",
-          "paragraph2": "ar unrhyw adeg."
-        }
-      },
-      "cookieBannerReject": {
-        "paragraph1": "Rydych wedi gwrthod cwcis ychwanegol. Gallwch",
-        "paragraph2": "ar unrhyw adeg."
-      },
-      "buttonAcceptText": "Derbyn cwcis dadansoddi",
-      "buttonRejectText": "Gwrthod cwcis dadansoddi",
-      "linkViewCookies": "Gweld cwcis",
-      "cookieBannerHideLinkText": "Cuddio'r neges gwcis"
-    },
     "footer": {
       "help": {
         "linkText": "Cymorth"
