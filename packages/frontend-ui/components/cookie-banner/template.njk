@@ -1,7 +1,6 @@
 {% from "govuk/components/cookie-banner/macro.njk" import govukCookieBanner %}
 
-{% set lng = params.language %}
-{% set serviceName = params.serviceName %}
+{% set lng = params.activeLanguage %}
 
 {% set html %}
 <p class="govuk-body">{{ 'cookieBanner.body1' | translate(lng) }}</p>
@@ -33,7 +32,7 @@
   name: "gov-uk-cookie-banner",
   messages: [
     {
-      headingText: ('cookieBanner.headingText' | translate(lng)) ~ ' ' ~ params.serviceName[lng],
+      headingText: 'cookieBanner.headingText' | translate(lng),
       html: html,
       attributes: {
         "id": "cookies-banner-main"
