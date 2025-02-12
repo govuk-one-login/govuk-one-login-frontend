@@ -10,7 +10,7 @@
 {% from "govuk/components/footer/macro.njk" import govukFooter %}
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
 {% from "frontend-language-toggle/src/macro.njk" import languageSelect %}
-{% from "frontend-ui/build/components/cookie-banner/macro.njk" import cookieBanner %}
+{% from "frontend-ui/build/components/cookie-banner/macro.njk" import frontendUiCookieBanner %}
 
 {% block skipLink %}
   {{ govukSkipLink({
@@ -20,7 +20,7 @@
 {% endblock %}
 
 {% block bodyStart %}
-  {{ cookieBanner({
+  {{ frontendUiCookieBanner({
     activeLanguage: htmlLang
   }
   )}}
