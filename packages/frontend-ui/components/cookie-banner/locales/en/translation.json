@@ -2,8 +2,8 @@
   "cookieBanner": {
     "body1": "We use some essential cookies to make this service work.",
     "body2": "We'd like to set additional cookies so we can remember your settings, understand how people use the service and make improvements.",
-    "ariaLabel": "Cookies on ",
-    "headingText": "Cookies on ",
+    "ariaLabel": "Cookies on GOV.UK One Login",
+    "headingText": "Cookies on GOV.UK One Login",
     "acceptAdditionalCookies": "Accept additional cookies",
     "rejectAdditionalCookies": "Reject additional cookies",
     "viewCookies": "View cookies",
