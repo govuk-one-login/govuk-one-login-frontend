@@ -62,6 +62,7 @@ The package is owned by the DI Frontend Capability team, part of the development
    ```sh
    npm install @govuk-one-login/frontend-analytics
    ```
+
 2. Configure your node application's startup file (example: app.js or index.js) and add a new virtual directory:
 
    ```js
@@ -78,8 +79,22 @@ The package is owned by the DI Frontend Capability team, part of the development
 
    [!WARNING] Check if the path to your node module folder is the correct one. [!WARNING]
 
-3. Set a variable “ga4ContainerId” with the value of your google tag manager id (format: GTM-XXXXXXX) and be sure it’s accessible to your base nunjucks template (example: src/views/common/layout/base.njk).
-   You can also set the variable uaContainerId with the value of your google tag container id (format: GTM-XXXXXXX).
+3. Set up your environment variables. Two are required for the package to work, others provide a more granular level of control (while not required, it's highly advised to implement these to minimise the impact of bugs and regressions):
+
+| Variable                | Example            | Required | Notes   |
+| ----------------------- | ------------------ | -------- | ------- |
+| Ga4ContainerId          | `'GTM-XXXXXXX'`    | Yes      | Provided by the Analytics Team
+| isGa4Enabled            | `true`             | Yes      | Global flag for the package
+| cookieDomain            | `'account.gov.uk'` | No       | Defaults to `'account.gov.uk'`
+| isDataSensitive         | `true`             | No       | If turned on, will redact all form data from analytics, can be set at page level (See Redacting PII)
+| ga4PageViewEnabled      | `true`             | No       |
+| ga4NavigationEnabled    | `true`             | No       |
+| ga4FormResponseEnabled  | `true`             | No       |
+| ga4FormErrorEnabled     | `true`             | No       |
+| ga4FormChangeEnabled    | `true`             | No       |
+| ga4SelectContentEnabled | `true`             | No       |
+
+These will need to be accessible via your base nunjucks template (example: src/views/common/layout/base.njk).
 
 [!NOTE] Different methods exist if you want to set this variable. Some projects use a middleware, some will prefer to use another method. [!NOTE]
 
@@ -88,7 +103,7 @@ The package is owned by the DI Frontend Capability team, part of the development
    ```js
     <script src="/ga4-assets/analytics.js"></script>
     <script>
-    window.DI.appInit({ga4ContainerId: "{{ga4ContainerId}}", uaContainerId: '{{ uaContainerId }}'})
+    window.DI.appInit({ga4ContainerId: "{{ga4ContainerId}}"})
     </script>
    ```
 
@@ -96,7 +111,6 @@ The package is owned by the DI Frontend Capability team, part of the development
 
    - isDataSensitive (boolean): specify if form response tracker can be collect form inputs for tracking purposes (default set to true, this will redact PII)
    - enableGa4Tracking (boolean): enable/disable GA4 trackers
-   - enableUaTracking (boolean): enable/disable Universal Analytics tracker
    - cookieDomain (string): specify the domain the analytics consent cookie should be raised against (default is "account.gov.uk")
 
 Example of call:
@@ -105,16 +119,22 @@ Example of call:
 window.DI.appInit(
   {
     ga4ContainerId: "{{ga4ContainerId}}",
-    uaContainerId: "{{ uaContainerId }}",
   },
   {
-    isDataSensitive: false,
-    enableGa4Tracking: true,
-    enableUaTracking: true,
-    cookieDomain: "{{ cookieDomain }}",
+    enableGa4Tracking:{{ga4Enabled}},
+    enablePageViewTracking:{{ga4PageViewEnabled}},
+    enableFormErrorTracking:{{ga4FormErrorEnabled}},
+    enableFormChangeTracking:{{ga4FormChangeEnabled}},
+    enableFormResponseTracking:{{ga4FormResponseEnabled}},
+    enableNavigationTracking:{{ga4NavigationEnabled}},
+    enableSelectContentTracking:{{ga4SelectContentEnabled}},
+    cookieDomain:"{{analyticsCookieDomain}}",
+    isDataSensitive:{{analyticsDataSensitive}}
   },
 );
 ```
+
+#### Redacting PII
 
 [!NOTE] Redacting personally identifiable information can be configured at a global level or page level [!NOTE] 
 
@@ -138,12 +158,10 @@ Base Page/Form:
 window.DI.appInit(
   {
     ga4ContainerId: "{{ga4ContainerId}}",
-    uaContainerId: "{{ uaContainerId }}",
   },
   {
     isDataSensitive: {{ analyticsDataSensitive }},
     enableGa4Tracking: true,
-    enableUaTracking: true,
     cookieDomain: "{{ cookieDomain }}",
   },
 );
@@ -321,46 +339,6 @@ If a checkbox or radio field has been implemented without a legend, please follo
     </div>
   </div>
 </div>
-```
-
-### Universal Analytics compability
-
-More information:
-https://govukverify.atlassian.net/wiki/spaces/DIFC/pages/3843227661/Universal+Analytics+compatibility
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-## Updating to V2
-
-In V2 all form responses are treated as sensitive by default, and specific text content is removed. This is in contrast to V1 where by default a more complex algorithm was used to determine what data to strip. This is needed to support teams who aren't confident that there can be no PII represented in their forms.
-
-If you are confident that your forms cannot contain PII and you want the original behaviour after the upgrade to v2, you will need to explicitly set the `isDataSensitive` flag to false.
-
-```javascript
-// v1.0.0
-window.DI.appInit(
-  {
-    ga4ContainerId: "{{ ga4ContainerId }}",
-    uaContainerId: "{{ uaContainerId }}",
-  },
-  {
-    cookieDomain: "{{ cookieDomain }}",
-  },
-);
-
-// is equivalent to...
-
-// v2.0.0
-window.DI.appInit(
-  {
-    ga4ContainerId: "{{ ga4ContainerId }}",
-    uaContainerId: "{{ uaContainerId }}",
-  },
-  {
-    cookieDomain: "{{ cookieDomain }}",
-    isDataSensitive: false,
-  },
-);
 ```
 
 ## Developing the package
