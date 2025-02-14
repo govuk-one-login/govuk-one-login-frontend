@@ -18,17 +18,7 @@
 {% endblock %}
 
 {% block header %}
-  {{ frontendUiHeader
-  ({
-    navigation: [
-      { href: "/organisation-type", text: 'general.header.menuLink1' | translate },
-      { href: "/organisation-type", text: 'general.header.menuLink2' | translate },
-      {
-        href: "/xDncNmqheVoQoeOTnVmwUnsuByWwKwwAPUZAWRYBnzgrDOCObSzFqMpwAxQRpHMUehzTfzGJjuFJOtWyQBdHQbtpEpxmopVEnghdxyz",
-        text: 'general.header.menuLink3' | translate
-      }
-    ]
-  }) }}
+  {{ frontendUiHeader() }}
 {% endblock %}
 
 {% block main %}
