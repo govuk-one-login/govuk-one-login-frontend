@@ -17,7 +17,7 @@ const { validateChooseLocation } = require("./journeys/chooseLocationService");
 const { validateEnterEmail } = require("./journeys/enterEmailService");
 const { validateFeedback } = require("./journeys/feedbackService");
 const { loadAssets } = require("@govuk-one-login/frontend-asset-loader");
-const { setFrontendUiTranslations } = require("@govuk-one-login/frontend-ui");
+const { setFrontendUiTranslations, frontendUiMiddleware } = require("@govuk-one-login/frontend-ui");
 
 const crypto = require("crypto");
 const sessionId = crypto.randomBytes(16).toString("hex");
@@ -74,11 +74,12 @@ i18next
 
       if (err) {
         console.error("i18next init failed:", err);
-      } 
-    }
+      }
+    },
   );
 
 app.use(i18nextMiddleware.handle(i18next));
+app.use(frontendUiMiddleware);
 
 app.use("/assets", express.static(nodeModules("govuk-frontend/govuk/assets")));
 
@@ -100,7 +101,7 @@ app.use((req, res, next) => {
     res.locals.htmlLang = req.i18n.language;
     res.locals.pageTitleLang = req.i18n.language;
     res.locals.mainLang = req.i18n.language;
-    res.locals.translations = req.i18n.store.data[req.i18n.language];
+    
     try {
       res.locals.currentUrl = new URL(
         req.protocol + "://" + req.get("host") + req.originalUrl,
