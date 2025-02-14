@@ -38,11 +38,13 @@ export class NavigationTracker extends BaseTracker {
     }
 
     let element: HTMLLinkElement = event.target as HTMLLinkElement;
-    element = NavigationTracker.getParentElementIfSpecificClass(element, [
-      "govuk-header__logotype",
-      "govuk-header__logotype-crown",
-      "one-login-header__logotype",
-    ]);
+    const crownAnchor: HTMLLinkElement = document.querySelector(
+      "a.govuk-header__link",
+    ) as HTMLLinkElement;
+    element = NavigationTracker.getContainingElement(
+      element,
+      crownAnchor,
+    ) as HTMLLinkElement;
 
     /*
      * Navigation tracker is only for links and navigation buttons outside of error summary list
@@ -88,7 +90,7 @@ export class NavigationTracker extends BaseTracker {
       element.href === "#" ||
       element.href === `${window.location.href}#`
     ) {
-      element.href = "undefined";
+      return false;
     }
 
     // Ignore change links
@@ -135,18 +137,14 @@ export class NavigationTracker extends BaseTracker {
    * @param {string[]} classes - An array of classes to check against the parent element's class.
    * @return {HTMLLinkElement} - The parent element of the parent element of the given HTMLLinkElement if it has a specific class, otherwise returns the original element.
    */
-  static getParentElementIfSpecificClass(
-    element: HTMLLinkElement,
-    classes: string[],
-  ): HTMLLinkElement {
-    if (
-      element.parentElement &&
-      classes.includes(element.parentElement.className) &&
-      element.parentElement.parentElement?.tagName === "A"
-    ) {
-      return element.parentElement.parentElement as HTMLLinkElement;
+  static getContainingElement(
+    clickedElement: HTMLElement,
+    containerElement?: HTMLLinkElement,
+  ): HTMLElement {
+    if (containerElement?.contains(clickedElement)) {
+      return containerElement;
     }
-    return element;
+    return clickedElement;
   }
 
   /**
