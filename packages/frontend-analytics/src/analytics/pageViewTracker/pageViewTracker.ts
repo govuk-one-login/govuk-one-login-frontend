@@ -1,5 +1,3 @@
-import logger from "loglevel";
-import { BaseTracker } from "../baseTracker/baseTracker";
 import {
   PageViewParametersInterface,
   PageViewEventInterface,
@@ -8,35 +6,32 @@ import { validateParameter } from "../../utils/validateParameter";
 import { FormErrorTracker } from "../formErrorTracker/formErrorTracker";
 import { OptionsInterface } from "../core/core.interface";
 import { getTaxonomy, setTaxonomies } from "../../utils/taxonomyUtils";
+import { pushToDataLayer } from "../../utils/pushToDataLayer";
 
-export class PageViewTracker extends BaseTracker {
+export class PageViewTracker {
   eventName: string = "page_view_ga4";
   enableGa4Tracking: boolean;
   enableFormErrorTracking: boolean;
   enablePageViewTracking: boolean;
+  organisations: string = "<OT1056>";
+  primary_publishing_organisation: string =
+    "government digital service - digital identity";
 
   constructor(options: OptionsInterface) {
-    super();
     this.enableGa4Tracking = options.enableGa4Tracking ?? false;
     this.enableFormErrorTracking = options.enableFormErrorTracking ?? true;
     this.enablePageViewTracking = options.enablePageViewTracking ?? true;
   }
 
-  /**
-   * Tracks the page load event and sends the relevant data to the data layer.
-   *
-   * @param {PageViewParametersInterface} parameters - The parameters for the page view event.
-   * @return {boolean} Returns true if the event was successfully tracked, false otherwise.
-   */
-  trackOnPageLoad(parameters: PageViewParametersInterface): boolean {
+  trackOnPageLoad(parameters: PageViewParametersInterface): void {
     if (
       window.DI.analyticsGa4.cookie.hasCookie &&
       !window.DI.analyticsGa4.cookie.consent
     ) {
-      return false;
+      return;
     }
     if (!this.enableGa4Tracking) {
-      return false;
+      return;
     }
 
     // trigger form error tracking if pageView is enabled
@@ -47,11 +42,11 @@ export class PageViewTracker extends BaseTracker {
         const formErrorTracker = new FormErrorTracker();
         formErrorTracker.trackFormError();
       }
-      return false;
+      return;
     }
 
     if (!this.enablePageViewTracking) {
-      return false;
+      return;
     }
 
     setTaxonomies(parameters);
@@ -59,11 +54,11 @@ export class PageViewTracker extends BaseTracker {
     const pageViewTrackerEvent: PageViewEventInterface = {
       event: this.eventName,
       page_view: {
-        language: BaseTracker.getLanguage(),
-        location: BaseTracker.getLocation(),
+        language: PageViewTracker.getLanguage(),
+        location: PageViewTracker.getLocation(),
         organisations: this.organisations,
         primary_publishing_organisation: this.primary_publishing_organisation,
-        referrer: BaseTracker.getReferrer(),
+        referrer: PageViewTracker.getReferrer(),
         status_code: validateParameter(parameters.statusCode.toString(), 3),
         title: validateParameter(parameters.englishPageTitle, 300),
         taxonomy_level1: validateParameter(parameters.taxonomy_level1, 100),
@@ -94,13 +89,7 @@ export class PageViewTracker extends BaseTracker {
       },
     };
 
-    try {
-      BaseTracker.pushToDataLayer(pageViewTrackerEvent);
-      return true;
-    } catch (err) {
-      logger.error("Error in trackOnPageLoad", err);
-      return false;
-    }
+    pushToDataLayer(pageViewTrackerEvent);
   }
 
   /**
@@ -150,5 +139,35 @@ export class PageViewTracker extends BaseTracker {
    */
   static getRelyingParty(): string {
     return document.location.hostname;
+  }
+
+  /**
+   * Retrieves the language code from the HTML document and returns it in lowercase.
+   *
+   * @return {string} The language code. Defaults to "en" if no language code is found.
+   */
+  static getLanguage(): string {
+    const languageCode = document.querySelector("html")?.getAttribute("lang");
+    return languageCode?.toLowerCase() ?? "undefined";
+  }
+
+  /**
+   * Returns the current location URL as a lowercase string.
+   *
+   * @return {string} The current location URL as a lowercase string, or "undefined" if not available.
+   */
+  static getLocation(): string {
+    return document.location.href?.toLowerCase() ?? "undefined";
+  }
+
+  /**
+   * Retrieves the referrer of the current document.
+   *
+   * @return {string} The referrer as a lowercase string, or "undefined" if it is empty.
+   */
+  static getReferrer(): string {
+    return document.referrer.length
+      ? document.referrer?.toLowerCase()
+      : "undefined";
   }
 }

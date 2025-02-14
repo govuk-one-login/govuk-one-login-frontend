@@ -2,7 +2,12 @@ import logger from "loglevel";
 import { validateParameter } from "../../utils/validateParameter";
 import { FormTracker } from "../formTracker/formTracker";
 import { FormEventInterface } from "../formTracker/formTracker.interface";
-import { BaseTracker } from "../baseTracker/baseTracker";
+import {
+  getDomain,
+  getDomainPath,
+  isChangeLink,
+} from "../../utils/dataScrapers";
+import { pushToDataLayer } from "../../utils/pushToDataLayer";
 
 export class FormChangeTracker extends FormTracker {
   eventName: string = "form_change_response";
@@ -44,7 +49,7 @@ export class FormChangeTracker extends FormTracker {
     // Ensure element is an <a> tag with "Change" text content and is not a lang toggle link
     if (
       element.tagName !== "A" ||
-      !BaseTracker.isChangeLink(element) ||
+      !isChangeLink(element) ||
       element.hasAttribute("hreflang")
     ) {
       return false;
@@ -60,17 +65,17 @@ export class FormChangeTracker extends FormTracker {
         section: validateParameter(FormChangeTracker.getSection(element), 100),
         action: "change response",
         external: "false",
-        link_domain: BaseTracker.getDomain(element.href),
-        "link_path_parts.1": BaseTracker.getDomainPath(element.href, 0),
-        "link_path_parts.2": BaseTracker.getDomainPath(element.href, 1),
-        "link_path_parts.3": BaseTracker.getDomainPath(element.href, 2),
-        "link_path_parts.4": BaseTracker.getDomainPath(element.href, 3),
-        "link_path_parts.5": BaseTracker.getDomainPath(element.href, 4),
+        link_domain: getDomain(element.href),
+        "link_path_parts.1": getDomainPath(element.href, 0),
+        "link_path_parts.2": getDomainPath(element.href, 1),
+        "link_path_parts.3": getDomainPath(element.href, 2),
+        "link_path_parts.4": getDomainPath(element.href, 3),
+        "link_path_parts.5": getDomainPath(element.href, 4),
       },
     };
 
     try {
-      BaseTracker.pushToDataLayer(formChangeTrackerEvent);
+      pushToDataLayer(formChangeTrackerEvent);
       return true;
     } catch (err) {
       logger.error("Error in trackFormChange", err);

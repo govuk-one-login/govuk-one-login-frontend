@@ -9,7 +9,7 @@ import { PageViewTracker } from "./pageViewTracker";
 import { OptionsInterface } from "../core/core.interface";
 import { FormErrorTracker } from "../formErrorTracker/formErrorTracker";
 import { FormChangeTracker } from "../formChangeTracker/formChangeTracker";
-import { BaseTracker } from "../baseTracker/baseTracker";
+import * as pushToDataLayer from "../../utils/pushToDataLayer";
 
 window.DI = { analyticsGa4: { cookie: { consent: true } } };
 
@@ -50,7 +50,7 @@ describe("pageViewTracker", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    jest.spyOn(BaseTracker, "pushToDataLayer");
+    jest.spyOn(pushToDataLayer, "pushToDataLayer");
     instance = new PageViewTracker(
       getOptions({
         enablePageViewTracking: true,
@@ -58,14 +58,14 @@ describe("pageViewTracker", () => {
     );
   });
 
-  test("pageView is deactivated", () => {
-    const newInstance = new PageViewTracker(
+  test("should not call pushToDataLayer if enablePageViewTracking is disabled", () => {
+    const newPageView = new PageViewTracker(
       getOptions({
         enablePageViewTracking: false,
       }),
     );
-    newInstance.trackOnPageLoad(getParameters());
-    expect(newInstance.trackOnPageLoad).toReturnWith(false);
+    newPageView.trackOnPageLoad(getParameters());
+    expect(pushToDataLayer.pushToDataLayer).not.toHaveBeenCalled();
   });
 
   test("pushToDataLayer is called", () => {
@@ -75,52 +75,20 @@ describe("pageViewTracker", () => {
       }),
     );
     newInstance.trackOnPageLoad(getParameters());
-    expect(BaseTracker.pushToDataLayer).toBeCalled();
+    expect(pushToDataLayer.pushToDataLayer).toBeCalled();
   });
 
-  test("pushToDataLayer is called with the good data", () => {
+  test("should call pushToDataLayer with a valid dataLayerEvent", () => {
     const parameters = getParameters();
     const dataLayerEvent: PageViewEventInterface = {
       event: instance.eventName,
       page_view: {
-        language: BaseTracker.getLanguage(),
-        location: BaseTracker.getLocation(),
+        language: PageViewTracker.getLanguage(),
+        location: PageViewTracker.getLocation(),
         organisations: instance.organisations,
         primary_publishing_organisation:
           instance.primary_publishing_organisation,
-        referrer: BaseTracker.getReferrer(),
-        status_code: parameters.statusCode.toString(),
-        title: parameters.englishPageTitle,
-        taxonomy_level1: parameters.taxonomy_level1,
-        taxonomy_level2: parameters.taxonomy_level2,
-        taxonomy_level3: parameters.taxonomy_level3,
-        taxonomy_level4: parameters.taxonomy_level4,
-        taxonomy_level5: parameters.taxonomy_level5,
-        content_id: parameters.content_id,
-        logged_in_status: PageViewTracker.getLoggedInStatus(
-          parameters.logged_in_status,
-        ),
-        dynamic: parameters.dynamic.toString(),
-        first_published_at: PageViewTracker.getFirstPublishedAt(),
-        updated_at: PageViewTracker.getUpdatedAt(),
-        relying_party: PageViewTracker.getRelyingParty(),
-      },
-    };
-    instance.trackOnPageLoad(getParameters());
-    expect(BaseTracker.pushToDataLayer).toBeCalledWith(dataLayerEvent);
-  });
-
-  test("pushToDataLayer is called with the good data", () => {
-    const parameters = getParameters();
-    const dataLayerEvent: PageViewEventInterface = {
-      event: instance.eventName,
-      page_view: {
-        language: BaseTracker.getLanguage(),
-        location: BaseTracker.getLocation(),
-        organisations: instance.organisations,
-        primary_publishing_organisation:
-          instance.primary_publishing_organisation,
-        referrer: BaseTracker.getReferrer(),
+        referrer: PageViewTracker.getReferrer(),
         status_code: parameters.statusCode.toString(),
         title: parameters.englishPageTitle,
         taxonomy_level1: parameters.taxonomy_level1,
@@ -139,17 +107,39 @@ describe("pageViewTracker", () => {
       },
     };
     instance.trackOnPageLoad(parameters);
-    expect(BaseTracker.pushToDataLayer).toBeCalledWith(dataLayerEvent);
+    expect(pushToDataLayer.pushToDataLayer).toBeCalledWith(dataLayerEvent);
   });
 
-  test("pageView is deactivated", () => {
-    instance = new PageViewTracker(
-      getOptions({
-        enablePageViewTracking: false,
-      }),
-    );
-    instance.trackOnPageLoad(getParameters());
-    expect(BaseTracker.pushToDataLayer).not.toHaveBeenCalled();
+  test("pushToDataLayer is called with the good data", () => {
+    const parameters = getParameters();
+    const dataLayerEvent: PageViewEventInterface = {
+      event: instance.eventName,
+      page_view: {
+        language: PageViewTracker.getLanguage(),
+        location: PageViewTracker.getLocation(),
+        organisations: instance.organisations,
+        primary_publishing_organisation:
+          instance.primary_publishing_organisation,
+        referrer: PageViewTracker.getReferrer(),
+        status_code: parameters.statusCode.toString(),
+        title: parameters.englishPageTitle,
+        taxonomy_level1: parameters.taxonomy_level1,
+        taxonomy_level2: parameters.taxonomy_level2,
+        taxonomy_level3: parameters.taxonomy_level3,
+        taxonomy_level4: parameters.taxonomy_level4,
+        taxonomy_level5: parameters.taxonomy_level5,
+        content_id: parameters.content_id,
+        logged_in_status: PageViewTracker.getLoggedInStatus(
+          parameters.logged_in_status,
+        ),
+        dynamic: parameters.dynamic.toString(),
+        first_published_at: PageViewTracker.getFirstPublishedAt(),
+        updated_at: PageViewTracker.getUpdatedAt(),
+        relying_party: PageViewTracker.getRelyingParty(),
+      },
+    };
+    instance.trackOnPageLoad(parameters);
+    expect(pushToDataLayer.pushToDataLayer).toBeCalledWith(dataLayerEvent);
   });
 
   test("getLoggedInStatus returns the good data if logged in", () => {
@@ -211,7 +201,7 @@ describe("pageViewTracker test disable ga4 tracking option", () => {
       }),
     );
     instance.trackOnPageLoad(getParameters());
-    expect(instance.trackOnPageLoad).toReturnWith(false);
+    expect(instance.trackOnPageLoad).toReturnWith();
   });
 });
 
@@ -226,7 +216,7 @@ describe("Cookie Management", () => {
     window.DI.analyticsGa4.cookie.hasCookie = true;
     const instance = new PageViewTracker(getOptions());
     instance.trackOnPageLoad(getParameters());
-    expect(instance.trackOnPageLoad).toReturnWith(false);
+    expect(instance.trackOnPageLoad).toReturnWith();
   });
 });
 
@@ -253,7 +243,7 @@ describe("Form Error Tracker Trigger", () => {
     jest.clearAllMocks();
     window.DI.analyticsGa4.cookie.hasCookie = true;
     window.DI.analyticsGa4.cookie.consent = true;
-    jest.spyOn(BaseTracker, "pushToDataLayer");
+    jest.spyOn(pushToDataLayer, "pushToDataLayer");
     jest.spyOn(FormErrorTracker.prototype, "trackFormError");
     instance = new PageViewTracker(getOptions());
     formErrorTracker = new FormErrorTracker();
@@ -263,7 +253,7 @@ describe("Form Error Tracker Trigger", () => {
     document.body.innerHTML =
       '<p id="organisationType-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select one option</p>';
     instance.trackOnPageLoad(getParameters());
-    expect(instance.trackOnPageLoad).toReturnWith(false);
+    expect(instance.trackOnPageLoad).toReturnWith();
   });
 
   test("FormError tracker is activated", () => {
@@ -308,7 +298,7 @@ describe("Form Error Tracker Trigger", () => {
       }),
     );
     instance.trackOnPageLoad(getParameters());
-    expect(BaseTracker.pushToDataLayer).not.toHaveBeenCalled();
+    expect(pushToDataLayer.pushToDataLayer).not.toHaveBeenCalled();
   });
 });
 
@@ -319,7 +309,7 @@ describe("Persisting taxonomy level values", () => {
     };
     document.body.innerHTML = "<p></p>";
     jest.clearAllMocks();
-    jest.spyOn(BaseTracker, "pushToDataLayer");
+    jest.spyOn(pushToDataLayer, "pushToDataLayer");
   });
 
   test("Taxonomy levels are persisted from previous page", () => {
@@ -333,7 +323,7 @@ describe("Persisting taxonomy level values", () => {
         taxonomy_level5: "persisted from previous page",
       }),
     );
-    expect(BaseTracker.pushToDataLayer).toHaveBeenNthCalledWith(1, {
+    expect(pushToDataLayer.pushToDataLayer).toHaveBeenNthCalledWith(1, {
       event: "page_view_ga4",
       page_view: {
         content_id: "<e4a3603d-2d3c-4ff1-9b80-d72c1e6b7a58>",
@@ -357,7 +347,7 @@ describe("Persisting taxonomy level values", () => {
         updated_at: PageViewTracker.getUpdatedAt(),
       },
     });
-    expect(BaseTracker.pushToDataLayer).toHaveBeenNthCalledWith(2, {
+    expect(pushToDataLayer.pushToDataLayer).toHaveBeenNthCalledWith(2, {
       event: "page_view_ga4",
       page_view: {
         content_id: "<e4a3603d-2d3c-4ff1-9b80-d72c1e6b7a58>",
