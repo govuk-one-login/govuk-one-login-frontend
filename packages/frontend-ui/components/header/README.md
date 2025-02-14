@@ -4,7 +4,8 @@ In order to remove the linking capability of the header logo and text include th
 
 {% block header %}
   {{ frontendUiHeader
-  (
+  ({
     isEmbeddedMobileApp = true
-  )}}
+  })
+  }}
 {% endblock %}

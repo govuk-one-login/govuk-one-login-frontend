@@ -65,7 +65,7 @@ treat it as an interactive element - without this it will be
       <a href="{{ params.homepageUrl | default('https://www.gov.uk/') }}" class="govuk-header__link govuk-header__link--homepage">
       {% endif %}
         <span class="govuk-header__logotype">
-          {{ (_tudorCrown if params.useTudorCrown else _stEdwardsCrown) | safe }}
+          {{ (_stEdwardsCrown if params.useStEdwardsCrown else _tudorCrown) | safe }}
           <span class="govuk-header__logotype-text">
             GOV.UK
           </span>
