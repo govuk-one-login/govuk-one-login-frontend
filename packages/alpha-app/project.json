@@ -13,7 +13,7 @@
     "format": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "prettier --write packages/alpha-app/src/**/*"
+        "command": "prettier --write \"packages/alpha-app/src/**/!(*.nunjucks).js\""
       }
     },
     "format:check": {
