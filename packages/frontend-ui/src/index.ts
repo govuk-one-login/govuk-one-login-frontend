@@ -3,17 +3,27 @@ import translationCookieBannerCy from "../components/cookie-banner/locales/cy/tr
 import translationCookieBannerEn from "../components/cookie-banner/locales/en/translation.json";
 
 export const setFrontendUiTranslations = (instanceI18n: typeof i18next) => {
-  instanceI18n.addResourceBundle("en", "translation", translationCookieBannerEn, true, false);
-  instanceI18n.addResourceBundle("cy", "translation", translationCookieBannerCy, true, false);
+  instanceI18n.addResourceBundle(
+    "en",
+    "translation",
+    translationCookieBannerEn,
+    true,
+    false,
+  );
+  instanceI18n.addResourceBundle(
+    "cy",
+    "translation",
+    translationCookieBannerCy,
+    true,
+    false,
+  );
 };
 
-export const getFrontendUiTranslations = (instanceI18n: typeof i18next, language: string) => {
-  return instanceI18n.getResourceBundle(language, "translation");
+export const frontendUiMiddleware = (
+  req: { i18n: { language: string, store: { data: { [key: string]: string} } } },
+  res: { locals: { translations: unknown } },
+  next: () => void,
+) => {
+  res.locals.translations = req.i18n.store.data[req.i18n.language];
+  next();
 };
-
-// export const frontendUiMiddleware = (instanceI18n: typeof i18next, req: { language: string; }, res: { locals: { translations: unknown; }; }, next: () => void) => {
-//   console.log(req);
-//   // const language = req.language || "en";
-//   // res.locals.translations = getFrontendUiTranslations(instanceI18n, language); 
-//   next();
-// };
