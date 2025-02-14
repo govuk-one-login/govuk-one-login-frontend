@@ -1,5 +1,6 @@
 import typescript from "rollup-plugin-typescript2";
 import copy from "rollup-plugin-copy";
+import json from '@rollup/plugin-json';
 
 export default {
   input: "src/index.ts",
@@ -26,5 +27,6 @@ export default {
       ],
       hook: "closeBundle",
     }),
+    json()
   ],
 };

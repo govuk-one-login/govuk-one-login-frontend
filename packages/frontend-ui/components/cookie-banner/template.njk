@@ -1,57 +1,58 @@
 {% from "govuk/components/cookie-banner/macro.njk" import govukCookieBanner %}
 
 {% set lng = params.activeLanguage %}
+{% set cookieBanner = params.cookieBanner.translation.cookieBanner %}
 
 {% set html %}
-<p class="govuk-body">{{ 'cookieBanner.body1' | translate(lng) }}</p>
-<p class="govuk-body">{{ 'cookieBanner.body2' | translate(lng) }}</p>
+<p class="govuk-body">{{ cookieBanner.body1 }}</p>
+<p class="govuk-body">{{ cookieBanner.body2 }}</p>
 {% endset %}
 
 {% set acceptHtml %}
   <p class="govuk-body">
-    {{ 'cookieBanner.cookieBannerAccept.body1' | translate(lng) }}
+    {{ cookieBanner.cookieBannerAccept.body1 }}
     <a class="govuk-link" href="https://signin.account.gov.uk/cookies">
-      {{ 'cookieBanner.changeCookiePreferencesLink' | translate(lng) }}
+      {{ 'cookieBanner.changeCookiePreferencesLink' }}
     </a> 
-    {{ 'cookieBanner.cookieBannerAccept.body2' | translate(lng) }}
+    {{ cookieBanner.cookieBannerAccept.body2 }}
   </p>
 {% endset %}
 
 {% set rejectedHtml %}
   <p class="govuk-body">
-    {{ 'cookieBanner.cookieBannerReject.body1' | translate(lng) }}
+    {{ cookieBanner.cookieBannerReject.body1 }}
     <a class="govuk-link" href="https://signin.account.gov.uk/cookies">
-      {{ 'cookieBanner.changeCookiePreferencesLink' | translate(lng) }}
+      {{ cookieBanner.changeCookiePreferencesLink }}
     </a> 
-    {{ 'cookieBanner.cookieBannerReject.body2' | translate(lng) }}
+    {{ cookieBanner.cookieBannerReject.body2 }}
   </p>
 {% endset %}
 
 {{ govukCookieBanner({
-  ariaLabel: 'cookieBanner.ariaLabel' | translate(lng),
+  ariaLabel: 'cookieBanner.ariaLabel',
   name: "gov-uk-cookie-banner",
   messages: [
     {
-      headingText: 'cookieBanner.headingText' | translate(lng),
+      headingText: cookieBanner.headingText,
       html: html,
       attributes: {
         "id": "cookies-banner-main"
       },
       actions: [
         {
-          text: 'cookieBanner.acceptAdditionalCookies' | translate(lng),
+          text: cookieBanner.acceptAdditionalCookies,
           type: "button",
           name: "cookiesAccept",
           value: "accept"
         },
         {
-          text: 'cookieBanner.rejectAdditionalCookies' | translate(lng),
+          text: cookieBanner.rejectAdditionalCookies,
           type: "button",
           name: "cookiesReject",
           value: "reject"
         },
         {
-          text: 'cookieBanner.viewCookies' | translate(lng),
+          text: cookieBanner.viewCookies,
           href: "https://signin.account.gov.uk/cookies"
         }
       ]
@@ -63,12 +64,12 @@
       },
       actions: [
         {
-          text: 'cookieBanner.changeCookiePreferencesLink' | translate(lng),
+          text: cookieBanner.changeCookiePreferencesLink,
           href: "#",
           type: "button",
           classes:"cookie-hide-button",
           attributes: {
-            "aria-label": 'cookieBanner.changeCookiePreferencesLink' | translate(lng)
+            "aria-label": cookieBanner.changeCookiePreferencesLink
           }
         }
       ],
@@ -81,12 +82,12 @@
       },
       actions: [
         {
-          text: 'cookieBanner.hideCookieMessage' | translate(lng),
+          text: cookieBanner.hideCookieMessage,
           href: "#",
           type: "button",
           classes:"cookie-hide-button",
           attributes: {
-            "aria-label": 'cookieBanner.hideCookieMessage' | translate(lng)
+            "aria-label": cookieBanner.hideCookieMessage
           }
         }
       ],
