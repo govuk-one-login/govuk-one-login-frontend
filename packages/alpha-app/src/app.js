@@ -17,7 +17,10 @@ const { validateChooseLocation } = require("./journeys/chooseLocationService");
 const { validateEnterEmail } = require("./journeys/enterEmailService");
 const { validateFeedback } = require("./journeys/feedbackService");
 const { loadAssets } = require("@govuk-one-login/frontend-asset-loader");
-const { setFrontendUiTranslations, frontendUiMiddleware } = require("@govuk-one-login/frontend-ui");
+const {
+  setFrontendUiTranslations,
+  frontendUiMiddleware,
+} = require("@govuk-one-login/frontend-ui");
 
 const crypto = require("crypto");
 const sessionId = crypto.randomBytes(16).toString("hex");
@@ -101,7 +104,7 @@ app.use((req, res, next) => {
     res.locals.htmlLang = req.i18n.language;
     res.locals.pageTitleLang = req.i18n.language;
     res.locals.mainLang = req.i18n.language;
-    
+
     try {
       res.locals.currentUrl = new URL(
         req.protocol + "://" + req.get("host") + req.originalUrl,
