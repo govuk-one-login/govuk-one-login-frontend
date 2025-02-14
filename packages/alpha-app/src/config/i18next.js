@@ -1,7 +1,6 @@
 module.exports = {
   i18nextConfigurationOptions: function (path) {
     return {
-      partialBundledLanguages: true,
       debug: false, // Whether to enable debug mode for i18next
       fallbackLng: "en", // The default language to fall back
       // to if a translation is not available in the requested language
