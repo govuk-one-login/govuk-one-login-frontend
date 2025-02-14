@@ -62,7 +62,6 @@ const APP_VIEWS = [
 ];
 
 app.set("view engine", configureNunjucks(app, APP_VIEWS));
-
 i18next
   .use(Backend)
   .use(i18nextMiddleware.LanguageDetector)
@@ -104,7 +103,6 @@ app.use((req, res, next) => {
     res.locals.htmlLang = req.i18n.language;
     res.locals.pageTitleLang = req.i18n.language;
     res.locals.mainLang = req.i18n.language;
-
     try {
       res.locals.currentUrl = new URL(
         req.protocol + "://" + req.get("host") + req.originalUrl,
