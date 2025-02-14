@@ -1,5 +1,6 @@
 import typescript from "rollup-plugin-typescript2";
 import copy from "rollup-plugin-copy";
+import json from '@rollup/plugin-json';
 
 export default {
   external: ["pino"],
@@ -27,5 +28,6 @@ export default {
       ],
       hook: "closeBundle",
     }),
+    json()
   ],
 };

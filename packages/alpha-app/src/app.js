@@ -17,7 +17,7 @@ const { validateChooseLocation } = require("./journeys/chooseLocationService");
 const { validateEnterEmail } = require("./journeys/enterEmailService");
 const { validateFeedback } = require("./journeys/feedbackService");
 const { loadAssets } = require("@govuk-one-login/frontend-asset-loader");
-const { loadFrontendUiTranslations } = require("@govuk-one-login/frontend-ui");
+const { setFrontendUiTranslations } = require("@govuk-one-login/frontend-ui");
 
 const crypto = require("crypto");
 const sessionId = crypto.randomBytes(16).toString("hex");
@@ -70,55 +70,16 @@ i18next
       ),
     },
     (err) => {
-      setTimeout(() => {
-        loadFrontendUiTranslations();
-      }, 1000);
+      setFrontendUiTranslations(i18next);
 
       if (err) {
         console.error("i18next init failed:", err);
-      } else {
-        console.log("✅ i18next successfully initialised");
-        console.log(
-          "🔹 Loaded translations (CY):",
-
-          i18next.getResourceBundle("cy", "translation"),
-        );
-        console.log(
-          "🔹 Loaded translations (EN):",
-          i18next.getResourceBundle("en", "translation"),
-        );
-      }
-    },
+      } 
+    }
   );
 
-// const loadFrontendUiTranslations = () => {
-//   const nodeModuleLocalesPath = path.join(
-//     nodeModules(
-//       "@govuk-one-login/frontend-ui/components/cookie-banner/locales",
-//     ),
-//   );
-//   i18next.addResourceBundle(
-//     "en",
-//     "translation",
-//     require(
-//       path.join(path.join(nodeModuleLocalesPath, "en", `translation.json`)),
-//     ),
-//     true,
-//     false,
-//   );
-
-//   i18next.addResourceBundle(
-//     "cy",
-//     "translation",
-//     require(
-//       path.join(path.join(nodeModuleLocalesPath, "cy", `translation.json`)),
-//     ),
-//     true,
-//     false,
-//   );
-// };
-
 app.use(i18nextMiddleware.handle(i18next));
+
 app.use("/assets", express.static(nodeModules("govuk-frontend/govuk/assets")));
 
 /** GA4 assets */
@@ -139,6 +100,7 @@ app.use((req, res, next) => {
     res.locals.htmlLang = req.i18n.language;
     res.locals.pageTitleLang = req.i18n.language;
     res.locals.mainLang = req.i18n.language;
+    res.locals.translations = req.i18n.store.data[req.i18n.language];
     try {
       res.locals.currentUrl = new URL(
         req.protocol + "://" + req.get("host") + req.originalUrl,

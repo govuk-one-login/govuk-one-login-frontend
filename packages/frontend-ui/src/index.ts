@@ -1,35 +1,19 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
-
 import i18next from "i18next";
-import path from 'path';
+import translationCookieBannerCy from "../components/cookie-banner/locales/cy/translation.json";
+import translationCookieBannerEn from "../components/cookie-banner/locales/en/translation.json";
 
-export const loadFrontendUiTranslations = () => {
-  const nodeModules = (modulePath: string) =>
-    `${path.resolve(__dirname, "../../../node_modules/", modulePath)}`;
-  
-  const nodeModuleLocalesPath = path.join(
-    nodeModules("@govuk-one-login/frontend-ui/components/cookie-banner/locales"),
-  );
-
-  console.log(__dirname);
-  
-  i18next.addResourceBundle(
-    "en",
-    "translation",
-    require(
-      path.join(path.join(nodeModuleLocalesPath, "en", `translation.json`)),
-    ),
-    true,
-    false,
-  );
-  
-  i18next.addResourceBundle(
-    "cy",
-    "translation",
-    require(
-      path.join(path.join(nodeModuleLocalesPath, "cy", `translation.json`)),
-    ),
-    true,
-    false,
-  );
+export const setFrontendUiTranslations = (instanceI18n: typeof i18next) => {
+  instanceI18n.addResourceBundle("en", "translation", translationCookieBannerEn, true, false);
+  instanceI18n.addResourceBundle("cy", "translation", translationCookieBannerCy, true, false);
 };
+
+export const getFrontendUiTranslations = (instanceI18n: typeof i18next, language: string) => {
+  return instanceI18n.getResourceBundle(language, "translation");
+};
+
+// export const frontendUiMiddleware = (instanceI18n: typeof i18next, req: { language: string; }, res: { locals: { translations: unknown; }; }, next: () => void) => {
+//   console.log(req);
+//   // const language = req.language || "en";
+//   // res.locals.translations = getFrontendUiTranslations(instanceI18n, language); 
+//   next();
+// };
