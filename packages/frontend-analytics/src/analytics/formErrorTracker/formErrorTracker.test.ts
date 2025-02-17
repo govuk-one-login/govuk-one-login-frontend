@@ -4,7 +4,7 @@ import {
   FormEventInterface,
   FormField,
 } from "../formTracker/formTracker.interface";
-import { BaseTracker } from "../baseTracker/baseTracker";
+import * as pushToDataLayer from "../../utils/pushToDataLayer";
 
 window.DI = { analyticsGa4: { cookie: { consent: true } } };
 
@@ -16,7 +16,7 @@ describe("FormErrorTracker", () => {
     // Remove any existing elements from document.body if needed
     document.body.innerHTML = "";
   });
-  jest.spyOn(BaseTracker, "pushToDataLayer");
+  jest.spyOn(pushToDataLayer, "pushToDataLayer");
   jest.spyOn(FormErrorTracker.prototype, "trackFormError");
 
   test("trackFormError should return false if not cookie consent", () => {
@@ -185,12 +185,20 @@ describe("FormErrorTracker", () => {
     };
     instance.trackFormError();
 
-    expect(BaseTracker.pushToDataLayer).toBeCalledWith(dataLayerEventDropdown);
-    expect(BaseTracker.pushToDataLayer).toBeCalledWith(dataLayerEventRadio);
-    expect(BaseTracker.pushToDataLayer).toBeCalledWith(dataLayerEventTextarea);
-    expect(BaseTracker.pushToDataLayer).toBeCalledWith(dataLayerEventText);
-    expect(BaseTracker.pushToDataLayer).toBeCalledWith(dataLayerEventPassword);
-    expect(BaseTracker.pushToDataLayer).toBeCalledWith(dataLayerEventCheckbox);
+    expect(pushToDataLayer.pushToDataLayer).toBeCalledWith(
+      dataLayerEventDropdown,
+    );
+    expect(pushToDataLayer.pushToDataLayer).toBeCalledWith(dataLayerEventRadio);
+    expect(pushToDataLayer.pushToDataLayer).toBeCalledWith(
+      dataLayerEventTextarea,
+    );
+    expect(pushToDataLayer.pushToDataLayer).toBeCalledWith(dataLayerEventText);
+    expect(pushToDataLayer.pushToDataLayer).toBeCalledWith(
+      dataLayerEventPassword,
+    );
+    expect(pushToDataLayer.pushToDataLayer).toBeCalledWith(
+      dataLayerEventCheckbox,
+    );
   });
   test("datalayer event should be defined", () => {
     window.DI.analyticsGa4.cookie.consent = true;
@@ -232,7 +240,7 @@ describe("FormErrorTracker", () => {
     };
 
     instance.trackFormError();
-    expect(BaseTracker.pushToDataLayer).toBeCalledWith(dataLayerEvent);
+    expect(pushToDataLayer.pushToDataLayer).toBeCalledWith(dataLayerEvent);
   });
 
   test("getErrorMessage should return error message", () => {

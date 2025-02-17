@@ -1,7 +1,7 @@
 import { describe, expect, jest, test, beforeEach } from "@jest/globals";
 import { SelectContentTracker } from "./selectContentTracker";
 import { SelectContentEventInterface } from "./selectContentTracker.interface";
-import { BaseTracker } from "../baseTracker/baseTracker";
+import * as pushToDataLayer from "../../utils/pushToDataLayer";
 
 describe("selectContentTracker", () => {
   let newInstance: SelectContentTracker;
@@ -17,7 +17,7 @@ describe("selectContentTracker", () => {
       bubbles: true,
       cancelable: true,
     });
-    jest.spyOn(BaseTracker, "pushToDataLayer");
+    jest.spyOn(pushToDataLayer, "pushToDataLayer");
     jest.spyOn(SelectContentTracker.prototype, "trackSelectContent");
     jest.spyOn(SelectContentTracker.prototype, "initialiseEventListener");
   });
@@ -62,7 +62,7 @@ describe("selectContentTracker", () => {
       newInstance.trackSelectContent(event);
     });
     details.dispatchEvent(action);
-    expect(BaseTracker.pushToDataLayer).toBeCalled();
+    expect(pushToDataLayer.pushToDataLayer).toBeCalled();
   });
   test("should push data to data layer for each details component", () => {
     const span1 = document.createElement("span");
@@ -119,14 +119,14 @@ describe("selectContentTracker", () => {
       newInstance.trackSelectContent(event);
     });
     firstDetails.dispatchEvent(action);
-    expect(BaseTracker.pushToDataLayer).toBeCalledWith(
+    expect(pushToDataLayer.pushToDataLayer).toBeCalledWith(
       dataLayerEventFirstDetails,
     );
     secondDetails.addEventListener("toggle", (event) => {
       newInstance.trackSelectContent(event);
     });
     secondDetails.dispatchEvent(action);
-    expect(BaseTracker.pushToDataLayer).toBeCalledWith(
+    expect(pushToDataLayer.pushToDataLayer).toBeCalledWith(
       dataLayerEventSecondDetails,
     );
   });
