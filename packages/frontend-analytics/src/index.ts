@@ -20,7 +20,6 @@ function appInit(
   const defaultedOptions = applyDefaults(options, {
     isDataSensitive: true,
     enableGa4Tracking: false,
-    enableUaTracking: false,
     enableFormChangeTracking: true,
     enableFormErrorTracking: true,
     enableFormResponseTracking: true,
@@ -34,11 +33,6 @@ function appInit(
       settings.ga4ContainerId,
       defaultedOptions,
     );
-
-    if (defaultedOptions.enableUaTracking) {
-      window.DI.analyticsGa4.uaContainerId = settings.uaContainerId;
-      window.DI.analyticsUa.init();
-    }
 
     return true;
   } catch (err) {

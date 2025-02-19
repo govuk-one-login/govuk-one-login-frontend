@@ -1,7 +1,7 @@
-export function applyDefaults<T extends object>(
+export const applyDefaults = <T extends object>(
   originalValue: T,
   defaults: Partial<T>,
-): T {
+): T => {
   const clonedOriginal = JSON.parse(JSON.stringify(originalValue));
 
   Object.entries(defaults).forEach(([key, defaultValue]) => {
@@ -11,4 +11,4 @@ export function applyDefaults<T extends object>(
   });
 
   return clonedOriginal;
-}
+};

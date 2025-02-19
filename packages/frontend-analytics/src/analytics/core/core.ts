@@ -18,9 +18,7 @@ export class Analytics {
   uaContainerId: string | undefined;
   pageViewTracker: PageViewTracker | undefined;
   navigationTracker: NavigationTracker | undefined;
-  formChangeTracker: FormChangeTracker | undefined;
   cookie: Cookie | undefined;
-  formResponseTracker: FormResponseTracker | undefined;
   selectContentTracker: SelectContentTracker | undefined;
 
   /**
@@ -54,23 +52,21 @@ export class Analytics {
       cookieDomain: options.cookieDomain,
     });
 
-    if (options.enableGa4Tracking) {
+    if (options.enableGa4Tracking && window.DI.analyticsGa4.cookie.consent) {
       pushToDataLayer({
         "gtm.allowlist": ["google"],
         "gtm.blocklist": ["adm", "awct", "sp", "gclidw", "gcs", "opt"],
         "gtm.start": new Date().getTime(),
         event: "gtm.js",
       });
-      this.formResponseTracker = new FormResponseTracker(
+      FormResponseTracker(
         this.isDataSensitive,
         this.enableFormResponseTracking,
       );
       this.navigationTracker = new NavigationTracker(
         this.enableNavigationTracking,
       );
-      this.formChangeTracker = new FormChangeTracker(
-        this.enableFormChangeTracking,
-      );
+      FormChangeTracker(this.enableFormChangeTracking);
       this.selectContentTracker = new SelectContentTracker(
         this.enableSelectContentTracking,
       );
