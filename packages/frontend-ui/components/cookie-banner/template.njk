@@ -12,7 +12,7 @@
   <p class="govuk-body">
     {{ cookieBanner.cookieBannerAccept.body1 }}
     <a class="govuk-link" href="https://signin.account.gov.uk/cookies">
-      {{ 'cookieBanner.changeCookiePreferencesLink' }}
+      {{ cookieBanner.changeCookiePreferencesLink }}
     </a> 
     {{ cookieBanner.cookieBannerAccept.body2 }}
   </p>
@@ -64,12 +64,12 @@
       },
       actions: [
         {
-          text: cookieBanner.changeCookiePreferencesLink,
+          text: cookieBanner.hideCookieMessage,
           href: "#",
           type: "button",
           classes:"cookie-hide-button",
           attributes: {
-            "aria-label": cookieBanner.changeCookiePreferencesLink
+            "aria-label": cookieBanner.hideCookieMessage
           }
         }
       ],

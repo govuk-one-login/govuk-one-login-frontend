@@ -10,6 +10,7 @@
   },
   "scripts": {
     "build": "rollup -c",
+    "dev": "rollup -c --watch",
     "test": "jest",
     "test:coverage": "jest --coverage src"
   },
