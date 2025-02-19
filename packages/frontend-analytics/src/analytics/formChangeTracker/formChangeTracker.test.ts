@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, jest, test } from "@jest/globals";
-import { FormChangeTracker } from "./formChangeTracker";
+import * as formChangeTracker from "./formChangeTracker";
 import * as pushToDataLayer from "../../utils/pushToDataLayer";
+import { getSection } from "../../utils/dataScrapers";
 
 function createForm() {
   document.body.innerHTML = `
@@ -18,7 +19,6 @@ function createForm() {
 }
 
 describe("FormChangeTracker", () => {
-  let newInstance: FormChangeTracker;
   let action: MouseEvent;
 
   beforeEach(() => {
@@ -27,11 +27,8 @@ describe("FormChangeTracker", () => {
     window.DI = { analyticsGa4: { cookie: { consent: true } } };
 
     jest.spyOn(pushToDataLayer, "pushToDataLayer");
-    jest.spyOn(FormChangeTracker.prototype, "initialiseEventListener");
-    jest.spyOn(FormChangeTracker.prototype, "trackFormChange");
+    jest.spyOn(formChangeTracker, "FormChangeTracker");
 
-    const enableFormChangeTracking = true;
-    newInstance = new FormChangeTracker(enableFormChangeTracking);
     action = new MouseEvent("click", {
       view: window,
       bubbles: true,
@@ -40,15 +37,12 @@ describe("FormChangeTracker", () => {
   });
 
   test("form change should be deactivated, if flag is set to false", () => {
-    const instance = new FormChangeTracker(false);
-    expect(instance.trackFormChange).not.toBeCalled();
-  });
-
-  test("new instance should call initialiseEventListener", () => {
-    expect(newInstance.initialiseEventListener).toBeCalled();
+    formChangeTracker.FormChangeTracker(false);
+    expect(pushToDataLayer.pushToDataLayer).not.toBeCalled();
   });
 
   test("pushToDataLayer is called", () => {
+    formChangeTracker.FormChangeTracker(true);
     const { changeLink } = createForm();
     changeLink.dispatchEvent(action);
     expect(pushToDataLayer.pushToDataLayer).toBeCalledWith({
@@ -106,7 +100,7 @@ describe("FormChangeTracker", () => {
   test("should return 'undefined' if parent element does not exist", () => {
     document.body.innerHTML = `<a id="change_link" href="http://localhost?edit=true">Change</a>`;
     const href = document.getElementById("change_link") as HTMLAnchorElement;
-    expect(FormChangeTracker.getSection(href)).toBe("undefined");
+    expect(getSection(href)).toBe("undefined");
   });
 
   test("should return text content of sibling with class 'govuk-summary-list__key'", () => {
@@ -117,7 +111,7 @@ describe("FormChangeTracker", () => {
     </div>
   `;
     const href = document.getElementById("change_link") as HTMLAnchorElement;
-    expect(FormChangeTracker.getSection(href)).toBe("Expected Section");
+    expect(getSection(href)).toBe("Expected Section");
   });
 
   test("should check and return text content of parent element if no matching sibling found", () => {
@@ -128,7 +122,7 @@ describe("FormChangeTracker", () => {
     </div>
   `;
     const href = document.getElementById("change_link") as HTMLAnchorElement;
-    expect(FormChangeTracker.getSection(href)).toBe("Postcode");
+    expect(getSection(href)).toBe("Postcode");
   });
 
   test("should return 'undefined' if no matching sibling found and parent has no text content", () => {
@@ -139,7 +133,7 @@ describe("FormChangeTracker", () => {
     `;
     const href = document.getElementById("change_link") as HTMLAnchorElement;
 
-    expect(FormChangeTracker.getSection(href)).toBe("undefined");
+    expect(getSection(href)).toBe("undefined");
   });
 
   test("should return 'undefined' if summary list key has no text content", () => {
@@ -150,6 +144,6 @@ describe("FormChangeTracker", () => {
     </div>
   `;
     const href = document.getElementById("change_link") as HTMLAnchorElement;
-    expect(FormChangeTracker.getSection(href)).toBe("undefined");
+    expect(getSection(href)).toBe("undefined");
   });
 });

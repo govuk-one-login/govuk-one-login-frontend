@@ -1,29 +1,28 @@
 import { describe, expect, jest, test, beforeEach } from "@jest/globals";
-import { FormErrorTracker } from "./formErrorTracker";
+import * as FormErrorTracker from "./formErrorTracker";
 import {
   FormEventInterface,
   FormField,
-} from "../formTracker/formTracker.interface";
+} from "../../utils/formTrackerUtils/formTracker.interface";
 import * as pushToDataLayer from "../../utils/pushToDataLayer";
+import * as FormTrackerUtils from "../../utils/formTrackerUtils/formTrackerUtils";
+import * as DataUtils from "../../utils/dataScrapers";
 
 window.DI = { analyticsGa4: { cookie: { consent: true } } };
 
 describe("FormErrorTracker", () => {
-  let instance: FormErrorTracker;
-
   beforeEach(() => {
-    instance = new FormErrorTracker();
     // Remove any existing elements from document.body if needed
     document.body.innerHTML = "";
   });
   jest.spyOn(pushToDataLayer, "pushToDataLayer");
-  jest.spyOn(FormErrorTracker.prototype, "trackFormError");
+  jest.spyOn(FormErrorTracker, "trackFormError");
 
   test("trackFormError should return false if not cookie consent", () => {
     window.DI.analyticsGa4.cookie.consent = false;
 
-    instance.trackFormError();
-    expect(instance.trackFormError).toReturnWith(false);
+    FormErrorTracker.trackFormError();
+    expect(FormErrorTracker.trackFormError).toReturnWith(false);
   });
   test("form error tracker should define a DL for each field in form", () => {
     window.DI.analyticsGa4.cookie.consent = true;
@@ -132,7 +131,7 @@ describe("FormErrorTracker", () => {
       event: "event_data",
       event_data: {
         event_name: "form_error",
-        type: instance.FREE_TEXT_FIELD_TYPE,
+        type: FormTrackerUtils.FREE_TEXT_FIELD_TYPE,
         url: "http://localhost/test-url",
         text: "error: please give us your feedback",
         section: "textarea section",
@@ -150,7 +149,7 @@ describe("FormErrorTracker", () => {
       event: "event_data",
       event_data: {
         event_name: "form_error",
-        type: instance.FREE_TEXT_FIELD_TYPE,
+        type: FormTrackerUtils.FREE_TEXT_FIELD_TYPE,
         url: "http://localhost/test-url",
         text: "error: please give us your email",
         section: "text input section",
@@ -169,7 +168,7 @@ describe("FormErrorTracker", () => {
       event: "event_data",
       event_data: {
         event_name: "form_error",
-        type: instance.FREE_TEXT_FIELD_TYPE,
+        type: FormTrackerUtils.FREE_TEXT_FIELD_TYPE,
         url: "http://localhost/test-url",
         text: "error: please give us your password",
         section: "password input section",
@@ -183,7 +182,7 @@ describe("FormErrorTracker", () => {
         "link_path_parts.5": "undefined",
       },
     };
-    instance.trackFormError();
+    FormErrorTracker.trackFormError();
 
     expect(pushToDataLayer.pushToDataLayer).toBeCalledWith(
       dataLayerEventDropdown,
@@ -239,7 +238,7 @@ describe("FormErrorTracker", () => {
       },
     };
 
-    instance.trackFormError();
+    FormErrorTracker.trackFormError();
     expect(pushToDataLayer.pushToDataLayer).toBeCalledWith(dataLayerEvent);
   });
 
@@ -260,7 +259,7 @@ describe("FormErrorTracker", () => {
     const input = document.createElement("input");
     input.id = formField.id;
     document.body.appendChild(input);
-    expect(FormErrorTracker.getErrorMessage(formField)).toBe(
+    expect(DataUtils.getErrorMessage(formField)).toBe(
       "error: this is an  error message",
     );
   });
@@ -282,7 +281,7 @@ describe("FormErrorTracker", () => {
     const input = document.createElement("input");
     input.id = `${formField.id}-day`;
     document.body.appendChild(input);
-    expect(FormErrorTracker.getErrorMessage(formField)).toBe(
+    expect(DataUtils.getErrorMessage(formField)).toBe(
       "error: this is an  error message",
     );
   });
@@ -299,7 +298,7 @@ describe("FormErrorTracker", () => {
     const input = document.createElement("input");
     input.id = formField.id;
     document.body.appendChild(input);
-    expect(FormErrorTracker.getErrorMessage(formField)).toBe("undefined");
+    expect(DataUtils.getErrorMessage(formField)).toBe("undefined");
   });
   test("getErrorFields should return an array of the first field in each form group in a form that have an error message", () => {
     const form = document.createElement("form");
@@ -341,7 +340,7 @@ describe("FormErrorTracker", () => {
       "</div>" +
       '  <button id="button" type="submit">submit</button>';
     document.body.appendChild(form);
-    expect(FormErrorTracker.getErrorFields()).toEqual([
+    expect(DataUtils.getErrorFields()).toEqual([
       {
         id: "questionType",
         name: "questionType",
