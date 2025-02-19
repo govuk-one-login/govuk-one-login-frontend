@@ -26,7 +26,7 @@ const RESET_PASSWORD_TOKEN_PATTERN = /reset_password_token=[a-zA-Z0-9-]+/g;
 const UNLOCK_TOKEN_PATTERN = /unlock_token=[a-zA-Z0-9-]+/g;
 const STATE_PATTERN = /state=.[^&]+/g;
 
-function isDate(value: string) {
+const isDate = (value: string): boolean => {
   if (
     value.match(DATE_PATTERN_NUMERIC_1) ||
     value.match(DATE_PATTERN_NUMERIC_2) ||
@@ -37,16 +37,16 @@ function isDate(value: string) {
     return true;
   }
   return false;
-}
+};
 
-function isPostCode(value: string) {
+const isPostCode = (value: string): boolean => {
   if (value.match(POSTCODE_PATTERN)) {
     return true;
   }
   return false;
-}
+};
 
-function isPhoneNumber(value: string) {
+const isPhoneNumber = (value: string): boolean => {
   if (
     value.match(PHONE_NUMBER_PATTERN_1) ||
     value.match(PHONE_NUMBER_PATTERN_2)
@@ -54,9 +54,9 @@ function isPhoneNumber(value: string) {
     return true;
   }
   return false;
-}
+};
 
-export function stripPIIFromString(value: string) {
+export const stripPIIFromString = (value: string): string => {
   let stripped = value.replace(EMAIL_PATTERN, "[email]");
   stripped = stripped.replace(
     RESET_PASSWORD_TOKEN_PATTERN,
@@ -91,4 +91,4 @@ export function stripPIIFromString(value: string) {
   }
 
   return stripped;
-}
+};
