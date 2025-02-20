@@ -91,6 +91,7 @@ export const getFormElement = (): HTMLFormElement | null => {
 export const getFormFields = (form: HTMLFormElement): FormField[] => {
   [...form.elements].forEach((element) => {
     const inputElement = element as HTMLInputElement;
+    console.log(inputElement);
 
     if (isExcludedType(inputElement)) {
       return;
