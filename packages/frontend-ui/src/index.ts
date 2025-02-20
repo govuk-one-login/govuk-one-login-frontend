@@ -20,7 +20,9 @@ export const setFrontendUiTranslations = (instanceI18n: typeof i18next) => {
 };
 
 export const frontendUiMiddleware = (
-  req: { i18n: { language: string, store: { data: { [key: string]: string} } } },
+  req: {
+    i18n: { language: string; store: { data: { [key: string]: unknown } } };
+  },
   res: { locals: { translations: unknown } },
   next: () => void,
 ) => {

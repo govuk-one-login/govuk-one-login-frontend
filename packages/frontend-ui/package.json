@@ -36,6 +36,8 @@
   },
   "homepage": "https://github.com/govuk-one-login/govuk-one-login-frontend#readme",
   "devDependencies": {
+    "@rollup/plugin-json": "^6.1.0",
+    "@types/express": "5.0.0",
     "@types/jest": "29.5.12",
     "@types/jest-axe": "3.5.9",
     "@types/lodash": "4.17.15",
@@ -48,9 +50,7 @@
     "typescript": "5.4.5"
   },
   "dependencies": {
-    "@types/express": "5.0.0",
     "express": "4.21.2",
-    "pino": "8.20.0",
-    "@rollup/plugin-json": "^6.1.0"
+    "pino": "8.20.0"
   }
 }
