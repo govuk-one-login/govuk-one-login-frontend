@@ -89,7 +89,11 @@ treat it as an interactive element - without this it will be
             <li class="govuk-header__navigation-item{{ ' govuk-header__navigation-item--active' if item.active }}"
             style="padding: 5px 0px 5px 30px; border-left: 1px solid #b1b4b6; margin-left: auto; ">
                 <a class="govuk-header__link" href="https://signin.account.gov.uk/signed-out">
+                  {%if lng == 'en'%}
                     Sign out
+                  {%else%}
+                  Allgofnodi
+                  {%endif%}
                   </a>
             </li>
       </ul>
