@@ -17,6 +17,10 @@ const { validateChooseLocation } = require("./journeys/chooseLocationService");
 const { validateEnterEmail } = require("./journeys/enterEmailService");
 const { validateFeedback } = require("./journeys/feedbackService");
 const { loadAssets } = require("@govuk-one-login/frontend-asset-loader");
+const {
+  setFrontendUiTranslations,
+  frontendUiMiddleware,
+} = require("@govuk-one-login/frontend-ui");
 
 const crypto = require("crypto");
 const sessionId = crypto.randomBytes(16).toString("hex");
@@ -30,8 +34,8 @@ const {
 } = require("./config/gtmMiddleware.js");
 const { checkSessionAndRedirect } = require("./config/middleware");
 const i18next = require("i18next");
-const Backend = require("i18next-fs-backend");
 const i18nextMiddleware = require("i18next-http-middleware");
+const Backend = require("i18next-fs-backend");
 const { i18nextConfigurationOptions } = require("./config/i18next");
 const {
   frontendVitalSignsInit,
@@ -62,12 +66,22 @@ i18next
   .use(Backend)
   .use(i18nextMiddleware.LanguageDetector)
   .init(
-    i18nextConfigurationOptions(
-      path.join(__dirname, "locales/{{lng}}/{{ns}}.json"),
-    ),
+    {
+      ...i18nextConfigurationOptions(
+        path.join(__dirname, "locales/{{lng}}/{{ns}}.json"),
+      ),
+    },
+    (err) => {
+      setFrontendUiTranslations(i18next);
+
+      if (err) {
+        console.error("i18next init failed:", err);
+      }
+    },
   );
 
 app.use(i18nextMiddleware.handle(i18next));
+app.use(frontendUiMiddleware);
 
 app.use("/assets", express.static(nodeModules("govuk-frontend/govuk/assets")));
 

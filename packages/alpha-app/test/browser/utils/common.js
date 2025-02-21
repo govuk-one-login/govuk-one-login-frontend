@@ -1,7 +1,7 @@
 const { expect } = require("chai");
 
 async function findItem(page, pwItem) {
-  return await page.locator(`[data-pw=${pwItem}]`);
+  return await page.locator(`#${pwItem}`);
 }
 
 async function clickItem(item) {

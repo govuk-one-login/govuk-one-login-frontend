@@ -55,7 +55,9 @@ When("I click Reject", async function () {
 });
 
 When("I click Hide", async function () {
-  await this.page.locator(`a:has-text("Hide") >> visible = true`).click();
+  await this.page
+    .locator(`a:has-text("Hide this message") >> visible = true`)
+    .click();
   await this.page.waitForLoadState("networkidle"); // Wait for network calls to finish
 });
 
@@ -99,7 +101,7 @@ When(
 );
 
 When("I select {word}", async function (attributeValue) {
-  await this.page.locator(`[data-pw=${attributeValue}]`).click();
+  await this.page.locator(`#${attributeValue}`).click();
   await this.page.waitForLoadState("networkidle"); // Wait for network calls to finish
 });
 
@@ -109,12 +111,17 @@ Then("I see the heading {string}", async function (heading) {
 });
 
 Then("I see the {word} element", async function (identifier) {
-  const element = await this.page.waitForSelector(`[data-pw=${identifier}]`);
+  const element = await this.page.waitForSelector(`#${identifier}`);
+  expect(await element.isVisible()).to.equal(true);
+});
+
+Then("I see the message {string}", async function (identifier) {
+  const element = await this.page.getByText(identifier);
   expect(await element.isVisible()).to.equal(true);
 });
 
 Then("I do not see the {word} element", async function (identifier) {
-  const element = await this.page.locator(`[data-pw=${identifier}]`);
+  const element = await this.page.locator(`#${identifier}`);
   expect(await element.isVisible()).to.equal(false);
 });
 
