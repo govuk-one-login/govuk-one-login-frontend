@@ -3,7 +3,6 @@ import { FormField } from "./formTracker.interface";
 export const FREE_TEXT_FIELD_TYPE = "free text field";
 export const DROPDOWN_FIELD_TYPE = "drop-down list";
 export const RADIO_FIELD_TYPE = "radio buttons";
-export const selectedFields: FormField[] = [];
 
 export const isExcludedType = (element: HTMLInputElement): boolean => {
   return (
@@ -19,19 +18,19 @@ export const getElementValue = (element: HTMLInputElement): string => {
   return label?.textContent?.trim() || "undefined";
 };
 
-export const processCheckbox = (element: HTMLInputElement): void => {
+export const processCheckbox = (element: HTMLInputElement, formFields: FormField[]): void => {
   if (!element.checked) {
     return;
   }
 
-  const checkboxInSameGroup = selectedFields.find(
+  const checkboxInSameGroup = formFields.find(
     (field) => field.name === element.name,
   );
 
   if (checkboxInSameGroup) {
     checkboxInSameGroup.value += `, ${getElementValue(element)}`;
   } else {
-    selectedFields.push({
+    formFields.push({
       id: element.id,
       name: element.name,
       value: getElementValue(element),
@@ -40,12 +39,12 @@ export const processCheckbox = (element: HTMLInputElement): void => {
   }
 };
 
-export const processRadio = (element: HTMLInputElement): void => {
+export const processRadio = (element: HTMLInputElement, formFields: FormField[]): void => {
   if (!element.checked) {
     return;
   }
 
-  selectedFields.push({
+  formFields.push({
     id: element.id,
     name: element.name,
     value: getElementValue(element),
@@ -55,8 +54,9 @@ export const processRadio = (element: HTMLInputElement): void => {
 
 export const processTextElement = (
   element: HTMLInputElement | HTMLTextAreaElement,
+  formFields: FormField[]
 ): void => {
-  selectedFields.push({
+  formFields.push({
     id: element.id,
     name: element.name,
     value: element.value,
@@ -64,8 +64,8 @@ export const processTextElement = (
   });
 };
 
-export const processSelectOne = (element: HTMLSelectElement): void => {
-  selectedFields.push({
+export const processSelectOne = (element: HTMLSelectElement, formFields: FormField[]): void => {
+  formFields.push({
     id: element.id,
     name: element.name,
     value: element.options[element.selectedIndex].text,
@@ -89,26 +89,26 @@ export const getFormElement = (): HTMLFormElement | null => {
  * @return {FormField[]} An array of selected form fields.
  */
 export const getFormFields = (form: HTMLFormElement): FormField[] => {
+  const formFields: FormField[] = [];
   [...form.elements].forEach((element) => {
     const inputElement = element as HTMLInputElement;
-    console.log(inputElement);
 
     if (isExcludedType(inputElement)) {
       return;
     }
 
     if (inputElement.type === "checkbox") {
-      processCheckbox(inputElement);
+      processCheckbox(inputElement, formFields);
     } else if (inputElement.type === "radio") {
-      processRadio(inputElement);
+      processRadio(inputElement, formFields);
     } else if (inputElement.type === "select-one") {
-      processSelectOne(inputElement as unknown as HTMLSelectElement);
+      processSelectOne(inputElement as unknown as HTMLSelectElement, formFields);
     } else {
-      processTextElement(inputElement);
+      processTextElement(inputElement, formFields);
     }
   });
 
-  return selectedFields;
+  return formFields;
 };
 
 /**
@@ -157,16 +157,16 @@ export const getFieldValue = (elements: FormField[]): string => {
  * @return {string} The label of the field.
  */
 export const getFieldLabel = (): string => {
-  let labels: HTMLCollectionOf<HTMLLegendElement | HTMLLabelElement> =
+  let labelCollection: HTMLCollectionOf<HTMLLegendElement | HTMLLabelElement> =
     document.getElementsByTagName("legend");
-  if (!labels.length) {
-    labels = document.getElementsByTagName("label");
+  if (!labelCollection.length) {
+    labelCollection = document.getElementsByTagName("label");
   }
   let label: string = "";
-  for (let i = 0; i < labels.length; i++) {
-    if (labels[i].textContent) {
-      label += labels[i].textContent!.trim();
-      if (i > 1 && i < labels.length - 1) {
+  for (let i = 0; i < labelCollection.length; i++) {
+    if (labelCollection[i].textContent) {
+      label += labelCollection[i].textContent!.trim();
+      if (i > 1 && i < labelCollection.length - 1) {
         label += ", ";
       }
     }

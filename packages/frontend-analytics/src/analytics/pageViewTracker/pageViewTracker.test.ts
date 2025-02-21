@@ -8,7 +8,6 @@ import {
 import { PageViewTracker } from "./pageViewTracker";
 import { OptionsInterface } from "../core/core.interface";
 import * as FormErrorTracker from "../formErrorTracker/formErrorTracker";
-import * as FormChangeTracker from "../formChangeTracker/formChangeTracker";
 import * as pushToDataLayer from "../../utils/pushToDataLayer";
 import {
   getLanguage,
@@ -226,8 +225,6 @@ describe("Cookie Management", () => {
 });
 
 describe("Form Change Tracker Trigger", () => {
-  const spy = jest.spyOn(FormChangeTracker, "trackFormChange");
-
   test("FormChange tracker is not triggered", () => {
     const instance = new PageViewTracker(
       getOptions({
@@ -236,7 +233,7 @@ describe("Form Change Tracker Trigger", () => {
     );
 
     instance.trackOnPageLoad(getParameters());
-    expect(spy).not.toHaveBeenCalled();
+    expect(pushToDataLayer.pushToDataLayer).not.toHaveBeenCalled();
   });
 });
 
