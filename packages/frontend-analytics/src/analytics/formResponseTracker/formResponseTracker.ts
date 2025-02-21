@@ -12,6 +12,7 @@ export class FormResponseTracker extends FormTracker {
   eventName: string = "form_response";
   eventType: string = "event_data";
   isDataSensitive: boolean;
+  isPageDataSensitive: boolean = false;
   enableFormResponseTracking: boolean;
 
   /**
@@ -19,9 +20,14 @@ export class FormResponseTracker extends FormTracker {
    *  * @param {boolean} isDataSensitive - Flag if data is sensitive
    *  * @return {void}
    */
-  constructor(isDataSensitive: boolean, enableFormResponseTracking: boolean) {
+  constructor(
+    isDataSensitive: boolean,
+    isPageDataSensitive: boolean,
+    enableFormResponseTracking: boolean,
+  ) {
     super();
     this.isDataSensitive = isDataSensitive;
+    this.isPageDataSensitive = isPageDataSensitive;
     this.enableFormResponseTracking = enableFormResponseTracking;
     this.initialiseEventListener();
   }
@@ -139,6 +145,8 @@ export class FormResponseTracker extends FormTracker {
    * @return {string} The text field or undefined
    */
   redactPII(parameter: string): string {
-    return this.isDataSensitive ? "undefined" : parameter.trim();
+    return this.isPageDataSensitive || this.isDataSensitive
+      ? "undefined"
+      : parameter.trim();
   }
 }

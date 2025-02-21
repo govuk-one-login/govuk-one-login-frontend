@@ -8,6 +8,7 @@ export interface OptionsInterface {
   cookieDomain?: string;
   enableUaTracking?: boolean;
   isDataSensitive?: boolean;
+  isPageDataSensitive?: boolean;
   enableFormChangeTracking?: boolean;
   enableFormErrorTracking?: boolean;
   enableFormResponseTracking?: boolean;

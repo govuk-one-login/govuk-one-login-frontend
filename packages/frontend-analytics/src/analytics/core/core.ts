@@ -11,6 +11,7 @@ import { pushToDataLayer } from "../../utils/pushToDataLayer";
 export class Analytics {
   gtmId: string;
   isDataSensitive: boolean | undefined;
+  isPageDataSensitive: boolean | undefined;
   enableFormResponseTracking: boolean;
   enableNavigationTracking: boolean;
   enableFormChangeTracking: boolean;
@@ -33,6 +34,7 @@ export class Analytics {
 
     this.cookie = new Cookie(options.cookieDomain);
     this.isDataSensitive = Boolean(options.isDataSensitive);
+    this.isPageDataSensitive = Boolean(options.isPageDataSensitive);
     this.enableFormResponseTracking = Boolean(
       options.enableFormResponseTracking,
     );
@@ -63,6 +65,7 @@ export class Analytics {
       });
       this.formResponseTracker = new FormResponseTracker(
         this.isDataSensitive,
+        this.isPageDataSensitive,
         this.enableFormResponseTracking,
       );
       this.navigationTracker = new NavigationTracker(
