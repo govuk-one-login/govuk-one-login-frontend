@@ -69,7 +69,7 @@ treat it as an interactive element - without this it will be
 {% endset %}
 
 <header class="govuk-header {{ params.classes if params.classes }}" role="banner" data-module="govuk-header"
-        {%- for attribute, value in params.attributes %} {{attribute}}="{{value}}"{% endfor %}>
+ {%- for attribute, value in params.attributes %} {{attribute}}="{{value}}"{% endfor %}>
   <div class="govuk-header__container {{ params.containerClasses | default('govuk-width-container') }}" style="display:flex">
     <div class="govuk-header__logo">
       <a href="{{ params.homepageUrl | default('/') }}" class="govuk-header__link govuk-header__link--homepage">
@@ -82,23 +82,25 @@ treat it as an interactive element - without this it will be
       </a>
     </div>
     {% if params.signOutActive %}
-    <div class="govuk-header__content" style="margin-left: auto">
-    <nav aria-label="{{ params.navigationLabel | default(menuButtonText) }}" class="govuk-header__navigation {{ params.navigationClasses if params.navigationClasses }}">
-      <button type="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="{{ params.menuButtonLabel | default('Show or hide menu') }}" hidden>{{ menuButtonText }}</button>
-      <ul id="navigation" class="govuk-header__navigation-list" style="display:flex">
+      <div class="govuk-header__content" style="margin-left: auto">
+        <nav aria-label="{{ params.navigationLabel | default(menuButtonText) }}" class="govuk-header__navigation {{ params.navigationClasses if params.navigationClasses }}">
+          <button type="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="{{ params.menuButtonLabel | default('Show or hide menu') }}" hidden>{{ menuButtonText }}</button>
+          <ul id="navigation" class="govuk-header__navigation-list" style="display:flex">
             <li class="govuk-header__navigation-item{{ ' govuk-header__navigation-item--active' if item.active }}"
             style="padding: 5px 0px 5px 30px; border-left: 1px solid #b1b4b6; margin-left: auto; ">
-                <a class="govuk-header__link" href="https://signin.account.gov.uk/signed-out">
-                  {%if lng == 'en'%}
-                    Sign out
-                  {%else%}
+              {%if lng == 'en'%}
+                <a aria-label="GOV.UK One Login menu" class="govuk-header__link" href="{{params.signOutLink}}">
+                  Sign out
+                </a>
+              {%else%}
+                <a aria-label="GOV.UK One Login dewislen" class="govuk-header__link" href="{{params.signOutLink}}">
                   Allgofnodi
-                  {%endif%}
-                  </a>
+                </a>
+              {%endif%}
             </li>
-      </ul>
-    </nav>
-    </div>
+          </ul>
+        </nav>
+      </div>
     {% endif %}
   </div>
 </header>
