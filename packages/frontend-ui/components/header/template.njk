@@ -2,7 +2,6 @@
 
 {% if params.signOutActive %}
 {% set lng = params.activeLanguage %}
-{% set header = params.header.translation.header %}
 {%endif%}
 
 <style>
@@ -72,7 +71,11 @@ treat it as an interactive element - without this it will be
  {%- for attribute, value in params.attributes %} {{attribute}}="{{value}}"{% endfor %}>
   <div class="govuk-header__container {{ params.containerClasses | default('govuk-width-container') }}" style="display:flex">
     <div class="govuk-header__logo">
-      <a href="{{ params.homepageUrl | default('/') }}" class="govuk-header__link govuk-header__link--homepage">
+      {% if params.isEmbeddedMobileApp %}
+      <span class="govuk-header__link govuk-header__link--homepage" style="pointer-events: none;">
+      {% else %}
+      <a href="{{ params.homepageUrl | default('https://www.gov.uk/') }}" class="govuk-header__link govuk-header__link--homepage">
+      {% endif %}
         <span class="govuk-header__logotype">
           {{ (_stEdwardsCrown if params.useStEdwardsCrown else _tudorCrown) | safe }}
           <span class="govuk-header__logotype-text">
