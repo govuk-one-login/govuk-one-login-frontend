@@ -1,0 +1,23 @@
+params:
+  - name: activeLanguage
+    type: string
+    required: true
+    description: required to toggle between translations
+
+  - name: signOutActive
+    type: boolean
+    required: false
+    description: shows or hides the signout function
+
+  - name: isEmbeddedMobileApp
+    type: boolean
+    required: false
+    description: disables the gov.uk link in the header
+
+  - name: signOutLink
+    type: string
+    required: false
+    description: where the signout button will direct the user
+
+    
+
