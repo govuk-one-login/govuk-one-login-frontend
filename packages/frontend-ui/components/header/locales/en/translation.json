@@ -1,5 +1,6 @@
 {
   "header": {
-    "signOut": "Sign Out"
+    "signOut": "Sign Out",
+    "ariaLabel": "GOV.UK One Login menu"
   }
 }
