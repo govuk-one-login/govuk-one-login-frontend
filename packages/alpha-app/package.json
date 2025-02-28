@@ -4,7 +4,7 @@
   "scripts": {
     "start": "npm-run-all build-sass --parallel dev",
     "dev": "node --watch src/app.js",
-    "build-sass": "rm -rf public/styles.css && sass --no-source-map ../../node_modules/@govuk-one-login/frontend-language-toggle/src/stylesheet/styles.css  public/stylesheets/application-ifsdjkn.css --style compressed",
+    "build-sass": "rm -rf public/styles.css && sass --no-source-map ../../node_modules/@govuk-one-login/frontend-language-toggle/src/stylesheet/styles.css  public/stylesheets/application-ifsdjkn.css --style compressed && sass --no-source-map ../../node_modules/@govuk-one-login/frontend-ui/build/all.css public/stylesheets/frontend-ui.css --style compressed",
     "gulp-watch": "gulp watch",
     "serve": "nodemon serve",
     "precommit": "npm run test && npm run format && git add .",

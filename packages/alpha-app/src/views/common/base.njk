@@ -3,13 +3,14 @@
 {% block head %}
   <link rel="stylesheet" href="/stylesheets/{{ assets['stylesheet.css'] }}"/>
   <link rel="stylesheet" href="/stylesheets/{{ assets['application.css'] }}"/>
+  <link rel="stylesheet" href="/stylesheets/frontend-ui.css">
 {% endblock %}
 
 {% from "govuk/components/skip-link/macro.njk" import govukSkipLink %}
 {% from "govuk/components/header/macro.njk" import govukHeader %}
 {% from "govuk/components/footer/macro.njk" import govukFooter %}
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
-{% from "frontend-language-toggle/src/macro.njk" import languageSelect %}
+{% from "frontend-ui/build/components/welsh-language-toggle/macro.njk" import frontendUiLanguageToggle %}
 {% from "frontend-ui/build/components/cookie-banner/macro.njk" import frontendUiCookieBanner %}
 
 {% block skipLink %}
@@ -53,15 +54,10 @@
       html: "general.govuk.phaseBanner.content" | translate | safe
     }) }}
 
-    {{ languageSelect({
-      ariaLabel: "general.languageSelect.ariaLabel" | translate,
+    {{ frontendUiLanguageToggle({
+      welshLanguageToggle: translations,
       url: currentUrl,
-      activeLanguage: htmlLang,
-      class: "",
-      languages: [
-        { code: "en", text: "English", visuallyHidden: "Change to English" },
-        { code: "cy", text: "Cymraeg", visuallyHidden: "Newid yr iaith ir Gymraeg" }
-      ]
+      activeLanguage: htmlLang
     }) }}
 
     {% block backLink %}{% endblock %}
