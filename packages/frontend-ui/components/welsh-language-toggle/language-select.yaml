@@ -13,7 +13,7 @@ params:
     description: Either "en" for english or "cy" for welsh.
   - name: languages
     type: array
-    required: true
+    required: false
     description: array of languages object
     params:
       - name: language

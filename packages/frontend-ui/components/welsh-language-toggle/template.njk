@@ -1,11 +1,15 @@
 {% set welshLanguageToggle = params.welshLanguageToggle.translation.welshLanguageToggle %}
+{% if params.languages %}
+{% set languages = params.languages %}
+{% else %}
 {% set languages = [
-{ code: "en", text: "English", ariaLabel: "Change to English" },
-{ code: "cy", text: "Cymraeg", ariaLabel: "Newid yr iaith ir Gymraeg" }
+{ code: "en", text: "English", visuallyHidden: "Change to English" },
+{ code: "cy", text: "Cymraeg", visuallyHidden: "Newid yr iaith ir Gymraeg" }
     ] %}
+{% endif %}
 
 <nav
-  class="language-select"
+  class="language-select {{params.class}}"
   aria-label="{{welshLanguageToggle.ariaLabel}}"
   role="navigation"
 >
