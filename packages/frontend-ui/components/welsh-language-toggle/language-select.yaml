@@ -1,16 +1,24 @@
 params:
-  - name: ariaLabel
+  - name: translations
     type: string
     required: true
+    description: translations from middleware 
+  - name: activeLanguage
+    type: string
+    required: true
+    description: currently selected language
+  - name: currentUrl
+    type: string
+    required: true
+    description: current url to be used to append langauge variable
+  - name: ariaLabel
+    type: string
+    required: false
     description: aria label for the nav tag
   - name: class
     type: string
     required: false
     description: css class you can add
-  - name: language
-    type: string
-    required: true
-    description: Either "en" for english or "cy" for welsh.
   - name: languages
     type: array
     required: false
