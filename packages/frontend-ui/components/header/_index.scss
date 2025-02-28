@@ -1,0 +1,19 @@
+@media (max-width: 640px) {
+    .govuk-header__navigation-item {
+      border-left: none !important;
+    }
+  } 
+
+.frontendUi_header_signOut-item{
+    padding: 5px 0px 5px 30px;
+    border-left: 1px solid #b1b4b6;
+    margin-left: auto;
+}
+
+.frontendUi_header__signOut{
+    display: flex;
+}
+
+.frontendUi-header__content{
+    margin-left: auto;
+}
