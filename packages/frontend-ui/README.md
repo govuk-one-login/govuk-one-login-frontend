@@ -77,7 +77,22 @@ Import the desired component macro into your base Nunjucks template. For example
 {% from "frontend-ui/build/components/cookie-banner/macro.njk" import frontendUiCookieBanner %}
 ```
 
-### 5. Add Component to Template
+### 5. Import all.css
+Import the css into your service in the `package.json` via the `build-sass` script
+```
+sass --no-source-map node_modules/@govuk-one-login/frontend-ui/build/all.css *destination*/frontend-ui.css --style compressed"
+```
+
+include a link to this in your template file
+```html
+{% block head %}
+     '''
+    <link href="/stylesheets/frontend-ui.css" rel="stylesheet">
+{% endblock %}
+```
+
+
+### 6. Add Component to Template
 
 Render the component in your template, passing any required data. For the Cookie Banner:
 
