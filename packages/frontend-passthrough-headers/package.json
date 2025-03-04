@@ -3,9 +3,8 @@
   "version": "1.2.0",
   "description": "Headers for the frontend package to passthrough to downstream services",
   "type": "module",
-  "esnext": "src/index.ts",
-  "main": "cjs/index.cjs",
-  "module": "esm/index.js",
+  "main": "build/cjs/index.cjs",
+  "module": "build/esm/index.js",
   "scripts": {
     "build": "rollup -c",
     "test": "jest -c --coverage"
@@ -18,8 +17,8 @@
   "publishConfig": {
     "access": "public"
   },
-  "author": "Nick Heal",
-  "license": "ISC",
+  "author": "DI Frontend Capability Team",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/govuk-one-login/govuk-one-login-frontend.git"
@@ -49,10 +48,10 @@
     "typescript": "5.4.5"
   },
   "exports": {
-    "import": "./esm/index.js",
-    "require": "./cjs/index.cjs"
+    "import": "./build/esm/index.js",
+    "require": "./build/cjs/index.cjs"
   },
-  "types": "./esm/index.d.ts",
+  "types": "./build/esm/index.d.ts",
   "dependencies": {
     "aws-lambda": "^1.0.7",
     "forwarded-parse": "^2.1.2",
