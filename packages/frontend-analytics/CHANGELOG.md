@@ -1,3 +1,13 @@
+## 3.3.0 (2025-03-04)
+
+### 🩹 Fixes
+
+- **analytics:** Update analytics package.json files/ value ([a71f191](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/a71f191))
+
+### ❤️  Thank You
+
+- di-aholme
+
 ## 3.2.0 (2025-03-04)
 
 ### 🚀 Features
