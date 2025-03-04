@@ -19,11 +19,8 @@
   },
   "files": [
     "components/",
-    "docs/",
-    "jest.config.js",
     "lib/",
     "package.json",
-    "src/",
     "README.md"
   ],
   "repository": {
@@ -39,7 +36,7 @@
     "gouk one login"
   ],
   "author": "DI Frontend Capability Team",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/govuk-one-login/govuk-one-login-frontend/issues"
   },
