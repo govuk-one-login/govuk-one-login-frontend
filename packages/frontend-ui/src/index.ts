@@ -1,6 +1,8 @@
 import i18next from "i18next";
 import translationCookieBannerCy from "../components/cookie-banner/locales/cy/translation.json";
 import translationCookieBannerEn from "../components/cookie-banner/locales/en/translation.json";
+import translationHeaderCy from "../components/header/locales/cy/translation.json";
+import translationHeaderEn from "../components/header/locales/en/translation.json";
 
 export const setFrontendUiTranslations = (instanceI18n: typeof i18next) => {
   instanceI18n.addResourceBundle(
@@ -14,6 +16,20 @@ export const setFrontendUiTranslations = (instanceI18n: typeof i18next) => {
     "cy",
     "translation",
     translationCookieBannerCy,
+    true,
+    false,
+  );
+  instanceI18n.addResourceBundle(
+    "en",
+    "translation",
+    translationHeaderEn,
+    true,
+    false,
+  );
+  instanceI18n.addResourceBundle(
+    "cy",
+    "translation",
+    translationHeaderCy,
     true,
     false,
   );

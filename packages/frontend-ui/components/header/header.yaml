@@ -1,0 +1,13 @@
+params:
+  - name: isEmbeddedMobileApp
+    type: boolean
+    required: false
+    description: disables the gov.uk link in the header
+
+  - name: signOutLink
+    type: string
+    required: false
+    description: where the signout button will direct the user
+
+    
+
