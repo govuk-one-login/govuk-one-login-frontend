@@ -20,20 +20,6 @@
         "tag": "Alpha",
         "content": "This is a new service - your <a class=\"govuk-link\" rel=\"noopener\" target=\"_blank\" href=\"https://signin.dev.account.gov.uk/contact-us\">feedback</a>  will help us to improve it. For more information, please <a rel=\"noopener\" class=\"govuk-link\" href=\"/welcome\">restart</a>  your journey"
       }
-    },
-    "footer": {
-      "help": {
-        "linkText": "Help"
-      },
-      "cookies": {
-        "linkText": "Cookies"
-      },
-      "contact": {
-        "linkText": "Contact"
-      },
-      "terms": {
-        "linkText": "Terms and conditions"
-      }
     }
   },
 

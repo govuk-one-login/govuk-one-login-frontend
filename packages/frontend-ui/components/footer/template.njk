@@ -1,0 +1,9 @@
+{% set footer = params.footer.translation.footer %}
+
+{% from "govuk/components/footer/macro.njk" import govukFooter %}
+
+{{ govukFooter({
+    meta: { items: footer.footerNavItems },
+    contentLicence: { html: footer.contentLicence.html },
+    copyright: { text: footer.copyright.text }
+}) }}
