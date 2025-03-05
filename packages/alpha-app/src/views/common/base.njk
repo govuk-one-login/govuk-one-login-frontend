@@ -7,10 +7,10 @@
 {% endblock %}
 
 {% from "govuk/components/skip-link/macro.njk" import govukSkipLink %}
-{% from "frontend-ui/build/components/header/macro.njk" import frontendUiHeader %}
-{% from "govuk/components/footer/macro.njk" import govukFooter %}
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
 {% from "frontend-language-toggle/src/macro.njk" import languageSelect %}
+{% from "frontend-ui/build/components/header/macro.njk" import frontendUiHeader %}
+{% from "frontend-ui/build/components/footer/macro.njk" import frontendUiFooter %}
 {% from "frontend-ui/build/components/cookie-banner/macro.njk" import frontendUiCookieBanner %}
 
 {% block skipLink %}
@@ -64,6 +64,12 @@
     </main>
   </div>
 
+{% block footer %}
+  {{ frontendUiFooter({
+    footer: translations
+  }) }}
+{% endblock %}
+
   <script src="/javascript/ua/{{ assets['init.js'] }}"></script>
   <script src="/ga4-assets/analytics.js"></script>
   <script>
@@ -90,17 +96,4 @@
       dynamic: false
     });
   </script>
-{% endblock %}
-
-{% block footer %}
-  {{ govukFooter({
-    meta: {
-      items: [
-        { href: "#", text: "general.footer.help.linkText" | translate },
-        { href: "#", text: "general.footer.cookies.linkText" | translate },
-        { href: "#", text: "general.footer.contact.linkText" | translate },
-        { href: "#", text: "general.footer.terms.linkText" | translate }
-      ]
-    }
-  }) }}
 {% endblock %}
