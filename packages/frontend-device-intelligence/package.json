@@ -1,0 +1,56 @@
+{
+  "name": "@govuk-one-login-frontend/frontend-device-intelligence",
+  "version": "1.0.0",
+  "description": "Frontend Device Intelligence package for GDS One Login",
+  "type": "module",
+  "esnext": "src/index.ts",
+  "main": "cjs/index.cjs",
+  "module": "esm/index.js",
+  "scripts": {
+    "build": "rollup -c",
+    "test": "jest -c --coverage"
+  },
+  "files": [
+    "build/",
+    "package.json",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/govuk-one-login/govuk-one-login-frontend.git"
+  },
+  "keywords": [
+    "govuk-one-login",
+    "gds",
+    "govuk-onelogin",
+    "govuk one login"
+  ],
+  "author": "DI Frontend Capability Team",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/govuk-one-login/govuk-one-login-frontend/issues"
+  },
+  "homepage": "https://github.com/govuk-one-login/govuk-one-login-frontend#readme",
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/jest-axe": "^3.5.9",
+    "@types/webpack": "^5.28.5",
+    "jest": "^29.5.0",
+    "rollup": "4.14.3",
+    "rollup-plugin-typescript2": "0.36.0",
+    "ts-jest": "^29.1.2",
+    "ts-node": "^10.9.2",
+    "typescript": "5.4.5",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^4.0.0"
+  },
+  "exports": {
+    "import": "./esm/index.js",
+    "require": "./cjs/index.cjs"
+  },
+  "types": "./esm/index.d.ts",
+  "dependencies": {}
+}
