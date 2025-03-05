@@ -3,6 +3,8 @@ import translationCookieBannerCy from "../components/cookie-banner/locales/cy/tr
 import translationCookieBannerEn from "../components/cookie-banner/locales/en/translation.json";
 import welshLanguageToggleCy from "../components/welsh-language-toggle/locales/cy/translation.json";
 import welshLanguageToggleEn from "../components/welsh-language-toggle/locales/en/translation.json";
+import translationHeaderCy from "../components/header/locales/cy/translation.json";
+import translationHeaderEn from "../components/header/locales/en/translation.json";
 
 export const setFrontendUiTranslations = (instanceI18n: typeof i18next) => {
   instanceI18n.addResourceBundle(
@@ -30,6 +32,20 @@ export const setFrontendUiTranslations = (instanceI18n: typeof i18next) => {
     "en",
     "translation",
     welshLanguageToggleEn,
+    true,
+    false,
+  );
+  instanceI18n.addResourceBundle(
+    "cy",
+    "translation",
+    translationHeaderCy,
+    true,
+    false,
+  );
+  instanceI18n.addResourceBundle(
+    "en",
+    "translation",
+    translationHeaderEn,
     true,
     false,
   );

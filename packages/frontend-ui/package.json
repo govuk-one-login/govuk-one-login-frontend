@@ -51,11 +51,12 @@
   },
   "dependencies": {
     "express": "4.21.2",
-    "pino": "8.20.0"
+    "pino": "8.20.0",
+    "sass": "^1.85.1"
   },
   "exports": {
     "import": "./build/esm/index.js",
     "require": "./build/cjs/index.cjs"
   },
   "types": "./build/esm/index.d.ts"
-}
+  }

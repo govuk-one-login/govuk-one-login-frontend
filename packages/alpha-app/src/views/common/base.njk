@@ -29,9 +29,8 @@
 
 {% block header %}
   {{ frontendUiHeader({
-    signOutActive: true,
     isEmbeddedMobileApp: false,
-    activeLanguage: htmlLang,
+    header: translations,
     signOutLink: 'https://signin.account.gov.uk/signed-out'
   }) }}
 {% endblock %}
