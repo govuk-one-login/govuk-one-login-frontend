@@ -13,7 +13,8 @@ on:
           - "@govuk-one-login/frontend-passthrough-headers"
           - "@govuk-one-login/frontend-vital-signs"
           - "@govuk-one-login/frontend-ui"
-          - "@govuk-one-login/frontend-asset-loader"          
+          - "@govuk-one-login/frontend-asset-loader"
+          - "@govuk-one-login/frontend-device-intelligence"          
       version:
         description: "Package Version"
         required: true

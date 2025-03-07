@@ -110,6 +110,7 @@ To release a package from the monorepo, use the **GitHub Actions Release workflo
      - `@govuk-one-login/frontend-passthrough-headers`
      - `@govuk-one-login/frontend-vital-signs`
      - `@govuk-one-login/frontend-asset-loader`
+     - `@govuk-one-login/frontend-device-intelligence`
    - **Increment**: Select the version increment for this release (`patch`, `minor`, or `major`) based on [Semantic Versioning](https://semver.org/).
    - **First Release**: Specify if this is the first release of the package from this repository. If set to `true`, the workflow will treat it as an initial release.
    - **Dry Run**: Set this to `true` for a dry run, which will simulate the release process without publishing.
@@ -138,6 +139,7 @@ To deprecate a specific package version from the monorepo, use the **GitHub Acti
      - `@govuk-one-login/frontend-vital-signs`
      - `@govuk-one-login/frontend-asset-loader`
      - `@govuk-one-login/frontend-ui`
+     - `@govuk-one-login/frontend-device-intelligence`
    - **Version**: Enter the version you want to deprecate (eg `0.0.1`, `0.1.1`, `1.0.1`)
 
 3. **Deprecation Process**

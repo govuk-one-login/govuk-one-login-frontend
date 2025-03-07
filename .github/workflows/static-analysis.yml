@@ -65,6 +65,7 @@ jobs:
             "frontend-passthrough-headers",
             "frontend-ui",
             "frontend-vital-signs",
+            "frontend-device-intelligence",
           ]
     steps:
       - uses: actions/checkout@v4
