@@ -63,6 +63,7 @@
       </div>
     </main>
   </div>
+{% endblock %}
 
 {% block footer %}
   {{ frontendUiFooter({
@@ -70,30 +71,33 @@
   }) }}
 {% endblock %}
 
-  <script src="/javascript/ua/{{ assets['init.js'] }}"></script>
-  <script src="/ga4-assets/analytics.js"></script>
-  <script>
-    window.DI.appInit(
-      {
-        uaContainerId: "{{ uaContainerId }}",
-        ga4ContainerId: "{{ ga4ContainerId }}"
-      },
-      {
-        isDataSensitive: false,
-        enableGa4Tracking: true,
-        enableUaTracking: true,
-        cookieDomain: "localhost"
-      }
-    );
+{% block bodyEnd %}
+  {% block scripts %}
+    <script src="/javascript/ua/{{ assets['init.js'] }}"></script>
+    <script src="/ga4-assets/analytics.js"></script>
+    <script>
+      window.DI.appInit(
+        {
+          uaContainerId: "{{ uaContainerId }}",
+          ga4ContainerId: "{{ ga4ContainerId }}"
+        },
+        {
+          isDataSensitive: false,
+          enableGa4Tracking: true,
+          enableUaTracking: true,
+          cookieDomain: "localhost"
+        }
+      );
 
-    window.DI.analyticsGa4.pageViewTracker.trackOnPageLoad({
-      statusCode: "{{statusCode}}",
-      englishPageTitle: "{{englishPageTitle}}",
-      taxonomy_level1: "{{taxonomyLevel1}}",
-      taxonomy_level2: "{{taxonomyLevel2}}",
-      content_id: "{{contentId}}",
-      logged_in_status: false,
-      dynamic: false
-    });
-  </script>
+      window.DI.analyticsGa4.pageViewTracker.trackOnPageLoad({
+        statusCode: "{{statusCode}}",
+        englishPageTitle: "{{englishPageTitle}}",
+        taxonomy_level1: "{{taxonomyLevel1}}",
+        taxonomy_level2: "{{taxonomyLevel2}}",
+        content_id: "{{contentId}}",
+        logged_in_status: false,
+        dynamic: false
+      });
+    </script>
+  {% endblock %}
 {% endblock %}
