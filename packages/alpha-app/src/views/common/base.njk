@@ -10,7 +10,7 @@
 {% from "frontend-ui/build/components/header/macro.njk" import frontendUiHeader %}
 {% from "govuk/components/footer/macro.njk" import govukFooter %}
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
-{% from "frontend-ui/build/components/welsh-language-toggle/macro.njk" import frontendUiLanguageToggle %}
+{% from "frontend-language-toggle/src/macro.njk" import languageSelect %}
 {% from "frontend-ui/build/components/cookie-banner/macro.njk" import frontendUiCookieBanner %}
 
 {% block skipLink %}
@@ -42,10 +42,15 @@
       html: "general.govuk.phaseBanner.content" | translate | safe
     }) }}
 
-    {{ frontendUiLanguageToggle({
-      welshLanguageToggle: translations,
+    {{ languageSelect({
+      ariaLabel: "general.languageSelect.ariaLabel" | translate,
       url: currentUrl,
-      activeLanguage: htmlLang
+      activeLanguage: htmlLang,
+      class: "",
+      languages: [
+        { code: "en", text: "English", visuallyHidden: "Change to English" },
+        { code: "cy", text: "Cymraeg", visuallyHidden: "Newid yr iaith ir Gymraeg" }
+      ]
     }) }}
 
     {% block backLink %}{% endblock %}
