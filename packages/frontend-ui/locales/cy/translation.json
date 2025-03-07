@@ -19,6 +19,10 @@
         "hideCookieMessage": "Cuddio’r neges yma",
         "viewCookiesLink": "https://signin.account.gov.uk/cookies"
     },
+    "header": {
+        "signOut": "Allgofnodi",
+        "ariaLabel": "GOV.UK One Login dewislen"
+    },
     "footer": {
         "footerNavItems": [
             {
