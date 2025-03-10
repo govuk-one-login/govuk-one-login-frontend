@@ -1,6 +1,8 @@
 import i18next from "i18next";
 import translationHeaderCy from "../components/header/locales/cy/translation.json";
 import translationHeaderEn from "../components/header/locales/en/translation.json";
+import translationSkipLinkCy from "../components/skip-link/locales/cy/translation.json";
+import translationSkipLinkEn from "../components/skip-link/locales/en/translation.json";
 import translationCy from "../locales/cy/translation.json";
 import translationEn from "../locales/en/translation.json";
 
@@ -30,6 +32,20 @@ export const setFrontendUiTranslations = (instanceI18n: typeof i18next) => {
     "cy",
     "translation",
     translationHeaderCy,
+    true,
+    false,
+  );
+  instanceI18n.addResourceBundle(
+    "en",
+    "translation",
+    translationSkipLinkEn,
+    true,
+    false,
+  );
+  instanceI18n.addResourceBundle(
+    "cy",
+    "translation",
+    translationSkipLinkCy,
     true,
     false,
   );
