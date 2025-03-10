@@ -1,0 +1,5 @@
+params:
+  - name: translations
+    type: string
+    required: true
+    description: translations from middleware 
