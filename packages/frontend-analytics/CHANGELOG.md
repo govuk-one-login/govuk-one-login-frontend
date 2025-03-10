@@ -55,7 +55,7 @@
 - fix the branch reporting for analytics to Sonarcloud ([b6bac54](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/b6bac54))
 - align frontend-analytics build process with other packages ([72cc11a](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/72cc11a))
 
-### ❤️  Thank You
+### ❤️ Thank You
 
 - di-aholme
 - Joanneyoung01

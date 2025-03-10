@@ -4,7 +4,7 @@ import {
   GTMInitInterface,
 } from "../analytics/pageViewTracker/pageViewTracker.interface";
 import { NavigationEventInterface } from "../analytics/navigationTracker/navigationTracker.interface";
-import { FormEventInterface } from "../analytics/formTracker/formTracker.interface";
+import { FormEventInterface } from "./formUtils/formTracker.interface";
 
 declare global {
   interface Window {

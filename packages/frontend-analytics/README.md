@@ -59,6 +59,7 @@ The package is owned by the DI Frontend Capability team, part of the development
 ### Installation
 
 1. Install NPM package
+
    ```sh
    npm install @govuk-one-login/frontend-analytics
    ```
@@ -81,12 +82,12 @@ The package is owned by the DI Frontend Capability team, part of the development
 
 3. Set up your environment variables. Two are required for the package to work, others provide a more granular level of control (while not required, it's highly advised to implement these to minimise the impact of bugs and regressions):
 
-| Variable                | Example            | Required | Notes   |
-| ----------------------- | ------------------ | -------- | ------- |
-| Ga4ContainerId          | `'GTM-XXXXXXX'`    | Yes      | Provided by the Analytics Team
-| isGa4Enabled            | `true`             | Yes      | Global flag for the package
-| cookieDomain            | `'account.gov.uk'` | No       | Defaults to `'account.gov.uk'`
-| isDataSensitive         | `true`             | No       | If turned on, will redact all form data from analytics, can be set at page level (See Redacting PII)
+| Variable                | Example            | Required | Notes                                                                                                |
+| ----------------------- | ------------------ | -------- | ---------------------------------------------------------------------------------------------------- |
+| Ga4ContainerId          | `'GTM-XXXXXXX'`    | Yes      | Provided by the Analytics Team                                                                       |
+| isGa4Enabled            | `true`             | Yes      | Global flag for the package                                                                          |
+| cookieDomain            | `'account.gov.uk'` | No       | Defaults to `'account.gov.uk'`                                                                       |
+| isDataSensitive         | `true`             | No       | If turned on, will redact all form data from analytics, can be set at page level (See Redacting PII) |
 | ga4PageViewEnabled      | `true`             | No       |
 | ga4NavigationEnabled    | `true`             | No       |
 | ga4FormResponseEnabled  | `true`             | No       |
@@ -136,24 +137,27 @@ window.DI.appInit(
 
 #### Redacting PII
 
-[!NOTE] Redacting personally identifiable information can be configured at a global level or page level [!NOTE] 
+[!NOTE] Redacting personally identifiable information can be configured at a global level or page level [!NOTE]
 
-1. Global Configuration 
+1. Global Configuration
 
 In your base Nunjucks template, the default isDataSensitive setting should remain true or be omitted (as true is the default). This ensures that PII is redacted by default for all pages.
 
 2. Page-Specific Configuration (Optionally Allow PII)
 
 In your view templates where you need to collect PII (use with caution):
-- Use Nunjucks templating to set the variable (e.g., isDataSensitive) to "false" 
-- Pass the variable to appInit: Include this variable in your window.DI.appInit call 
+
+- Use Nunjucks templating to set the variable (e.g., isDataSensitive) to "false"
+- Pass the variable to appInit: Include this variable in your window.DI.appInit call
 
 Page Level:
+
 ```js
 {% set analyticsDataSensitive = true %}
 ```
 
 Base Page/Form:
+
 ```js
 window.DI.appInit(
   {
