@@ -56,5 +56,14 @@
         "contentLicence": {
             "html": "All content is available under the <a class=\"govuk-footer__link\" href=\"https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/\" rel=\"licence\">Open Government Licence v3.0</a>, except where otherwise stated"
         }
-    }
+    },
+    "header": {
+        "signOut": "Sign Out",
+        "ariaLabel": "GOV.UK One Login menu"
+      },
+    "phaseBanner": {
+        "tag": "BETA",
+        "text": "This is a new service. Help us improve it and ",
+        "link": "give your feedback (opens in a new tab)."
+      }
 }

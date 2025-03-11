@@ -1,0 +1,22 @@
+{% set phaseBanner = params.phaseBanner.translation.phaseBanner %}
+{% from "./tag/macro.njk" import frontendUiTag -%}
+
+<div class="govuk-phase-banner
+  {%- if params.classes %} {{ params.classes }}{% endif %}"{% for attribute, value in params.attributes %} {{ attribute }}="{{ value }}"{% endfor %}>
+<p class="govuk-phase-banner__content">
+ {{ frontendUiTag({
+    html: params.tag or phaseBanner.tag, 
+    classes: "govuk-phase-banner__content__tag" + (" " + params.tag.classes if params.tag.classes)
+  }) | indent(4) | trim }}
+
+  <span class="govuk-phase-banner__text">
+    {{ phaseBanner.text }}
+    <a class="govuk-link"
+       rel="noopener"
+       target="_blank"
+       href="{{ contactUsUrl(params.contactUrl, params.url) or contactUsUrl('https://signin.account.gov.uk/contact-us', params.url) }}">
+      {{ phaseBanner.link }}
+    </a>
+  </span>
+</p>
+</div>

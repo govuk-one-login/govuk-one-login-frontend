@@ -29,3 +29,23 @@ export const frontendUiMiddleware = (
   res.locals.translations = req.i18n.store.data[req.i18n.language];
   next();
 };
+
+export function addLanguageParam(language: string, url?: URL) {
+  if (!url) {
+    console.warn(
+      "URL is undefined. The parameter cannot be added, and the toggle will not work.",
+    );
+    return "#invalid-url-lang-toggle";
+  }
+
+  url.searchParams.set("lng", language);
+  return url.pathname + url.search;
+}
+
+export function contactUsUrl(baseUrl: string, urlToAppend: string) {
+  if(!baseUrl)
+    return null;
+  const encodedUrl = encodeURIComponent(urlToAppend);
+  const searchParam = new URLSearchParams({ fromURL: encodedUrl });
+  return `${baseUrl}?${searchParam.toString()}`;
+}

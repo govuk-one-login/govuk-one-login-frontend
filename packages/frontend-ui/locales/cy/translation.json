@@ -56,5 +56,14 @@
         "contentLicence": {
             "html": "Mae'r holl gynnwys ar gael o dan <a class=\"govuk-footer__link\" href=\"https://www.nationalarchives.gov.uk/doc/open-government-licence-cymraeg/version/3/\" rel=\"licence\">Trwydded Llywodraeth Agored v3.0</a>, oni nodir yn wahanol"
         }
-    }
+    },
+    "header": {
+        "signOut": "Allgofnodi",
+        "ariaLabel": "GOV.UK One Login dewislen"
+    },
+    "phaseBanner": {
+    "tag": "BETA",
+    "text": "Mae hwn yn wasanaeth newydd. Helpwch ni i'w wella a ",
+    "link": "rhoi eich adborth (agor mewn tab newydd)."
+  }
 }

@@ -7,9 +7,9 @@
 {% endblock %}
 
 {% from "govuk/components/skip-link/macro.njk" import govukSkipLink %}
-{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
-{% from "frontend-language-toggle/src/macro.njk" import languageSelect %}
 {% from "frontend-ui/build/components/header/macro.njk" import frontendUiHeader %}
+{% from "frontend-ui/build/components/phase-banner/macro.njk" import frontendUiPhaseBanner %} 
+{% from "frontend-language-toggle/src/macro.njk" import languageSelect %}
 {% from "frontend-ui/build/components/footer/macro.njk" import frontendUiFooter %}
 {% from "frontend-ui/build/components/cookie-banner/macro.njk" import frontendUiCookieBanner %}
 
@@ -37,9 +37,10 @@
 
 {% block main %}
   <div class="govuk-width-container">
-    {{ govukPhaseBanner({
-      tag: { text: "general.govuk.phaseBanner.tag" | translate },
-      html: "general.govuk.phaseBanner.content" | translate | safe
+    {{ frontendUiPhaseBanner({
+      phaseBanner: translations,
+      url: currentUrl,
+      contactUrl: 'https://signin.account.gov.uk/contact-us'
     }) }}
 
     {{ languageSelect({

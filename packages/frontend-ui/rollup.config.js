@@ -42,7 +42,10 @@ export default [{
       file: "build/all.css",
     },
   plugins: [
-    scss({ fileName: 'all.css'}),
+    scss({ 
+      fileName: 'all.css',
+      outputStyle: "compressed",
+    }),
   ]
 }
 ];
