@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * This file is used to create the includeComponent function as well as the interfaces each of the
  * fingerprint components must implement.
