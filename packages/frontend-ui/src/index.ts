@@ -5,6 +5,8 @@ import translationHeaderCy from "../components/header/locales/cy/translation.jso
 import translationHeaderEn from "../components/header/locales/en/translation.json";
 import welshLanguageToggleCy from "../components/welsh-language-toggle/locales/cy/translation.json";
 import welshLanguageToggleEn from "../components/welsh-language-toggle/locales/en/translation.json";
+import translationPhaseBannerEn from "../components/phase-banner/locales/en/translation.json";
+import translationPhaseBannerCy from "../components/phase-banner/locales/cy/translation.json";
 
 export const setFrontendUiTranslations = (instanceI18n: typeof i18next) => {
   instanceI18n.addResourceBundle(
@@ -49,6 +51,20 @@ export const setFrontendUiTranslations = (instanceI18n: typeof i18next) => {
     true,
     false,
   );
+  instanceI18n.addResourceBundle(
+    "en",
+    "translation",
+    translationPhaseBannerEn,
+    true,
+    false,
+  );
+  instanceI18n.addResourceBundle(
+    "cy",
+    "translation",
+    translationPhaseBannerCy,
+    true,
+    false,
+  );
 };
 
 export const frontendUiMiddleware = (
@@ -62,7 +78,7 @@ export const frontendUiMiddleware = (
   next();
 };
 
-export default function addLanguageParam(language: string, url?: URL) {
+export function addLanguageParam(language: string, url?: URL) {
   if (!url) {
     console.warn(
       "URL is undefined. The parameter cannot be added, and the toggle will not work.",
@@ -72,4 +88,10 @@ export default function addLanguageParam(language: string, url?: URL) {
 
   url.searchParams.set("lng", language);
   return url.pathname + url.search;
+}
+
+export function contactUsUrl(baseUrl: string, urlToAppend: string): string {
+  const encodedUrl = encodeURIComponent(urlToAppend);
+  const searchParam = new URLSearchParams({ fromURL: encodedUrl });
+  return `${baseUrl}?${searchParam.toString()}`;
 }
