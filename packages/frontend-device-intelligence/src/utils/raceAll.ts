@@ -1,4 +1,5 @@
-import { componentInterface } from '../factory'
+/* eslint-disable */
+import { componentInterface } from "../factory";
 
 type DelayedPromise<T> = Promise<T>;
 
@@ -8,7 +9,6 @@ export function delay<T>(t: number, val: T): DelayedPromise<T> {
   });
 }
 
-
 export interface RaceResult<T> {
   value: T;
   elapsed?: number;
@@ -17,7 +17,7 @@ export interface RaceResult<T> {
 export function raceAllPerformance<T>(
   promises: Promise<T>[],
   timeoutTime: number,
-  timeoutVal: T
+  timeoutVal: T,
 ): Promise<RaceResult<T>[]> {
   return Promise.all(
     promises.map((p) => {
@@ -32,14 +32,18 @@ export function raceAllPerformance<T>(
           elapsed: performance.now() - startTime,
         })),
       ]);
-    })
+    }),
   );
 }
 
-
-
-export function raceAll<T>(promises: Promise<T>[], timeoutTime: number, timeoutVal: T): Promise<(T | undefined)[]> {
-  return Promise.all(promises.map((p) => {
-    return Promise.race([p, delay(timeoutTime, timeoutVal)]);
-  }));
+export function raceAll<T>(
+  promises: Promise<T>[],
+  timeoutTime: number,
+  timeoutVal: T,
+): Promise<(T | undefined)[]> {
+  return Promise.all(
+    promises.map((p) => {
+      return Promise.race([p, delay(timeoutTime, timeoutVal)]);
+    }),
+  );
 }

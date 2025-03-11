@@ -4,14 +4,14 @@
  * Feels a little dumb I'm doing this manually.
  */
 
-import './audio/audio'
-import './canvas/canvas'
-import './fonts/fonts'
-import './hardware/hardware'
-import './locales/locales'
-import './permissions/permissions'
-import './plugins/plugins'
-import './screen/screen'
-import './system/system'
-import './webgl/webgl'
-import './math/math'
+import "./audio/audio";
+import "./canvas/canvas";
+import "./fonts/fonts";
+import "./hardware/hardware";
+import "./locales/locales";
+import "./permissions/permissions";
+import "./plugins/plugins";
+import "./screen/screen";
+import "./system/system";
+import "./webgl/webgl";
+import "./math/math";

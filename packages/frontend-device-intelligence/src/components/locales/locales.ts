@@ -1,23 +1,23 @@
-import { componentInterface, includeComponent } from '../../factory'
+/* eslint-disable */
+import { componentInterface, includeComponent } from "../../factory";
 
 function getLocales(): Promise<componentInterface> {
   return new Promise((resolve) => {
-    resolve(
-      {
-        'languages': getUserLanguage(),
-        'timezone': getUserTimezone()
-      });
+    resolve({
+      languages: getUserLanguage(),
+      timezone: getUserTimezone(),
     });
+  });
 }
 
 function getUserLanguage(): string {
-    const userLanguages: string[] = [];
+  const userLanguages: string[] = [];
 
-    return navigator.language;
-  }
+  return navigator.language;
+}
 
-  function getUserTimezone(): string {
-    return Intl.DateTimeFormat().resolvedOptions().timeZone;
-  }
+function getUserTimezone(): string {
+  return Intl.DateTimeFormat().resolvedOptions().timeZone;
+}
 
-  includeComponent('locales', getLocales);
+includeComponent("locales", getLocales);

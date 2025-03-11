@@ -1,4 +1,4 @@
-import { componentInterface, includeComponent } from '../../factory'
+import { componentInterface, includeComponent } from "../../factory";
 
 async function createAudioFingerprint(): Promise<componentInterface> {
   const resultPromise = new Promise<componentInterface>((resolve, reject) => {
@@ -6,9 +6,10 @@ async function createAudioFingerprint(): Promise<componentInterface> {
       // Set up audio parameters
       const sampleRate = 44100;
       const numSamples = 5000;
-      const audioContext = new (window.OfflineAudioContext || window.webkitOfflineAudioContext)(1, numSamples, sampleRate );
+      const audioContext = new (window.OfflineAudioContext ||
+        window.webkitOfflineAudioContext)(1, numSamples, sampleRate);
       const audioBuffer = audioContext.createBufferSource();
-      
+
       const oscillator = audioContext.createOscillator();
       oscillator.frequency.value = 1000;
       const compressor = audioContext.createDynamicsCompressor();
@@ -21,34 +22,26 @@ async function createAudioFingerprint(): Promise<componentInterface> {
       compressor.connect(audioContext.destination);
       oscillator.start();
       let samples: Float32Array;
-  
-      audioContext.oncomplete = event => {
-        samples = event.renderedBuffer.getChannelData(0);
-        resolve(
-            {
-                'sampleHash': calculateHash(samples),
-                'oscillator': oscillator.type,
-                'maxChannels': audioContext.destination.maxChannelCount,
-                'channelCountMode': audioBuffer.channelCountMode,
 
-            }    
-          );
+      audioContext.oncomplete = (event) => {
+        samples = event.renderedBuffer.getChannelData(0);
+        resolve({
+          sampleHash: calculateHash(samples),
+          oscillator: oscillator.type,
+          maxChannels: audioContext.destination.maxChannelCount,
+          channelCountMode: audioBuffer.channelCountMode,
+        });
       };
-  
+
       audioContext.startRendering();
-      
-  
     } catch (error) {
-      console.error('Error creating audio fingerprint:', error);
+      console.error("Error creating audio fingerprint:", error);
       reject(error);
     }
-  
   });
-  
+
   return resultPromise;
-
 }
-
 
 function calculateHash(samples: Float32Array) {
   let hash = 0;
@@ -58,4 +51,4 @@ function calculateHash(samples: Float32Array) {
   return hash;
 }
 
-includeComponent('audio', createAudioFingerprint);
+includeComponent("audio", createAudioFingerprint);
