@@ -1,10 +1,5 @@
 {
   "general": {
-    "header": {
-      "menuLink1": "Menu link 1",
-      "menuLink2": "Menu link 2",
-      "menuLink3": "Menu link 3"
-    },
     "languageSelect": {
       "ariaLabel": "Select language"
     },
@@ -15,25 +10,7 @@
     },
     "govuk": {
       "backLink": "Back",
-      "skipLink": "Skip to main content",
-      "phaseBanner": {
-        "tag": "Alpha",
-        "content": "This is a new service - your <a class=\"govuk-link\" rel=\"noopener\" target=\"_blank\" href=\"https://signin.dev.account.gov.uk/contact-us\">feedback</a>  will help us to improve it. For more information, please <a rel=\"noopener\" class=\"govuk-link\" href=\"/welcome\">restart</a>  your journey"
-      }
-    },
-    "footer": {
-      "help": {
-        "linkText": "Help"
-      },
-      "cookies": {
-        "linkText": "Cookies"
-      },
-      "contact": {
-        "linkText": "Contact"
-      },
-      "terms": {
-        "linkText": "Terms and conditions"
-      }
+      "skipLink": "Skip to main content"
     }
   },
 

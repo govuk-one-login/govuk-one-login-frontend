@@ -1,67 +1,33 @@
 import i18next from "i18next";
-import translationCookieBannerCy from "../components/cookie-banner/locales/cy/translation.json";
-import translationCookieBannerEn from "../components/cookie-banner/locales/en/translation.json";
-import translationHeaderCy from "../components/header/locales/cy/translation.json";
-import translationHeaderEn from "../components/header/locales/en/translation.json";
-import welshLanguageToggleCy from "../components/welsh-language-toggle/locales/cy/translation.json";
-import welshLanguageToggleEn from "../components/welsh-language-toggle/locales/en/translation.json";
-import translationPhaseBannerEn from "../components/phase-banner/locales/en/translation.json";
-import translationPhaseBannerCy from "../components/phase-banner/locales/cy/translation.json";
+import translationCy from "../locales/cy/translation.json";
+import translationEn from "../locales/en/translation.json";
 
 export const setFrontendUiTranslations = (instanceI18n: typeof i18next) => {
   instanceI18n.addResourceBundle(
     "en",
     "translation",
-    translationCookieBannerEn,
+    translationEn,
     true,
     false,
   );
   instanceI18n.addResourceBundle(
     "cy",
     "translation",
-    translationCookieBannerCy,
+    translationCy,
     true,
     false,
   );
   instanceI18n.addResourceBundle(
     "en",
     "translation",
-    translationHeaderEn,
+    translationEn,
     true,
     false,
   );
   instanceI18n.addResourceBundle(
     "cy",
     "translation",
-    translationHeaderCy,
-    true,
-    false,
-  );
-  instanceI18n.addResourceBundle(
-    "en",
-    "translation",
-    welshLanguageToggleEn,
-    true,
-    false,
-  );
-  instanceI18n.addResourceBundle(
-    "cy",
-    "translation",
-    welshLanguageToggleCy,
-    true,
-    false,
-  );
-  instanceI18n.addResourceBundle(
-    "en",
-    "translation",
-    translationPhaseBannerEn,
-    true,
-    false,
-  );
-  instanceI18n.addResourceBundle(
-    "cy",
-    "translation",
-    translationPhaseBannerCy,
+    translationCy,
     true,
     false,
   );
@@ -90,7 +56,9 @@ export function addLanguageParam(language: string, url?: URL) {
   return url.pathname + url.search;
 }
 
-export function contactUsUrl(baseUrl: string, urlToAppend: string): string {
+export function contactUsUrl(baseUrl: string, urlToAppend: string) {
+  if(!baseUrl)
+    return null;
   const encodedUrl = encodeURIComponent(urlToAppend);
   const searchParam = new URLSearchParams({ fromURL: encodedUrl });
   return `${baseUrl}?${searchParam.toString()}`;
