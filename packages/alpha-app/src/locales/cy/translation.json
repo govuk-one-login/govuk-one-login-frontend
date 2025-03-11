@@ -1,8 +1,5 @@
 {
   "general": {
-    "languageSelect": {
-      "ariaLabel": "Switcher iaith"
-    },
     "buttons": {
       "startNow": "Dechrau Nawr",
       "continue": "Parhau",

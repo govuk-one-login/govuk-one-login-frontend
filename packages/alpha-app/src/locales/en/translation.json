@@ -1,8 +1,5 @@
 {
   "general": {
-    "languageSelect": {
-      "ariaLabel": "Select language"
-    },
     "buttons": {
       "startNow": "Start Now",
       "continue": "Continue",

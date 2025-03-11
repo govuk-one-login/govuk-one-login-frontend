@@ -61,6 +61,9 @@
         "signOut": "Sign Out",
         "ariaLabel": "GOV.UK One Login menu"
       },
+      "languageSelect": {
+        "ariaLabel": "Select language"
+      },
     "phaseBanner": {
         "tag": "BETA",
         "text": "This is a new service. Help us improve it and ",

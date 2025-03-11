@@ -9,7 +9,7 @@
 {% from "govuk/components/skip-link/macro.njk" import govukSkipLink %}
 {% from "frontend-ui/build/components/header/macro.njk" import frontendUiHeader %}
 {% from "frontend-ui/build/components/phase-banner/macro.njk" import frontendUiPhaseBanner %} 
-{% from "frontend-language-toggle/src/macro.njk" import languageSelect %}
+{% from "frontend-ui/build/components/language-select/macro.njk" import frontendUiLanguageSelect %}
 {% from "frontend-ui/build/components/footer/macro.njk" import frontendUiFooter %}
 {% from "frontend-ui/build/components/cookie-banner/macro.njk" import frontendUiCookieBanner %}
 
@@ -43,15 +43,10 @@
       contactUrl: 'https://signin.account.gov.uk/contact-us'
     }) }}
 
-    {{ languageSelect({
-      ariaLabel: "general.languageSelect.ariaLabel" | translate,
+    {{ frontendUiLanguageSelect({
+      frontendUiLanguageSelect: translations,
       url: currentUrl,
-      activeLanguage: htmlLang,
-      class: "",
-      languages: [
-        { code: "en", text: "English", visuallyHidden: "Change to English" },
-        { code: "cy", text: "Cymraeg", visuallyHidden: "Newid yr iaith ir Gymraeg" }
-      ]
+      activeLanguage: htmlLang
     }) }}
 
     {% block backLink %}{% endblock %}

@@ -61,6 +61,9 @@
         "signOut": "Allgofnodi",
         "ariaLabel": "GOV.UK One Login dewislen"
     },
+    "languageSelect": {
+        "ariaLabel": "Switcher iaith"
+      },
     "phaseBanner": {
     "tag": "BETA",
     "text": "Mae hwn yn wasanaeth newydd. Helpwch ni i'w wella a ",

@@ -1,0 +1,38 @@
+{% set languageSelect = params.languageSelect.translation.languageSelect %}
+{% if params.languages %}
+{% set languages = params.languages %}
+{% else %}
+{% set languages = [
+{ code: "en", text: "English", visuallyHidden: "Change to English" },
+{ code: "cy", text: "Cymraeg", visuallyHidden: "Newid yr iaith ir Gymraeg" }
+    ] %}
+{% endif %}
+
+<nav
+  class="language-select {{params.class}}"
+  aria-label="{{languageSelect.ariaLabel}}"
+  role="navigation"
+>
+  <ul
+    class="govuk-list language-select__list govuk-body-s govuk-!-margin-0"
+    role="list"
+  >
+    {% for lang in languages %}
+    <li class="language-select__list-item" role="listitem">
+      {% if params.activeLanguage == lang.code %}
+      <span aria-current="true">{{ lang.text }}</span>
+      {% else %}
+      <a
+        class="govuk-link govuk-link--no-visited-state"
+        href="{{ addLanguageParam(lang.code, params.url)}}"
+        data-journey-click="link - click:lang-select:{{ lang.code }}"
+        rel="alternate"
+        hreflang="{{ lang.code }}"
+        lang="{{lang.code}}"
+        role="link"
+      >{{ lang.text }}<div class="govuk-visually-hidden">{{ lang.visuallyHidden }}</div></a>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+</nav>
