@@ -93,7 +93,9 @@ app.use(
 /** ThumbmarkJS fingerprint **/
 app.use(
   "/fingerprint",
-  express.static(nodeModules("@govuk-one-login/frontend-device-intelligence/build/esm")),
+  express.static(
+    nodeModules("@govuk-one-login/frontend-device-intelligence/build/esm"),
+  ),
 );
 app.use(
   session({
