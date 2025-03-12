@@ -31,7 +31,7 @@
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href="#installation"> Prerequisites and Installation</a></li>
       </ul>
     </li>
   </ol>
@@ -53,13 +53,37 @@ The package is owned by the DI Frontend Capability team, part of the development
 
 ## Getting Started
 
-### Installation
+### Prerequisites and Installation
 
+Top level of the monorepo:
 ```
 npm install
 npm run build
 ```
 
+Or Add to your project using `npm i @govuk-one-login/frontend-device-intelligence`
+
+### Testing
+
+To test the Device Intelligence package in the One Login Frontend monorepo, follow these steps:
+
+  <ol>
+    <li> Complete the prerequisites and installation steps. </li> 
+    </br>
+    <li> Add the /fingerprint path to the app.js so that the application utilises the device intelligence package from the govuk-one-login node modules. </li>
+    <br/>
+    <li> Add the usage of the fingerprint into the web page by adding in the script into the base nunjucks file. Declare alongside the rest of the scripts in nunjucks context block. </li>
+  
+  ```
+    <script>
+      import('/fingerprint/index.js')
+      .then((ThumbmarkJS) => {
+          ThumbmarkJS.getFingerprint().then((fp) => { console.log(fp)})
+      })
+    </script>
+  ```
+  <li> Run npm start in the alpha app directory and application should be available at http://localhost:3000. Once loaded, inspect the console to view the result of printing out the fingerprint ID. </li>
+  </ol>
 
 ## Developing the package
 
