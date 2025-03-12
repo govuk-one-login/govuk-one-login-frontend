@@ -7,11 +7,6 @@ import {
 import { hash } from "../utils/hash";
 import { raceAll, raceAllPerformance } from "../utils/raceAll";
 import { options } from "./options";
-import * as packageJson from "../../package.json";
-
-export function getVersion(): string {
-  return packageJson.version;
-}
 
 export async function getFingerprintData(): Promise<componentInterface> {
   try {
@@ -100,8 +95,6 @@ export async function getFingerprint(
   try {
     const fingerprintData = await getFingerprintData();
     const thisHash = hash(JSON.stringify(fingerprintData));
-    if (Math.random() < 0.001 && options.logging)
-      logFingerprintData(thisHash, fingerprintData);
     if (includeData) {
       return { hash: thisHash.toString(), data: fingerprintData };
     } else {
