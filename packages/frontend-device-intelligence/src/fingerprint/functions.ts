@@ -1,64 +1,51 @@
-/* eslint-disable */
 import {
-  componentInterface,
+  type ComponentInterface,
   getComponentPromises,
-  timeoutInstance,
-} from "../factory";
+} from "../components/index";
 import { hash } from "../utils/hash";
-import { raceAll, raceAllPerformance } from "../utils/raceAll";
-import { options } from "./options";
-import * as packageJson from "../../package.json";
+import { raceAll } from "../utils/raceAll";
 
-export function getVersion(): string {
-  return packageJson.version;
-}
+const timeoutInstance: ComponentInterface = {
+  timeout: "true",
+};
 
-export async function getFingerprintData(): Promise<componentInterface> {
-  try {
-    const promiseMap: Record<
-      string,
-      Promise<componentInterface>
-    > = getComponentPromises();
-    const keys: string[] = Object.keys(promiseMap);
-    const promises: Promise<componentInterface>[] = Object.values(promiseMap);
-    const resolvedValues: (componentInterface | undefined)[] = await raceAll(
-      promises,
-      options?.timeout || 1000,
-      timeoutInstance,
-    );
-    const validValues: componentInterface[] = resolvedValues.filter(
-      (value): value is componentInterface => value !== undefined,
-    );
-    const resolvedComponents: Record<string, componentInterface> = {};
-    validValues.forEach((value, index) => {
-      resolvedComponents[keys[index]] = value;
-    });
-    return filterFingerprintData(
-      resolvedComponents,
-      options.exclude || [],
-      options.include || [],
-      "",
-    );
-  } catch (error) {
-    throw error;
-  }
+export async function getFingerprintData(): Promise<ComponentInterface> {
+  const promiseMap: Record<
+    string,
+    Promise<ComponentInterface>
+  > = getComponentPromises();
+  const keys: string[] = Object.keys(promiseMap);
+  const promises: Promise<ComponentInterface>[] = Object.values(promiseMap);
+  const resolvedValues: (ComponentInterface | undefined)[] = await raceAll(
+    promises,
+    1000,
+    timeoutInstance,
+  );
+  const validValues: ComponentInterface[] = resolvedValues.filter(
+    (value): value is ComponentInterface => value !== undefined,
+  );
+  const resolvedComponents: Record<string, ComponentInterface> = {};
+  validValues.forEach((value, index) => {
+    resolvedComponents[keys[index]] = value;
+  });
+  return filterFingerprintData(resolvedComponents, [], [], "");
 }
 
 /**
  * This function filters the fingerprint data based on the exclude and include list
- * @param {componentInterface} obj - components objects from main componentInterface
+ * @param {ComponentInterface} obj - components objects from main ComponentInterface
  * @param {string[]} excludeList - elements to exclude from components objects (e.g : 'canvas', 'system.browser')
  * @param {string[]} includeList - elements to only include from components objects (e.g : 'canvas', 'system.browser')
  * @param {string} path - auto-increment path iterating on key objects from components objects
- * @returns {componentInterface} result - returns the final object before hashing in order to get fingerprint
+ * @returns {ComponentInterface} result - returns the final object before hashing in order to get fingerprint
  */
 export function filterFingerprintData(
-  obj: componentInterface,
+  obj: ComponentInterface,
   excludeList: string[],
   includeList: string[],
   path: string = "",
-): componentInterface {
-  const result: componentInterface = {};
+): ComponentInterface {
+  const result: ComponentInterface = {};
 
   for (const [key, value] of Object.entries(obj)) {
     const currentPath = path + key + ".";
@@ -93,44 +80,15 @@ export function filterFingerprintData(
 export async function getFingerprint(includeData?: false): Promise<string>;
 export async function getFingerprint(
   includeData: true,
-): Promise<{ hash: string; data: componentInterface }>;
+): Promise<{ hash: string; data: ComponentInterface }>;
 export async function getFingerprint(
   includeData?: boolean,
-): Promise<string | { hash: string; data: componentInterface }> {
-  try {
-    const fingerprintData = await getFingerprintData();
-    const thisHash = hash(JSON.stringify(fingerprintData));
-    if (Math.random() < 0.001 && options.logging)
-      logFingerprintData(thisHash, fingerprintData);
-    if (includeData) {
-      return { hash: thisHash.toString(), data: fingerprintData };
-    } else {
-      return thisHash.toString();
-    }
-  } catch (error) {
-    throw error;
-  }
-}
-
-export async function getFingerprintPerformance() {
-  try {
-    const promiseMap = getComponentPromises();
-    const keys = Object.keys(promiseMap);
-    const promises = Object.values(promiseMap);
-    const resolvedValues = await raceAllPerformance(
-      promises,
-      options?.timeout || 1000,
-      timeoutInstance,
-    );
-    const resolvedComponents: { [key: string]: any } = {
-      elapsed: {},
-    };
-    resolvedValues.forEach((value, index) => {
-      resolvedComponents[keys[index]] = value.value;
-      resolvedComponents["elapsed"][keys[index]] = value.elapsed;
-    });
-    return resolvedComponents;
-  } catch (error) {
-    throw error;
+): Promise<string | { hash: string; data: ComponentInterface }> {
+  const fingerprintData = await getFingerprintData();
+  const thisHash = hash(JSON.stringify(fingerprintData));
+  if (includeData) {
+    return { hash: thisHash.toString(), data: fingerprintData };
+  } else {
+    return thisHash.toString();
   }
 }

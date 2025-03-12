@@ -1,41 +1,81 @@
-import { componentInterface } from "../factory";
-import { filterFingerprintData } from "./functions";
+/* eslint-disable */
+import {
+  getFingerprintData,
+  getFingerprint,
+  filterFingerprintData,
+} from "./functions";
+import { ComponentInterface } from "../components/index";
 
-const test_components: componentInterface = {
-  one: "1",
-  two: 2,
-  three: { a: true, b: false },
-};
+jest.mock("../components/index", () => ({
+  getComponentPromises: jest.fn(() => ({
+    componentA: Promise.resolve({ key: "valueA" }),
+    componentB: Promise.resolve({ key: "valueB" }),
+  })),
+}));
 
-describe("component filtering tests", () => {
-  test("excluding top level works", () => {
-    expect(filterFingerprintData(test_components, ["one"], [])).toMatchObject({
-      two: 2,
-      three: { a: true, b: false },
+jest.mock("../utils/hash", () => ({
+  hash: jest.fn((data) => `hashed_${data}`),
+}));
+
+// Mock fetch for logging function
+global.fetch = jest.fn(() => Promise.resolve({ ok: true })) as jest.Mock;
+
+describe("getFingerprintData()", () => {
+  test("returns filtered component data correctly", async () => {
+    const data = await getFingerprintData();
+    expect(data).toEqual({
+      componentA: { key: "valueA" },
+      componentB: { key: "valueB" },
     });
   });
-  test("including top level works", () => {
-    expect(
-      filterFingerprintData(test_components, [], ["one", "two"]),
-    ).toMatchObject({
-      one: "1",
-      two: 2,
+
+  test("handles empty data gracefully", async () => {
+    const { getComponentPromises } = require("../components/index");
+    getComponentPromises.mockReturnValue({});
+    const data = await getFingerprintData();
+    expect(data).toEqual({});
+  });
+
+  test("throws an error if something goes wrong", async () => {
+    const { getComponentPromises } = require("../components/index");
+    getComponentPromises.mockImplementation(() => {
+      throw new Error("Test Error");
+    });
+    await expect(getFingerprintData()).rejects.toThrow("Test Error");
+  });
+});
+
+describe("filterFingerprintData()", () => {
+  const sampleData: ComponentInterface = {
+    included: { path: { key: "value" } },
+    excluded: { path: { key: "excludedValue" } },
+    normal: { key: "normalValue" },
+  };
+
+  test("filters out excluded data correctly", () => {
+    const filteredData = filterFingerprintData(
+      sampleData,
+      ["excluded.path"],
+      [],
+    );
+    expect(filteredData).toEqual({
+      included: { path: { key: "value" } },
+      normal: { key: "normalValue" },
     });
   });
-  test("excluding low-level works", () => {
-    expect(
-      filterFingerprintData(test_components, ["two", "three.a"], []),
-    ).toMatchObject({
-      one: "1",
-      three: { b: false },
-    });
+
+  test("handles empty object gracefully", () => {
+    const filteredData = filterFingerprintData({}, [], []);
+    expect(filteredData).toEqual({});
   });
-  test("including low-level works", () => {
-    expect(
-      filterFingerprintData(test_components, [], ["one", "three.b"]),
-    ).toMatchObject({
-      one: "1",
-      three: { b: false },
-    });
+});
+
+describe("getFingerprint()", () => {
+  test("throws an error when data fetching fails", async () => {
+    const { getFingerprintData } = require("./functions");
+    jest
+      .spyOn(require("./functions"), "getFingerprintData")
+      .mockRejectedValue(new Error("Test Error"));
+    await expect(getFingerprint()).rejects.toThrow("Test Error");
   });
 });

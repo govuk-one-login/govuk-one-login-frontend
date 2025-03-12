@@ -1,7 +1,6 @@
-/* eslint-disable */
 export async function ephemeralIFrame(
   callback: ({ iframe }: { iframe: Document }) => void,
-): Promise<any> {
+): Promise<void> {
   while (!document.body) {
     await wait(50);
   }

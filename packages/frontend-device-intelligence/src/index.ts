@@ -1,7 +1,4 @@
-/* eslint-disable */
-import { getFingerprint, getFingerprintData, getFingerprintPerformance, getVersion } from './fingerprint/functions'
-import { setOption } from './fingerprint/options'
-import { includeComponent } from './factory'
-import './components'
+import { getFingerprint, getFingerprintData } from "./fingerprint/functions";
+import "./components";
 
-export { setOption, getVersion, getFingerprint, getFingerprintData, getFingerprintPerformance, includeComponent }
+export { getFingerprint, getFingerprintData };

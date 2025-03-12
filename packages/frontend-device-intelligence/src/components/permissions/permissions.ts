@@ -1,69 +1,67 @@
-/* eslint-disable */
-import { componentInterface, includeComponent } from "../../factory";
+import { ComponentInterface } from "../index";
 import { mostFrequentValuesInArrayOfDictionaries } from "../../utils/getMostFrequent";
-import { options } from "../../fingerprint/options";
 
-let permission_keys: PermissionName[];
-function initializePermissionKeys() {
-  permission_keys =
-    options?.permissions_to_check ||
-    ([
-      "accelerometer",
-      "accessibility",
-      "accessibility-events",
-      "ambient-light-sensor",
-      "background-fetch",
-      "background-sync",
-      "bluetooth",
-      "camera",
-      "clipboard-read",
-      "clipboard-write",
-      "device-info",
-      "display-capture",
-      "gyroscope",
-      "geolocation",
-      "local-fonts",
-      "magnetometer",
-      "microphone",
-      "midi",
-      "nfc",
-      "notifications",
-      "payment-handler",
-      "persistent-storage",
-      "push",
-      "speaker",
-      "storage-access",
-      "top-level-storage-access",
-      "window-management",
-      "query",
-    ] as PermissionName[]);
+function getPermissionKeys(): PermissionName[] {
+  return [
+    "accelerometer",
+    "accessibility",
+    "accessibility-events",
+    "ambient-light-sensor",
+    "background-fetch",
+    "background-sync",
+    "bluetooth",
+    "camera",
+    "clipboard-read",
+    "clipboard-write",
+    "device-info",
+    "display-capture",
+    "gyroscope",
+    "geolocation",
+    "local-fonts",
+    "magnetometer",
+    "microphone",
+    "midi",
+    "nfc",
+    "notifications",
+    "payment-handler",
+    "persistent-storage",
+    "push",
+    "speaker",
+    "storage-access",
+    "top-level-storage-access",
+    "window-management",
+    "query",
+  ] as PermissionName[];
 }
 
-export default async function getBrowserPermissions(): Promise<componentInterface> {
-  initializePermissionKeys();
-  const permissionPromises: Promise<componentInterface>[] = Array.from(
-    { length: options?.retries || 3 },
-    () => getBrowserPermissionsOnce(),
+export async function getBrowserPermissions(): Promise<ComponentInterface> {
+  const permissionKeys = getPermissionKeys();
+  const permissionPromises: Promise<ComponentInterface>[] = Array.from(
+    { length: 3 },
+    () => getBrowserPermissionsOnce(permissionKeys),
   );
   return Promise.all(permissionPromises).then((resolvedPermissions) => {
     const permission = mostFrequentValuesInArrayOfDictionaries(
       resolvedPermissions,
-      permission_keys,
+      permissionKeys,
     );
     return permission;
   });
 }
 
-async function getBrowserPermissionsOnce(): Promise<componentInterface> {
+async function getBrowserPermissionsOnce(
+  permissionKeys: PermissionName[],
+): Promise<ComponentInterface> {
   const permissionStatus: { [key: string]: string } = {};
 
-  for (const feature of permission_keys) {
+  for (const feature of permissionKeys) {
     try {
       // Request permission status for each feature
       const status = await navigator.permissions.query({ name: feature });
 
       // Assign permission status to the object
       permissionStatus[feature] = status.state.toString();
+      // eslint-disable-next-line
     } catch (error) {
       // In case of errors (unsupported features, etc.), do nothing. Not listing them is the same as not supported
     }
@@ -71,5 +69,3 @@ async function getBrowserPermissionsOnce(): Promise<componentInterface> {
 
   return permissionStatus;
 }
-
-includeComponent("permissions", getBrowserPermissions);

@@ -1,19 +1,16 @@
-/* eslint-disable */
-import { componentInterface, includeComponent } from "../../factory";
+import { ComponentInterface } from "../index";
 
-function screenDetails(): Promise<componentInterface> {
-  return new Promise((resolve) => {
-    resolve({
-      is_touchscreen: navigator.maxTouchPoints > 0,
-      maxTouchPoints: navigator.maxTouchPoints,
-      colorDepth: screen.colorDepth,
-      mediaMatches: matchMedias(),
-    });
+export function screenDetails(): Promise<ComponentInterface> {
+  return Promise.resolve({
+    is_touchscreen: navigator.maxTouchPoints > 0,
+    maxTouchPoints: navigator.maxTouchPoints,
+    colorDepth: screen.colorDepth,
+    mediaMatches: matchMedias(),
   });
 }
 
 function matchMedias(): string[] {
-  let results: string[] = [];
+  const results: string[] = [];
 
   /**
    * @see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_media_queries/Using_media_queries
@@ -48,5 +45,3 @@ function matchMedias(): string[] {
   });
   return results;
 }
-
-includeComponent("screen", screenDetails);

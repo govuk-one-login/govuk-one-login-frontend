@@ -1,22 +1,15 @@
-import { componentInterface, includeComponent } from "../../factory";
+import { ComponentInterface } from "../index";
 
-export default function getInstalledPlugins(): Promise<componentInterface> {
+export function getInstalledPlugins(): Promise<ComponentInterface> {
   const plugins: string[] = [];
 
   if (navigator.plugins) {
-    for (let i = 0; i < navigator.plugins.length; i++) {
-      const plugin = navigator.plugins[i];
+    for (const plugin of navigator.plugins) {
       plugins.push(
         [plugin.name, plugin.filename, plugin.description].join("|"),
       );
     }
   }
 
-  return new Promise((resolve) => {
-    resolve({
-      plugins: plugins,
-    });
-  });
+  return Promise.resolve({ plugins });
 }
-
-includeComponent("plugins", getInstalledPlugins);
