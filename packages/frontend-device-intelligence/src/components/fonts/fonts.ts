@@ -1,11 +1,5 @@
-/* eslint-disable */
-import { componentInterface, includeComponent } from "../../factory";
+import { ComponentInterface } from "../index";
 import { ephemeralIFrame } from "../../utils/ephemeralIFrame";
-import { getBrowser } from "../system/browser";
-
-interface FontMetrics {
-  [k: string]: number;
-}
 
 const availableFonts = [
   "Arial",
@@ -101,30 +95,24 @@ const availableFonts = [
 
 const baseFonts = ["monospace", "sans-serif", "serif"];
 
-export default function getFontMetrics(): Promise<componentInterface> {
-  return new Promise((resolve, reject) => {
-    try {
-      ephemeralIFrame(async ({ iframe }) => {
-        const textToRender = "Hello, world!";
+export async function getFontMetrics(): Promise<ComponentInterface> {
+  return new Promise((resolve) => {
+    ephemeralIFrame(({ iframe }) => {
+      const canvas = iframe.createElement("canvas");
+      const ctx = canvas.getContext("2d");
 
-        const canvas = iframe.createElement("canvas");
-        const ctx = canvas.getContext("2d");
-
-        const defaultWidths: number[] = baseFonts.map((font) => {
-          return measureSingleFont(ctx, font);
-        });
-
-        let results: { [k: string]: any } = {};
-        availableFonts.forEach((font) => {
-          const fontWidth = measureSingleFont(ctx, font);
-          if (!defaultWidths.includes(fontWidth)) results[font] = fontWidth;
-        });
-
-        resolve(results);
+      const defaultWidths: number[] = baseFonts.map((font) => {
+        return measureSingleFont(ctx, font);
       });
-    } catch (error) {
-      reject({ error: "unsupported" });
-    }
+
+      const results: { [k: string]: number } = {};
+      availableFonts.forEach((font) => {
+        const fontWidth = measureSingleFont(ctx, font);
+        if (!defaultWidths.includes(fontWidth)) results[font] = fontWidth;
+      });
+
+      resolve(results);
+    }).catch(() => {});
   });
 }
 
@@ -136,9 +124,6 @@ function measureSingleFont(
     throw new Error("Canvas context not supported");
   }
   const text: string = "WwMmLli0Oo";
-  const defaultFont = ctx.font; // Store default font
   ctx.font = `72px ${font}`; // Set a default font size
   return ctx.measureText(text).width;
 }
-
-if (getBrowser().name != "Firefox") includeComponent("fonts", getFontMetrics);

@@ -1,14 +1,13 @@
-/* eslint-disable */
 export function getCommonPixels(
   images: ImageData[],
   width: number,
   height: number,
 ): ImageData {
-  let finalData: number[] = [];
+  const finalData: number[] = [];
   for (let i = 0; i < images[0].data.length; i++) {
-    let indice: number[] = [];
-    for (let u = 0; u < images.length; u++) {
-      indice.push(images[u].data[i]);
+    const indice: number[] = [];
+    for (const image of images) {
+      indice.push(image.data[i]);
     }
     finalData.push(getMostFrequent(indice));
   }
@@ -18,7 +17,7 @@ export function getCommonPixels(
   return new ImageData(pixelArray, width, height);
 }
 
-function getMostFrequent(arr: number[]): number {
+export function getMostFrequent(arr: number[]): number {
   if (arr.length === 0) {
     return 0; // Handle empty array case
   }

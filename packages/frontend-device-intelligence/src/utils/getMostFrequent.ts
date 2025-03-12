@@ -1,5 +1,4 @@
-/* eslint-disable */
-function mostFrequentValue(arr: any[]): any | null {
+export function mostFrequentValue<T>(arr: T[]): string | null {
   if (arr.length === 0) {
     return null; // Return null for an empty array
   }
@@ -12,7 +11,7 @@ function mostFrequentValue(arr: any[]): any | null {
     frequencyMap[key] = (frequencyMap[key] || 0) + 1;
   });
 
-  let mostFrequent: any = arr[0]; // Assume the first element is the most frequent
+  let mostFrequent = String(arr[0]); // Assume the first element is the most frequent
   let highestFrequency = 1; // Frequency of the assumed most frequent element
 
   // Find the element with the highest frequency
@@ -26,11 +25,11 @@ function mostFrequentValue(arr: any[]): any | null {
   return mostFrequent;
 }
 
-export function mostFrequentValuesInArrayOfDictionaries(
-  arr: { [key: string]: any }[],
+export function mostFrequentValuesInArrayOfDictionaries<T>(
+  arr: { [key: string]: T }[],
   keys: string[],
-): { [key: string]: any } {
-  const result: { [key: string]: any } = {};
+): { [key: string]: string } {
+  const result: { [key: string]: string } = {};
 
   keys.forEach((key) => {
     const valuesForKey = arr

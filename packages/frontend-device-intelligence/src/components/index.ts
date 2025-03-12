@@ -1,17 +1,34 @@
-/**
- * Does anyone have a cleaner way of doing this?
- * I want to import all the components in this folder
- * Feels a little dumb I'm doing this manually.
- */
+import { getBrowser } from "./system/browser";
 
-import "./audio/audio";
-import "./canvas/canvas";
-import "./fonts/fonts";
-import "./hardware/hardware";
-import "./locales/locales";
-import "./permissions/permissions";
-import "./plugins/plugins";
-import "./screen/screen";
-import "./system/system";
-import "./webgl/webgl";
-import "./math/math";
+import { getFontMetrics } from "./fonts/fonts";
+import { getHardwareInfo } from "./hardware/hardware";
+import { getLocales } from "./locales/locales";
+import { getBrowserPermissions } from "./permissions/permissions";
+import { getInstalledPlugins } from "./plugins/plugins";
+import { screenDetails } from "./screen/screen";
+import { getSystemDetails } from "./system/system";
+
+export interface ComponentInterface {
+  [key: string]: string | string[] | number | boolean | ComponentInterface;
+}
+
+export const components: { [name: string]: () => Promise<ComponentInterface> } =
+  {
+    hardware: getHardwareInfo,
+    locales: getLocales,
+    permissions: getBrowserPermissions,
+    plugins: getInstalledPlugins,
+    screen: screenDetails,
+    system: getSystemDetails,
+  };
+if (getBrowser().name != "Firefox") {
+  components.fonts = getFontMetrics;
+}
+
+export const getComponentPromises = (): {
+  [name: string]: Promise<ComponentInterface>;
+} => {
+  return Object.fromEntries(
+    Object.entries(components).map(([key, value]) => [key, value()]),
+  );
+};

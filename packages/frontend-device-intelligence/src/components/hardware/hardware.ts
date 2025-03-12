@@ -1,70 +1,80 @@
-/* eslint-disable */
-import { componentInterface, includeComponent } from "../../factory";
+import { ComponentInterface } from "../index";
 
-function getHardwareInfo(): Promise<componentInterface> {
-  return new Promise((resolve, reject) => {
-    const deviceMemory =
-      navigator.deviceMemory !== undefined ? navigator.deviceMemory : 0;
+type ExtendedNavigator = Navigator & { deviceMemory?: number };
+type ExtendedPerformance = Performance & {
+  memory?: {
+    totalJSHeapSize: number;
+    usedJSHeapSize: number;
+    jsHeapSizeLimit: number;
+  };
+};
+
+export function getHardwareInfo(): Promise<ComponentInterface> {
+  return new Promise((resolve) => {
+    const navigatorWithMemory: ExtendedNavigator =
+      navigator as ExtendedNavigator;
+    const deviceMemory = navigatorWithMemory.deviceMemory ?? 0;
+
+    const extendedPerformance: ExtendedPerformance = window.performance;
     const memoryInfo =
-      window.performance && (window.performance as any).memory
-        ? (window.performance as any).memory
+      window.performance && extendedPerformance.memory
+        ? extendedPerformance.memory
         : 0;
     resolve({
       videocard: getVideoCard(),
       architecture: getArchitecture(),
       deviceMemory: deviceMemory.toString() || "undefined",
-      jsHeapSizeLimit: memoryInfo.jsHeapSizeLimit || 0,
+      jsHeapSizeLimit: memoryInfo ? memoryInfo?.jsHeapSizeLimit : 0,
     });
   });
 }
 
-function getVideoCard(): componentInterface | string {
+function getVideoCard(): ComponentInterface | string {
   const canvas = document.createElement("canvas");
   const gl =
     canvas.getContext("webgl") ?? canvas.getContext("experimental-webgl");
 
-  if (gl && "getParameter" in gl) {
-    try {
-      // Try standard parameters first
-      const vendor = (gl.getParameter(gl.VENDOR) || "").toString();
-      const renderer = (gl.getParameter(gl.RENDERER) || "").toString();
+  if (!gl || !("getParameter" in gl)) {
+    return "undefined";
+  }
 
-      let result: componentInterface = {
-        vendor: vendor,
-        renderer: renderer,
-        version: (gl.getParameter(gl.VERSION) || "").toString(),
-        shadingLanguageVersion: (
-          gl.getParameter(gl.SHADING_LANGUAGE_VERSION) || ""
-        ).toString(),
-      };
+  const result = buildVideoCardInfo(gl);
+  return addUnmaskedInfo(gl, result);
+}
 
-      // Only try debug info if needed and available
-      if (!renderer.length || !vendor.length) {
-        const debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
-        if (debugInfo) {
-          const vendorUnmasked = (
-            gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL) || ""
-          ).toString();
-          const rendererUnmasked = (
-            gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) || ""
-          ).toString();
+function buildVideoCardInfo(gl: WebGLRenderingContext): ComponentInterface {
+  return {
+    vendor: (gl.getParameter(gl.VENDOR) || "").toString(),
+    renderer: (gl.getParameter(gl.RENDERER) || "").toString(),
+    version: (gl.getParameter(gl.VERSION) || "").toString(),
+    shadingLanguageVersion: (
+      gl.getParameter(gl.SHADING_LANGUAGE_VERSION) || ""
+    ).toString(),
+  };
+}
 
-          // Only add unmasked values if they exist
-          if (vendorUnmasked) {
-            result.vendorUnmasked = vendorUnmasked;
-          }
-          if (rendererUnmasked) {
-            result.rendererUnmasked = rendererUnmasked;
-          }
-        }
-      }
+function addUnmaskedInfo(
+  gl: WebGLRenderingContext,
+  result: ComponentInterface,
+): ComponentInterface {
+  if (
+    (typeof result.vendor === "string" && !result.vendor.length) ||
+    (typeof result.renderer === "string" && !result.renderer.length)
+  ) {
+    const debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
+    if (debugInfo) {
+      const vendorUnmasked = (
+        gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL) || ""
+      ).toString();
+      const rendererUnmasked = (
+        gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) || ""
+      ).toString();
 
-      return result;
-    } catch (error) {
-      // fail silently
+      if (vendorUnmasked) result.vendorUnmasked = vendorUnmasked;
+      if (rendererUnmasked) result.rendererUnmasked = rendererUnmasked;
     }
   }
-  return "undefined";
+  return result;
 }
 
 function getArchitecture(): number {
@@ -75,5 +85,3 @@ function getArchitecture(): number {
 
   return u8[3];
 }
-
-includeComponent("hardware", getHardwareInfo);
