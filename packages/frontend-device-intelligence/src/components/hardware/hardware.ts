@@ -4,7 +4,9 @@ import { componentInterface, includeComponent } from "../../factory";
 function getHardwareInfo(): Promise<componentInterface> {
   return new Promise((resolve, reject) => {
     const deviceMemory =
-      navigator.deviceMemory !== undefined ? navigator.deviceMemory : 0;
+      (navigator as any).deviceMemory !== undefined
+        ? (navigator as any).deviceMemory
+        : 0;
     const memoryInfo =
       window.performance && (window.performance as any).memory
         ? (window.performance as any).memory
