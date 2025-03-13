@@ -1,0 +1,10 @@
+{% from "govuk/components/skip-link/macro.njk" import govukSkipLink %}
+
+{% set skipLink = params.skipLink.translation.skipLink %}
+
+{{ govukSkipLink({
+  href: "#main-content",
+  text: skipLink.title | translate
+}) }}
+
+

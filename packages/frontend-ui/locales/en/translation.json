@@ -1,72 +1,75 @@
 {
-    "cookieBanner": {
-        "body1": "We use some essential cookies to make this service work.",
-        "body2": "We'd like to set additional cookies so we can remember your settings, understand how people use the service and make improvements.",
-        "ariaLabel": "Cookies on GOV.UK One Login",
-        "headingText": "Cookies on GOV.UK One Login",
-        "acceptAdditionalCookies": "Accept additional cookies",
-        "rejectAdditionalCookies": "Reject additional cookies",
-        "viewCookies": "View cookies",
-        "cookieBannerAccept": {
-            "body1": "You've accepted additional cookies. You can ",
-            "body2": " at any time."
-        },
-        "cookieBannerReject": {
-            "body1": "You've rejected additional cookies. You can ",
-            "body2": " at any time."
-        },
-        "changeCookiePreferencesLink": "change your cookie settings",
-        "hideCookieMessage": "Hide this message",
-        "viewCookiesLink": "https://signin.account.gov.uk/cookies"
+  "cookieBanner": {
+    "body1": "We use some essential cookies to make this service work.",
+    "body2": "We'd like to set additional cookies so we can remember your settings, understand how people use the service and make improvements.",
+    "ariaLabel": "Cookies on GOV.UK One Login",
+    "headingText": "Cookies on GOV.UK One Login",
+    "acceptAdditionalCookies": "Accept additional cookies",
+    "rejectAdditionalCookies": "Reject additional cookies",
+    "viewCookies": "View cookies",
+    "cookieBannerAccept": {
+      "body1": "You've accepted additional cookies. You can ",
+      "body2": " at any time."
     },
-    "header": {
-        "signOut": "Sign Out",
-        "ariaLabel": "GOV.UK One Login menu"
+    "cookieBannerReject": {
+      "body1": "You've rejected additional cookies. You can ",
+      "body2": " at any time."
     },
-    "footer": {
-        "footerNavItems": [
-            {
-                "href": "https://signin.account.gov.uk/accessibility-statement",
-                "text": "Accessibility statement"
-            },
-            {
-                "href": "https://signin.account.gov.uk/cookies",
-                "text": "Cookies"
-            },
-            {
-                "href": "https://signin.account.gov.uk/terms-and-conditions",
-                "text": "Terms and conditions"
-            },
-            {
-                "href": "https://signin.account.gov.uk/privacy-notice",
-                "text": "Privacy notice"
-            },
-            {
-                "href": "https://home.account.gov.uk/contact-gov-uk-one-login",
-                "text": "Support (opens in new tab)",
-                "attributes": {
-                    "rel": "noreferrer noopener",
-                    "target": "_blank"
-                }
-            }
-        ],
-        "copyright": {
-            "text": "© Crown copyright"
-        },
-        "contentLicence": {
-            "html": "All content is available under the <a class=\"govuk-footer__link\" href=\"https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/\" rel=\"licence\">Open Government Licence v3.0</a>, except where otherwise stated"
+    "changeCookiePreferencesLink": "change your cookie settings",
+    "hideCookieMessage": "Hide this message",
+    "viewCookiesLink": "https://signin.account.gov.uk/cookies"
+  },
+  "header": {
+    "signOut": "Sign Out",
+    "ariaLabel": "GOV.UK One Login menu"
+  },
+  "footer": {
+    "footerNavItems": [
+      {
+        "href": "https://signin.account.gov.uk/accessibility-statement",
+        "text": "Accessibility statement"
+      },
+      {
+        "href": "https://signin.account.gov.uk/cookies",
+        "text": "Cookies"
+      },
+      {
+        "href": "https://signin.account.gov.uk/terms-and-conditions",
+        "text": "Terms and conditions"
+      },
+      {
+        "href": "https://signin.account.gov.uk/privacy-notice",
+        "text": "Privacy notice"
+      },
+      {
+        "href": "https://home.account.gov.uk/contact-gov-uk-one-login",
+        "text": "Support (opens in new tab)",
+        "attributes": {
+          "rel": "noreferrer noopener",
+          "target": "_blank"
         }
-    },
-    "header": {
-        "signOut": "Sign Out",
-        "ariaLabel": "GOV.UK One Login menu"
-      },
-      "languageSelect": {
-        "ariaLabel": "Select language"
-      },
-    "phaseBanner": {
-        "tag": "BETA",
-        "text": "This is a new service. Help us improve it and ",
-        "link": "give your feedback (opens in a new tab)."
       }
+    ],
+    "copyright": {
+      "text": "© Crown copyright"
+    },
+    "contentLicence": {
+      "html": "All content is available under the <a class=\"govuk-footer__link\" href=\"https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/\" rel=\"licence\">Open Government Licence v3.0</a>, except where otherwise stated"
+    }
+  },
+  "header": {
+    "signOut": "Sign Out",
+    "ariaLabel": "GOV.UK One Login menu"
+  },
+  "languageSelect": {
+    "ariaLabel": "Select language"
+  },
+  "phaseBanner": {
+    "tag": "BETA",
+    "text": "This is a new service. Help us improve it and ",
+    "link": "give your feedback (opens in a new tab)."
+  },
+  "skipLink": {
+    "title": "Skip to main content"
+  }
 }
