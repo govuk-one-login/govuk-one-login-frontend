@@ -92,7 +92,7 @@ app.use(
 );
 /** ThumbmarkJS fingerprint **/
 app.use(
-  "/fingerprint",
+  "/thumbmarkJS/fingerprint",
   express.static(
     nodeModules("@govuk-one-login/frontend-device-intelligence/build/esm"),
   ),

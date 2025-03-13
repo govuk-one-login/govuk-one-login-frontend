@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Frontend Device Intelligence package for GDS One Login",
   "type": "module",
-  "esnext": "src/index.ts",
+  "esnext": "src/thumbmarkJS/index.ts",
   "main": "cjs/index.cjs",
   "module": "esm/index.js",
   "scripts": {
