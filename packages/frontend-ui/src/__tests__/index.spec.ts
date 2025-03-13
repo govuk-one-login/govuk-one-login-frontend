@@ -1,5 +1,10 @@
 import i18next from "i18next";
-import { frontendUiMiddleware, setFrontendUiTranslations, addLanguageParam, contactUsUrl } from "..";
+import {
+  frontendUiMiddleware,
+  setFrontendUiTranslations,
+  addLanguageParam,
+  contactUsUrl,
+} from "..";
 
 describe("frontendUiMiddleware", () => {
   describe("when the ui middleware is called", () => {
@@ -74,18 +79,17 @@ describe("addLanguageParam function", () => {
   });
 });
 
-
-describe('contactUsUrl function', () => {
-  it('should add fromURL parameter to URL', () => {
-    const baseUrl = 'https://www.example.com';
-    const urlToAppend = '/some-path';
+describe("contactUsUrl function", () => {
+  it("should add fromURL parameter to URL", () => {
+    const baseUrl = "https://www.example.com";
+    const urlToAppend = "/some-path";
     const result = contactUsUrl(baseUrl, urlToAppend);
-    expect(result).toContain('?fromURL=%2Fsome-path');
+    expect(result).toContain("?fromURL=%2Fsome-path");
   });
 
-  it('should return null if baseUrl is undefined', () => {
-    const urlToAppend = '/some-path';
-    const result = contactUsUrl('', urlToAppend);
-    expect(result).toBeNull(); 
+  it("should return null if baseUrl is undefined", () => {
+    const urlToAppend = "/some-path";
+    const result = contactUsUrl("", urlToAppend);
+    expect(result).toBeNull();
   });
 });
