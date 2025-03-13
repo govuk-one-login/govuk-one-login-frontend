@@ -6,17 +6,19 @@
   <link rel="stylesheet" href="/stylesheets/application-frontendUi.css"/>
 {% endblock %}
 
-{% from "govuk/components/skip-link/macro.njk" import govukSkipLink %}
+{% from "frontend-ui/build/components/header/macro.njk" import frontendUiHeader %}
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+{% from "frontend-language-toggle/src/macro.njk" import languageSelect %}
 {% from "frontend-ui/build/components/header/macro.njk" import frontendUiHeader %}
 {% from "frontend-ui/build/components/phase-banner/macro.njk" import frontendUiPhaseBanner %} 
 {% from "frontend-ui/build/components/language-select/macro.njk" import frontendUiLanguageSelect %}
 {% from "frontend-ui/build/components/footer/macro.njk" import frontendUiFooter %}
 {% from "frontend-ui/build/components/cookie-banner/macro.njk" import frontendUiCookieBanner %}
+{% from "frontend-ui/build/components/skip-link/macro.njk" import frontendUiSkipLink %}
 
 {% block skipLink %}
-  {{ govukSkipLink({
-    href: "#main-content",
-    text: "general.govuk.skipLink" | translate
+  {{ frontendUiSkipLink({
+    skipLink: translations
   }) }}
 {% endblock %}
 

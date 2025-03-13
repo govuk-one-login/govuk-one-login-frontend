@@ -44,8 +44,8 @@ export function addLanguageParam(language: string, url?: URL) {
 
 export function contactUsUrl(baseUrl: string, urlToAppend: string) {
   if (!baseUrl) {
-     return null;
-   }
-   const searchParams = new URLSearchParams({ fromURL: urlToAppend });
-   return `${baseUrl}?${searchParams.toString()}`;
- }
+    return null;
+  }
+  const searchParams = new URLSearchParams({ fromURL: urlToAppend });
+  return `${baseUrl}?${searchParams.toString()}`;
+}

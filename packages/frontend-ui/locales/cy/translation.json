@@ -1,72 +1,75 @@
 {
-    "cookieBanner": {
-        "body1": "Rydym yn defnyddio rhai cwcis hanfodol i wneud i'r gwasanaeth hwn weithio.",
-        "body2": "Hoffem osod cwcis ychwanegol er mwyn i ni allu cofio eich gosodiadau, deall sut mae pobl yn defnyddio'r gwasanaeth a gwneud gwelliannau.",
-        "ariaLabel": "Cwcis ar GOV.UK One Login",
-        "headingText": "Cwcis ar GOV.UK One Login",
-        "acceptAdditionalCookies": "Derbyn cwcis ychwanegol",
-        "rejectAdditionalCookies": "Gwrthod cwcis ychwanegol",
-        "viewCookies": "Gweld cwcis",
-        "cookieBannerAccept": {
-            "body1": "Rydych wedi derbyn cwcis ychwanegol. Gallwch ",
-            "body2": " ar unrhyw adeg."
-        },
-        "cookieBannerReject": {
-            "body1": "Rydych wedi gwrthod cwcis ychwanegol. Gallwch ",
-            "body2": " ar unrhyw adeg."
-        },
-        "changeCookiePreferencesLink": "newid eich gosodiadau cwcis",
-        "hideCookieMessage": "Cuddio’r neges yma",
-        "viewCookiesLink": "https://signin.account.gov.uk/cookies"
+  "cookieBanner": {
+    "body1": "Rydym yn defnyddio rhai cwcis hanfodol i wneud i'r gwasanaeth hwn weithio.",
+    "body2": "Hoffem osod cwcis ychwanegol er mwyn i ni allu cofio eich gosodiadau, deall sut mae pobl yn defnyddio'r gwasanaeth a gwneud gwelliannau.",
+    "ariaLabel": "Cwcis ar GOV.UK One Login",
+    "headingText": "Cwcis ar GOV.UK One Login",
+    "acceptAdditionalCookies": "Derbyn cwcis ychwanegol",
+    "rejectAdditionalCookies": "Gwrthod cwcis ychwanegol",
+    "viewCookies": "Gweld cwcis",
+    "cookieBannerAccept": {
+      "body1": "Rydych wedi derbyn cwcis ychwanegol. Gallwch ",
+      "body2": " ar unrhyw adeg."
     },
-    "header": {
-        "signOut": "Allgofnodi",
-        "ariaLabel": "GOV.UK One Login dewislen"
+    "cookieBannerReject": {
+      "body1": "Rydych wedi gwrthod cwcis ychwanegol. Gallwch ",
+      "body2": " ar unrhyw adeg."
     },
-    "footer": {
-        "footerNavItems": [
-            {
-                "href": "https://signin.account.gov.uk/accessibility-statement",
-                "text": "Datganiad hygyrchedd"
-            },
-            {
-                "href": "https://signin.account.gov.uk/cookies",
-                "text": "Cwcis"
-            },
-            {
-                "href": "https://signin.account.gov.uk/terms-and-conditions",
-                "text": "Telerau ac amodau"
-            },
-            {
-                "href": "https://signin.account.gov.uk/privacy-notice",
-                "text": "Hysbysiad preifatrwydd"
-            },
-            {
-                "href": "https://home.account.gov.uk/contact-gov-uk-one-login",
-                "text": "Cymorth (agor mewn tab newydd)",
-                "attributes": {
-                    "rel": "noreferrer noopener",
-                    "target": "_blank"
-                }
-            }
-        ],
-        "copyright": {
-            "text": "© Hawlfraint y goron"
-        },
-        "contentLicence": {
-            "html": "Mae'r holl gynnwys ar gael o dan <a class=\"govuk-footer__link\" href=\"https://www.nationalarchives.gov.uk/doc/open-government-licence-cymraeg/version/3/\" rel=\"licence\">Trwydded Llywodraeth Agored v3.0</a>, oni nodir yn wahanol"
-        }
-    },
-    "header": {
-        "signOut": "Allgofnodi",
-        "ariaLabel": "GOV.UK One Login dewislen"
-    },
-    "languageSelect": {
-        "ariaLabel": "Switcher iaith"
+    "changeCookiePreferencesLink": "newid eich gosodiadau cwcis",
+    "hideCookieMessage": "Cuddio’r neges yma",
+    "viewCookiesLink": "https://signin.account.gov.uk/cookies"
+  },
+  "header": {
+    "signOut": "Allgofnodi",
+    "ariaLabel": "GOV.UK One Login dewislen"
+  },
+  "footer": {
+    "footerNavItems": [
+      {
+        "href": "https://signin.account.gov.uk/accessibility-statement",
+        "text": "Datganiad hygyrchedd"
       },
-    "phaseBanner": {
+      {
+        "href": "https://signin.account.gov.uk/cookies",
+        "text": "Cwcis"
+      },
+      {
+        "href": "https://signin.account.gov.uk/terms-and-conditions",
+        "text": "Telerau ac amodau"
+      },
+      {
+        "href": "https://signin.account.gov.uk/privacy-notice",
+        "text": "Hysbysiad preifatrwydd"
+      },
+      {
+        "href": "https://home.account.gov.uk/contact-gov-uk-one-login",
+        "text": "Cymorth (agor mewn tab newydd)",
+        "attributes": {
+          "rel": "noreferrer noopener",
+          "target": "_blank"
+        }
+      }
+    ],
+    "copyright": {
+      "text": "© Hawlfraint y goron"
+    },
+    "contentLicence": {
+      "html": "Mae'r holl gynnwys ar gael o dan <a class=\"govuk-footer__link\" href=\"https://www.nationalarchives.gov.uk/doc/open-government-licence-cymraeg/version/3/\" rel=\"licence\">Trwydded Llywodraeth Agored v3.0</a>, oni nodir yn wahanol"
+    }
+  },
+  "header": {
+    "signOut": "Allgofnodi",
+    "ariaLabel": "GOV.UK One Login dewislen"
+  },
+  "languageSelect": {
+    "ariaLabel": "Switcher iaith"
+  },
+  "phaseBanner": {
     "tag": "BETA",
     "text": "Mae hwn yn wasanaeth newydd. Helpwch ni i'w wella a ",
     "link": "rhoi eich adborth (agor mewn tab newydd)."
+  },
+  "skipLink": {
+    "title": "Neidio i'r prif gynnwys"
   }
 }
