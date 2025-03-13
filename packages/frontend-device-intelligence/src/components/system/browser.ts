@@ -39,8 +39,8 @@ export function getBrowser(): BrowserResult {
 
   // Loop through the regexes and try to find a match
   for (const regex of regexes) {
-    const match = ua.match(regex);
-    if (match && match.groups) {
+    const match = regex.match(ua);
+    if (match?.groups) {
       // Translate the browser name if necessary
       const name = browserNameMap[match.groups.name] || match.groups.name;
       // Return the browser name and version

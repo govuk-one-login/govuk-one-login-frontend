@@ -39,7 +39,11 @@ async function createAudioFingerprint(): Promise<componentInterface> {
       audioContext.startRendering();
     } catch (error) {
       console.error("Error creating audio fingerprint:", error);
-      reject(error);
+      reject(
+        new Error(
+          `Audio fingerprint creation failed: ${error.message || error}`,
+        ),
+      );
     }
   });
 
@@ -48,8 +52,8 @@ async function createAudioFingerprint(): Promise<componentInterface> {
 
 function calculateHash(samples: Float32Array) {
   let hash = 0;
-  for (let i = 0; i < samples.length; ++i) {
-    hash += Math.abs(samples[i]);
+  for (const sample of samples) {
+    hash += Math.abs(sample);
   }
   return hash;
 }
