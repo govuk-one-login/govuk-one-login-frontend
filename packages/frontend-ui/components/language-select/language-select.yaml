@@ -1,0 +1,43 @@
+params:
+  - name: translations
+    type: string
+    required: true
+    description: translations from middleware 
+  - name: activeLanguage
+    type: string
+    required: true
+    description: currently selected language
+  - name: currentUrl
+    type: string
+    required: true
+    description: current url to be used to append langauge variable
+  - name: ariaLabel
+    type: string
+    required: false
+    description: aria label for the nav tag
+  - name: class
+    type: string
+    required: false
+    description: css class you can add
+  - name: languages
+    type: array
+    required: false
+    description: array of languages object
+    params:
+      - name: language
+        type: object
+        required: false
+        description: language object
+        params:
+          - name: code
+            type: string
+            required: true
+            description: language code
+          - name: text
+            type: string
+            required: true
+            description: language text
+          - name: visuallyHidden
+            type: string
+            required: false
+            description: language text

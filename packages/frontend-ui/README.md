@@ -34,7 +34,25 @@ app.set(
 
 **Warning:** Ensure the path to your `node_modules` folder is correct.
 
-### 3. Load Translations and Configure Middleware
+### 3. Configure Nunjucks to use exported functions
+
+In your `config/nunjucks` file import and set the following to use the language toggle, phase banner etc..
+
+Javascript:
+```javascript
+const frontendUi = require("@govuk-one-login/frontend-ui");
+
+nunjucksEnv.addGlobal("addLanguageParam", frontendUi.addLanguageParam);
+nunjucksEnv.addGlobal("contactUsUrl", frontendUi.contactUsUrl);
+```
+Typescript:
+```typescript
+import {contactUsUrl, addLanguageParam } from "@govuk-one-login/frontend-ui";
+nunjucksEnv.addGlobal("addLanguageParam", addLanguageParam);
+nunjucksEnv.addGlobal("contactUsUrl", contactUsUrl);
+```
+
+### 4. Load Translations and Configure Middleware
 
 In your `app.js`, import necessary functions and load translations after initializing i18next:
 
@@ -69,7 +87,7 @@ i18next
 app.use(frontendUiMiddleware);
 ```
 
-### 4. Import Macro
+### 5. Import Macro
 
 Import the desired component macro into your base Nunjucks template. For example, to use the Cookie Banner component:
 
@@ -77,7 +95,7 @@ Import the desired component macro into your base Nunjucks template. For example
 {% from "frontend-ui/build/components/cookie-banner/macro.njk" import frontendUiCookieBanner %}
 ```
 
-### 5. Import all.css
+### 6. Import all.css
 Import the css into your service in the `package.json` via the `build-sass` script
 ```
 sass --no-source-map node_modules/@govuk-one-login/frontend-ui/build/all.css *destination*/frontend-ui.css --style compressed"
@@ -92,7 +110,7 @@ include a link to this in your template file
 ```
 
 
-### 6. Add Component to Template
+### 7. Add Component to Template
 
 Render the component in your template, passing any required data. For the Cookie Banner:
 

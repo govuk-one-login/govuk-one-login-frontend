@@ -1,0 +1,17 @@
+params:
+  - name: translations
+    type: string
+    required: true
+    description: translations from middleware 
+  - name: url
+    type: string
+    required: true
+    description: current page url
+  - name: tag
+    type: string
+    required: false
+    description: tag override
+  - name: contactUrl
+    type: string
+    required: false
+    description: contactUsUrl override

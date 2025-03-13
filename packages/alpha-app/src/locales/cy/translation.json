@@ -1,13 +1,5 @@
 {
   "general": {
-    "header": {
-      "menuLink1": "dewislen 1",
-      "menuLink2": "dewislen 2",
-      "menuLink3": "dewislen 3"
-    },
-    "languageSelect": {
-      "ariaLabel": "Switcher iaith"
-    },
     "buttons": {
       "startNow": "Dechrau Nawr",
       "continue": "Parhau",
@@ -15,11 +7,7 @@
     },
     "govuk": {
       "backLink": "Yn ôl",
-      "skipLink": "Neidio i'r prif gynnwys",
-      "phaseBanner": {
-        "tag": "Alffa",
-        "content": "Mae hwn yn wasanaeth newydd - bydd eich <a class=\"govuk-link\" rel=\"noopener\" target=\"_blank\" href=\"https://signin.dev.account.gov.uk/contact-us\">adborth</a> yn ein helpu i'w wella. Am fwy o wybodaeth, os gwelwch yn dda <a class=\"govuk-link\" href=\"/welcome\">ailgychwynwch</a> eich taith"
-      }
+      "skipLink": "Neidio i'r prif gynnwys"
     }
   },
 

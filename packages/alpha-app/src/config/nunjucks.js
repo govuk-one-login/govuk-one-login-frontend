@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 const nunjucks = require("nunjucks");
 const i18next = require("i18next");
-const addLanguageParam = require("@govuk-one-login/frontend-language-toggle");
+const frontendUi = require("@govuk-one-login/frontend-ui");
 
 module.exports = {
   configureNunjucks: (app, viewsPath) => {
@@ -11,7 +11,8 @@ module.exports = {
       noCache: true,
     });
 
-    nunjucksEnv.addGlobal("addLanguageParam", addLanguageParam);
+    nunjucksEnv.addGlobal("addLanguageParam", frontendUi.addLanguageParam);
+    nunjucksEnv.addGlobal("contactUsUrl", frontendUi.contactUsUrl);
 
     nunjucksEnv.addFilter("translate", function (key, options) {
       const translate = i18next.getFixedT(this.ctx.language);
