@@ -6,7 +6,11 @@ async function createAudioFingerprint(): Promise<componentInterface> {
       // Set up audio parameters
       const sampleRate = 44100;
       const numSamples = 5000;
-      const audioContext = new (window.OfflineAudioContext)(1, numSamples, sampleRate);
+      const audioContext = new window.OfflineAudioContext(
+        1,
+        numSamples,
+        sampleRate,
+      );
       const audioBuffer = audioContext.createBufferSource();
 
       const oscillator = audioContext.createOscillator();
