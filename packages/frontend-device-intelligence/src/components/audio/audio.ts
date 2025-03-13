@@ -1,7 +1,7 @@
 import { componentInterface, includeComponent } from "../../factory";
 
 async function createAudioFingerprint(): Promise<componentInterface> {
-  const resultPromise = new Promise<componentInterface>((resolve, reject) => {
+  const resultPromise = new Promise<componentInterface>((resolve) => {
     try {
       // Set up audio parameters
       const sampleRate = 44100;
@@ -38,15 +38,13 @@ async function createAudioFingerprint(): Promise<componentInterface> {
 
       audioContext.startRendering();
     } catch (error) {
-      console.error("Error creating audio fingerprint:", error);
-      reject(
-        new Error(
-          `Audio fingerprint creation failed: ${error.message || error}`,
-        ),
-      );
+      if (error instanceof Error) {
+        console.error(`Audio fingerprint creation failed: ${error.message}`);
+      } else {
+        console.error(`Audio fingerprint creation failed: ${String(error)}`);
+      }
     }
   });
-
   return resultPromise;
 }
 
