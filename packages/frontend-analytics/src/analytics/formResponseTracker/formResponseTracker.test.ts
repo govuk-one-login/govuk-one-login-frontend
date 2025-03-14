@@ -27,7 +27,11 @@ describe("form with multiple fields", () => {
     const isDataSensitive = false;
     const isPageSensitive = false;
     const enableFormResponseTracking = false;
-    FormResponseTracker(isDataSensitive, isPageSensitive, enableFormResponseTracking);
+    FormResponseTracker(
+      isDataSensitive,
+      isPageSensitive,
+      enableFormResponseTracking,
+    );
     document.body.innerHTML =
       '<div id="main-content">' +
       '<form action="/test-url" method="post">' +
@@ -44,7 +48,11 @@ describe("form with multiple fields", () => {
     const isDataSensitive = false;
     const isPageSensitive = false;
     const enableFormResponseTracking = true;
-    FormResponseTracker(isDataSensitive, isPageSensitive, enableFormResponseTracking);
+    FormResponseTracker(
+      isDataSensitive,
+      isPageSensitive,
+      enableFormResponseTracking,
+    );
     document.body.innerHTML =
       '<div id="main-content">' +
       '<form action= "/test-url" method= "post">' +
@@ -210,7 +218,11 @@ describe("form with radio buttons", () => {
     const isDataSensitive = false;
     const isPageSensitive = false;
     const enableFormResponseTracking = true;
-    FormResponseTracker(isDataSensitive, isPageSensitive, enableFormResponseTracking);
+    FormResponseTracker(
+      isDataSensitive,
+      isPageSensitive,
+      enableFormResponseTracking,
+    );
     document.body.innerHTML =
       '<div id="main-content">' +
       '<form action="/test-url" method="post">' +
@@ -250,7 +262,11 @@ describe("form with radio buttons", () => {
     const isDataSensitive = true;
     const isPageSensitive = false;
     const enableFormResponseTracking = true;
-    FormResponseTracker(isDataSensitive, isPageSensitive, enableFormResponseTracking);
+    FormResponseTracker(
+      isDataSensitive,
+      isPageSensitive,
+      enableFormResponseTracking,
+    );
 
     document.body.innerHTML = `
       <div id="main-content">
@@ -300,7 +316,11 @@ describe("form with input checkbox", () => {
     const isDataSensitive = false;
     const isPageSensitive = false;
     const enableFormResponseTracking = true;
-    FormResponseTracker(isDataSensitive, isPageSensitive, enableFormResponseTracking);
+    FormResponseTracker(
+      isDataSensitive,
+      isPageSensitive,
+      enableFormResponseTracking,
+    );
 
     document.body.innerHTML = `
       <div id="main-content">
@@ -351,7 +371,11 @@ describe("form with input text", () => {
     const isDataSensitive = false;
     const isPageSensitive = false;
     const enableFormResponseTracking = true;
-    FormResponseTracker(isDataSensitive, isPageSensitive, enableFormResponseTracking);
+    FormResponseTracker(
+      isDataSensitive,
+      isPageSensitive,
+      enableFormResponseTracking,
+    );
     document.body.innerHTML =
       '<div id="main-content">' +
       '<form action="/test-url" method="post">' +
@@ -393,7 +417,11 @@ describe("form with input textarea", () => {
     const isDataSensitive = false;
     const isPageSensitive = false;
     const enableFormResponseTracking = true;
-    FormResponseTracker(isDataSensitive, isPageSensitive, enableFormResponseTracking);
+    FormResponseTracker(
+      isDataSensitive,
+      isPageSensitive,
+      enableFormResponseTracking,
+    );
     document.body.innerHTML =
       '<div id="main-content">' +
       '<form action="/test-url" method="post">' +
@@ -435,7 +463,11 @@ describe("form with dropdown", () => {
     const isDataSensitive = false;
     const isPageSensitive = false;
     const enableFormResponseTracking = true;
-    FormResponseTracker(isDataSensitive, isPageSensitive, enableFormResponseTracking);
+    FormResponseTracker(
+      isDataSensitive,
+      isPageSensitive,
+      enableFormResponseTracking,
+    );
     document.body.innerHTML =
       '<div id="main-content">' +
       '<form action="/test-url" method="post">' +

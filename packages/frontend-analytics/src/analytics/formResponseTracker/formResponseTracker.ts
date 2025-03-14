@@ -77,7 +77,7 @@ export const FormResponseTracker = (
             text: redactPII(
               validateParameter(getFieldValue([field]), 100),
               isDataSensitive,
-              isPageDataSensitive
+              isPageDataSensitive,
             ),
             section: validateParameter(getSectionValue(field), 100),
             action: validateParameter(getButtonLabel(event), 100),

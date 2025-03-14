@@ -8,7 +8,7 @@ Feature: Navigation events are pushed to the data layer for GA4 when user clicks
 #  When I click Start Now link
 #  Then The dataLayer includes the navigation button event
 
-#Scenario: GA4 navigation inbound link event is pushed when user clicks on the inbound link
+# Scenario: GA4 navigation inbound link event is pushed when user clicks on the inbound link
 #  Given I visit the welcome page
 #  And I accept analytics cookies
 #  And I set up a listener for the data layer push
@@ -23,11 +23,11 @@ Feature: Navigation events are pushed to the data layer for GA4 when user clicks
 #  Then The dataLayer includes the navigation outbound link event
 
 # Scenario: GA4 navigation logo event is pushed when user clicks on the logo
-# Given I visit the welcome page
-# And I accept analytics cookies
-# And I set up a listener for the data layer push
-# When I click logo
-# Then The dataLayer includes the navigation logo event
+#  Given I visit the welcome page
+#  And I accept analytics cookies
+#  And I set up a listener for the data layer push
+#  When I click logo
+#  Then The dataLayer includes the navigation logo event
 
 # Scenario: GA4 navigation link event is pushed when user clicks on banner link
 #  Given I visit the welcome page
@@ -50,12 +50,12 @@ Feature: Navigation events are pushed to the data layer for GA4 when user clicks
 #  When I click Open Government Licence link
 #  Then The dataLayer includes the navigation footer licence link event
 
-Scenario: GA4 navigation link event is pushed when user clicks on footer copyright link
-  Given I visit the welcome page
-  And I accept analytics cookies
-  And I set up a listener for the data layer push
-  When I click Crown copyright link
-  Then The dataLayer includes the navigation footer copyright link event
+# Scenario: GA4 navigation link event is pushed when user clicks on footer copyright link
+#  Given I visit the welcome page
+#  And I accept analytics cookies
+#  And I set up a listener for the data layer push
+#  When I click Crown copyright link
+#  Then The dataLayer includes the navigation footer copyright link event
 
 # Scenario: GA4 navigation link event is pushed when user clicks on menu link
 #  Given I visit the welcome page

@@ -11,7 +11,9 @@ export const redactPII = (
   isDataSensitive: boolean,
   isPageDataSensitive: boolean,
 ): string => {
-  return isPageDataSensitive || isDataSensitive ? "undefined" : parameter.trim();
+  return isPageDataSensitive || isDataSensitive
+    ? "undefined"
+    : parameter.trim();
 };
 
 /**
