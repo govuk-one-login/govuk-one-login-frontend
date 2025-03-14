@@ -1,5 +1,29 @@
+/* eslint-disable */
 import { componentInterface } from "../factory";
-import { filterFingerprintData } from "./functions";
+import {
+  getFingerprint,
+  getFingerprintData,
+  getFingerprintPerformance,
+  filterFingerprintData,
+} from "./functions";
+import { hash } from "../utils/hash";
+
+jest.mock("../factory", () => ({
+  getComponentPromises: jest.fn(() => ({
+    one: Promise.resolve("1"),
+    two: Promise.resolve(2),
+    three: Promise.resolve({ a: true, b: false }),
+  })),
+  timeoutInstance: {},
+}));
+
+jest.mock("../../../package.json", () => ({
+  version: "1.2.3",
+}));
+
+jest.mock("../utils/hash", () => ({
+  hash: jest.fn((data) => "hashed_${data}"),
+}));
 
 const test_components: componentInterface = {
   one: "1",
@@ -37,5 +61,19 @@ describe("component filtering tests", () => {
       one: "1",
       three: { b: false },
     });
+  });
+
+  test("filtering should return empty object if all elements are excluded", () => {
+    const result = filterFingerprintData(
+      test_components,
+      ["one", "two", "three"],
+      [],
+    );
+    expect(result).toMatchObject({});
+  });
+
+  test("filtering should return complete object if no elements are specified", () => {
+    const result = filterFingerprintData(test_components, [], []);
+    expect(result).toMatchObject(test_components);
   });
 });

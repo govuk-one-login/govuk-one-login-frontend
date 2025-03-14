@@ -18,7 +18,7 @@ export function getCommonPixels(
   return new ImageData(pixelArray, width, height);
 }
 
-function getMostFrequent(arr: number[]): number {
+export function getMostFrequent(arr: number[]): number {
   if (arr.length === 0) {
     return 0; // Handle empty array case
   }
