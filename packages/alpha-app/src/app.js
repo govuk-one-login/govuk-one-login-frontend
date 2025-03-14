@@ -90,6 +90,13 @@ app.use(
   "/ga4-assets",
   express.static(nodeModules("@govuk-one-login/frontend-analytics/lib")),
 );
+/** ThumbmarkJS fingerprint **/
+app.use(
+  "/thumbmarkJS/fingerprint",
+  express.static(
+    nodeModules("@govuk-one-login/frontend-device-intelligence/build/esm"),
+  ),
+);
 app.use(
   session({
     secret: sessionId, // Should I make this more secure?

@@ -3,7 +3,7 @@ import copy from 'rollup-plugin-copy';
 
 export default {
   external: ["forwarded-parse", "pino"],
-  input: "src/index.ts",
+  input: "src/thumbmarkJS/index.ts",
   output: [
     {
       file: "build/cjs/index.cjs",

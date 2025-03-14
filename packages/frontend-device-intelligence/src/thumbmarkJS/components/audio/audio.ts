@@ -1,0 +1,59 @@
+import { componentInterface, includeComponent } from "../../factory";
+
+async function createAudioFingerprint(): Promise<componentInterface> {
+  const resultPromise = new Promise<componentInterface>((resolve) => {
+    try {
+      // Set up audio parameters
+      const sampleRate = 44100;
+      const numSamples = 5000;
+      const audioContext = new window.OfflineAudioContext(
+        1,
+        numSamples,
+        sampleRate,
+      );
+      const audioBuffer = audioContext.createBufferSource();
+
+      const oscillator = audioContext.createOscillator();
+      oscillator.frequency.value = 1000;
+      const compressor = audioContext.createDynamicsCompressor();
+      compressor.threshold.value = -50;
+      compressor.knee.value = 40;
+      compressor.ratio.value = 12;
+      compressor.attack.value = 0;
+      compressor.release.value = 0.2;
+      oscillator.connect(compressor);
+      compressor.connect(audioContext.destination);
+      oscillator.start();
+      let samples: Float32Array;
+
+      audioContext.oncomplete = (event) => {
+        samples = event.renderedBuffer.getChannelData(0);
+        resolve({
+          sampleHash: calculateHash(samples),
+          oscillator: oscillator.type,
+          maxChannels: audioContext.destination.maxChannelCount,
+          channelCountMode: audioBuffer.channelCountMode,
+        });
+      };
+
+      audioContext.startRendering();
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(`Audio fingerprint creation failed: ${error.message}`);
+      } else {
+        console.error(`Audio fingerprint creation failed: ${String(error)}`);
+      }
+    }
+  });
+  return resultPromise;
+}
+
+function calculateHash(samples: Float32Array) {
+  let hash = 0;
+  for (const sample of samples) {
+    hash += Math.abs(sample);
+  }
+  return hash;
+}
+
+includeComponent("audio", createAudioFingerprint);
