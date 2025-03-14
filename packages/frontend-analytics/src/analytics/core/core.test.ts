@@ -2,6 +2,7 @@ import { describe, expect, test } from "@jest/globals";
 import { Analytics } from "./core";
 import { PageViewTracker } from "../pageViewTracker/pageViewTracker";
 import { OptionsInterface } from "./core.interface";
+import * as FormResponseTracker from "../formResponseTracker/formResponseTracker";
 
 window.DI = { analyticsGa4: { cookie: { consent: true } } };
 
@@ -49,10 +50,11 @@ describe("should initialize the ga4 class", () => {
   });
 
   test("GA4 trackers not initialized", () => {
+    jest.spyOn(FormResponseTracker, "FormResponseTracker");
     options.enableGa4Tracking = false;
     document.body = document.createElement("body");
     const newInstance = new Analytics(gtmId, options);
     expect(newInstance.navigationTracker).toEqual(undefined);
-    expect(newInstance.formResponseTracker).toEqual(undefined);
+    expect(FormResponseTracker.FormResponseTracker).not.toHaveBeenCalled();
   });
 });

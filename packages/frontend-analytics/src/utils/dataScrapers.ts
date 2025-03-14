@@ -1,3 +1,7 @@
+/**
+ * Common
+ */
+
 export const getDomain = (url: string): string => {
   if (url === "undefined") {
     return "undefined";
@@ -19,7 +23,6 @@ export const getDomainPath = (url: string, part: number): string => {
   return domainPath.length ? domainPath : "undefined";
 };
 
-// check for change links used by both navigationTracker and formChangeTracker
 export const isChangeLink = (element: HTMLElement): boolean => {
   if (element.tagName === "A") {
     const anchorElement = element as HTMLAnchorElement;
