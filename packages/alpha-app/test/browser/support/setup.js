@@ -3,10 +3,9 @@ const { chromium } = require("playwright");
 
 BeforeAll(async function () {
   global.browser = await chromium.launch({
-    // Not headless so we can watch test runs
     headless: true,
-    // Slow so we can see things happening
-    // slowMo: 500
+    // slowMo: 500,
+    // devtools: true,
   });
 });
 
