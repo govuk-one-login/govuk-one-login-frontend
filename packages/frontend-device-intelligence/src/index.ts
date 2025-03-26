@@ -1,1 +1,4 @@
-// export your public components here
+import { getFingerprint, getFingerprintData } from "./fingerprint/functions";
+import "./components";
+
+export { getFingerprint, getFingerprintData };
