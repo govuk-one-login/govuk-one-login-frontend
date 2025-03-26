@@ -5,7 +5,7 @@
 import { axe, toHaveNoViolations } from "jest-axe";
 import nunjucks from "nunjucks";
 import path from "path";
-import render from "../../test/jestHelper";
+import { render } from "../../test/jestHelper";
 expect.extend(toHaveNoViolations);
 
 const nunjucksEnv = nunjucks.configure(
@@ -43,7 +43,7 @@ describe("languageSelect Component", () => {
   it("has the appropriate accessibility testing", async () => {
     const renderedComponent = render("languageSelect", mockParams);
 
-    const results = await axe(renderedComponent.html());
+    const results = await axe(renderedComponent.documentElement.outerHTML);
     expect(results).toHaveNoViolations();
   });
 });
