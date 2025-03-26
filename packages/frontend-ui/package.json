@@ -56,8 +56,14 @@
     "pino": "8.20.0"
   },
   "exports": {
-    "import": "./build/esm/index.js",
-    "require": "./build/cjs/index.cjs"
+    ".": {
+      "import": "./build/esm/index.js",
+      "require": "./build/cjs/index.cjs"
+    },
+    "./frontend": {
+      "import": "./build/esm/index-fe.js",
+      "require": "./build/cjs/index-fe.cjs"
+    }
   },
   "types": "./build/esm/index.d.ts",
   "optionalDependencies": {
