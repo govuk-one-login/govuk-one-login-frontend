@@ -81,6 +81,7 @@ export async function getFingerprint(includeData?: false): Promise<string>;
 export async function getFingerprint(
   includeData: true,
 ): Promise<{ hash: string; data: ComponentInterface }>;
+
 export async function getFingerprint(
   includeData?: boolean,
 ): Promise<string | { hash: string; data: ComponentInterface }> {
@@ -90,5 +91,21 @@ export async function getFingerprint(
     return { hash: thisHash.toString(), data: fingerprintData };
   } else {
     return thisHash.toString();
+  }
+}
+
+export async function setFingerprintCookie(): Promise<void> {
+  if (typeof window === "undefined") {
+    console.warn("fingerprint cookie logic should only run on the client side");
+    return;
+  }
+
+  try {
+    const fingerprint = await getFingerprint();
+    const encodedFingerprint = btoa(fingerprint);
+    document.cookie = `device_intelligence_fingerprint=${encodedFingerprint}; path=/; secure; SameSite=Lax`;
+    console.log("Fingerprint cookie set:", encodedFingerprint);
+  } catch (error) {
+    console.error("Error setting fingerprint cookie:", error);
   }
 }

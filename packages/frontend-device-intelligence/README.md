@@ -76,9 +76,11 @@ To test the Device Intelligence package in the One Login Frontend monorepo, foll
   
   ```
     <script>
-      import('/thumbmarkJS/fingerprint/index.js')
+      import('/fingerprint/index.js')
       .then((ThumbmarkJS) => {
           ThumbmarkJS.getFingerprint().then((fp) => { console.log(fp)})
+          ThumbmarkJS.getFingerprintData().then((fp) => { console.log(fp)})
+          ThumbmarkJS.setFingerprintCookie().then((fp) => { console.log(fp)})
       })
     </script>
   ```
