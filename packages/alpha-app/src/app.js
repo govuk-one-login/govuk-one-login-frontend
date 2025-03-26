@@ -42,6 +42,22 @@ const {
 } = require("@govuk-one-login/frontend-vital-signs");
 
 const app = express();
+
+let counter = 0;
+
+app.get("/api", (req, res) => {
+  counter++;
+  const processingTime = req.query.processingTime || 1;
+  console.log(
+    `Elapsed processing seconds: ${counter}. Processing time limit is: ${processingTime}`,
+  );
+  if (counter >= processingTime) {
+    res.json({ status: "Clear to proceed", counter: counter });
+    counter = 0;
+  } else {
+    res.json({ status: "Still processing", counter: counter });
+  }
+});
 const protect = require("overload-protection")("express", {
   production: process.env.NODE_ENV === "production",
   maxEventLoopDelay: 400,
