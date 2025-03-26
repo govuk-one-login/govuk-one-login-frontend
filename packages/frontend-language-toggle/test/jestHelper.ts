@@ -1,11 +1,8 @@
-import nunjucks from "nunjucks";
-import { load } from "cheerio";
 import path from "path";
+import { JSDOM } from "jsdom";
+import nunjucks from "nunjucks";
 
-export default function render(
-  macroName: string,
-  params = {},
-) {
+export function render(macroName: string, params = {}) {
   if (Object.keys(params).length === 0 && params.constructor === Object) {
     throw new Error(
       "Parameters passed to `render` should be an object but are undefined",
@@ -20,5 +17,7 @@ export default function render(
 
   const output = nunjucks.renderString(macroString, {});
 
-  return load(output);
+  const dom = new JSDOM(output);
+
+  return dom.window.document;
 }

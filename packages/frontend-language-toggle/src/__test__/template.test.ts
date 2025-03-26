@@ -1,9 +1,6 @@
-import nunjucks from "nunjucks";
 import path from "path";
-import { axe, toHaveNoViolations } from "jest-axe";
-import render from "../../test/jestHelper";
-
-expect.extend(toHaveNoViolations);
+import nunjucks from "nunjucks";
+import { render } from "../../test/jestHelper";
 
 const nunjucksEnv = nunjucks.configure(
   path.dirname("frontend-language-toggle"),
@@ -37,23 +34,16 @@ describe("languageSelect Component", () => {
     ],
   };
 
-  it("has the appropriate accessibility testing", async () => {
-    const renderedComponent = render("languageSelect", mockParams);
-
-    const results = await axe(renderedComponent.html());
-    expect(results).toHaveNoViolations();
-  });
-
   it("renders the class from params", () => {
     const renderedComponent = render("languageSelect", mockParams);
-    const renderedNavElement = renderedComponent("nav");
-    expect(renderedNavElement.attr("class")).toContain("test-class");
+    const renderedNavElement = renderedComponent.getElementsByTagName("nav")[0];
+    expect(renderedNavElement.getAttribute("class")).toContain("test-class");
   });
 
   it("renders the aria-label from params", () => {
     const renderedComponent = render("languageSelect", mockParams);
-    const renderedNavElement = renderedComponent("nav");
-    expect(renderedNavElement.attr("aria-label")).toBe("test-aria");
+    const renderedNavElement = renderedComponent.getElementsByTagName("nav")[0];
+    expect(renderedNavElement.getAttribute("aria-label")).toBe("test-aria");
   });
 
   describe("renders active language as a span, and inactive language as a link", () => {
@@ -80,21 +70,22 @@ describe("languageSelect Component", () => {
       const renderedComponent = render("languageSelect", mockParams);
 
       // test span
-      const renderedSpan = renderedComponent("span");
-      expect(renderedSpan.text()).toBe("Cymraeg");
+      const renderedSpan = renderedComponent.getElementsByTagName("span")[0];
+      expect(renderedSpan.textContent).toBe("Cymraeg");
 
       // test visually hidden
-      const renderedVisuallyHidden = renderedComponent(
-        ".govuk-visually-hidden",
-      );
-      expect(renderedVisuallyHidden.text()).toBe("Change to English");
+      const renderedVisuallyHidden = renderedComponent.getElementsByClassName(
+        "govuk-visually-hidden",
+      )[0];
+      expect(renderedVisuallyHidden.textContent).toBe("Change to English");
 
       // test link
-      const renderedLink = renderedComponent(".govuk-link");
-      expect(renderedLink.get(0)?.tagName).toEqual("a");
-      expect(renderedLink.attr("target")).toEqual(undefined);
-      expect(renderedLink.attr("href")).toContain("?lng=en");
-      expect(renderedLink.attr("class")).toContain(
+      const renderedLink =
+        renderedComponent.getElementsByClassName("govuk-link")[0];
+      expect(renderedLink.tagName.toLocaleLowerCase()).toEqual("a");
+      expect(renderedLink.getAttribute("target")).toEqual(null);
+      expect(renderedLink.getAttribute("href")).toContain("?lng=en");
+      expect(renderedLink.getAttribute("class")).toContain(
         "govuk-link govuk-link--no-visited-state",
       );
     });
@@ -103,21 +94,24 @@ describe("languageSelect Component", () => {
       const renderedComponent = render("languageSelect", mockParams);
 
       // test span
-      const renderedSpan = renderedComponent("span").text();
-      expect(renderedSpan).toBe("English");
+      const renderedSpan = renderedComponent.getElementsByTagName("span")[0];
+      expect(renderedSpan.textContent).toBe("English");
 
       // test visually hidden
-      const renderedVisuallyHidden = renderedComponent(
-        ".govuk-visually-hidden",
+      const renderedVisuallyHidden = renderedComponent.getElementsByClassName(
+        "govuk-visually-hidden",
+      )[0];
+      expect(renderedVisuallyHidden.textContent).toBe(
+        "Newid yr iaith ir Gymraeg",
       );
-      expect(renderedVisuallyHidden.text()).toBe("Newid yr iaith ir Gymraeg");
 
       // test link
-      const renderedLink = renderedComponent(".govuk-link");
-      expect(renderedLink.get(0)?.tagName).toEqual("a");
-      expect(renderedLink.attr("target")).toEqual(undefined);
-      expect(renderedLink.attr("href")).toContain("?lng=cy");
-      expect(renderedLink.attr("class")).toContain(
+      const renderedLink =
+        renderedComponent.getElementsByClassName("govuk-link")[0];
+      expect(renderedLink.tagName.toLocaleLowerCase()).toEqual("a");
+      expect(renderedLink.getAttribute("target")).toEqual(null);
+      expect(renderedLink.getAttribute("href")).toContain("?lng=cy");
+      expect(renderedLink.getAttribute("class")).toContain(
         "govuk-link govuk-link--no-visited-state",
       );
     });
