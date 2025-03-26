@@ -1,9 +1,12 @@
 params:
+  - name: translations
+    type: string
+    required: true
+    description: translations from middleware 
   - name: isEmbeddedMobileApp
     type: boolean
     required: false
     description: disables the gov.uk link in the header
-
   - name: signOutLink
     type: string
     required: false
