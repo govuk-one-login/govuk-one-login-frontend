@@ -65,7 +65,7 @@ govukInsetText({ text: "pages.home.content.insetText"| translate }) }}
 </details>
 {% from "govuk/components/button/macro.njk" import govukButton %} {{
 govukButton({ text: "general.buttons.startNow"|translate, href:
-"/organisation-type", isStartButton: true }) }}
+"/organisation-type", isStartButton: true, "attributes": {"data-nav": true,"data-link": "undefined"} }) }}
 
 <h2 class="govuk-heading-m">{{"pages.home.content.subheading2"| translate}}</h2>
 <p class="govuk-body">{{"pages.home.content.paragraph6"| translate| safe}}</p>

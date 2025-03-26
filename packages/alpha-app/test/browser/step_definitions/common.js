@@ -41,28 +41,22 @@ When("I choose {word} value", async function (text) {
 });
 
 When("I click Accept", async function () {
-  await this.page
-    .locator(`button:has-text("Accept") >> visible = true`)
-    .click();
+  await this.page.locator(`button:has-text("Accept"):visible`).click();
   await this.page.waitForLoadState("networkidle"); // Wait for network calls to finish
 });
 
 When("I click Reject", async function () {
-  await this.page
-    .locator(`button:has-text("Reject") >> visible = true`)
-    .click();
+  await this.page.locator(`button:has-text("Reject"):visible`).click();
   await this.page.waitForLoadState("networkidle"); // Wait for network calls to finish
 });
 
 When("I click Hide", async function () {
-  await this.page
-    .locator(`a:has-text("Hide this message") >> visible = true`)
-    .click();
+  await this.page.locator(`a:has-text("Hide this message"):visible`).click();
   await this.page.waitForLoadState("networkidle"); // Wait for network calls to finish
 });
 
 When("I click logo", async function () {
-  await this.page.locator(`span:text-is(" GOV.UK ") >> visible = true`).click();
+  await this.page.locator(`span:text-is(" GOV.UK "):visible`).click();
   await this.page.waitForLoadState("networkidle"); // Wait for network calls to finish
 });
 
@@ -73,16 +67,14 @@ When("I click Back", async function () {
 
 When("I click {word} {word}", async function (text, element) {
   if (element === "link") element = "a";
-  await this.page
-    .locator(`${element}:text-is("${text}") >> visible = true`)
-    .click();
+  await this.page.locator(`${element}:text-is("${text}"):visible`).click();
   await this.page.waitForLoadState("networkidle"); // Wait for network calls to finish
 });
 
 When("I click {word} {word} {word}", async function (text, text2, element) {
   if (element === "link") element = "a";
   await this.page
-    .locator(`${element}:has-text("${text} ${text2}") >> visible = true`)
+    .locator(`${element}:has-text("${text} ${text2}"):visible`)
     .click();
   await this.page.waitForLoadState("networkidle"); // Wait for network calls to finish
 });
@@ -92,9 +84,7 @@ When(
   async function (text, text2, text3, element) {
     if (element === "link") element = "a";
     await this.page
-      .locator(
-        `${element}:has-text("${text} ${text2} ${text3}") >> visible = true`,
-      )
+      .locator(`${element}:has-text("${text} ${text2} ${text3}"):visible`)
       .click();
     await this.page.waitForLoadState("networkidle"); // Wait for network calls to finish
   },

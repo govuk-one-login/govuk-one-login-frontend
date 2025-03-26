@@ -5,4 +5,4 @@ Feature: Form change events are pushed to the data layer for GA4 when user decid
 #  Given I visit the welcome page
 #  And I accept analytics cookies
 #  And I edit the organisation-type page
-# Then The dataLayer includes the form change event
+#  Then The dataLayer includes the form change event
