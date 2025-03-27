@@ -141,3 +141,17 @@ Render the component in your template, passing any required data. For the Cookie
 ```
 
 This setup ensures that translations are loaded correctly and the middleware can set necessary local variables for the components to function properly.
+
+### Identity Teams Only
+
+Identity teams will also need to install the optional dependency `hmpo-components` and the basefiles
+
+To replace your basefile you need to change the appropriate extension at the top of your view file:
+```html
+{% extends "frontend-ui/build/components/bases/identity/identity-base-form.njk" %}
+
+or 
+
+{% extends "frontend-ui/build/components/bases/identity/identity-base-page.njk" %}
+
+```
