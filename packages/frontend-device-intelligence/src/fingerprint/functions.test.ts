@@ -6,7 +6,7 @@ import {
   setFingerprintCookie,
 } from "./functions";
 import { ComponentInterface } from "../components/index";
-import { Response } from "express";
+
 jest.mock("../components/index", () => ({
   getComponentPromises: jest.fn(() => ({
     componentA: Promise.resolve({ key: "valueA" }),
@@ -94,6 +94,10 @@ describe("setFingerprintCookie()", () => {
   });
 
   it("should set the fingerprint cookie correctly", async () => {
+    jest
+      .spyOn(require("./functions"), "getFingerprint")
+      .mockResolvedValue("mockFingerprint");
+
     await setFingerprintCookie();
 
     expect(document.cookie).toMatch(
