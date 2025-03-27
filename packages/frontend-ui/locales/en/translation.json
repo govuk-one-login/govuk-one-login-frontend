@@ -19,10 +19,6 @@
     "hideCookieMessage": "Hide this message",
     "viewCookiesLink": "https://signin.account.gov.uk/cookies"
   },
-  "header": {
-    "signOut": "Sign Out",
-    "ariaLabel": "GOV.UK One Login menu"
-  },
   "footer": {
     "footerNavItems": [
       {

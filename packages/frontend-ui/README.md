@@ -54,7 +54,7 @@ nunjucksEnv.addGlobal("contactUsUrl", contactUsUrl);
 
 ### 4. Load Translations and Configure Middleware
 
-In your `app.js`, import necessary functions and load translations after initializing i18next:
+In your `app.js`, import necessary functions and load translations after initializing i18next (Identity teams may need to use the bypass function as their i18n setup is different):
 
 ```javascript
 const {
@@ -85,6 +85,16 @@ i18next
 
 // Apply the middleware
 app.use(frontendUiMiddleware);
+
+// For Identity teams a language setting bypass may be required, first import the bypass function and then configure router to use the new function at the top of your router.use functions
+
+const {
+ frontendUiMiddlewareIdentityBypass,
+} = require('@govuk-one-login/frontend-ui');
+....
+
+router.use(frontendUiMiddlewareIdentityBypass);
+
 ```
 
 ### 5. Import Macro
@@ -93,6 +103,16 @@ Import the desired component macro into your base Nunjucks template. For example
 
 ```html
 {% from "frontend-ui/build/components/cookie-banner/macro.njk" import frontendUiCookieBanner %}
+```
+
+To replace your basefile you need to change the appropriate extension at the top of your view file:
+```html
+{% extends "frontend-ui/build/components/bases/identity/identity-base-form.njk" %}
+
+or 
+
+{% extends "frontend-ui/build/components/bases/identity/identity-base-page.njk" %}
+
 ```
 
 ### 6. Import all.css
@@ -116,8 +136,22 @@ Render the component in your template, passing any required data. For the Cookie
 
 ```html
 {{ frontendUiCookieBanner({
-  cookieBanner: translations 
+  translations: translations.translate.cookieBanner 
 }) }}
 ```
 
 This setup ensures that translations are loaded correctly and the middleware can set necessary local variables for the components to function properly.
+
+### Identity Teams Only
+
+Identity teams will also need to install the optional dependency `hmpo-components` and the basefiles
+
+To replace your basefile you need to change the appropriate extension at the top of your view file:
+```html
+{% extends "frontend-ui/build/components/bases/identity/identity-base-form.njk" %}
+
+or 
+
+{% extends "frontend-ui/build/components/bases/identity/identity-base-page.njk" %}
+
+```

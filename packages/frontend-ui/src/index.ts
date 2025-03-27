@@ -30,6 +30,22 @@ export const frontendUiMiddleware = (
   next();
 };
 
+export const frontendUiMiddlewareIdentityBypass = (
+  req: {
+    i18n: {
+      language: "en" | "cy"
+  }},
+  res: { locals: { translations: unknown } },
+  next: () => void,
+) => {
+    const localTranslations = {
+    en: translationEn,
+    cy: translationCy
+  };
+  res.locals.translations = localTranslations[req.i18n.language];
+  next();
+};
+
 export function addLanguageParam(language: string, url?: URL) {
   if (!url) {
     console.warn(
