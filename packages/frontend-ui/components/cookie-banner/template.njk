@@ -1,7 +1,7 @@
 {% from "govuk/components/cookie-banner/macro.njk" import govukCookieBanner %}
 
 {% set lng = params.activeLanguage %}
-{% set cookieBanner = params.cookieBanner.translation.cookieBanner %}
+{% set cookieBanner = params.translations %}
 
 {% set html %}
 <p class="govuk-body">{{ cookieBanner.body1 }}</p>

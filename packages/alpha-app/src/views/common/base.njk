@@ -18,13 +18,13 @@
 
 {% block skipLink %}
   {{ frontendUiSkipLink({
-    skipLink: translations
+    translations: translations.translation.skipLink
   }) }}
 {% endblock %}
 
 {% block bodyStart %}
   {{ frontendUiCookieBanner({
-    cookieBanner: translations
+    translations: translations.translation.cookieBanner
   }
   )}}
 {% endblock %}
@@ -32,7 +32,7 @@
 {% block header %}
   {{ frontendUiHeader({
     isEmbeddedMobileApp: false,
-    header: translations,
+    translations: translations.translation.header,
     signOutLink: 'https://signin.account.gov.uk/signed-out'
   }) }}
 {% endblock %}
@@ -40,13 +40,13 @@
 {% block main %}
   <div class="govuk-width-container">
     {{ frontendUiPhaseBanner({
-      phaseBanner: translations,
+      translations: translations.translation.phaseBanner,
       url: currentUrl,
       contactUrl: 'https://signin.account.gov.uk/contact-us'
     }) }}
 
     {{ frontendUiLanguageSelect({
-      frontendUiLanguageSelect: translations,
+      translations: translations.translation.languageSelect,
       url: currentUrl,
       activeLanguage: htmlLang
     }) }}
@@ -65,7 +65,7 @@
 
 {% block footer %}
   {{ frontendUiFooter({
-    footer: translations
+    translations: translations.translation.footer
   }) }}
 {% endblock %}
 
