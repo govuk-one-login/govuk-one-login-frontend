@@ -3,9 +3,10 @@ import {
   getFingerprintData,
   getFingerprint,
   filterFingerprintData,
+  setFingerprintCookie,
 } from "./functions";
 import { ComponentInterface } from "../components/index";
-
+import { Response } from "express";
 jest.mock("../components/index", () => ({
   getComponentPromises: jest.fn(() => ({
     componentA: Promise.resolve({ key: "valueA" }),
@@ -77,5 +78,53 @@ describe("getFingerprint()", () => {
       .spyOn(require("./functions"), "getFingerprintData")
       .mockRejectedValue(new Error("Test Error"));
     await expect(getFingerprint()).rejects.toThrow("Test Error");
+  });
+});
+
+describe("setFingerprintCookie()", () => {
+  beforeEach(() => {
+    Object.defineProperty(document, "cookie", {
+      writable: true,
+      value:
+        "/device_intelligence_fingerprint=.*; path=\/; Secure; SameSite=Strict/",
+    });
+
+    jest.spyOn(console, "warn").mockImplementation(() => {});
+    jest.spyOn(console, "error").mockImplementation(() => {});
+  });
+
+  it("should set the fingerprint cookie correctly", async () => {
+    await setFingerprintCookie();
+
+    expect(document.cookie).toMatch(
+      /device_intelligence_fingerprint=.*; path=\/; Secure; SameSite=Strict/,
+    );
+  });
+
+  it("should log a warning if run on the server side", async () => {
+    const originalWindow = global.window;
+    delete (global as any).window;
+
+    await setFingerprintCookie();
+
+    expect(console.warn).toHaveBeenCalledWith(
+      "fingerprint cookie logic should only run on the client side",
+    );
+
+    global.window = originalWindow;
+  });
+
+  it("should log an error if fingerprint generation fails", async () => {
+    jest.spyOn(console, "error").mockImplementation(() => {});
+    jest.spyOn(global, "btoa").mockImplementation(() => {
+      throw new Error("Encoding error");
+    });
+
+    await setFingerprintCookie();
+
+    expect(console.error).toHaveBeenCalledWith(
+      "Error setting fingerprint cookie:",
+      expect.any(Error),
+    );
   });
 });
