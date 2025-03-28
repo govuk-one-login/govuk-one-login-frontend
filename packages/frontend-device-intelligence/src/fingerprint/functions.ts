@@ -101,9 +101,9 @@ export async function setFingerprintCookie(): Promise<void> {
   }
 
   try {
-    const fingerprint = await getFingerprint();
-    const encodedFingerprint = btoa(fingerprint);
-    document.cookie = `device_intelligence_fingerprint=${encodedFingerprint}; path=/; secure; SameSite=Lax`;
+    const fingerprint = await getFingerprintData();
+    const encodedFingerprint = btoa(JSON.stringify(fingerprint));
+    document.cookie = `device_intelligence_fingerprint=${encodedFingerprint}; path=/; secure; SameSite=Strict`;
     console.log("Fingerprint cookie set:", encodedFingerprint);
   } catch (error) {
     console.error("Error setting fingerprint cookie:", error);

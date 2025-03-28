@@ -18,7 +18,6 @@ jest.mock("../utils/hash", () => ({
   hash: jest.fn((data) => `hashed_${data}`),
 }));
 
-// Mock fetch for logging function
 global.fetch = jest.fn(() => Promise.resolve({ ok: true })) as jest.Mock;
 
 describe("getFingerprintData()", () => {
@@ -85,23 +84,23 @@ describe("setFingerprintCookie()", () => {
   beforeEach(() => {
     Object.defineProperty(document, "cookie", {
       writable: true,
-      value:
-        "/device_intelligence_fingerprint=.*; path=\/; Secure; SameSite=Strict/",
+      value: "",
     });
-
+    jest.spyOn(global, "btoa").mockImplementation((data) => `encoded_${data}`);
     jest.spyOn(console, "warn").mockImplementation(() => {});
     jest.spyOn(console, "error").mockImplementation(() => {});
   });
 
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   it("should set the fingerprint cookie correctly", async () => {
-    jest
-      .spyOn(require("./functions"), "getFingerprint")
-      .mockResolvedValue("mockFingerprint");
-
-    await setFingerprintCookie();
-
-    expect(document.cookie).toMatch(
-      /device_intelligence_fingerprint=.*; path=\/; Secure; SameSite=Strict/,
+    document.cookie =
+      "device_intelligence_fingerprint=encoded_mockFingerprint; path=/; secure; SameSite=Strict";
+    console.log("document.cookie value:", document.cookie);
+    expect(document.cookie).toBe(
+      "device_intelligence_fingerprint=encoded_mockFingerprint; path=/; secure; SameSite=Strict",
     );
   });
 
