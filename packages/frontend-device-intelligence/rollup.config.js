@@ -12,6 +12,11 @@ export default {
       file: "build/esm/index.js",
       format: "es",
     },
+    {
+      file: "build/iife/index.js",
+      format: "iife",
+      name: "ThumbmarkJS"
+    }
   ],
   plugins: [
     typescript(),
