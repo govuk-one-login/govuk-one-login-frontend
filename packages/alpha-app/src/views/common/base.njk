@@ -91,14 +91,13 @@
     });
   </script>
 
+  <script src="/fingerprint/index.js"></script>
   <script>
-    import('/fingerprint/index.js')
-    .then((ThumbmarkJS) => {
-        ThumbmarkJS.getFingerprint().then((fp) => { console.log(fp)})
-        ThumbmarkJS.getFingerprintData().then((fp) => { console.log(fp)})
-        ThumbmarkJS.setFingerprintCookie().then((fp) => { console.log(fp)})
-    })
+    console.log(window.ThumbmarkJS.getFingerprint())
+    console.log(window.ThumbmarkJS.getFingerprintData())
+    console.log(window.ThumbmarkJS.setFingerprintCookie())
   </script>
+
 {% endblock %}
 
 {% block footer %}

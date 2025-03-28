@@ -70,20 +70,28 @@ To test the Device Intelligence package in the One Login Frontend monorepo, foll
   <ol>
     <li> Complete the prerequisites and installation steps. </li> 
     </br>
-    <li> Add the /thumbmarkJS/fingerprint path to the app.js so that the application utilises the device intelligence package from the govuk-one-login node modules. </li>
+    <li> Add the /fingerprint path to the app.js so that the application utilises the device intelligence package from the govuk-one-login node modules. </li>
     <br/>
     <li> Add the usage of the fingerprint into the web page by adding in the script into the base nunjucks file. Declare alongside the rest of the scripts in nunjucks context block. </li>
   
   ```
+    <script src="/fingerprint/index.js"></script>
     <script>
-      import('/fingerprint/index.js')
-      .then((ThumbmarkJS) => {
-          ThumbmarkJS.getFingerprint().then((fp) => { console.log(fp)})
-          ThumbmarkJS.getFingerprintData().then((fp) => { console.log(fp)})
-          ThumbmarkJS.setFingerprintCookie().then((fp) => { console.log(fp)})
-      })
+      console.log(window.ThumbmarkJS.getFingerprint())
+      console.log(window.ThumbmarkJS.getFingerprintData())
+      console.log(window.ThumbmarkJS.setFingerprintCookie())
     </script>
   ```
+  <li> Update the rollup.config.js file to support 'iife' format for browsers. </li>
+
+  ```
+    {
+      file: "build/iife/index.js",
+      format: "iife",
+      name: "ThumbmarkJS"
+    }
+  ```
+
   <li> Run npm start in the alpha app directory and application should be available at http://localhost:3000. Once loaded, inspect the console to view the result of printing out the fingerprint ID. </li>
   </ol>
 
