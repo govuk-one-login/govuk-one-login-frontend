@@ -4,6 +4,7 @@ import {
 } from "../components/index";
 import { hash } from "../utils/hash";
 import { raceAll } from "../utils/raceAll";
+import { getFontMetrics } from "../components/fonts/fonts";
 
 const timeoutInstance: ComponentInterface = {
   timeout: "true",
@@ -28,6 +29,17 @@ export async function getFingerprintData(): Promise<ComponentInterface> {
   validValues.forEach((value, index) => {
     resolvedComponents[keys[index]] = value;
   });
+
+  const deviceHash = hash(JSON.stringify(resolvedComponents));
+  resolvedComponents.thumbmark = { deviceHash };
+
+  try {
+    const { fontHash } = await getFontMetrics();
+    resolvedComponents.fonts = { fontHash };
+  } catch (error) {
+    console.error("Error Retrieving the font hash:", error);
+  }
+
   return filterFingerprintData(resolvedComponents, [], [], "");
 }
 

@@ -1,5 +1,8 @@
+/* eslint-disable */
 import { ComponentInterface } from "../index";
 import { ephemeralIFrame } from "../../utils/ephemeralIFrame";
+import { hash } from "../../utils/hash";
+const { createCanvas } = require("canvas");
 
 const availableFonts = [
   "Arial",
@@ -93,26 +96,30 @@ const availableFonts = [
   "Work Sans",
 ];
 
-const baseFonts = ["monospace", "sans-serif", "serif"];
-
 export async function getFontMetrics(): Promise<ComponentInterface> {
   return new Promise((resolve) => {
     ephemeralIFrame(({ iframe }) => {
-      const canvas = iframe.createElement("canvas");
+      const canvas = createCanvas(200, 200);
       const ctx = canvas.getContext("2d");
+
+      const baseFonts = ["monospaces", "sans serif", "serif"];
 
       const defaultWidths: number[] = baseFonts.map((font) => {
         return measureSingleFont(ctx, font);
       });
 
-      const results: { [k: string]: number } = {};
+      const detectedFontResults: string[] = [];
       availableFonts.forEach((font) => {
         const fontWidth = measureSingleFont(ctx, font);
-        if (!defaultWidths.includes(fontWidth)) results[font] = fontWidth;
+        if (!defaultWidths.includes(fontWidth)) detectedFontResults.push(font);
       });
 
-      resolve(results);
-    }).catch(() => {});
+      const fontHash = hash(JSON.stringify(detectedFontResults));
+
+      resolve({ fontHash });
+    }).catch((error) => {
+      console.error("error retrieving the font hash frame", error);
+    });
   });
 }
 

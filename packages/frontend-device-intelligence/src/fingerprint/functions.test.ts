@@ -36,14 +36,29 @@ describe("getFingerprintData()", () => {
     expect(data).toEqual({
       componentA: { key: "valueA" },
       componentB: { key: "valueB" },
+      fonts: {
+        fontHash:
+          'hashed_["Arial Black","Arial Narrow","Comic Sans MS","Courier New","Geneva","Georgia","Gill Sans","Open Sans","Optima","Palatino","PT Sans","PT Serif","Rockwell","Tahoma","Trebuchet MS","Verdana"]',
+      },
+      thumbmark: {
+        deviceHash:
+          'hashed_{"componentA":{"key":"valueA"},"componentB":{"key":"valueB"}}',
+      },
     });
   });
 
   test("handles empty data gracefully", async () => {
     jest.spyOn(components, "getComponentPromises").mockReturnValueOnce({});
-
     const data = await getFingerprintData();
-    expect(data).toEqual({});
+    expect(data).toEqual({
+      fonts: {
+        fontHash:
+          'hashed_["Arial Black","Arial Narrow","Comic Sans MS","Courier New","Geneva","Georgia","Gill Sans","Open Sans","Optima","Palatino","PT Sans","PT Serif","Rockwell","Tahoma","Trebuchet MS","Verdana"]',
+      },
+      thumbmark: {
+        deviceHash: "hashed_{}",
+      },
+    });
   });
 
   test("throws an error if something goes wrong", async () => {
@@ -52,7 +67,6 @@ describe("getFingerprintData()", () => {
       .mockImplementationOnce(() => {
         throw new Error("Test Error");
       });
-
     await expect(getFingerprintData()).rejects.toThrow("Test Error");
   });
 });
@@ -130,7 +144,18 @@ describe("setFingerprintCookie()", () => {
   });
 
   it("should set the fingerprint cookie correctly", async () => {
-    const mockData = "mockFingerprint";
+    const mockData = {
+      componentA: { key: "valueA" },
+      componentB: { key: "valueB" },
+      thumbmark: {
+        deviceHash:
+          'hashed_{"componentA":{"key":"valueA"},"componentB":{"key":"valueB"}}',
+      },
+      fonts: {
+        fontHash:
+          'hashed_["Arial Black","Arial Narrow","Comic Sans MS","Courier New","Geneva","Georgia","Gill Sans","Open Sans","Optima","Palatino","PT Sans","PT Serif","Rockwell","Tahoma","Trebuchet MS","Verdana"]',
+      },
+    };
 
     jest
       .spyOn(functions, "getFingerprintData")
@@ -140,8 +165,9 @@ describe("setFingerprintCookie()", () => {
     await setFingerprintCookie();
 
     console.log("document.cookie value:", document.cookie);
+
     expect(document.cookie).toBe(
-      'device_intelligence_fingerprint=encoded_{"componentA":{"key":"valueA"},"componentB":{"key":"valueB"}}; path=/; secure; SameSite=Strict',
+      `device_intelligence_fingerprint=encoded_${JSON.stringify(mockData)}; path=/; secure; SameSite=Strict`,
     );
   });
 
