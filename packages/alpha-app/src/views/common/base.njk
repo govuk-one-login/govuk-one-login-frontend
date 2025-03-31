@@ -61,6 +61,41 @@
       </div>
     </main>
   </div>
+
+  <script src="/javascript/ua/{{ assets['init.js'] }}"></script>
+  <script src="/ga4-assets/analytics.js"></script>
+  <script>
+    window.DI.appInit(
+      {
+        uaContainerId: "{{ uaContainerId }}",
+        ga4ContainerId: "{{ ga4ContainerId }}"
+      },
+      {
+        isDataSensitive: false,
+        enableGa4Tracking: true,
+        enableUaTracking: true,
+        cookieDomain: "localhost"
+      }
+    );
+
+    window.DI.analyticsGa4.pageViewTracker.trackOnPageLoad({
+      statusCode: "{{statusCode}}",
+      englishPageTitle: "{{englishPageTitle}}",
+      taxonomy_level1: "{{taxonomyLevel1}}",
+      taxonomy_level2: "{{taxonomyLevel2}}",
+      content_id: "{{contentId}}",
+      logged_in_status: false,
+      dynamic: false
+    });
+  </script>
+
+  <script src="/fingerprint/index.js"></script>
+  <script>
+    console.log(window.ThumbmarkJS.getFingerprint())
+    console.log(window.ThumbmarkJS.getFingerprintData())
+    console.log(window.ThumbmarkJS.setFingerprintCookie())
+  </script>
+
 {% endblock %}
 
 {% block footer %}
