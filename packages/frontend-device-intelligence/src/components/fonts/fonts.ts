@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { ComponentInterface } from "../index";
 import { ephemeralIFrame } from "../../utils/ephemeralIFrame";
 import { hash } from "../../utils/hash";
@@ -110,7 +109,8 @@ export async function getFontMetrics(): Promise<ComponentInterface> {
       const detectedFontResults: { [k: string]: number } = {};
       availableFonts.forEach((font) => {
         const fontWidth = measureSingleFont(ctx, font);
-        if (!defaultWidths.includes(fontWidth)) detectedFontResults[font] = fontWidth;
+        if (!defaultWidths.includes(fontWidth))
+          detectedFontResults[font] = fontWidth;
       });
 
       const fontHash = hash(JSON.stringify(detectedFontResults));

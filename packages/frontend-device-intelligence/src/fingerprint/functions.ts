@@ -106,7 +106,9 @@ export async function getFingerprint(
   }
 }
 
-export async function setFingerprintCookie(cookieDomain = "account.gov.uk"): Promise<void> {
+export async function setFingerprintCookie(
+  cookieDomain = "account.gov.uk",
+): Promise<void> {
   if (typeof window === "undefined") {
     console.warn("fingerprint cookie logic should only run on the client side");
     return;
