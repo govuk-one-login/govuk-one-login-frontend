@@ -2,7 +2,6 @@
 import { ComponentInterface } from "../index";
 import { ephemeralIFrame } from "../../utils/ephemeralIFrame";
 import { hash } from "../../utils/hash";
-const { createCanvas } = require("canvas");
 
 const availableFonts = [
   "Arial",
@@ -99,7 +98,7 @@ const availableFonts = [
 export async function getFontMetrics(): Promise<ComponentInterface> {
   return new Promise((resolve) => {
     ephemeralIFrame(({ iframe }) => {
-      const canvas = createCanvas(200, 200);
+      const canvas = iframe.createElement("canvas");
       const ctx = canvas.getContext("2d");
 
       const baseFonts = ["monospaces", "sans serif", "serif"];
