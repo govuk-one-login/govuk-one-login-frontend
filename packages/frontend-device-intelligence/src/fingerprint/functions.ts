@@ -118,7 +118,6 @@ export async function setFingerprintCookie(
     const fingerprint = await getFingerprintData();
     const encodedFingerprint = btoa(JSON.stringify(fingerprint));
     document.cookie = `di-device-intelligence=${encodedFingerprint}; path=/; domain=${cookieDomain}; secure; SameSite=Strict`;
-    console.log("Fingerprint cookie set:", encodedFingerprint);
   } catch (error) {
     console.error("Error setting fingerprint cookie:", error);
   }

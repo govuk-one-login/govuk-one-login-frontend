@@ -89,11 +89,10 @@
     });
   </script>
 
-  <script src="/fingerprint/index.js"></script>
-  <script>
-    console.log(window.ThumbmarkJS.getFingerprint())
-    console.log(window.ThumbmarkJS.getFingerprintData())
-    console.log(window.ThumbmarkJS.setFingerprintCookie('localhost'))
+  <script type="module" src="/fingerprint/index.js"></script>
+  <script type="module">
+    import { setFingerprintCookie } from "/fingerprint/index.js";
+    setFingerprintCookie('localhost')
   </script>
 
 {% endblock %}

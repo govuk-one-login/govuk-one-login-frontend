@@ -93,7 +93,7 @@ app.use(
 app.use(
   "/fingerprint",
   express.static(
-    nodeModules("@govuk-one-login/frontend-device-intelligence/build/iife"),
+    nodeModules("@govuk-one-login/frontend-device-intelligence/build/esm"),
   ),
 );
 app.use(
