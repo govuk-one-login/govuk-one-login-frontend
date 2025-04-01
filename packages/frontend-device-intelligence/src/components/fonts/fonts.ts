@@ -1,5 +1,6 @@
 import { ComponentInterface } from "../index";
 import { ephemeralIFrame } from "../../utils/ephemeralIFrame";
+import { hash } from "../../utils/hash";
 
 const availableFonts = [
   "Arial",
@@ -93,26 +94,31 @@ const availableFonts = [
   "Work Sans",
 ];
 
-const baseFonts = ["monospace", "sans-serif", "serif"];
-
 export async function getFontMetrics(): Promise<ComponentInterface> {
   return new Promise((resolve) => {
     ephemeralIFrame(({ iframe }) => {
       const canvas = iframe.createElement("canvas");
       const ctx = canvas.getContext("2d");
 
+      const baseFonts = ["monospaces", "sans serif", "serif"];
+
       const defaultWidths: number[] = baseFonts.map((font) => {
         return measureSingleFont(ctx, font);
       });
 
-      const results: { [k: string]: number } = {};
+      const detectedFontResults: { [k: string]: number } = {};
       availableFonts.forEach((font) => {
         const fontWidth = measureSingleFont(ctx, font);
-        if (!defaultWidths.includes(fontWidth)) results[font] = fontWidth;
+        if (!defaultWidths.includes(fontWidth))
+          detectedFontResults[font] = fontWidth;
       });
 
-      resolve(results);
-    }).catch(() => {});
+      const fontHash = hash(JSON.stringify(detectedFontResults));
+
+      resolve({ fontHash });
+    }).catch((error) => {
+      console.error("error retrieving the font hash frame", error);
+    });
   });
 }
 
@@ -124,6 +130,6 @@ function measureSingleFont(
     throw new Error("Canvas context not supported");
   }
   const text: string = "WwMmLli0Oo";
-  ctx.font = `72px ${font}`; // Set a default font size
+  ctx.font = `72px ${font}`;
   return ctx.measureText(text).width;
 }

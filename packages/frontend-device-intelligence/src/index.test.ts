@@ -44,6 +44,7 @@ describe("index", () => {
       plugins: Joi.any().required(),
       screen: Joi.any().required(),
       system: Joi.any().required(),
+      thumbmark: Joi.any().required(),
     });
 
     const { error } = schema.validate(await getFingerprintData());

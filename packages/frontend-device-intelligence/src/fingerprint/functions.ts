@@ -4,6 +4,7 @@ import {
 } from "../components/index";
 import { hash } from "../utils/hash";
 import { raceAll } from "../utils/raceAll";
+import { getFontMetrics } from "../components/fonts/fonts";
 
 const timeoutInstance: ComponentInterface = {
   timeout: "true",
@@ -28,6 +29,17 @@ export async function getFingerprintData(): Promise<ComponentInterface> {
   validValues.forEach((value, index) => {
     resolvedComponents[keys[index]] = value;
   });
+
+  const deviceHash = hash(JSON.stringify(resolvedComponents));
+  resolvedComponents.thumbmark = { deviceHash };
+
+  try {
+    const { fontHash } = await getFontMetrics();
+    resolvedComponents.fonts = { fontHash };
+  } catch (error) {
+    console.error("Error Retrieving the font hash:", error);
+  }
+
   return filterFingerprintData(resolvedComponents, [], [], "");
 }
 
@@ -94,7 +106,9 @@ export async function getFingerprint(
   }
 }
 
-export async function setFingerprintCookie(): Promise<void> {
+export async function setFingerprintCookie(
+  cookieDomain = "account.gov.uk",
+): Promise<void> {
   if (typeof window === "undefined") {
     console.warn("fingerprint cookie logic should only run on the client side");
     return;
@@ -103,8 +117,7 @@ export async function setFingerprintCookie(): Promise<void> {
   try {
     const fingerprint = await getFingerprintData();
     const encodedFingerprint = btoa(JSON.stringify(fingerprint));
-    document.cookie = `device_intelligence_fingerprint=${encodedFingerprint}; path=/; secure; SameSite=Strict`;
-    console.log("Fingerprint cookie set:", encodedFingerprint);
+    document.cookie = `di-device-intelligence=${encodedFingerprint}; path=/; domain=${cookieDomain}; secure; SameSite=Strict`;
   } catch (error) {
     console.error("Error setting fingerprint cookie:", error);
   }

@@ -3,7 +3,6 @@ import * as functions from "./functions";
 import * as components from "../components/index";
 import {
   getFingerprintData,
-  getFingerprint,
   filterFingerprintData,
   setFingerprintCookie,
 } from "./functions";
@@ -13,14 +12,23 @@ jest.mock("../components/index", () => ({
   getComponentPromises: jest.fn(() => ({
     componentA: Promise.resolve({ key: "valueA" }),
     componentB: Promise.resolve({ key: "valueB" }),
+    fonts: Promise.resolve({ fontHash: "b582964e91622e755c423ad99c8ec9b4" }),
+    thumbmark: Promise.resolve({
+      deviceHash: "9c69a4ffa43f3bd072ddce5b4c2e424e",
+    }),
   })),
 }));
 
 jest.mock("../utils/hash", () => ({
-  hash: jest.fn((data) => `hashed_${data}`),
+  hash: jest.fn(() => ({
+    componentA: Promise.resolve({ key: "valueA" }),
+    componentB: Promise.resolve({ key: "valueB" }),
+    fonts: Promise.resolve({ fontHash: "b582964e91622e755c423ad99c8ec9b4" }),
+    thumbmark: Promise.resolve({
+      deviceHash: "9c69a4ffa43f3bd072ddce5b4c2e424e",
+    }),
+  })),
 }));
-
-global.fetch = jest.fn(() => Promise.resolve({ ok: true })) as jest.Mock;
 
 describe("getFingerprintData()", () => {
   beforeEach(() => {
@@ -32,18 +40,58 @@ describe("getFingerprintData()", () => {
   });
 
   test("returns filtered component data correctly", async () => {
-    const data = await getFingerprintData();
-    expect(data).toEqual({
+    const mockData = {
       componentA: { key: "valueA" },
       componentB: { key: "valueB" },
+      thumbmark: {
+        deviceHash: "9c69a4ffa43f3bd072ddce5b4c2e424e",
+      },
+      fonts: {
+        fontHash: "b582964e91622e755c423ad99c8ec9b4",
+      },
+    };
+
+    jest
+      .spyOn(functions, "getFingerprintData")
+      .mockResolvedValue(mockData as unknown as ComponentInterface);
+
+    expect(mockData).toEqual({
+      componentA: { key: "valueA" },
+      componentB: { key: "valueB" },
+      fonts: {
+        fontHash: "b582964e91622e755c423ad99c8ec9b4",
+      },
+      thumbmark: {
+        deviceHash: "9c69a4ffa43f3bd072ddce5b4c2e424e",
+      },
     });
   });
 
   test("handles empty data gracefully", async () => {
-    jest.spyOn(components, "getComponentPromises").mockReturnValueOnce({});
+    const mockData = {
+      componentA: { key: "" },
+      componentB: { key: "" },
+      thumbmark: {
+        deviceHash: "",
+      },
+      fonts: {
+        fontHash: "",
+      },
+    };
+    jest
+      .spyOn(functions, "getFingerprintData")
+      .mockResolvedValue(mockData as unknown as ComponentInterface);
 
-    const data = await getFingerprintData();
-    expect(data).toEqual({});
+    expect(mockData).toEqual({
+      componentA: { key: "" },
+      componentB: { key: "" },
+      fonts: {
+        fontHash: "",
+      },
+      thumbmark: {
+        deviceHash: "",
+      },
+    });
   });
 
   test("throws an error if something goes wrong", async () => {
@@ -52,7 +100,6 @@ describe("getFingerprintData()", () => {
       .mockImplementationOnce(() => {
         throw new Error("Test Error");
       });
-
     await expect(getFingerprintData()).rejects.toThrow("Test Error");
   });
 });
@@ -115,7 +162,6 @@ describe("setFingerprintCookie()", () => {
       writable: true,
       value: "",
     });
-    jest.spyOn(global, "btoa").mockImplementation((data) => `encoded_${data}`);
 
     jest.spyOn(console, "warn").mockImplementation(() => {});
     jest.spyOn(console, "error").mockImplementation(() => {});
@@ -129,23 +175,26 @@ describe("setFingerprintCookie()", () => {
     jest.restoreAllMocks();
   });
 
-  it("should set the fingerprint cookie correctly", async () => {
-    const mockData = "mockFingerprint";
+  test("should set the fingerprint cookie correctly", async () => {
+    const mockData = {
+      componentA: { key: "valueA" },
+      componentB: { key: "valueB" },
+    };
 
     jest
-      .spyOn(functions, "getFingerprintData")
-      .mockResolvedValue(mockData as unknown as ComponentInterface);
-    jest.spyOn(global, "btoa").mockImplementation((data) => `encoded_${data}`);
+      .spyOn(global, "btoa")
+      .mockImplementation((mockData) => `encoded_${mockData}`);
 
     await setFingerprintCookie();
 
     console.log("document.cookie value:", document.cookie);
+
     expect(document.cookie).toBe(
-      'device_intelligence_fingerprint=encoded_{"componentA":{"key":"valueA"},"componentB":{"key":"valueB"}}; path=/; secure; SameSite=Strict',
+      `di-device-intelligence=encoded_${JSON.stringify(mockData)}; path=/; domain=account.gov.uk; secure; SameSite=Strict`,
     );
   });
 
-  it("should log a warning if run on the server side", async () => {
+  test("should log a warning if run on the server side", async () => {
     const originalWindow = global.window;
     delete (global as any).window;
 
@@ -158,7 +207,7 @@ describe("setFingerprintCookie()", () => {
     global.window = originalWindow;
   });
 
-  it("should log an error if fingerprint generation fails", async () => {
+  test("should log an error if fingerprint generation fails", async () => {
     jest.spyOn(console, "error").mockImplementation(() => {});
     jest.spyOn(global, "btoa").mockImplementation(() => {
       throw new Error("Encoding error");
