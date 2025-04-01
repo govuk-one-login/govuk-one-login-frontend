@@ -107,10 +107,10 @@ export async function getFontMetrics(): Promise<ComponentInterface> {
         return measureSingleFont(ctx, font);
       });
 
-      const detectedFontResults: string[] = [];
+      const detectedFontResults: { [k: string]: number } = {};
       availableFonts.forEach((font) => {
         const fontWidth = measureSingleFont(ctx, font);
-        if (!defaultWidths.includes(fontWidth)) detectedFontResults.push(font);
+        if (!defaultWidths.includes(fontWidth)) detectedFontResults[font] = fontWidth;
       });
 
       const fontHash = hash(JSON.stringify(detectedFontResults));

@@ -190,7 +190,7 @@ describe("setFingerprintCookie()", () => {
     console.log("document.cookie value:", document.cookie);
 
     expect(document.cookie).toBe(
-      `device_intelligence_fingerprint=encoded_${JSON.stringify(mockData)}; path=/; secure; SameSite=Strict`,
+      `di-device-intelligence=encoded_${JSON.stringify(mockData)}; path=/; domain=account.gov.uk; secure; SameSite=Strict`,
     );
   });
 

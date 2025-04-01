@@ -106,7 +106,7 @@ export async function getFingerprint(
   }
 }
 
-export async function setFingerprintCookie(): Promise<void> {
+export async function setFingerprintCookie(cookieDomain = "account.gov.uk"): Promise<void> {
   if (typeof window === "undefined") {
     console.warn("fingerprint cookie logic should only run on the client side");
     return;
@@ -115,7 +115,7 @@ export async function setFingerprintCookie(): Promise<void> {
   try {
     const fingerprint = await getFingerprintData();
     const encodedFingerprint = btoa(JSON.stringify(fingerprint));
-    document.cookie = `device_intelligence_fingerprint=${encodedFingerprint}; path=/; secure; SameSite=Strict`;
+    document.cookie = `di-device-intelligence=${encodedFingerprint}; path=/; domain=${cookieDomain}; secure; SameSite=Strict`;
     console.log("Fingerprint cookie set:", encodedFingerprint);
   } catch (error) {
     console.error("Error setting fingerprint cookie:", error);
