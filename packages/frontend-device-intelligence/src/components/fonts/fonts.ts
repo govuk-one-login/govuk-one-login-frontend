@@ -131,6 +131,6 @@ function measureSingleFont(
     throw new Error("Canvas context not supported");
   }
   const text: string = "WwMmLli0Oo";
-  ctx.font = `72px ${font}`; // Set a default font size
+  ctx.font = `72px ${font}`;
   return ctx.measureText(text).width;
 }

@@ -3,7 +3,9 @@ import { getFontMetrics } from "./fonts";
 
 describe("fonts", () => {
   it("should fetch font data in the correct format", async () => {
-    const schema = Joi.object().pattern(Joi.string(), Joi.number());
+    const schema = Joi.object({
+      fontHash: Joi.string().required(),
+    });
 
     const { error } = schema.validate(await getFontMetrics());
 
