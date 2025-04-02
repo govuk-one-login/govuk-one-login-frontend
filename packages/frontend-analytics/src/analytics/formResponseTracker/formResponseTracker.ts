@@ -12,7 +12,7 @@ export class FormResponseTracker extends FormTracker {
   eventName: string = "form_response";
   eventType: string = "event_data";
   isDataSensitive: boolean;
-  isPageDataSensitive: boolean = true;
+  isPageDataSensitive: boolean;
   enableFormResponseTracking: boolean;
 
   /**
