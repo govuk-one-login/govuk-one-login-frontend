@@ -19,6 +19,7 @@ function appInit(
 ): boolean {
   const defaultedOptions = applyDefaults(options, {
     isDataSensitive: true,
+    isPageDataSensitive: true,
     enableGa4Tracking: false,
     enableUaTracking: false,
     enableFormChangeTracking: true,

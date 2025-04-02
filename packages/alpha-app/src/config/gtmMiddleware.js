@@ -29,17 +29,20 @@ const setStatusCode = (req, res, next) => {
   next();
 };
 
+function getPath(req) {
+  const { url } = req;
+  const path = ROUTE_INFO.find((route) => route.path === url.split("?")[0]);
+  if (!path) console.log("Path not found");
+  return path;
+}
+
 // Middleware to instantiate the values for taxonomy levels 1 and 2 for the On Page Load tracker
 const setTaxonomyValues = (req, res, next) => {
-  const url = req.url;
-  const pathFound = ROUTE_INFO.find(
-    (route) => route.path === url.split("?")[0],
-  );
-  if (pathFound) {
-    res.locals.taxonomyLevel1 = pathFound.taxonomyLevel1 || "undefined";
-    res.locals.taxonomyLevel2 = pathFound.taxonomyLevel2 || "undefined";
+  const path = getPath(req);
+  if (path) {
+    res.locals.taxonomyLevel1 = path.taxonomyLevel1 || "undefined";
+    res.locals.taxonomyLevel2 = path.taxonomyLevel2 || "undefined";
   } else {
-    console.log("Path not found");
     res.locals.taxonomyLevel1 = "undefined";
     res.locals.taxonomyLevel2 = "undefined";
   }
@@ -49,15 +52,10 @@ const setTaxonomyValues = (req, res, next) => {
 
 // Middleware to instantiate the value for the pageTitle for the On Page Load tracker
 const setPageTitle = (req, res, next) => {
-  const url = req.url;
-  const pathFound = ROUTE_INFO.find(
-    (route) => route.path === url.split("?")[0],
-  );
-
-  if (pathFound) {
-    res.locals.englishPageTitle = pathFound.pageTitle || "undefined";
+  const path = getPath(req);
+  if (path) {
+    res.locals.englishPageTitle = path.pageTitle || "undefined";
   } else {
-    console.log("Path not found");
     res.locals.englishPageTitle = "undefined";
   }
 
@@ -66,15 +64,10 @@ const setPageTitle = (req, res, next) => {
 
 // Middleware to instantiate the value for the pageTitle for the On Page Load tracker
 const setContentId = (req, res, next) => {
-  const url = req.url;
-  const pathFound = ROUTE_INFO.find(
-    (route) => route.path === url.split("?")[0],
-  );
-
-  if (pathFound) {
-    res.locals.contentId = pathFound.contentId || "undefined";
+  const path = getPath(req);
+  if (path) {
+    res.locals.contentId = path.contentId || "undefined";
   } else {
-    console.log("Path not found");
     res.locals.englishPageTitle = "undefined";
   }
 
