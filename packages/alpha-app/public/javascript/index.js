@@ -6,33 +6,11 @@
       initial: {
         spinnerState: "pending",
       },
-      // error: {
-      //   heading: "Sorry, there is a problem",
-      //   messageText: "We cannot return you to the service at the moment.",
-      //   whatYouCanDo: {
-      //     heading: "What you can do",
-      //     message: {
-      //       text1:
-      //         "Go back to the service you were trying to use. You can look for the service using your search engine or find it from the ",
-      //       link: {
-      //         href: "https://www.gov.uk",
-      //         text: "GOV.UK homepage",
-      //       },
-      //       text2: ".",
-      //     },
-      //   },
-      // },
-      // complete: {},
-      // longWait: {
-      //   spinnerStateText: "We're still trying to return you to the service",
-      // },
+      complete: { spinnerState: "completed" },
     };
 
     const state = {
-      heading: content.initial.heading,
-      spinnerStateText: content.initial.spinnerStateText,
       spinnerState: content.initial.spinnerState,
-      // buttonDisabled: true,
       done: false,
       virtualDom: [],
     };
@@ -42,44 +20,11 @@
     const createVirtualDom = () => {
       const initialState = [
         {
-          nodeName: "h1",
-          text: state.heading,
-          classes: ["govuk-heading-l"],
-        },
-        {
           nodeName: "div",
           id: "spinner",
           classes: ["spinner", "spinner__pending", "centre", state.spinnerState],
         },
-        {
-          nodeName: "p",
-          text: state.spinnerStateText,
-          classes: ["centre", "spinner-state-text"],
-        },
       ];
-
-      // const errorState = [
-      //   {
-      //     nodeName: "h1",
-      //     text: state.heading,
-      //     classes: ["govuk-heading-l"],
-      //   },
-      //   {
-      //     nodeName: "p",
-      //     text: state.messageText,
-      //     classes: ["govuk-body"],
-      //   },
-      //   {
-      //     nodeName: "h2",
-      //     text: content.error.whatYouCanDo.heading,
-      //     classes: ["govuk-heading-m"],
-      //   },
-      //   {
-      //     nodeName: "p",
-      //     innerHTML: `${content.error.whatYouCanDo.message.text1}<a href="${content.error.whatYouCanDo.message.link.href}">${content.error.whatYouCanDo.message.link.text}</a>${content.error.whatYouCanDo.message.text2}`,
-      //     classes: ["govuk-body"],
-      //   },
-      // ];
 
       return initialState;
     };
@@ -93,15 +38,15 @@
       const container = document.getElementById("spinner-container");
 
       if (vDomChanged) {
-        document.title = state.heading;
+        // document.title = state.heading;
         state.virtualDom = createVirtualDom();
         const elements = state.virtualDom.map(convert);
         container.replaceChildren(...elements);
       }
 
-      // if (state.error) {
-      //   container.classList.add("spinner-container__error");
-      // }
+      if (state.error) {
+        container.classList.add("spinner-container__error");
+      }
 
       if (state.done) {
         clearInterval(timers.updateDomTimer);
@@ -111,13 +56,10 @@
     const reflectCompletion = () => {
       state.spinnerState = "spinner__ready";
       state.spinnerStateText = content.complete.spinnerState;
-      // state.buttonDisabled = false;
       state.done = true;
     };
 
     const reflectError = () => {
-      state.heading = content.error.heading;
-      state.messageText = content.error.messageText;
       state.spinnerState = "spinner__failed";
       state.done = true;
       state.error = true;
@@ -129,7 +71,6 @@
       if (node.innerHTML) el.innerHTML = node.innerHTML;
       if (node.id) el.id = node.id;
       if (node.classes) el.classList.add(...node.classes);
-      // if (node.buttonDisabled) el.setAttribute("disabled", node.buttonDisabled);
       return el;
     };
 
@@ -166,12 +107,6 @@
     return {
       state: state,
       init: () => {
-        timers.informUserWhereWaitIsLong = setTimeout(() => {
-          if (state.spinnerState !== "ready") {
-            state.spinnerStateText = content.longWait.spinnerStateText;
-          }
-        }, 5000);
-
         timers.updateDomTimer = setInterval(updateDom, 2000);
 
         timers.abortUnresponsiveRequest = setTimeout(() => {
@@ -186,6 +121,8 @@
       },
     };
   })();
+
+  /* eslint-disable no-undef */
 
   WaitInteractions.init();
 
