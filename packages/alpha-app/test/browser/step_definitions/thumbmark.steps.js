@@ -7,10 +7,3 @@ Then("the {word} cookie has been set", async function(cookieName) {
     const expectedCookie = cookies.find(cookie => cookie.name === cookieName);
     expect(expectedCookie).toBeDefined();
 });
-
-/* Scenario 2 */
-Then("the {word} cookie has not been set", async function(cookieName) {
-   const cookies = await this.page.context().cookies();
-   const expectedCookie = cookies.find(cookie => cookie.name === cookieName);
-   expect(expectedCookie).toBeUndefined(); 
-});
