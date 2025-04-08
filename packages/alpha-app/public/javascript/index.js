@@ -38,14 +38,13 @@
       const container = document.getElementById("spinner-container");
 
       if (vDomChanged) {
-        // document.title = state.heading;
         state.virtualDom = createVirtualDom();
-        const elements = state.virtualDom.map(convert);
-        container.replaceChildren(...elements);
+        const elements = state?.virtualDom?.map(convert);
+        container?.replaceChildren(...elements);
       }
 
       if (state.error) {
-        container.classList.add("spinner-container__error");
+        container?.classList.add("spinner-container__error");
       }
 
       if (state.done) {
@@ -80,8 +79,7 @@
 
     const requestIDProcessingStatus = async () => {
       const apiRoute =
-        document.getElementById("spinner-container").dataset.apiRoute;
-
+        document?.getElementById("spinner-container")?.dataset.apiRoute;
       try {
         const response = await fetch(apiRoute);
 
