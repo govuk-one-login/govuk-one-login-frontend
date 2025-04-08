@@ -1,5 +1,3 @@
-import { apiRoute, container, node, state, timers } from "./types";
-
 export const WaitInteractions = (() => {
   const content = {
     initial: {
@@ -8,13 +6,13 @@ export const WaitInteractions = (() => {
     complete: { spinnerState: "completed" },
   };
 
-  const state: state = {
+  const state = {
     spinnerState: content.initial.spinnerState,
     done: false,
     virtualDom: [],
   };
 
-  const timers: timers = {};
+  const timers = {};
 
   const createVirtualDom = () => {
     const initialState = [
@@ -28,24 +26,18 @@ export const WaitInteractions = (() => {
     return initialState;
   };
 
-  const vDomHasChanged = (
-    currentVDom: never[],
-    nextVDom: { nodeName: string; id: string; classes: string[] }[],
-  ) => {
+  const vDomHasChanged = (currentVDom, nextVDom) => {
     return JSON.stringify(currentVDom) !== JSON.stringify(nextVDom);
   };
 
   const updateDom = () => {
-    const vDomChanged = vDomHasChanged(
-      state.virtualDom as [],
-      createVirtualDom() as [],
-    );
-    const container: container = document.getElementById("spinner-container");
+    const vDomChanged = vDomHasChanged(state.virtualDom, createVirtualDom());
+    const container = document.getElementById("spinner-container");
 
     if (vDomChanged) {
       state.virtualDom = createVirtualDom();
-      const elements = state?.virtualDom?.map(convert as never);
-      container?.replaceChildren(...(elements as unknown as []));
+      const elements = state?.virtualDom?.map(convert);
+      container?.replaceChildren(...elements);
     }
 
     if (state.error) {
@@ -53,7 +45,7 @@ export const WaitInteractions = (() => {
     }
 
     if (state.done) {
-      clearInterval(timers.updateDomTimer as unknown as undefined);
+      clearInterval(timers.updateDomTimer);
     }
   };
 
@@ -69,10 +61,8 @@ export const WaitInteractions = (() => {
     state.error = true;
   };
 
-  const convert = (node: node) => {
-    const el = document.createElement(
-      node.nodeName as keyof HTMLElementTagNameMap,
-    );
+  const convert = (node) => {
+    const el = document.createElement(node.nodeName);
     if (node.text) el.textContent = node.text;
     if (node.innerHTML) el.innerHTML = node.innerHTML;
     if (node.id) el.id = node.id;
@@ -85,10 +75,10 @@ export const WaitInteractions = (() => {
   };
 
   const requestIDProcessingStatus = async () => {
-    const apiRoute: apiRoute =
+    const apiRoute =
       document?.getElementById("spinner-container")?.dataset.apiRoute;
     try {
-      const response = await fetch(apiRoute as unknown as URL);
+      const response = await fetch(apiRoute);
 
       if (response.status !== 200) {
         throw new Error(`Status code ${response.status} received`);
