@@ -35,7 +35,7 @@
       </ul>
     </li>
     <li>
-      <a href="#updating-to-v2">Updating to V2</a>
+      <a href="#updating-to-v4">Updating to V4</a>
     </li>
   </ol>
 </details>
@@ -77,26 +77,26 @@ The package is owned by the DI Frontend Capability team, part of the development
    );
    ```
 
-   [!WARNING] Check if the path to your node module folder is the correct one. [!WARNING]
+   ‼️ Check if the path to your node module folder is the correct one. ‼️
 
 3. Set up your environment variables. Two are required for the package to work, others provide a more granular level of control (while not required, it's highly advised to implement these to minimise the impact of bugs and regressions):
 
-| Variable                | Example            | Required | Notes   |
-| ----------------------- | ------------------ | -------- | ------- |
-| Ga4ContainerId          | `'GTM-XXXXXXX'`    | Yes      | Provided by the Analytics Team
-| isGa4Enabled            | `true`             | Yes      | Global flag for the package
-| cookieDomain            | `'account.gov.uk'` | No       | Defaults to `'account.gov.uk'`
-| isDataSensitive         | `true`             | No       | If turned on, will redact all form data from analytics, can be set at page level (See Redacting PII)
-| ga4PageViewEnabled      | `true`             | No       |
-| ga4NavigationEnabled    | `true`             | No       |
-| ga4FormResponseEnabled  | `true`             | No       |
-| ga4FormErrorEnabled     | `true`             | No       |
-| ga4FormChangeEnabled    | `true`             | No       |
-| ga4SelectContentEnabled | `true`             | No       |
+| Variable                | Example            | Required  | Notes   |
+| ----------------------- | ------------------ | --------  | ------- |
+| Ga4ContainerId          | `'GTM-XXXXXXX'`    | Yes       | Provided by the Analytics Team |
+| isGa4Enabled            | `true`             | Yes       |Global flag for the package |
+| cookieDomain            | `'account.gov.uk'` | No       | Set this to the environment domain eg. `'account.gov.uk'` or `'build.account.gov.uk'` |
+| isDataSensitive         | `true`             | No       |If turned on, will redact all form data from analytics, can be set at page level (See Redacting PII) |
+| ga4PageViewEnabled      | `true`             | No       | |
+| ga4NavigationEnabled    | `true`             | No       | |
+| ga4FormResponseEnabled  | `true`             | No       | |
+| ga4FormErrorEnabled     | `true`             | No       | |
+| ga4FormChangeEnabled    | `true`             | No       | |
+| ga4SelectContentEnabled | `true`             | No       | |
 
 These will need to be accessible via your base nunjucks template (example: src/views/common/layout/base.njk).
 
-[!NOTE] Different methods exist if you want to set this variable. Some projects use a middleware, some will prefer to use another method. [!NOTE]
+ℹ Different methods exist if you want to set this variable. Some projects use a middleware, some will prefer to use another method. ℹ
 
 4. Add this block of code into your base nunjucks template:
 
@@ -136,21 +136,27 @@ window.DI.appInit(
 
 #### Redacting PII
 
-[!NOTE] Redacting personally identifiable information can be configured at a global level or page level [!NOTE] 
+Redacting personally identifiable information can be configured—at a global level and/or page level—by the use of two flags.
 
-1. Global Configuration 
+The flags `isDataSensitive` and `isPageDataSensitve` both default to true, and when either is true then data is redacted.
 
-In your base Nunjucks template, the default isDataSensitive setting should remain true or be omitted (as true is the default). This ensures that PII is redacted by default for all pages.
+The intention is that `isPageDataSensitive` is used as a page-by-page flag, and `isDataSensitive` is used as a global override to force redaction across the whole service.
 
-2. Page-Specific Configuration (Optionally Allow PII)
+##### Global Configuration 
 
-In your view templates where you need to collect PII (use with caution):
-- Use Nunjucks templating to set the variable (e.g., isDataSensitive) to "false" 
-- Pass the variable to appInit: Include this variable in your window.DI.appInit call 
+In your base Nunjucks template, configure the `isDataSensitive` flag to be `true` if you want to redact all data in your service, or false if you want to control it on a page-by-page basis.
+
+##### Page-Specific Configuration
+
+> ‼️ This option is only available if the global `isDataSensitive` override is set to false.
+
+In your view templates where you need to collect data (use with caution):
+- Use Nunjucks templating to set the variable (e.g., isPageDataSensitive) to "false".
+- Pass the variable to appInit: Include this variable in your window.DI.appInit call.
 
 Page Level:
 ```js
-{% set analyticsDataSensitive = true %}
+{% set isPageDataSensitive = false %}
 ```
 
 Base Page/Form:
@@ -160,14 +166,15 @@ window.DI.appInit(
     ga4ContainerId: "{{ga4ContainerId}}",
   },
   {
-    isDataSensitive: {{ analyticsDataSensitive }},
+    isDataSensitive: false,
+    isPageDataSensitive: {{ isPageDataSensitive }},
     enableGa4Tracking: true,
     cookieDomain: "{{ cookieDomain }}",
   },
 );
 ```
 
-[!NOTE] window.DI.appInit is a function loaded from analytics.js. That will create a new instance of our analytics library and store into window.DI.analyticsGa4 [!NOTE]
+ℹ window.DI.appInit is a function loaded from analytics.js. That will create a new instance of our analytics library and store into window.DI.analyticsGa4 ℹ
 
 ### Analytics Cookie Consent
 
@@ -179,7 +186,7 @@ The Cookie class is responsible for managing cookies consent about analytics. It
 - Show the element that displays a message when consent is given
 - Hide the cookie banner when the visitor wants to hide the accepted or rejected message
 
-[!NOTE]
+ℹ
 Tips:
 1/ You can get analytics cookie consent status (true or false) by calling the function hasConsentForAnalytics:
 
@@ -196,7 +203,7 @@ window.DI.analyticsGa4.cookie.setBannerCookieConsent(
 );
 ```
 
-[!NOTE]
+ℹ
 
 ### Page View Tracker
 
@@ -274,7 +281,7 @@ We are tracking different types of link:
 - Header Menu Bar: When a user clicks on a link in the header menu
 - Footer links: When a user clicks on a link within the footer
 
-[!NOTE] All links are automatically tracked. But if you need to track a button, your element needs to have a specific attributes "data-nav" and "data-link"(e.g: <button data-nav=true data-link="/next-page-url">Next</button>) [!NOTE]
+ℹ All links are automatically tracked. But if you need to track a button, your element needs to have a specific attributes "data-nav" and "data-link"(e.g: <button data-nav=true data-link="/next-page-url">Next</button>) ℹ
 
 ### Form Response Tracker
 
@@ -340,6 +347,25 @@ If a checkbox or radio field has been implemented without a legend, please follo
   </div>
 </div>
 ```
+
+## Upgrading to V4
+
+> ‼️ Before upgrading to V4 please reach out to the Data & Analytics team to understand how the two data sensitivty flags should be set for your service.
+
+The breaking change in V4 is the addition of a page-level flag (`isPageDataSensitive`) to mark data as sensitive, on top of the existing service level flag (`isDataSensitive`).
+
+Another way of explaining this is that setting `isPageDataSensitive` on a page-by-page basis is the best-practice way to determine page sensitivity going forwards. `isDataSensitive` is now to be used as an override to force redact all data in the service if required.
+
+The new behaviour can be best described as:
+
+| isDataSensitive | isPageDataSensitive | Result |
+| --- | --- | --- |
+| true / undefined | true / false / undefined | Data is redacted |
+| false | true | Data is redacted |
+| false | false | Data is not redacted |
+| false | undefined | **Data is redacted—this is the breaking change you will experience if you upgrade to V4 without making any other changes.** |
+
+To maintain existing behaviour of V3 you'd have to set `isPageDataSensitive` to `false` on every page. This way sensitivity would be entirely determined by `isDataSensitive` as it is in V3.
 
 ## Developing the package
 

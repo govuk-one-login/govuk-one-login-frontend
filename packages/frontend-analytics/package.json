@@ -14,7 +14,7 @@
     "build": "webpack-cli --config webpack.config.js --mode production",
     "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,md}\"",
     "eslint": "eslint .",
-    "test": "jest",
+    "test": "jest --coverage",
     "test:coverage": "jest --coverage src"
   },
   "files": [
