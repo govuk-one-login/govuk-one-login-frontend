@@ -11,6 +11,10 @@ params:
     type: string
     required: false
     description: where the signout button will direct the user
+  - name: useStEdwardsCrown
+    type: boolean
+    required: false
+    description: changes the crown displayed in the header
 
     
 
