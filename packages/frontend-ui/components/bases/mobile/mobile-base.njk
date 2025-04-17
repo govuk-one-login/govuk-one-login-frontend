@@ -34,7 +34,12 @@
 {% endblock %}
 
 {% block bodyStart %}
-  {% include 'common/layout/banner.njk' %}
+  {% block frontendUiCookieBanner %}
+    {{ frontendUiCookieBanner({
+    translations: translations.translation.cookieBanner
+  }
+  )}}
+  {% endblock %}
 {% endblock %}
 
 {% block header %}
