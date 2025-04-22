@@ -7,6 +7,7 @@ import {
   setFingerprintCookie,
 } from "./functions";
 import { ComponentInterface } from "../components/index";
+import logger from "../logger";
 
 jest.mock("../components/index", () => ({
   getComponentPromises: jest.fn(() => ({
@@ -163,10 +164,10 @@ describe("setFingerprintCookie()", () => {
       value: "",
     });
 
-    jest.spyOn(console, "warn").mockImplementation(() => {});
-    jest.spyOn(console, "error").mockImplementation(() => {});
+    jest.spyOn(logger, "warn").mockImplementation(() => {});
+    jest.spyOn(logger, "error").mockImplementation(() => {});
     jest
-      .spyOn(console, "log")
+      .spyOn(logger, "log")
       .mockClear()
       .mockImplementation(() => {});
   });
@@ -187,7 +188,7 @@ describe("setFingerprintCookie()", () => {
 
     await setFingerprintCookie();
 
-    console.log("document.cookie value:", document.cookie);
+    logger.log("document.cookie value:", document.cookie);
 
     expect(document.cookie).toBe(
       `di-device-intelligence=encoded_${JSON.stringify(mockData)}; path=/; domain=account.gov.uk; secure; SameSite=Strict`,
@@ -200,7 +201,7 @@ describe("setFingerprintCookie()", () => {
 
     await setFingerprintCookie();
 
-    expect(console.warn).toHaveBeenCalledWith(
+    expect(logger.warn).toHaveBeenCalledWith(
       "fingerprint cookie logic should only run on the client side",
     );
 
@@ -208,14 +209,14 @@ describe("setFingerprintCookie()", () => {
   });
 
   test("should log an error if fingerprint generation fails", async () => {
-    jest.spyOn(console, "error").mockImplementation(() => {});
+    jest.spyOn(logger, "error").mockImplementation(() => {});
     jest.spyOn(global, "btoa").mockImplementation(() => {
       throw new Error("Encoding error");
     });
 
     await setFingerprintCookie();
 
-    expect(console.error).toHaveBeenCalledWith(
+    expect(logger.error).toHaveBeenCalledWith(
       "Error setting fingerprint cookie:",
       expect.any(Error),
     );
