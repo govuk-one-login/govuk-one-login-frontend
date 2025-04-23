@@ -21,9 +21,13 @@ export const getDomainPath = (url: string, part: number): string => {
 
 // check for change links used by both navigationTracker and formChangeTracker
 export const isChangeLink = (element: HTMLElement): boolean => {
-  if (element.tagName === "A") {
-    const anchorElement = element as HTMLAnchorElement;
-    return new URL(anchorElement.href).searchParams.get("edit") === "true";
+  if (element instanceof HTMLAnchorElement) {
+    try {
+      return new URL(element.href).searchParams.get("edit") === "true";
+      // eslint-disable-next-line
+    } catch (e) {
+      return false;
+    }
   }
   return false;
 };

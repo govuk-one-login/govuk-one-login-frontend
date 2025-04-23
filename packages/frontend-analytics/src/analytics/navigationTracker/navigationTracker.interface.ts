@@ -16,3 +16,5 @@ export interface NavigationEventInterface {
     "link_path_parts.5": string;
   };
 }
+
+export type NavigationElement = HTMLAnchorElement | HTMLButtonElement;

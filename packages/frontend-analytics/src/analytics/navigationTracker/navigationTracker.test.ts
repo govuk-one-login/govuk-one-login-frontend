@@ -1,6 +1,7 @@
 import { describe, expect, jest, test } from "@jest/globals";
 import { NavigationTracker } from "./navigationTracker";
 import * as pushToDataLayer from "../../utils/pushToDataLayer";
+import { NavigationElement } from "./navigationTracker.interface";
 
 window.DI = { analyticsGa4: { cookie: { consent: true } } };
 
@@ -60,21 +61,18 @@ describe("navigationTracker", () => {
     });
   });
 
-  // // test trackNavigation return false if tracker is deactivated
   test("trackNavigation return false if tracker is deactivated", () => {
     const instance = new NavigationTracker(false);
     const href = document.createElement("BUTTON");
     href.setAttribute("data-nav", "true");
     href.setAttribute("data-link", "/next-url");
     href.innerHTML = "Continue";
-    href.setAttribute("href", "http://localhost");
     href.addEventListener("click", (event) => {
       expect(instance.trackNavigation(event)).toBe(false);
     });
     href.dispatchEvent(action);
   });
 
-  // test trackNavigation doesn't accept anything except button or link
   test("trackNavigation should return false if not a link or a button", () => {
     const href = document.createElement("div");
     href.className = "govuk-footer__link";
@@ -84,46 +82,38 @@ describe("navigationTracker", () => {
     href.dispatchEvent(action);
   });
 
-  // test trackNavigation accept button
   test("trackNavigation should return true if a link", () => {
-    document.body.innerHTML = "<header></header><footer></footer>";
-    const href = document.createElement("A");
-    href.className = "govuk-footer__link";
-    href.innerHTML = "Link to GOV.UK";
-    href.setAttribute("href", "http://localhost");
-    href.addEventListener("click", (event) => {
+    document.body.innerHTML = `<header></header>
+    <a id="testLink" class="govuk-footer__link" href="http://www.test.co.uk">Link to GOV.UK</a><footer></footer>`;
+    const element = document.getElementById("testLink") as NavigationElement;
+    element.addEventListener("click", (event) => {
       expect(newInstance.trackNavigation(event)).toBe(true);
     });
-    href.dispatchEvent(action);
+    element.dispatchEvent(action);
   });
 
-  // test trackNavigation accept navigation button
   test("trackNavigation should return true if a navigation button", () => {
     document.body.innerHTML = "<header></header><footer></footer>";
     const href = document.createElement("BUTTON");
     href.setAttribute("data-nav", "true");
     href.setAttribute("data-link", "/next-url");
     href.innerHTML = "Continue";
-    href.setAttribute("href", "http://localhost");
     href.addEventListener("click", (event) => {
       expect(newInstance.trackNavigation(event)).toBe(true);
     });
     href.dispatchEvent(action);
   });
 
-  // test trackNavigation doesn't accept button
   test("trackNavigation should return false if not a navigation button", () => {
     document.body.innerHTML = "<header></header><footer></footer>";
     const href = document.createElement("BUTTON");
     href.innerHTML = "Continue";
-    href.setAttribute("href", "http://localhost");
     href.addEventListener("click", (event) => {
       expect(newInstance.trackNavigation(event)).toBe(false);
     });
     href.dispatchEvent(action);
   });
 
-  // test trackNavigation doesn't accept change links
   test("trackNavigation should return false if it is a change link", () => {
     document.body.innerHTML = "<div></div>";
     const href = document.createElement("A");
@@ -135,7 +125,6 @@ describe("navigationTracker", () => {
     href.dispatchEvent(action);
   });
 
-  // // test pushToDataLayer is called
   test("pushToDataLayer is not called without a href", () => {
     const element = document.createElement("A");
     element.className = "govuk-footer__link";
@@ -175,7 +164,7 @@ describe("getLinkType", () => {
     document.body.innerHTML = "<header></header><footer></footer>";
     const footer = document.getElementsByTagName("footer")[0];
     footer.appendChild(href);
-    const element = action.target as HTMLLinkElement;
+    const element = action.target as NavigationElement;
     expect(NavigationTracker.getLinkType(element)).toBe("footer");
   });
 
@@ -187,7 +176,7 @@ describe("getLinkType", () => {
     const phaseBanner =
       document.getElementsByClassName("govuk-phase-banner")[0];
     phaseBanner.appendChild(href);
-    const element = action.target as HTMLLinkElement;
+    const element = action.target as NavigationElement;
     expect(NavigationTracker.getLinkType(element)).toBe("header menu bar");
   });
 
@@ -198,7 +187,7 @@ describe("getLinkType", () => {
     document.body.innerHTML = "<header></header><footer></footer>";
     const header = document.getElementsByTagName("header")[0];
     header.appendChild(href);
-    const element = action.target as HTMLLinkElement;
+    const element = action.target as NavigationElement;
     expect(NavigationTracker.getLinkType(element)).toBe("header menu bar");
   });
 
@@ -206,7 +195,7 @@ describe("getLinkType", () => {
     const href = document.createElement("A");
     href.className = "other-link";
     href.dispatchEvent(action);
-    const element = action.target as HTMLLinkElement;
+    const element = action.target as NavigationElement;
     document.body.innerHTML = "<header></header><footer></footer>";
     expect(NavigationTracker.getLinkType(element)).toBe("generic link");
   });
@@ -215,7 +204,7 @@ describe("getLinkType", () => {
     const button = document.createElement("A");
     button.className = "govuk-button";
     button.dispatchEvent(action);
-    const element = action.target as HTMLLinkElement;
+    const element = action.target as NavigationElement;
     expect(NavigationTracker.getLinkType(element)).toBe("generic button");
   });
 
@@ -224,7 +213,7 @@ describe("getLinkType", () => {
     button.setAttribute("data-nav", "true");
     button.setAttribute("data-link", "/next-url");
     button.dispatchEvent(action);
-    const element = action.target as HTMLLinkElement;
+    const element = action.target as NavigationElement;
     expect(NavigationTracker.getLinkType(element)).toBe("generic button");
   });
 });
@@ -258,19 +247,19 @@ describe("isHeaderMenuBarLink", () => {
 
   test("should return true if link is inside the header tag", () => {
     document.body.innerHTML = `<header><a id="testLink">Link to GOV.UK</a></header>`;
-    const element = document.getElementById("testLink") as HTMLElement;
+    const element = document.getElementById("testLink") as NavigationElement;
     expect(NavigationTracker.isHeaderMenuBarLink(element)).toBe(true);
   });
 
   test("should return true if link is inside the nav tag", () => {
     document.body.innerHTML = `<nav><a id="testLink">Link to GOV.UK</a></nav>`;
-    const element = document.getElementById("testLink") as HTMLElement;
+    const element = document.getElementById("testLink") as NavigationElement;
     expect(NavigationTracker.isHeaderMenuBarLink(element)).toBe(true);
   });
 
   test("should return false if link is not inside the header or nav tag", () => {
     document.body.innerHTML = `<div><a id="testLink">Link to GOV.UK</a></div>`;
-    const element = document.getElementById("testLink") as HTMLElement;
+    const element = document.getElementById("testLink") as NavigationElement;
     expect(NavigationTracker.isHeaderMenuBarLink(element)).toBe(false);
   });
 });
@@ -280,13 +269,13 @@ describe("isFooterLink", () => {
 
   test("should return true if link is inside the footer tag", () => {
     document.body.innerHTML = `<footer><a id="testLink2">Link to GOV.UK</a></footer>`;
-    const element = document.getElementById("testLink2") as HTMLElement;
+    const element = document.getElementById("testLink2") as NavigationElement;
     expect(NavigationTracker.isFooterLink(element)).toBe(true);
   });
 
   test("should return true if link is not inside the footer tag", () => {
     document.body.innerHTML = `<footer></footer><a id="testLink2">Link to GOV.UK</a>`;
-    const element = document.getElementById("testLink2") as HTMLElement;
+    const element = document.getElementById("testLink2") as NavigationElement;
     expect(NavigationTracker.isFooterLink(element)).toBe(false);
   });
 });
@@ -296,13 +285,13 @@ describe("isBackLink", () => {
 
   test("should return true if link is a back button", () => {
     document.body.innerHTML = `<a id="testLink3" href="/welcome" class="govuk-back-link">Back</a>`;
-    const element = document.getElementById("testLink3") as HTMLElement;
+    const element = document.getElementById("testLink3") as NavigationElement;
     expect(NavigationTracker.isBackLink(element)).toBe(true);
   });
 
   test("should return false if link is not a back button", () => {
     document.body.innerHTML = `<a id="testLink3" href="/welcome" class="govuk-random-link">Back</a>`;
-    const element = document.getElementById("testLink3") as HTMLElement;
+    const element = document.getElementById("testLink3") as NavigationElement;
     expect(NavigationTracker.isBackLink(element)).toBe(false);
   });
 });
@@ -317,16 +306,15 @@ describe("getSection", () => {
 
   test("it should return undefined if section is not defined", () => {
     document.body.innerHTML = `<body><a id="testLink1">Link to GOV.UK</a></body>`;
-    const element = document.getElementById("testLink1") as HTMLElement;
+    const element = document.getElementById("testLink1") as NavigationElement;
     expect(NavigationTracker.getSection(element)).toBe("undefined");
   });
 
   test("it should return logo when a link is clicked in the logo", () => {
-    const element = document.createElement("span");
-    element.className = "govuk-header__logotype";
-    document.body.innerHTML = "<header></header>";
-    const header = document.getElementsByTagName("header")[0];
-    header.appendChild(element);
+    document.body.innerHTML = `<header><a id="testAnchor" href="http://localhost:3000">
+      <span class="govuk-header__logotype"></span></header>
+      </a>`;
+    const element = document.getElementById("testAnchor") as NavigationElement;
     element.dispatchEvent(action);
     element.addEventListener("click", () => {
       expect(NavigationTracker.getSection(element)).toBe("logo");
@@ -341,7 +329,7 @@ describe("getSection", () => {
     const phaseBanner =
       document.getElementsByClassName("govuk-phase-banner")[0];
     phaseBanner.appendChild(href);
-    const element = action.target as HTMLLinkElement;
+    const element = action.target as NavigationElement;
     expect(NavigationTracker.getSection(element)).toBe("phase banner");
   });
 
@@ -352,7 +340,7 @@ describe("getSection", () => {
     document.body.innerHTML = "<header></header>";
     const header = document.getElementsByTagName("header")[0];
     header.appendChild(href);
-    const element = action.target as HTMLLinkElement;
+    const element = action.target as NavigationElement;
     expect(NavigationTracker.getSection(element)).toBe("menu links");
   });
 
@@ -365,7 +353,7 @@ describe("getSection", () => {
       "govuk-footer__inline-list",
     )[0];
     footerInlineList.appendChild(href);
-    const element = action.target as HTMLLinkElement;
+    const element = action.target as NavigationElement;
     expect(NavigationTracker.getSection(element)).toBe("support links");
   });
 
@@ -379,7 +367,7 @@ describe("getSection", () => {
       "govuk-footer__licence-description",
     )[0];
     licence.appendChild(href);
-    const element = action.target as HTMLLinkElement;
+    const element = action.target as NavigationElement;
     expect(NavigationTracker.getSection(element)).toBe("licence");
   });
 
@@ -393,7 +381,7 @@ describe("getSection", () => {
       "govuk-footer__copyright-logo",
     )[0];
     copyright.appendChild(href);
-    const element = action.target as HTMLLinkElement;
+    const element = action.target as NavigationElement;
     expect(NavigationTracker.getSection(element)).toBe("copyright");
   });
 });
