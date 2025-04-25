@@ -1,4 +1,5 @@
 import i18next from "i18next";
+import { Request, Response, NextFunction } from 'express';
 import {
   frontendUiMiddleware,
   setFrontendUiTranslations,
@@ -9,20 +10,29 @@ import {
 describe("frontendUiMiddleware", () => {
   describe("when the ui middleware is called", () => {
     it("should attach translations from the i18n store to locals", () => {
-      const req = {
+      const mockRequest = {
         i18n: {
           language: "en",
           store: { data: { en: { translationKey: "translationValue" } } },
         },
-      };
-      const res = { locals: { translations: {} } };
-      frontendUiMiddleware(req, res, () => {});
-      expect(res.locals.translations).toEqual({
+      } as unknown as Request & { i18n: { language: string; store: { data: { [key: string]: unknown } } } }; 
+
+      const mockResponse = {
+        locals: {}, 
+      } as Response & { locals: { translations: unknown } }; 
+
+      const next = jest.fn() as NextFunction; 
+
+      frontendUiMiddleware(mockRequest, mockResponse, next);
+
+      expect(mockResponse.locals.translations).toEqual({
         translationKey: "translationValue",
       });
+      expect(next).toHaveBeenCalled();
     });
   });
 });
+
 
 describe("setFrontendUiTranslations", () => {
   describe("when setFrontendUiTranslations is called", () => {
