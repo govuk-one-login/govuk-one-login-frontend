@@ -1,5 +1,6 @@
 import { ComponentInterface } from "../index";
 import { mostFrequentValuesInArrayOfDictionaries } from "../../utils/getMostFrequent";
+import logger from "../../logger";
 
 function getPermissionKeys(): PermissionName[] {
   return [
@@ -63,6 +64,7 @@ async function getBrowserPermissionsOnce(
       permissionStatus[feature] = status.state.toString();
       // eslint-disable-next-line
     } catch (error) {
+      logger.error("feature not supported");
       // In case of errors (unsupported features, etc.), do nothing. Not listing them is the same as not supported
     }
   }

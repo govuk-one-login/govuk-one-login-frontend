@@ -1,3 +1,4 @@
+import logger from "../../logger";
 import { ComponentInterface } from "../index";
 import { getBrowser } from "./browser";
 
@@ -45,6 +46,7 @@ function getApplePayVersion(): number {
       }
       // eslint-disable-next-line
     } catch (error) {
+      logger.error("No supported version available for the payment method");
       return 0;
     }
   }

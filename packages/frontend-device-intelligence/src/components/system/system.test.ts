@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Joi from "joi";
 import { getSystemDetails } from "./system";
+import logger from "../../logger";
 
 describe("system", () => {
   it("should fetch system data", async () => {
@@ -42,5 +44,20 @@ describe("system", () => {
     const systemDetails = await getSystemDetails();
 
     expect(systemDetails.applePayVersion).toBe(3);
+  });
+
+  it("logs an error if the pay version is not supported", async () => {
+    const spy = jest.spyOn(logger, "error").mockImplementation(() => {});
+
+    (global as any).ApplePaySession = class {
+      static supportsVersion() {
+        throw new Error();
+      }
+    };
+    (global as any).location = { protocol: "https:" };
+
+    await getSystemDetails();
+
+    expect(spy).toHaveBeenCalled();
   });
 });

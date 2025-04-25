@@ -92,8 +92,9 @@
 
   <script type="module" src="/fingerprint/index.js"></script>
   <script type="module">
-    import { setFingerprintCookie } from "/fingerprint/index.js";
+    import { setFingerprintCookie, setLogLevel } from "/fingerprint/index.js";
     setFingerprintCookie('localhost')
+    setLogLevel("silent");
   </script>
 
 {% endblock %}

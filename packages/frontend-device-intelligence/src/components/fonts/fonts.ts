@@ -1,6 +1,7 @@
 import { ComponentInterface } from "../index";
 import { ephemeralIFrame } from "../../utils/ephemeralIFrame";
 import { hash } from "../../utils/hash";
+import logger from "../../logger";
 
 const availableFonts = [
   "Arial",
@@ -117,7 +118,7 @@ export async function getFontMetrics(): Promise<ComponentInterface> {
 
       resolve({ fontHash });
     }).catch((error) => {
-      console.error("error retrieving the font hash frame", error);
+      logger.error("error retrieving the font hash frame", error);
     });
   });
 }
