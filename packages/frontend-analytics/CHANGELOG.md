@@ -1,3 +1,33 @@
+# 4.0.0 (2025-04-25)
+
+### 🚀 Features
+
+- **DFC-826:** LogLevel Logger added to device intelligence package. Logs silent by default ([a6f236c](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/a6f236c))
+- **DFC-828:** add isPageDataSensitive docs ([04bd4e4](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/04bd4e4))
+- **DFC-818:** Tests added and refactored code ([48f1ee6](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/48f1ee6))
+- **DFC-818:** Font and Hash fields with RFC ([33df869](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/33df869))
+- **DFC-809:** updated package versions ([02232c0](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/02232c0))
+- **DFC-809:** updated package-lock ([7ee1745](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/7ee1745))
+- **DFC-810:** Updated changelog and readme. Removed unused code from fingerprint function ([01480b2](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/01480b2))
+- **DFC-810:** Clone thumbmarkjs into device intelligence package ([70f7405](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/70f7405))
+- **DFC-809:** Updates to sonar workflow and package.json ([8a3ea81](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/8a3ea81))
+- **DFC-809:** Adding device intelligence package to github workflows ([fbb3f4e](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/fbb3f4e))
+- **dfc-749:** skip link ([502bfda](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/502bfda))
+
+### 🩹 Fixes
+
+- added npm installs for linux ([079411b](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/079411b))
+- **analytics:** Change page sensitivity to on by default ([2b3edd8](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/2b3edd8))
+
+### ❤️ Thank You
+
+- arwa.tawawala
+- arwatGDS
+- DavidMcMichael-GDS
+- di-aholme
+- nickhealGDS
+- ug-gds
+
 ## 3.3.0 (2025-03-04)
 
 ### 🩹 Fixes
