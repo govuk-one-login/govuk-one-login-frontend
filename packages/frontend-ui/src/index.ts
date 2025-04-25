@@ -1,4 +1,5 @@
 import i18next from "i18next";
+import { NextFunction, Request, Response } from "express";
 import translationCy from "../locales/cy/translation.json";
 import translationEn from "../locales/en/translation.json";
 import path from "path";
@@ -22,23 +23,23 @@ export const setFrontendUiTranslations = (instanceI18n: typeof i18next) => {
 };
 
 export const frontendUiMiddleware = (
-  req: {
+  req: Request & {
     i18n: { language: string; store: { data: { [key: string]: unknown } } };
   },
-  res: { locals: { translations: unknown } },
-  next: () => void,
+  res: Response & { locals: { translations: unknown } },
+  next: NextFunction
 ) => {
   res.locals.translations = req.i18n.store.data[req.i18n.language];
   next();
 };
 
 export const frontendUiMiddlewareIdentityBypass = (
-  req: {
+  req: Request & {
     i18n: {
       language: "en" | "cy"
   }},
-  res: { locals: { translations: unknown } },
-  next: () => void,
+  res: Response & { locals: { translations: unknown } },
+  next: NextFunction
 ) => {
     const localTranslations = {
     en: translationEn,
