@@ -1,6 +1,6 @@
 {
   "name": "@govuk-one-login/frontend-device-intelligence",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Frontend Device Intelligence package for GDS One Login",
   "type": "module",
   "main": "build/cjs/index.cjs",

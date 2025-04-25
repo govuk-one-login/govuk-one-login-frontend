@@ -1,3 +1,16 @@
+## 1.2.0 (2025-04-25)
+
+### 🚀 Features
+
+- **DFC-836:** Year update ([b2c23a4](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/b2c23a4))
+- **DFC-836:** License added into device intelligence package ([8dc052e](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/8dc052e))
+- **DFC-826:** adding test coverage for system.ts ([9e015d8](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/9e015d8))
+- **DFC-826:** LogLevel Logger added to device intelligence package. Logs silent by default ([a6f236c](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/a6f236c))
+
+### ❤️ Thank You
+
+- arwatGDS
+
 ## 1.1.0 (2025-04-01)
 
 ### 🚀 Features
