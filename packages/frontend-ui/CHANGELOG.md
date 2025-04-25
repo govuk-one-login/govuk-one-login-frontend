@@ -1,3 +1,21 @@
+## 1.0.2 (2025-04-25)
+
+### 🚀 Features
+
+- **DFC-826:** LogLevel Logger added to device intelligence package. Logs silent by default ([a6f236c](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/a6f236c))
+- **DFC-818:** Tests added and refactored code ([48f1ee6](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/48f1ee6))
+- **DFC-818:** Font and Hash fields with RFC ([33df869](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/33df869))
+
+### 🩹 Fixes
+
+- updated tests for middleware ([c9ef5a7](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/c9ef5a7))
+- updated middleware functions for typescript ([5b7c2ec](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/5b7c2ec))
+
+### ❤️ Thank You
+
+- arwatGDS
+- DavidMcMichael-GDS
+
 ## 1.0.1 (2025-03-31)
 
 This was a version bump only for @govuk-one-login/frontend-ui to align it with other projects, there were no code changes.
