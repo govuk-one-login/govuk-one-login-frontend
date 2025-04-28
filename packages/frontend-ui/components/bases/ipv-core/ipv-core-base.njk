@@ -45,13 +45,14 @@
     translations: translations.translation.cookieBanner
   }
   )}}
+  {%endblock%}
 {% endblock %}
 
 {% block header %}
         {{ frontendUiHeader({
       translations: translations.transkation.header,
       homepageUrl: "https://www.gov.uk",
-      signOutLink: logoutUrl,
+      signOutLink: logoutUrl
     }) }}
 {% endblock %}
 
@@ -60,7 +61,7 @@
     {{ frontendUiPhaseBanner({
       translations: translations.translation.phaseBanner,
       url: currentUrl,
-      contactUrl: 'https://signin.account.gov.uk/contact-us'
+      contactUrl: {{ contactUsUrl }}
     }) }}
         {% block beforeContent %}{% endblock %}
         {% if showLanguageToggle %}
