@@ -9,7 +9,7 @@ module.exports = {
       autoescape: true,
       express: app,
       noCache: true,
-    });
+    }).addGlobal("May_2025_Rebrand", process.env.May_2025_Rebrand);
 
     nunjucksEnv.addGlobal("addLanguageParam", frontendUi.addLanguageParam);
     nunjucksEnv.addGlobal("contactUsUrl", frontendUi.contactUsUrl);
