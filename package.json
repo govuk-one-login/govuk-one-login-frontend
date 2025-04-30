@@ -51,8 +51,5 @@
     "hooks": {
       "pre-commit": "npm run precommit"
     }
-  },
-  "dependencies": {
-    "@rollup/rollup-darwin-arm64": "^4.39.0"
   }
 }
