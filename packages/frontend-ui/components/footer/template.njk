@@ -1,7 +1,7 @@
 {% set footer = params.translations %}
 
 {% from "govuk/components/footer/macro.njk" import govukFooter %}
-{% if May_2025_Rebrand == 'true'%}
+{% if May_2025_Rebrand %}
     {{ govukFooter({
     meta: { items: footer.footerNavItems },
     contentLicence: { html: footer.contentLicence.html },
