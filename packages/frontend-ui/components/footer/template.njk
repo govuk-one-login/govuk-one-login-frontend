@@ -1,9 +1,18 @@
 {% set footer = params.translations %}
 
 {% from "govuk/components/footer/macro.njk" import govukFooter %}
+{% if May_2025_Rebrand %}
+    {{ govukFooter({
+    meta: { items: footer.footerNavItems },
+    contentLicence: { html: footer.contentLicence.html },
+    copyright: { text: footer.copyright.text },
+    attributes: { style: 'background-color:rgb(0, 255, 0)' }
 
+}) }}
+{%else%}
 {{ govukFooter({
     meta: { items: footer.footerNavItems },
     contentLicence: { html: footer.contentLicence.html },
     copyright: { text: footer.copyright.text }
 }) }}
+{%endif%}

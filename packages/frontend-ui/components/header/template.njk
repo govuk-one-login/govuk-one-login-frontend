@@ -54,6 +54,41 @@ treat it as an interactive element - without this it will be
 <![endif]-->
 {% endset %}
 
+
+{% if May_2025_Rebrand %}
+<header class="govuk-header {{ params.classes if params.classes }}" role="banner" data-module="govuk-header" style="background-color:rgb(0, 255, 0)"
+ {%- for attribute, value in params.attributes %} {{attribute}}="{{value}}"{% endfor %}>
+  <div class="frontendUi_header__signOut govuk-header__container {{ params.containerClasses | default('govuk-width-container') }}">
+    <div class="govuk-header__logo">
+      {% if params.isEmbeddedMobileApp %}
+      <span class="govuk-header__link govuk-header__link--homepage" style="pointer-events: none;">
+      {% else %}
+      <a href="{{ params.homepageUrl | default('https://www.gov.uk/') }}" class="govuk-header__link govuk-header__link--homepage">
+      {% endif %}
+        <span class="govuk-header__logotype">
+          {{ (_stEdwardsCrown if params.useStEdwardsCrown else _tudorCrown) | safe }}
+          <span class="govuk-header__logotype-text">
+            GOV.UK
+          </span>
+        </span>
+      </a>
+    </div>
+    {% if params.signOutLink %}
+      <div class="frontendUi-header__content govuk-header__content">
+        <nav aria-label="{{ params.navigationLabel | default(menuButtonText) }}" class="govuk-header__navigation {{ params.navigationClasses if params.navigationClasses }}">
+          <ul id="navigation" class="frontendUi_header__signOut govuk-header__navigation-list">
+            <li class="frontendUi_header_signOut-item govuk-header__navigation-item{{ ' govuk-header__navigation-item--active' if item.active }}">
+                <a aria-label="{{header.ariaLabel}}" class="govuk-header__link" href="{{params.signOutLink}}">
+                  {{header.signOut}}
+                </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    {% endif %}
+  </div>
+</header>
+  {% else %}
 <header class="govuk-header {{ params.classes if params.classes }}" role="banner" data-module="govuk-header"
  {%- for attribute, value in params.attributes %} {{attribute}}="{{value}}"{% endfor %}>
   <div class="frontendUi_header__signOut govuk-header__container {{ params.containerClasses | default('govuk-width-container') }}">
@@ -86,3 +121,4 @@ treat it as an interactive element - without this it will be
     {% endif %}
   </div>
 </header>
+  {% endif %}
