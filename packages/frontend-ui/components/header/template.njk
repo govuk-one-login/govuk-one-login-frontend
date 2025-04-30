@@ -55,7 +55,7 @@ treat it as an interactive element - without this it will be
 {% endset %}
 
 
-{% if May_2025_Rebrand == 'true'%}
+{% if May_2025_Rebrand %}
 <header class="govuk-header {{ params.classes if params.classes }}" role="banner" data-module="govuk-header" style="background-color:rgb(0, 255, 0)"
  {%- for attribute, value in params.attributes %} {{attribute}}="{{value}}"{% endfor %}>
   <div class="frontendUi_header__signOut govuk-header__container {{ params.containerClasses | default('govuk-width-container') }}">
