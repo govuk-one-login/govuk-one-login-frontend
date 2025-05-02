@@ -1,5 +1,4 @@
 {% extends "govuk/template.njk" %}
-
 {% from "frontend-ui/build/components/cookie-banner/macro.njk" import frontendUiCookieBanner %}
 {% from "frontend-ui/build/components/phase-banner/macro.njk" import frontendUiPhaseBanner %}
 {% from "frontend-ui/build/components/header/macro.njk" import frontendUiHeader %}
@@ -22,6 +21,7 @@
     {% endif %}
 
     <link href="/public/stylesheets/application.css" rel="stylesheet">
+    <link href="/public/stylesheets/frontend-ui.css" rel="stylesheet">
 
     {# For older browsers to allow them to recognise HTML5 elements such as `<header>` #}
     <!--[if lt IE 9]>
@@ -45,12 +45,14 @@
     translations: translations.translation.cookieBanner
   }
   )}}
+
+
   {%endblock%}
 {% endblock %}
 
 {% block header %}
         {{ frontendUiHeader({
-      translations: translations.transkation.header,
+      translations: translations.translation.header,
       homepageUrl: "https://www.gov.uk",
       signOutLink: logoutUrl
     }) }}
@@ -61,16 +63,17 @@
     {{ frontendUiPhaseBanner({
       translations: translations.translation.phaseBanner,
       url: currentUrl,
-      contactUrl: {{ contactUsUrl }}
+      contactUrl: contactUsUrl
     }) }}
+
         {% block beforeContent %}{% endblock %}
-        {% if showLanguageToggle %}
+        {# {% if showLanguageToggle %} #}
     {{ frontendUiLanguageSelect({
       translations: translations.translation.languageSelect,
       url: currentUrl,
       activeLanguage: htmlLang
     }) }}
-        {% endif %}
+        {# {% endif %} #}
         {% if showBack %}
             {{ govukBackLink({
                 text: "general.govuk.backLink" | translate,
