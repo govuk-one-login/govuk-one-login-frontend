@@ -1,5 +1,4 @@
 @charset "UTF-8";
-@use "../components/all";
 :root {
   --govuk-frontend-version: "4.7.0";
 }
@@ -1953,7 +1952,7 @@
 }
 @supports not (caret-color: auto) { // Support for older browsers 
   .govuk-fieldset,
-  x:-moz-any-link { //NOSONAR
+  x:-moz-any-link {
     display: table-cell;
   }
 }
@@ -7196,3 +7195,5 @@
   }
 }
 /*# sourceMappingURL=govuk-frontend-4.7.0.min.css.map */
+
+@import "../components/all";
