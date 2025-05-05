@@ -1,6 +1,8 @@
 import i18next from "i18next";
 import translationCy from "../locales/cy/translation.json";
 import translationEn from "../locales/en/translation.json";
+import path from "path";
+import { readFileSync } from "fs";
 
 export const setFrontendUiTranslations = (instanceI18n: typeof i18next) => {
   instanceI18n.addResourceBundle(
@@ -65,3 +67,30 @@ export function contactUsUrl(baseUrl: string, urlToAppend: string) {
   const searchParams = new URLSearchParams({ fromURL: urlToAppend });
   return `${baseUrl}?${searchParams.toString()}`;
 }
+
+export const setBaseTranslations = (instanceI18n: typeof i18next) => {
+  instanceI18n.addResourceBundle(
+    'cy',
+    "translation",
+    getTranslationObject('cy')
+  );
+  instanceI18n.addResourceBundle(
+    'en',
+    "translation",
+    getTranslationObject('en')
+  );
+};
+
+export const getTranslationObject = (locale: string): Record<string, unknown> => {
+  const translations = JSON.parse(
+    readFileSync(
+      path.resolve("locales", locale, "translation.json"), // Resolve path from the root
+      "utf8"
+    )
+  );
+  return {
+    ...translations,
+  };
+};
+
+
