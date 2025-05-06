@@ -3,6 +3,7 @@ const nunjucks = require("nunjucks");
 const i18next = require("i18next");
 const frontendUi = require("@govuk-one-login/frontend-ui");
 
+
 module.exports = {
   configureNunjucks: (app, viewsPath) => {
     const nunjucksEnv = nunjucks.configure(viewsPath, {
