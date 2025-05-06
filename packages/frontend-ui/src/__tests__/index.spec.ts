@@ -1,6 +1,6 @@
 import i18next from "i18next";
 import fs, { readFileSync } from "fs";
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from "express";
 import {
   frontendUiMiddleware,
   setFrontendUiTranslations,
@@ -18,13 +18,15 @@ describe("frontendUiMiddleware", () => {
           language: "en",
           store: { data: { en: { translationKey: "translationValue" } } },
         },
-      } as unknown as Request & { i18n: { language: string; store: { data: { [key: string]: unknown } } } }; 
+      } as unknown as Request & {
+        i18n: { language: string; store: { data: { [key: string]: unknown } } };
+      };
 
       const mockResponse = {
-        locals: {}, 
-      } as Response & { locals: { translations: unknown } }; 
+        locals: {},
+      } as Response & { locals: { translations: unknown } };
 
-      const next = jest.fn() as NextFunction; 
+      const next = jest.fn() as NextFunction;
 
       frontendUiMiddleware(mockRequest, mockResponse, next);
 
@@ -35,7 +37,6 @@ describe("frontendUiMiddleware", () => {
     });
   });
 });
-
 
 describe("setFrontendUiTranslations", () => {
   describe("when setFrontendUiTranslations is called", () => {
