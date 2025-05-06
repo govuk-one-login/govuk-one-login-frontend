@@ -12,7 +12,10 @@ module.exports = {
 
     nunjucksEnv.addGlobal("addLanguageParam", frontendUi.addLanguageParam);
     nunjucksEnv.addGlobal("contactUsUrl", frontendUi.contactUsUrl);
-    nunjucksEnv.addGlobal("May_2025_Rebrand", process.env.May_2025_Rebrand == 'true');
+    nunjucksEnv.addGlobal(
+      "May_2025_Rebrand",
+      process.env.May_2025_Rebrand == "true",
+    );
     nunjucksEnv.addGlobal(
       "May_2025_Rebrand",
       process.env.May_2025_Rebrand == "true",

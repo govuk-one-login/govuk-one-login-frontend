@@ -38,7 +38,6 @@ describe("frontendUiMiddleware", () => {
   });
 });
 
-
 describe("setFrontendUiTranslations", () => {
   describe("when setFrontendUiTranslations is called", () => {
     it("should add default translations to the i18n resource bundle", (done) => {
