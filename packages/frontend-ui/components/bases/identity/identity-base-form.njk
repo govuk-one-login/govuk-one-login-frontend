@@ -10,6 +10,11 @@
     {{- (translate("govuk.error", { default: "Error" }) + ": ") if errorlist.length }}{{ hmpoTitle | safe }}{{ " – " + govukServiceName | safe if govukServiceName !== " " }} – GOV.UK One Login
 {%- endblock %}
 
+{% block head %}
+    <link href="public/stylesheets/application.css" rel="stylesheet">
+    <link href="public/stylesheets/frontend-ui.css" rel="stylesheet">
+{% endblock %}
+
 {% block header %}
   {% block cookieBanner %}
       {{ frontendUiCookieBanner({
