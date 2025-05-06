@@ -56,7 +56,7 @@ When("I click Hide", async function () {
 });
 
 When("I click logo", async function () {
-  await this.page.locator(`span:text-is(" GOV.UK "):visible`).click();
+  await this.page.locator(`a.govuk-header__link--homepage`).click();
   await this.page.waitForLoadState("networkidle"); // Wait for network calls to finish
 });
 

@@ -16,10 +16,6 @@ module.exports = {
       "May_2025_Rebrand",
       process.env.May_2025_Rebrand == "true",
     );
-    nunjucksEnv.addGlobal(
-      "May_2025_Rebrand",
-      process.env.May_2025_Rebrand == "true",
-    );
 
     nunjucksEnv.addFilter("translate", function (key, options) {
       const translate = i18next.getFixedT(this.ctx.language);
