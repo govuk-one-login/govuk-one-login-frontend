@@ -1,0 +1,27 @@
+{% extends "layouts/main.njk" %}
+
+{% set url = "/api" %}
+
+{% block content %}
+
+    <div id="spinner-container"
+         data-initial-heading="Initial heading text"
+         data-initial-spinnerStateText="Initial spinner state text"
+         data-initial-spinnerState="pending"
+         data-error-heading="Error heading"
+         data-error-messageText="Error message text"
+         data-error-whatYouCanDo-heading="Error what you can do heading"
+         data-error-whatYouCanDo-message-text1="Error what you can do message text1"
+         data-error-whatYouCanDo-message-link-href="Error what you can do message link href"
+         data-error-whatYouCanDo-message-link-text="Error what you can do message link text"
+         data-error-whatYouCanDo-message-text2="Error what you can do message link text2"
+         data-complete-spinnerState="complete"
+         data-longWait-spinnerStateText="Long wait spinner state">
+    </div>
+
+{% endblock %}
+
+{% block pageScripts %}
+
+{% endblock %}
+
