@@ -1,0 +1,134 @@
+{% extends "govuk/template.njk" %}
+{% from "common/ga4-opl/macro.njk" import ga4OnPageLoad %}
+{% from "frontend-ui/build/components/cookie-banner/macro.njk" import frontendUiCookieBanner %}
+{% from "frontend-ui/build/components/phase-banner/macro.njk" import frontendUiPhaseBanner %}
+{% from "frontend-ui/build/components/language-select/macro.njk" import frontendUiLanguageSelect %}
+{% from "frontend-ui/build/components/footer/macro.njk" import frontendUiFooter %}
+
+{%- set headerClasses -%}
+  {%- if not hideAccountNavigation -%} govuk-header--with-account-navigation {%- endif -%}
+  {%- if showSignOut -%} govuk-header--right-align-nav {%- endif -%}
+{%- endset -%}
+
+{% block head %}
+  {# Dynatrace RUM snippet #}
+  {% if dynatraceRumUrl %}
+    <script src="{{ dynatraceRumUrl }}" crossorigin="anonymous" nonce="{{ scriptNonce }}"></script>
+  {% endif %}
+  <link href="/public/style.css" rel="stylesheet">
+  <link href="/public/frontend-ui.css" rel="stylesheet">
+
+{% endblock %}
+
+{% block pageTitle %}
+  {%- if error or errors %} 
+    {{ 'general.errorTitlePrefix' | translate }} - 
+  {%- endif -%}
+  {%- if pageTitleName -%}
+    {{ pageTitleName }}
+    {%- if not hideTitleProductName %} - {% endif -%}
+  {% endif -%}
+  {{ 'general.serviceNameTitle' | translate if not hideTitleProductName }}
+{%- endblock %}
+
+{% block bodyStart %}
+  {% block cookieBanner %}
+    {{ frontendUiCookieBanner({
+      translations: translations.translation.cookieBanner
+    }) }}
+  {% endblock %}
+{% endblock %}
+
+{% block header %}
+  {% include 'common/layout/header.njk' %}
+  {% if not hideAccountNavigation and isUserLoggedIn %}
+    {% include 'common/layout/navigation.njk' %}
+  {% endif %}
+{% endblock %}
+
+{% block main %}
+  <div class="govuk-width-container {{ containerClasses }}">
+    {{ frontendUiPhaseBanner({
+      translations: translations.translation.phaseBanner,
+      url: currentUrl,
+      contactUrl: ("[supportUrl]", authFrontEndUrl + "/contact-us-questions?theme=suggestions_feedback")
+    }) if not hidePhaseBanner }}
+
+    {% if showLanguageToggle %}
+      {{ frontendUiLanguageSelect({
+        translations: translations.translation.languageSelect,
+        url: currentUrl,
+        activeLanguage: htmlLang
+      }) }}
+    {% endif %}
+
+    {% block backLinkBlock %}
+      {% if backLink %}
+        <a href="{{ backLink }}" class="govuk-back-link js-back-link">
+          {{ backLinkText }}
+          {{ 'general.back' | translate if not backLinkText }}
+        </a>
+      {% endif %}
+    {% endblock %}
+
+    {% block beforeContent %}{% endblock %}
+
+    <main class="govuk-main-wrapper {{ mainClasses }}" id="main-content" {% if mainLang %} lang="{{ mainLang }}" {% endif %}>
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+
+  {% block feedback %}{% endblock %}
+{% endblock %}
+
+{% block footer %}
+  {{ frontendUiFooter({
+    translations: translations.translation.footer
+  }) }}
+{% endblock %}
+
+{% block bodyEnd %}
+  {% block scripts %}{% endblock %}
+
+  <script type="module" src="/public/scripts/govuk-frontend.min.js" {% if scriptNonce %} nonce="{{ scriptNonce }}"{% endif %}></script>
+
+  <script type="module" {% if scriptNonce %} nonce="{{ scriptNonce }}"{% endif %}>
+    import { initAll } from '/public/scripts/govuk-frontend.min.js';
+    initAll();
+  </script>
+
+  <script type="text/javascript" src="/public/scripts/analytics.js" nonce="{{ scriptNonce }}"></script>
+
+  <script type="text/javascript" nonce="{{ scriptNonce }}">
+    {% if backLinkJS %}
+      var backLink = document.querySelector('.js-back-link');
+      if (backLink) {
+        backLink.addEventListener('click', function(e) {
+          var referrer = new URL(document.referrer).hostname;
+          if (referrer === document.location.hostname && window.history.length > 2) {
+            event.preventDefault();
+            window.history.back();
+          }
+        });
+      }
+    {% endif %}
+  </script>
+
+  <script type="text/javascript" {% if scriptNonce %} nonce="{{ scriptNonce }}"{% endif %}>
+    if (window.DI) {
+      window.DI.appInit({
+        ga4ContainerId: "{{ ga4ContainerId }}"
+      }, {
+        enableGa4Tracking: {{ isGa4Enabled }},
+        cookieDomain: "{{ analyticsCookieDomain }}",
+        isDataSensitive: true,
+        enablePageViewTracking: true,
+        enableFormResponseTracking: true,
+        enableFormChangeTracking: true,
+        enableFormErrorTracking: true,
+        enableNavigationTracking: true,
+        enableSelectContentTracking: {{ isSelectContentTrackingEnabled }}
+      });
+    }
+  </script>
+{% endblock %}
