@@ -1,0 +1,128 @@
+{% extends "govuk/template.njk" %}
+
+{% from "frontend-ui/build/components/phase-banner/macro.njk" import frontendUiPhaseBanner %}
+{% from "frontend-ui/build/components/header/macro.njk" import frontendUiHeader %}
+{% from "frontend-ui/build/components/footer/macro.njk" import frontendUiFooter %}
+{% from "frontend-ui/build/components/language-select/macro.njk" import frontendUiLanguageSelect %}
+{% from "ga4-opl/macro.njk" import ga4OnPageLoad %}
+{% if makeFullWidth %}
+  {% set columnWidth = "full" %}
+{% else %}
+  {% set columnWidth = 'two-thirds' %}
+{% endif %}
+
+{% set phaseBannerHtml %}
+  <span class="govuk-phase-banner__text">
+    {{ 'general.phaseBanner.newService' | translate }}
+    <a class="govuk-link" href="{{supportFormLink}}" data-pw="phase-banner-support-form-link">{{ 'general.phaseBanner.feedback' | translate }}</a>
+    {{ 'general.phaseBanner.helpToImprove' | translate }}
+  </span>
+{% endset %}
+
+{% block head %}
+    <link href="/stylesheets/application.css" rel="stylesheet">
+    <link href="/stylesheets/language-toggle.css" rel="stylesheet">
+    <link href="/stylesheets/frontend-ui.css" rel="stylesheet">
+    <meta name="robots" content="noindex">
+{% endblock %}
+
+{% block pageTitle %}
+    {% if pageTitleName %}
+        {{ pageTitleName }}
+        -
+    {% endif %}
+    {{ 'general.serviceNameTitle' | translate }}
+{% endblock %}
+
+{% block bodyStart %}
+  {% block frontendUiCookieBanner %}
+    {{ frontendUiCookieBanner({
+    translations: translations.translation.cookieBanner
+  }
+  )}}
+  {% endblock %}
+{% endblock %}
+
+{% block header %}
+    {{ frontendUiHeader({
+      translations: translations.translation.header,
+      homepageUrl: "https://www.gov.uk"
+    }) }}
+{% endblock %}
+
+{% block main %}
+  <div class="govuk-width-container {{ containerClasses }}">
+    {% if doNotShowPhaseBanner %}
+    {% else %}
+    {{ frontendUiPhaseBanner({
+      translations: translations.translation.phaseBanner,
+      url: currentUrl,
+      contactUrl: 'https://home.dev.account.gov.uk/contact-gov-uk-one-login'
+    }) }}
+    {% endif %}
+
+    {% if showLanguageToggle %}
+     {{ frontendUiLanguageSelect({
+      translations: translations.translation.languageSelect,
+      url: currentUrl,
+      activeLanguage: htmlLang
+    }) }}
+    {% endif %}
+
+    {% if showBack %}
+      {{ govukBackLink({
+            text: "Back",
+            href: hrefBack
+        }) }}
+    {% endif %}
+    {% if showBackLinkHtml %}
+    <a href="#" id="back-button" class="govuk-back-link">{{'general.buttons.back' | translate}}</a>
+    {% endif %}
+    <main class="govuk-main-wrapper {{ mainClasses }} govuk-!-padding-top-2" id="main-content" role="main" >
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-{{columnWidth}} {{ rowClasses }}">
+            {% block content %}{% endblock %}
+            </div>
+      </div>
+    </main>
+  </div>
+{% endblock %}
+
+{% block footer %}
+  {{ frontendUiFooter({
+    translations: translations.translation.footer
+  }) }}
+{% endblock %}
+
+{% block bodyEnd %}
+  <script type="text/javascript" src="/public/scripts/application.js"></script>
+  <script type="text/javascript" src="/public/scripts/analytics.js" nonce='{{scriptNonce}}'></script>
+  <script type="text/javascript" nonce='{{scriptNonce}}'>
+    window.DI = window.DI || {};
+    window.DI.taxonomy_level2 = '{{taxonomy_level2}}'
+  </script>
+  <script type="text/javascript" {% if scriptNonce %} nonce="{{ scriptNonce }}"{%  endif %}>
+    window
+      .DI
+      .appInit({
+        ga4ContainerId: "{{ga4ContainerId}}",
+        uaContainerId: "{{uaContainerId}}"
+      }, {
+        isDataSensitive: false,
+        disableGa4Tracking: {{isGa4Disabled}},
+        disableUaTracking: {{isUaDisabled}},
+        cookieDomain: "{{analyticsCookieDomain}}"
+      });
+  </script>
+  <script type="text/javascript" nonce='{{scriptNonce}}'>
+    if (document.getElementById('back-button')) 
+      document
+        .getElementById('back-button')
+        .addEventListener('click', (e) => {
+          e.preventDefault();
+          window
+            .history
+            .back()
+        })
+  </script>
+{% endblock %}

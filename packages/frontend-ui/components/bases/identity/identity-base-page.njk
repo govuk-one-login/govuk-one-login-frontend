@@ -11,15 +11,14 @@
 {%- endblock %}
 
 {% block header %}
-
-  {% block frontendUiCookieBanner %}
-          {{ frontendUiCookieBanner({
+  {% block cookieBanner %}
+      {{ frontendUiCookieBanner({
     translations: translations.cookieBanner
   }
   )}}
   {% endblock %}
 
-  {% block frontendUiHeader %}
+  {% block header %}
     {{ frontendUiHeader({
       translations: translations.header,
       homepageUrl: "https://www.gov.uk"
