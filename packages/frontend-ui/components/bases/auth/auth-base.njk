@@ -39,55 +39,44 @@
 {% endblock %}
 
 {% block bodyStart %}
-  {% include 'common/layout/banner.njk' %}
+  {% block cookieBanner %}
+    {{ frontendUiCookieBanner({
+      translations: translations.translation.cookieBanner
+    }) }}
+  {% endblock %}
 {% endblock %}
 
 {% set phaseBannerClasses = "test-banner" if showTestBanner %}
 
 {% block header %}
-  {% if strategicAppChannel %}
-    {{ strategicAppHeader({
-      useTudorCrown: true,
-      classes: phaseBannerClasses
-    }) }}
-  {% else %}
     {{ frontendUiHeader({
       translations: translations.translation.header,
-      homepageUrl: "https://www.gov.uk"
+      homepageUrl: "https://www.gov.uk",
+      classes: phaseBannerClasses
     }) }}
-  {% endif %}
 {% endblock %}
 
-{% set phaseBannerText %}
   {% if showTestBanner %}
-    {{ 'general.phaseBanner.testEnvironmentMessage' | translate }}
+    {% set phaseBannerText = 'general.phaseBanner.testEnvironmentMessage' | translate %}
   {% else %}
-    {{ 'general.phaseBanner.message.start' | translate }}
-    <a href="{{ contactUsLinkUrl }}" class="govuk-link" rel="noopener" target="_blank">
-      {{ 'general.phaseBanner.message.linkText' | translate }}
-    </a>
-    {{ 'general.phaseBanner.message.end' | translate }}
+    {% set phaseBannerText = 'phaseBanner.text' | translate %}
   {% endif %}
-{% endset %}
 
-{% set phaseBannerTagText %}
   {% if showTestBanner %}
-    {{ 'general.phaseBanner.tag.test' | translate }}
+    {% set phaseBannerTag = 'general.phaseBanner.tag.test' | translate %}
   {% else %}
-    {{ "general.phaseBanner.tag.beta" | translate }}
+     {% set phaseBannerTag = 'general.phaseBanner.tag.beta' | translate %}
   {% endif %}
-{% endset %}
 
 {% block main %}
   <div class="govuk-width-container {{ containerClasses }}">
-    {% if strategicAppChannel === true %}
-    {% else %}
       {{ frontendUiPhaseBanner({
         translations: translations.translation.phaseBanner,
         url: currentUrl,
-        contactUrl: contactUsLinkUrl
+        contactUrl: contactUsLinkUrl,
+        tag: phaseBannerTag,
+        phaseBannerText: phaseBannerText
       }) }}
-    {% endif %}
     {% block beforeContent %}{% endblock %}
     {% if languageToggleEnabled %}
       {{ frontendUiLanguageSelect({
