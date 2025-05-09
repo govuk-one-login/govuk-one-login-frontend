@@ -3,7 +3,62 @@ import { NextFunction, Request, Response } from "express";
 import translationCy from "../locales/cy/translation.json";
 import translationEn from "../locales/en/translation.json";
 import path from "path";
-import { readFileSync } from "fs";
+import { existsSync, readFileSync,  } from "fs";
+
+
+// Define types for Express and non-Express versions
+interface I18nData {
+  language: string;
+  store: {
+    data: { [key: string]: unknown };
+  };
+}
+
+interface ExpressRequest extends Request {
+  i18n: I18nData;
+}
+
+interface ExpressResponse extends Response {
+  locals: {
+    translations: unknown;
+    basePath?: string;
+  };
+}
+
+interface PlainRequest {
+  i18n: I18nData;
+}
+
+interface PlainResponse {
+  locals: {
+    translations: unknown;
+    basePath?: string;
+  };
+}
+
+// Overload signatures
+export function frontendUiMiddleware(
+  req: ExpressRequest,
+  res: ExpressResponse,
+  next: NextFunction,
+): void;
+
+export function frontendUiMiddleware(
+  req: PlainRequest,
+  res: PlainResponse,
+  next: NextFunction,
+): void;
+
+// Implementation
+export function frontendUiMiddleware(
+  req: ExpressRequest | PlainRequest,
+  res: ExpressResponse | PlainResponse,
+  next: NextFunction
+): void {
+  res.locals.translations = req.i18n.store.data[req.i18n.language];
+  res.locals.basePath = process.cwd();
+    next();
+}
 
 export const setFrontendUiTranslations = (instanceI18n: typeof i18next) => {
   instanceI18n.addResourceBundle(
@@ -22,30 +77,19 @@ export const setFrontendUiTranslations = (instanceI18n: typeof i18next) => {
   );
 };
 
-export const frontendUiMiddleware = (
-  req: Request & {
-    i18n: { language: string; store: { data: { [key: string]: unknown } } };
-  },
-  res: Response & { locals: { translations: unknown } },
-  next: NextFunction
-) => {
-  res.locals.translations = req.i18n.store.data[req.i18n.language];
-  next();
-};
 
 export const frontendUiMiddlewareIdentityBypass = (
-  req: Request & {
-    i18n: {
-      language: "en" | "cy"
-  }},
-  res: Response & { locals: { translations: unknown } },
-  next: NextFunction
+  req: ExpressRequest,
+  res: ExpressResponse,
+  next: NextFunction,
 ) => {
-    const localTranslations = {
+  const localTranslations = {
     en: translationEn,
-    cy: translationCy
+    cy: translationCy,
   };
-  res.locals.translations = localTranslations[req.i18n.language];
+  const language = req.i18n.language as keyof typeof localTranslations;
+  res.locals.translations = localTranslations[language] || {};
+  res.locals.basePath = process.cwd();
   next();
 };
 
@@ -69,29 +113,43 @@ export function contactUsUrl(baseUrl: string, urlToAppend: string) {
   return `${baseUrl}?${searchParams.toString()}`;
 }
 
-export const setBaseTranslations = (instanceI18n: typeof i18next) => {
-  instanceI18n.addResourceBundle(
-    'cy',
-    "translation",
-    getTranslationObject('cy')
-  );
-  instanceI18n.addResourceBundle(
-    'en',
-    "translation",
-    getTranslationObject('en')
-  );
+export const setBaseTranslations = (
+  instanceI18n: typeof i18next,
+  filePath?: string,
+) => {
+  ["cy", "en"].forEach((locale) => {
+    instanceI18n.addResourceBundle(
+      locale,
+      "translation",
+      getTranslationObject(locale, filePath),
+    );
+  });
 };
 
-export const getTranslationObject = (locale: string): Record<string, unknown> => {
-  const translations = JSON.parse(
-    readFileSync(
-      path.resolve("locales", locale, "translation.json"), // Resolve path from the root
-      "utf8"
-    )
-  );
-  return {
-    ...translations,
-  };
+export const getTranslationObject = (
+  locale: string,
+  filepath?: string,
+): Record<string, unknown> => {
+  const possiblePaths = [
+    path.resolve("locales", locale, "translation.json"),
+    path.resolve("src/locales", locale, "translation.json"),
+    path.resolve(filepath ?? "", locale, "translation.json"),
+  ];
+
+  for (const filePath of possiblePaths) {
+    if (existsSync(filePath)) {
+      try {
+        const fileContent = readFileSync(filePath, "utf8");
+        return JSON.parse(fileContent);
+      } catch (error) {
+        console.error(
+          `Error reading or parsing translation file at ${filePath}:`,
+          error,
+        );
+      }
+    }
+  }
+
+  console.warn(`No translation file found for locale: ${locale}`);
+  return {}; // Return an empty object as a fallback
 };
-
-
