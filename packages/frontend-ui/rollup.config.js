@@ -21,6 +21,7 @@ export default [
       typescript(),
       copy({
         targets: [
+          { src: "./build/cjs/index.d.ts", dest: "./build/cjs/", rename: "index.d.cts" },
           { src: "./src/macro.njk", dest: "./build" },
           { src: "./src/template.njk", dest: "./build" },
           { src: "./src/header.yaml", dest: "./build" },

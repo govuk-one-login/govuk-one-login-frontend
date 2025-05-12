@@ -10,7 +10,11 @@
   }) | indent(4) | trim }}
 
   <span class="govuk-phase-banner__text">
+    {% if params.phaseBannerText %}
+    {{ params.phaseBannerText }}
+    {% else %}
     {{ phaseBanner.text }}
+    {% endif %}
     <a class="govuk-link"
        rel="noopener"
        target="_blank"

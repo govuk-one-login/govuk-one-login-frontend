@@ -1,6 +1,7 @@
 {% extends "govuk/template.njk" %}
 
 {% from "frontend-ui/build/components/phase-banner/macro.njk" import frontendUiPhaseBanner %}
+{% from "frontend-ui/build/components/cookie-banner/macro.njk" import frontendUiCookieBanner %}
 {% from "frontend-ui/build/components/header/macro.njk" import frontendUiHeader %}
 {% from "frontend-ui/build/components/footer/macro.njk" import frontendUiFooter %}
 {% from "frontend-ui/build/components/language-select/macro.njk" import frontendUiLanguageSelect %}
@@ -11,13 +12,6 @@
   {% set columnWidth = 'two-thirds' %}
 {% endif %}
 
-{% set phaseBannerHtml %}
-  <span class="govuk-phase-banner__text">
-    {{ 'general.phaseBanner.newService' | translate }}
-    <a class="govuk-link" href="{{supportFormLink}}" data-pw="phase-banner-support-form-link">{{ 'general.phaseBanner.feedback' | translate }}</a>
-    {{ 'general.phaseBanner.helpToImprove' | translate }}
-  </span>
-{% endset %}
 
 {% block head %}
     <link href="/stylesheets/application.css" rel="stylesheet">
