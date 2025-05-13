@@ -1,3 +1,32 @@
+## 1.1.0 (2025-05-13)
+
+### 🚀 Features
+
+- **728:** added overload for functions and edited basefiles, configured rollup for js ([36d80ec](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/36d80ec))
+- **830,832,833:** adding basefiles and cleaning up previous basefiles ([f61f5f3](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/f61f5f3))
+- **831:** added ipvcore base, new functions, updated integration tests ([7c0b3b8](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/7c0b3b8))
+- **dfc-736:** remove dependecy ([065c281](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/065c281))
+- **dfc-736:** spinner switch to js due to roll up errors and parsing not compatible with ts ([e785ab8](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/e785ab8))
+- **dfc-736:** loading spinner ([c0625f8](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/c0625f8))
+- **dfc-736:** remove dependecy ([3efeccc](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/3efeccc))
+- **dfc-736:** spinner switch to js due to roll up errors and parsing not compatible with ts ([afd0c25](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/afd0c25))
+- **dfc-736:** loading spinner ([13cbd47](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/13cbd47))
+- **838:** updated env to read as boolean value ([675d3c6](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/675d3c6))
+- **838:** added env variable for toggle between versions ([e4730bc](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/e4730bc))
+
+### 🩹 Fixes
+
+- updated express to peerDependency ([4b569a4](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/4b569a4))
+- updated header template to support potentially needed params ([a74e0bf](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/a74e0bf))
+- updated the basefiles to include links to the frontend-ui css ([93f8be3](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/93f8be3))
+- updated the basefiles to include links to the frontend-ui css ([#183](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/183))
+- updated header template to support potentially needed params ([39ccef2](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/39ccef2))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+- ug-gds
+
 ## 1.0.2 (2025-04-25)
 
 ### 🚀 Features
