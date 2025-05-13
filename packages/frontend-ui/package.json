@@ -53,9 +53,11 @@
     "typescript": "5.8.2"
   },
   "dependencies": {
-    "express": "5.1.0",
     "js-yaml": "^4.1.0",
     "pino": "8.20.0"
+  },
+  "peerDependencies": {
+    "express": "^5.1.0 || >= 4.21.2"
   },
   "exports": {
     ".": {
