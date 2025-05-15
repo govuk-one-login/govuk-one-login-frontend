@@ -1,3 +1,12 @@
+declare global {
+  interface Window {
+    dtrum?: {
+      enable: () => void;
+      disable: () => void;
+    };
+  }
+}
+
 export class Cookie {
   public consent: boolean = false;
   public hasCookie: boolean = false;
@@ -30,6 +39,7 @@ export class Cookie {
     );
     if (savedCookiePreference) {
       this.consent = this.hasConsentForAnalytics();
+      this.initDynatrace(this.consent);
       this.hideElement(this.cookieBannerContainer[0] as HTMLElement);
     } else {
       // add event listeners
@@ -51,6 +61,18 @@ export class Cookie {
       });
 
       this.showElement(this.cookieBannerContainer[0] as HTMLElement);
+    }
+
+    if (!this.consent) {
+      window.addEventListener(
+        "cookie-consent",
+        () => {
+          const newConsent = this.hasConsentForAnalytics();
+          this.initDynatrace(newConsent);
+          console.log("consent event recieved from Dynatrace");
+        },
+        { once: true },
+      );
     }
   }
 
@@ -108,17 +130,14 @@ export class Cookie {
     if (analyticsConsent === true) {
       if (this.cookiesAccepted) {
         this.showElement(this.cookiesAccepted);
+        console.log("accepted the cookies and it fired an event");
       }
 
-      let event;
-      if (typeof window.CustomEvent === "function") {
-        event = new window.CustomEvent("cookie-consent");
-      } else {
-        event = new CustomEvent("cookie-consent");
-      }
+      const event = new CustomEvent("cookie-consent");
       window.dispatchEvent(event);
     } else if (this.cookiesRejected) {
       this.showElement(this.cookiesRejected);
+      console.log("Dynatrace didn't get set so its disabled");
     }
   }
 
@@ -216,6 +235,22 @@ export class Cookie {
     }
     if (!element?.classList.contains(this.SHOWN_CLASS)) {
       element?.classList.add(this.SHOWN_CLASS);
+    }
+  }
+
+  /**
+   * Enables/disables Dynatrace accordingly to the user consent from the cookie.
+   * @param {boolean} hasConsentedForAnalytics
+   */
+  initDynatrace(hasConsentedForAnalytics: boolean): void {
+    if (window.dtrum) {
+      if (hasConsentedForAnalytics) {
+        window.dtrum.enable();
+        console.log(window.dtrum, "ENABLED!!!");
+      } else {
+        window.dtrum.disable();
+        console.log(window.dtrum, "DISABLED :( ");
+      }
     }
   }
 }
