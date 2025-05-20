@@ -1,9 +1,17 @@
+{% if May_2025_Rebrand %}
+{%set htmlClasses = 'govuk-template--rebranded'%}
+{% endif %}
+
 {% extends "govuk/template.njk" %}
 
 {% block head %}
   <link rel="stylesheet" href="/stylesheets/{{ assets['stylesheet.css'] }}"/>
   <link rel="stylesheet" href="/stylesheets/{{ assets['application.css'] }}"/>
-  <link rel="stylesheet" href="/stylesheets/application-frontendUi.css"/>
+  {% if May_2025_Rebrand %}
+  <link rel="stylesheet" href="/stylesheets/application-frontendUi-V5.css"/>
+  {% else %}
+  <link rel="stylesheet" href="/stylesheets/application-frontendUi-V4.css"/>
+  {% endif %}
 {% endblock %}
 
 
@@ -56,7 +64,7 @@
     {% block backLink %}{% endblock %}
 
     <main id="main-content" class="govuk-main-wrapper govuk-!-padding-top-3" >
-    {{frontendUiSpinner()}}
+    {# {{frontendUiSpinner()}} #}
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
           {% block content %}{% endblock %}

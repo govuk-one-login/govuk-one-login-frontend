@@ -54,7 +54,9 @@
   },
   "dependencies": {
     "js-yaml": "^4.1.0",
-    "pino": "8.20.0"
+    "pino": "8.20.0",
+    "@govuk-frontend/V4": "npm:govuk-frontend@^4.9.0",
+    "@govuk-frontend/V5": "npm:govuk-frontend@^5.10.1"
   },
   "peerDependencies": {
     "express": "^5.1.0 || >= 4.21.2"

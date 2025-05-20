@@ -73,6 +73,7 @@ const APP_VIEWS = [
   path.join(__dirname, "views"),
   path.join(__dirname, "components"),
   nodeModules("govuk-frontend/"),
+  nodeModules("@govuk-frontend/"),
   nodeModules("@govuk-one-login"),
 ];
 
