@@ -69,7 +69,6 @@ export class Cookie {
         () => {
           const newConsent = this.hasConsentForAnalytics();
           this.initDynatrace(newConsent);
-          console.log("consent event recieved from Dynatrace");
         },
         { once: true },
       );
@@ -130,14 +129,12 @@ export class Cookie {
     if (analyticsConsent === true) {
       if (this.cookiesAccepted) {
         this.showElement(this.cookiesAccepted);
-        console.log("accepted the cookies and it fired an event");
       }
 
       const event = new CustomEvent("cookie-consent");
       window.dispatchEvent(event);
     } else if (this.cookiesRejected) {
       this.showElement(this.cookiesRejected);
-      console.log("Dynatrace didn't get set so its disabled");
     }
   }
 
@@ -246,10 +243,8 @@ export class Cookie {
     if (window.dtrum) {
       if (hasConsentedForAnalytics) {
         window.dtrum.enable();
-        console.log(window.dtrum, "ENABLED!!!");
       } else {
         window.dtrum.disable();
-        console.log(window.dtrum, "DISABLED :( ");
       }
     }
   }
