@@ -1,0 +1,8 @@
+.govuk-footer {
+    background: #f4f8fb;
+}
+
+.govuk-footer__copyright-logo::before {
+    mask-image: url("../images/govuk-crest.svg") !important;
+}
+

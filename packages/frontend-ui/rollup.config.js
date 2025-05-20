@@ -70,6 +70,14 @@ export default [
         fileName: "all-v5.css",
         outputStyle: "compressed",
       }),
+      copy({
+        targets: [
+          {
+            src: 'node_modules/govuk-frontend/dist/govuk/assets/images/*',
+            dest: 'public/govuk/assets/images',
+          },
+        ],
+      }),
     ],
   },
 ];
