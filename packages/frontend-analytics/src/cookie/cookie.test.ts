@@ -212,3 +212,37 @@ describe("Dynamic Cookie Domain Assignment", () => {
     expect(instance.cookieDomain).toBe("account.gov.uk");
   });
 });
+
+describe("Dynatrace Implementation", () => {
+  const cookieDomain = "";
+
+  let enableMock: jest.Mock;
+  let disableMock: jest.Mock;
+
+  beforeEach(() => {
+    enableMock = jest.fn();
+    disableMock = jest.fn();
+
+    /* eslint-disable @typescript-eslint/no-explicit-any */
+    (window as unknown as { dtrum: any }).dtrum = {
+      enable: enableMock,
+      disable: disableMock,
+    };
+  });
+
+  test("Dynatrace when consent is accepted", () => {
+    const instance = new Cookie(cookieDomain);
+    instance.initDynatrace(true);
+
+    expect(enableMock).toHaveBeenCalledTimes(2);
+    expect(disableMock).not.toHaveBeenCalled();
+  });
+
+  test("Dynatrace when consent is rejected", () => {
+    const instance = new Cookie(cookieDomain);
+    instance.initDynatrace(false);
+
+    expect(disableMock).toHaveBeenCalledTimes(1);
+    expect(enableMock).toHaveBeenCalledTimes(1);
+  });
+});
