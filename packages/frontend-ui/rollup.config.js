@@ -49,13 +49,25 @@ export default [
     ],
   },
   {
-    input: "./src/all.scss",
+    input: "./src/all-v4.scss",
     output: {
-      file: "build/all.css",
+      file: "build/all-v4.css",
     },
     plugins: [
       scss({
-        fileName: "all.css",
+        fileName: "all-v4.css",
+        outputStyle: "compressed",
+      }),
+    ],
+  },
+  {
+    input: "./src/all-v5.scss",
+    output: {
+      file: "build/all-v5.css",
+    },
+    plugins: [
+      scss({
+        fileName: "all-v5.css",
         outputStyle: "compressed",
       }),
     ],
