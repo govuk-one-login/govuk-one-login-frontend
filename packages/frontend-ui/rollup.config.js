@@ -64,15 +64,8 @@ export default [
   },
     {
     input: "./src/allV5.scss",
-    output: {
-      file: "build/allV5.css",
-    },
-    plugins: [
-      scss({
-        fileName: "allV5.css",
-        outputStyle: "compressed",
-      }),
-    ],
+    output: { file: "build/allV5.css" },
+    plugins: [scss({ fileName: "allV5.css", outputStyle: "compressed"})],
     onwarn,
   },
 ];
