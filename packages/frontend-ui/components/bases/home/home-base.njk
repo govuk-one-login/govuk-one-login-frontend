@@ -6,6 +6,10 @@
 {% from "frontend-ui/build/components/language-select/macro.njk" import frontendUiLanguageSelect %}
 {% from "frontend-ui/build/components/footer/macro.njk" import frontendUiFooter %}
 
+{% if May_2025_Rebrand %}
+{%set htmlClasses = 'govuk-template--rebranded'%}
+{% endif %}
+
 
 {% block head %}
   {# Dynatrace RUM snippet #}
@@ -13,7 +17,7 @@
     <script src="{{ dynatraceRumUrl }}" crossorigin="anonymous" nonce="{{ scriptNonce }}"></script>
   {% endif %}
   <link href="/public/style.css" rel="stylesheet">
-  <link href="/public/frontend-ui.css" rel="stylesheet">
+  <link rel="stylesheet" href="/public/frontendUi.css"/>
 
 {% endblock %}
 

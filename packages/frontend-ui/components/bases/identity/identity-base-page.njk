@@ -6,6 +6,14 @@
 {% from "frontend-ui/build/components/footer/macro.njk" import frontendUiFooter %}
 {% from "frontend-ui/build/components/language-select/macro.njk" import frontendUiLanguageSelect %}
 
+{% if May_2025_Rebrand %}
+{%set htmlClasses = 'govuk-template--rebranded'%}
+{% endif %}
+
+{% block head %}
+  <link rel="stylesheet" href="/public/stylesheets/application.css"/>
+{% endblock %}
+
 {%- block pageTitle %}
   {{- (translate("govuk.error", { default: "Error" }) + ": ") if errorlist.length }}{{ hmpoTitle | safe }}{{ " – " + govukServiceName | safe if govukServiceName !== " " }} – GOV.UK One Login
 {%- endblock %}
@@ -18,7 +26,7 @@
   )}}
   {% endblock %}
 
-  {% block header %}
+  {% block govukHeader %}
     {{ frontendUiHeader({
       translations: translations.header,
       homepageUrl: "https://www.gov.uk"

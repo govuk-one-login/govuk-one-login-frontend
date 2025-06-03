@@ -7,6 +7,10 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "frontend-ui/build/components/language-select/macro.njk" import frontendUiLanguageSelect %}
 
+{% if May_2025_Rebrand %}
+{%set htmlClasses = 'govuk-template--rebranded'%}
+{% endif %}
+
 {% if strategicAppChannel == true %}
   {% set htmlClasses = 'govuk-template__mobile' %}
 {% endif %}
@@ -14,7 +18,7 @@
 {% block head %}
   <!--[if !IE 8]><!-->
   <link href="/public/style.css" rel="stylesheet">
-  <link href="/public/frontend-ui.css" rel="stylesheet">
+  <link rel="stylesheet" href="/public/frontendUi.css"/>
   <!--<![endif]-->
 
   <!--[if IE 8]>

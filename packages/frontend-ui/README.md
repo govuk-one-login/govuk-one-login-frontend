@@ -27,7 +27,7 @@ app.set(
  'view engine',
  configureNunjucks(app, [
     // ... other view paths ...
-    path.resolve('node_modules/@govuk-one-login/frontend-ui'),
+    path.resolve('node_modules/@govuk-one-login/frontend-ui')
   ]),
 );
 ```
@@ -44,13 +44,17 @@ const frontendUi = require("@govuk-one-login/frontend-ui");
 
 nunjucksEnv.addGlobal("addLanguageParam", frontendUi.addLanguageParam);
 nunjucksEnv.addGlobal("contactUsUrl", frontendUi.contactUsUrl);
+nunjucksEnv.addGlobal("May_2025_Rebrand", process.env.May_2025_Rebrand == "true");
 ```
 Typescript:
 ```typescript
 import {contactUsUrl, addLanguageParam } from "@govuk-one-login/frontend-ui";
 nunjucksEnv.addGlobal("addLanguageParam", addLanguageParam);
 nunjucksEnv.addGlobal("contactUsUrl", contactUsUrl);
+nunjucksEnv.addGlobal("May_2025_Rebrand", process.env.May_2025_Rebrand == "true");
 ```
+
+In order to use the `May_2025_Rebrand` variable you will need to create or add to your `.env` file the following `May_2025_Rebrand=`[true/false]
 
 ### 4. Load Translations and Configure Middleware
 
@@ -58,6 +62,7 @@ In your `app.js`, import necessary functions and load translations after initial
 
 ```javascript
 const {
+setBaseTranslations
  setFrontendUiTranslations,
  frontendUiMiddleware,
 } = require('@govuk-one-login/frontend-ui');
@@ -74,8 +79,6 @@ i18next
       ),
     },
     (err) => {
-      // Load Frontend UI translations after i18next initialization and pass current instance of i18next
-      setFrontendUiTranslations(i18next); 
 
       if (err) {
         console.error('i18next init failed:', err);
@@ -84,6 +87,9 @@ i18next
   );
 
 // Apply the middleware
+setBaseTranslations(i18next);
+setFrontendUiTranslations(i18next); 
+app.use(i18nextMiddleware.handle(i18next));
 app.use(frontendUiMiddleware);
 
 // For Identity teams a language setting bypass may be required, first import the bypass function and then configure router to use the new function at the top of your router.use functions
@@ -116,19 +122,39 @@ or
 ```
 
 ### 6. Import all.css
-Import the css into your service in the `package.json` via the `build-sass` script
+Import the css into your service in the `package.json` via the `build-sass` script.
 ```
-sass --no-source-map node_modules/@govuk-one-login/frontend-ui/build/all.css *destination*/frontend-ui.css --style compressed"
+sass --no-source-map ../../node_modules/@govuk-one-login/frontend-ui/build/all.css [WhereYouStoreStyleSheets]/frontendUi.css --style compressed"
 ```
 
-include a link to this in your template file
+You will also need to add the following in order to ensure that the assets all load properly across the basefiles
+```
+"cp -R ../../node_modules/@govuk-one-login/frontend-ui/build/frontendUiAssets [OneLevelAboveWhereYouStoreStyleSheets/SameFolderAsStyleSheets]/"
+```
+
+include a link to this in your template file, this has been done in the created basefiles already
 ```html
 {% block head %}
      '''
-    <link href="/stylesheets/frontend-ui.css" rel="stylesheet">
+  <link rel="stylesheet" href="/[WhereYouStoreStyleSheets]/frontendUi.css"/>
 {% endblock %}
 ```
 
+Or alternatively you can import the frontend-ui all.css directly into your exisiting css file if you are having a 'flickering' issue
+``` scss
+$govuk-assets-path: "/public/";
+$hmpo-summary-list: false;
+
+@import "../../../node_modules/govuk-frontend/govuk/all";
+@import "../../../node_modules/hmpo-components/all";
+@import "../../../node_modules/@govuk-one-login/frontend-language-toggle/stylesheet/styles";
+@import "../../../node_modules/accessible-autocomplete/dist/accessible-autocomplete.min";
+@import "components/button-spinner";
+@import "components/country-picker";
+
+@import "../../../node_modules/@govuk-one-login/frontend-ui/build/all.css"; // <--- HERE>
+
+```
 
 ### 7. Add Component to Template
 
