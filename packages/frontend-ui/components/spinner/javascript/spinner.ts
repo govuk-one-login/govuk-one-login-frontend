@@ -1,3 +1,4 @@
+import { virtualDom } from "../utils/types";
 export const WaitInteractions = (() => {
   const content = {
     initial: {
@@ -14,7 +15,7 @@ export const WaitInteractions = (() => {
 
   const timers = {};
 
-  const createVirtualDom = () => {
+  const createVirtualDom: virtualDom = () => {
     const initialState = [
       {
         nodeName: "div",
