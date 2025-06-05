@@ -4,7 +4,8 @@
   "scripts": {
     "start": "npm-run-all build-sass --parallel dev",
     "dev": "node --watch src/app.js",
-    "build-sass": "rm -rf public/styles.css && sass --no-source-map ../../node_modules/@govuk-one-login/frontend-language-toggle/src/stylesheet/styles.css public/stylesheets/application-ifsdjkn.css --style compressed && sass --no-source-map ../../node_modules/@govuk-one-login/frontend-ui/build/all.css public/stylesheets/application-frontendUi.css --style compressed",
+    "build-assets": "cp -R ../../node_modules/@govuk-one-login/frontend-ui/build/frontendUiAssets public/",
+    "build-sass": "rm -rf public/styles.css && sass --no-source-map ../../node_modules/@govuk-one-login/frontend-language-toggle/src/stylesheet/styles.css public/stylesheets/application-ifsdjkn.css --style compressed && sass --no-source-map ../../node_modules/govuk-frontend/govuk/all.scss public/stylesheets/govuk-frontend.css --style compressed && sass --no-source-map ../../node_modules/@govuk-one-login/frontend-ui/build/all.css public/stylesheets/frontendUi.css --style compressed",
     "serve": "nodemon serve",
     "precommit": "npm run test && npm run format && git add .",
     "prod": "export NODE_ENV=production && node src/app.js",
@@ -25,7 +26,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
     "express-session": "^1.18.1",
-    "govuk-frontend": "^4.9.0",
+    "govuk-frontend": "4.10.0",
     "i18next": "^23.16.8",
     "i18next-fs-backend": "^2.6.0",
     "i18next-http-middleware": "^3.7.1",
@@ -46,7 +47,7 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "husky": "^8.0.3",
     "npm-run-all": "^4.1.5",
-    "playwright": "1.51.1",
+    "playwright": "1.47.2",
     "prettier": "3.5.3",
     "sass": "^1.79.4",
     "start-server-and-test": "2.0.11"

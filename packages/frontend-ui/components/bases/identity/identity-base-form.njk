@@ -1,10 +1,18 @@
-{% extends "form-template.njk" %}
+{% extends "hmpo-template.njk" %}
 
 {% from "frontend-ui/build/components/cookie-banner/macro.njk" import frontendUiCookieBanner %}
 {% from "frontend-ui/build/components/phase-banner/macro.njk" import frontendUiPhaseBanner %}
 {% from "frontend-ui/build/components/header/macro.njk" import frontendUiHeader %}
 {% from "frontend-ui/build/components/footer/macro.njk" import frontendUiFooter %}
 {% from "frontend-ui/build/components/language-select/macro.njk" import frontendUiLanguageSelect %}
+
+{% if May_2025_Rebrand %}
+{%set htmlClasses = 'govuk-template--rebranded'%}
+{% endif %}
+
+{% block head %}
+  <link rel="stylesheet" href="/public/stylesheets/application.css"/>
+{% endblock %}
 
 {%- block pageTitle %}
   {{- (translate("govuk.error", { default: "Error" }) + ": ") if errorlist.length }}{{ hmpoTitle | safe }}{{ " – " + govukServiceName | safe if govukServiceName !== " " }} – GOV.UK One Login
@@ -18,7 +26,7 @@
   )}}
   {% endblock %}
 
-  {% block header %}
+  {% block govukHeader %}
     {{ frontendUiHeader({
       translations: translations.header,
       homepageUrl: "https://www.gov.uk"
@@ -49,7 +57,6 @@
   {% endblock %}
 {% endblock %}
 
-
 {% block footer %}
   {{ frontendUiFooter({
     translations: translations.footer
@@ -64,19 +71,19 @@
       window.GOVUKFrontend.initAll()
       window.DI.appInit({
         ga4ContainerId: "{{ga4ContainerId}}",
-        uaContainerId:"{{uaContainerId}}"},{
-          enableGa4Tracking:{{ga4Enabled}},
-          enableUaTracking:{{uaEnabled}},
-          enablePageViewTracking:{{ga4PageViewEnabled}},
-          enableFormErrorTracking:{{ga4FormErrorEnabled}},
-          enableFormChangeTracking:{{ga4FormChangeEnabled}},
-          enableFormResponseTracking:{{ga4FormResponseEnabled}},
-          enableNavigationTracking:{{ga4NavigationEnabled}},
-          enableSelectContentTracking:{{ga4SelectContentEnabled}},
-          cookieDomain:"{{analyticsCookieDomain}}",
-          isDataSensitive:{{analyticsDataSensitive}}
-        }
-      );
+        uaContainerId:"{{uaContainerId}}"
+      },{
+        enableGa4Tracking:{{ga4Enabled}},
+        enableUaTracking:{{uaEnabled}},
+        enablePageViewTracking:{{ga4PageViewEnabled}},
+        enableFormErrorTracking:{{ga4FormErrorEnabled}},
+        enableFormChangeTracking:{{ga4FormChangeEnabled}},
+        enableFormResponseTracking:{{ga4FormResponseEnabled}},
+        enableNavigationTracking:{{ga4NavigationEnabled}},
+        enableSelectContentTracking:{{ga4SelectContentEnabled}},
+        cookieDomain:"{{analyticsCookieDomain}}",
+        isDataSensitive:{{analyticsDataSensitive}}
+      });
     </script>
   {% endblock %}
 {% endblock %}

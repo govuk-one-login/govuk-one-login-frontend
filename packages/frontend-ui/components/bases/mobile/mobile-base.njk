@@ -6,6 +6,11 @@
 {% from "frontend-ui/build/components/footer/macro.njk" import frontendUiFooter %}
 {% from "frontend-ui/build/components/language-select/macro.njk" import frontendUiLanguageSelect %}
 {% from "ga4-opl/macro.njk" import ga4OnPageLoad %}
+
+{% if May_2025_Rebrand %}
+{%set htmlClasses = 'govuk-template--rebranded'%}
+{% endif %}
+
 {% if makeFullWidth %}
   {% set columnWidth = "full" %}
 {% else %}
@@ -18,6 +23,8 @@
     <link href="/stylesheets/language-toggle.css" rel="stylesheet">
     <link href="/stylesheets/frontend-ui.css" rel="stylesheet">
     <meta name="robots" content="noindex">
+
+  <link rel="stylesheet" href="/stylesheets/frontendUi.css"/>
 {% endblock %}
 
 {% block pageTitle %}

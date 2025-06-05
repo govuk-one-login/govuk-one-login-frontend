@@ -55,7 +55,8 @@
   },
   "header": {
     "signOut": "Allgofnodi",
-    "ariaLabel": "GOV.UK One Login dewislen"
+    "ariaLabel": "GOV.UK One Login dewislen",
+    "signOutAriaLabel": "Allgofnodwch o'ch GOV.UK One Login"
   },
   "languageSelect": {
     "ariaLabel": "Switcher iaith"
