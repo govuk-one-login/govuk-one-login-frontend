@@ -51,7 +51,9 @@ describe("phaseBanner Component", () => {
     };
 
     const template = `{% from "phase-banner/macro.njk" import govukPhaseBanner %}{{ govukPhaseBanner(params) }}`;
-    const renderedComponent = renderInline(template, { params: contactUrlOnlyParams });
+    const renderedComponent = renderInline(template, {
+      params: contactUrlOnlyParams,
+    });
     const results = await axe(renderedComponent.outerHTML);
     expect(results).toHaveNoViolations();
   });

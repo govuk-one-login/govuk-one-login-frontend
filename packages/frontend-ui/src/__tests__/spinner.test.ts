@@ -7,7 +7,6 @@ import { renderInline } from "../../test/jestHelper";
 expect.extend(toHaveNoViolations);
 
 describe("Spinner Component", () => {
-
   it("has no accessibility violations", async () => {
     const template = `{% block content %}
         {% set url = "/api?processingTime=2" %}
