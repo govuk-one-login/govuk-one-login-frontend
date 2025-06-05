@@ -1,6 +1,6 @@
-module.exports = {
+export default {
   collectCoverage: true,
   preset: "ts-jest",
-  roots: ["<rootDir>/src/", "<rootDir>/scripts/"],
-  testEnvironment: "node",
+  setupFiles: ["<rootDir>/test/jest.setup.ts"],
+  testEnvironment: "jsdom",
 };
