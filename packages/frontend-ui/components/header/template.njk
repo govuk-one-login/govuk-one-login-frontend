@@ -24,7 +24,7 @@
         </div>
         {% if params.signOutLink %}
           <div class="frontendUi-header__content govuk-header__content">
-            <nav aria-label="{{ params.navigationLabel | default(menuButtonText) }}" class="govuk-header__navigation {{ govuk-header__navigation--signOut if params.May_2025_Rebrand }}">
+            <nav aria-label="{{header.ariaLabel}}" class="govuk-header__navigation {{ govuk-header__navigation--signOut if params.May_2025_Rebrand }}">
               <ul id="navigation" class="frontendUi_header__signOut govuk-header__navigation-list">
                 <li class="{{ 'frontendUi_header_signOut-item--rebrand' if May_2025_Rebrand }} {{'frontendUi_header_signOut-item' if not May_2025_Rebrand}} govuk-header__navigation-item{{ ' govuk-header__navigation-item--active' if item.active }}">
                   <a aria-label="{{header.signOutAriaLabel}}" class="govuk-header__link" href="{{params.signOutLink}}">
