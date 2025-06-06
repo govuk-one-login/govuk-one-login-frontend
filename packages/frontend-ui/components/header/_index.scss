@@ -26,6 +26,7 @@
 
 .frontendUi_header__signOut{
     display: flex;
+    flex-wrap: wrap;
 }
 
 .frontendUi-header__content{
@@ -63,4 +64,10 @@
     .govuk-template--rebranded .govuk-header__navigation-list {
         padding-bottom: 0px;
     }
+}
+
+@media (max-width: 340px) {
+    .frontendUi-header__content {
+    margin-left: unset;
+}
 }
