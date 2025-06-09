@@ -1,3 +1,21 @@
+## 1.2.0 (2025-06-09)
+
+### 🚀 Features
+
+- **DFC-879:** Remove the word click as not needed ([4acff91](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/4acff91))
+- **DFC-880:** accessibility info and relationships update for rebranding ([f7d8b9a](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/f7d8b9a))
+- **DFC-879:** sign out aria label updated for accessibility 2.5.3 ([95d1045](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/95d1045))
+- **849:** Rebreand updates, asset import, basefile changes, bug fixes ([61bc629](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/61bc629))
+
+### 🩹 Fixes
+
+- **878:** added wrap to header signout ([7245a9a](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/7245a9a))
+
+### ❤️ Thank You
+
+- arwatGDS
+- DavidMcMichael-GDS
+
 ## 1.1.0 (2025-05-13)
 
 ### 🚀 Features
