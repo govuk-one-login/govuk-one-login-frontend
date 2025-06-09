@@ -46,7 +46,7 @@ export const WaitInteractions = (() => {
     }
 
     if (state.done) {
-      clearInterval(timers.updateDomTimer);
+      clearInterval(timers.updateDomTimer as state as number);
     }
   };
 
