@@ -1,4 +1,4 @@
-import { apiRoute, content, error, state } from "../utils/types";
+import { apiRoute, content, error, state, timers } from "../utils/types";
 export const WaitInteractions = (() => {
   const content: content = {
     initial: {
@@ -13,7 +13,7 @@ export const WaitInteractions = (() => {
     virtualDom: [],
   };
 
-  const timers = {};
+  const timers: timers = {};
 
   const createVirtualDom = () => {
     const initialState = [
@@ -46,7 +46,7 @@ export const WaitInteractions = (() => {
     }
 
     if (state.done) {
-      clearInterval(timers.updateDomTimer as state as number);
+      clearInterval(timers.updateDomTimer);
     }
   };
 

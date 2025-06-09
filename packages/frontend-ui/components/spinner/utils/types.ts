@@ -34,3 +34,11 @@ export type state = {
   };
   spinnerStateText?: string;
 };
+
+export type timers = {
+  timers?: {
+    updateDomTimer?: any;
+  };
+  updateDomTimer?: any;
+  abortUnresponsiveRequest?: any;
+};
