@@ -1,13 +1,13 @@
-import { virtualDom } from "../utils/types";
+import { apiRoute, content, error, state, virtualDom } from "../utils/types";
 export const WaitInteractions = (() => {
-  const content = {
+  const content: content = {
     initial: {
       spinnerState: "pending",
     },
     complete: { spinnerState: "completed" },
   };
 
-  const state = {
+  const state: state = {
     spinnerState: content.initial.spinnerState,
     done: false,
     virtualDom: [],
@@ -41,7 +41,7 @@ export const WaitInteractions = (() => {
       container?.replaceChildren(...elements);
     }
 
-    if (state.error) {
+    if (state.error as error) {
       container?.classList.add("spinner-container__error");
     }
 
@@ -79,7 +79,7 @@ export const WaitInteractions = (() => {
     const apiRoute =
       document?.getElementById("spinner-container")?.dataset.apiRoute;
     try {
-      const response = await fetch(apiRoute);
+      const response = await fetch(apiRoute as apiRoute);
 
       if (response.status !== 200) {
         throw new Error(`Status code ${response.status} received`);
