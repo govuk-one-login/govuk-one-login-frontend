@@ -8,8 +8,7 @@ export type error = {
   spinnerState: string;
   done: boolean;
   virtualDom: never[];
-  state: { error: any };
-  error: any;
+  state: { error: boolean };
 };
 
 export type apiRoute = RequestInfo | URL;
@@ -23,22 +22,18 @@ export type content = {
   };
 };
 
+export type timers = {
+  updateDomTimer?: number;
+  abortUnresponsiveRequest?: number;
+};
+
 export type state = {
   error?: boolean | error;
   spinnerState?: string;
   done?: boolean;
-  virtualDom?: any[];
+  virtualDom?: unknown[];
   timers?: {
-    updateDomTimer: any;
-    abortUnresponsiveRequest: any;
+    timers;
   };
   spinnerStateText?: string;
-};
-
-export type timers = {
-  timers?: {
-    updateDomTimer?: any;
-  };
-  updateDomTimer?: any;
-  abortUnresponsiveRequest?: any;
 };
