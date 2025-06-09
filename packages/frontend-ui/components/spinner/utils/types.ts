@@ -23,8 +23,8 @@ export type content = {
 };
 
 export type timers = {
-  updateDomTimer?: number;
-  abortUnresponsiveRequest?: number;
+  updateDomTimer?: unknown;
+  abortUnresponsiveRequest?: unknown;
 };
 
 export type state = {
