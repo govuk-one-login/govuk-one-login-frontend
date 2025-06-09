@@ -1,4 +1,4 @@
-import { apiRoute, content, error, state, virtualDom } from "../utils/types";
+import { apiRoute, content, error, state } from "../utils/types";
 export const WaitInteractions = (() => {
   const content: content = {
     initial: {
@@ -8,14 +8,14 @@ export const WaitInteractions = (() => {
   };
 
   const state: state = {
-    spinnerState: content.initial.spinnerState,
+    spinnerState: content.initial.spinnerState as string,
     done: false,
     virtualDom: [],
   };
 
   const timers = {};
 
-  const createVirtualDom: virtualDom = () => {
+  const createVirtualDom = () => {
     const initialState = [
       {
         nodeName: "div",

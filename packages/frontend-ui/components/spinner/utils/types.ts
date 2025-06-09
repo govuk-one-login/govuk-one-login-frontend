@@ -16,7 +16,7 @@ export type apiRoute = RequestInfo | URL;
 
 export type content = {
   initial: {
-    spinnerState: string;
+    spinnerState: string | virtualDom;
   };
   complete: {
     spinnerState: string;
@@ -24,7 +24,7 @@ export type content = {
 };
 
 export type state = {
-  error?: error;
+  error?: boolean | error;
   spinnerState?: string;
   done?: boolean;
   virtualDom?: any[];
@@ -32,4 +32,5 @@ export type state = {
     updateDomTimer: any;
     abortUnresponsiveRequest: any;
   };
+  spinnerStateText?: string;
 };
