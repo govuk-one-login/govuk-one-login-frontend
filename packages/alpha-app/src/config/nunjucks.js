@@ -13,8 +13,8 @@ module.exports = {
     nunjucksEnv.addGlobal("addLanguageParam", frontendUi.addLanguageParam);
     nunjucksEnv.addGlobal("contactUsUrl", frontendUi.contactUsUrl);
     nunjucksEnv.addGlobal(
-      "May_2025_Rebrand",
-      process.env.May_2025_Rebrand == "true",
+      "MAY_2025_REBRAND_ENABLED",
+      process.env.MAY_2025_REBRAND_ENABLED == "true",
     );
 
     nunjucksEnv.addFilter("translate", function (key, options) {
