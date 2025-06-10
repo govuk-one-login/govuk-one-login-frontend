@@ -3,7 +3,7 @@
  */
 
 import { axe, toHaveNoViolations } from "jest-axe";
-import { renderInline } from "../../test/jestHelper";
+import { render } from "../../test/jestHelper";
 expect.extend(toHaveNoViolations);
 
 describe("Header accessibility", () => {
@@ -25,8 +25,8 @@ describe("Header accessibility", () => {
 
   it("should have no accessibility violations in default state", async () => {
     const template = `{% from "header/macro.njk" import govukHeader %}{{ govukHeader(params) }}`;
-    const renderedComponent = renderInline(template, { params: mockParams });
-    const results = await axe(renderedComponent.outerHTML);
+    const renderedComponent = render(template, { params: mockParams });
+    const results = await axe(renderedComponent.documentElement.outerHTML);
     expect(results).toHaveNoViolations();
   });
 });

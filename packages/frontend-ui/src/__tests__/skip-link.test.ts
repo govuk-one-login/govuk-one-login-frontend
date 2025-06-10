@@ -3,7 +3,7 @@
  */
 
 import { axe, toHaveNoViolations } from "jest-axe";
-import { renderInline } from "../../test/jestHelper";
+import { render } from "../../test/jestHelper";
 expect.extend(toHaveNoViolations);
 
 describe("skipLink Component", () => {
@@ -21,8 +21,8 @@ describe("skipLink Component", () => {
         text: skipLink.title
         }) }}`;
 
-    const renderedComponent = renderInline(template, { params: mockParams });
-    const results = await axe(renderedComponent.outerHTML);
+    const renderedComponent = render(template, { params: mockParams });
+    const results = await axe(renderedComponent.documentElement.outerHTML);
     expect(results).toHaveNoViolations();
   });
 });

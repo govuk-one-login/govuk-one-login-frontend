@@ -25,7 +25,7 @@ describe("Footer Component", () => {
 
   it("has no accessibility violations", async () => {
     // const template = `{% from "footer/macro.njk" import govukFooter %}{{ govukFooter(params) }}`;
-    const template = "frontendUiFooter";
+    const template = "footer";
 
     const renderedComponent = render(template, { params: mockParams });
     const results = await axe(renderedComponent.documentElement.outerHTML);
@@ -34,7 +34,7 @@ describe("Footer Component", () => {
 
   // it("has no accessibility violations - testing May rebrand condition", async () => {
   //   const template = `{% from "footer/macro.njk" import govukFooter %}{{ govukFooter(params) }}`;
-  //   const renderedComponent = renderInline(template, { params: mockParams, May_2025_Rebrand: true });
+  //   const renderedComponent = render(template, { params: mockParams, May_2025_Rebrand: true });
   //   const results = await axe(renderedComponent.outerHTML);
   //   expect(results).toHaveNoViolations();
   // });

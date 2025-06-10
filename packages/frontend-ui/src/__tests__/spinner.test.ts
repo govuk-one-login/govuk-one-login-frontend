@@ -3,7 +3,7 @@
  */
 
 import { axe, toHaveNoViolations } from "jest-axe";
-import { renderInline } from "../../test/jestHelper";
+import { render } from "../../test/jestHelper";
 expect.extend(toHaveNoViolations);
 
 describe("Spinner Component", () => {
@@ -14,8 +14,8 @@ describe("Spinner Component", () => {
         </div>
         {% endblock %}`;
 
-    const renderedComponent = renderInline(template, {});
-    const results = await axe(renderedComponent.outerHTML);
+    const renderedComponent = render(template, {});
+    const results = await axe(renderedComponent.documentElement.outerHTML);
     expect(results).toHaveNoViolations();
   });
 });

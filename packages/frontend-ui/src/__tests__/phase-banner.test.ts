@@ -3,7 +3,7 @@
  */
 
 import { axe, toHaveNoViolations } from "jest-axe";
-import { renderInline } from "../../test/jestHelper";
+import { render } from "../../test/jestHelper";
 expect.extend(toHaveNoViolations);
 
 describe("phaseBanner Component", () => {
@@ -18,8 +18,8 @@ describe("phaseBanner Component", () => {
 
   it("has no accessibility violations with minimal params", async () => {
     const template = `{% from "phase-banner/macro.njk" import govukPhaseBanner %}{{ govukPhaseBanner(params) }}`;
-    const renderedComponent = renderInline(template, { params: mockParams });
-    const results = await axe(renderedComponent.outerHTML);
+    const renderedComponent = render(template, { params: mockParams });
+    const results = await axe(renderedComponent.documentElement.outerHTML);
     expect(results).toHaveNoViolations();
   });
 
@@ -39,8 +39,8 @@ describe("phaseBanner Component", () => {
     };
 
     const template = `{% from "phase-banner/macro.njk" import govukPhaseBanner %}{{ govukPhaseBanner(params) }}`;
-    const renderedComponent = renderInline(template, { params: allParams });
-    const results = await axe(renderedComponent.outerHTML);
+    const renderedComponent = render(template, { params: allParams });
+    const results = await axe(renderedComponent.documentElement.outerHTML);
     expect(results).toHaveNoViolations();
   });
 
@@ -51,10 +51,10 @@ describe("phaseBanner Component", () => {
     };
 
     const template = `{% from "phase-banner/macro.njk" import govukPhaseBanner %}{{ govukPhaseBanner(params) }}`;
-    const renderedComponent = renderInline(template, {
+    const renderedComponent = render(template, {
       params: contactUrlOnlyParams,
     });
-    const results = await axe(renderedComponent.outerHTML);
+    const results = await axe(renderedComponent.documentElement.outerHTML);
     expect(results).toHaveNoViolations();
   });
 });

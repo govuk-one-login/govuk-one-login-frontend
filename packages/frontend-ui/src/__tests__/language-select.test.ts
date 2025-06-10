@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import { axe, toHaveNoViolations } from "jest-axe";
-import { renderInline } from "../../test/jestHelper";
+import { render } from "../../test/jestHelper";
 expect.extend(toHaveNoViolations);
 
 describe("languageSelect Component", () => {
@@ -24,8 +24,8 @@ describe("languageSelect Component", () => {
 
   it("has no accessibility violations", async () => {
     const template = `{% from "language-select/macro.njk" import govukLanguageSelect %}{{ govukLanguageSelect(params) }}`;
-    const renderedComponent = renderInline(template, { params: mockParams });
-    const results = await axe(renderedComponent.outerHTML);
+    const renderedComponent = render(template, { params: mockParams });
+    const results = await axe(renderedComponent.documentElement.outerHTML);
     expect(results).toHaveNoViolations();
   });
 
@@ -38,10 +38,10 @@ describe("languageSelect Component", () => {
       },
     };
     const template = `{% from "language-select/macro.njk" import govukLanguageSelect %}{{ govukLanguageSelect(params) }}`;
-    const renderedComponent = renderInline(template, {
+    const renderedComponent = render(template, {
       params: mockParamsWithTranslations,
     });
-    const results = await axe(renderedComponent.outerHTML);
+    const results = await axe(renderedComponent.documentElement.outerHTML);
     expect(results).toHaveNoViolations();
   });
 });
