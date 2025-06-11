@@ -44,17 +44,17 @@ const frontendUi = require("@govuk-one-login/frontend-ui");
 
 nunjucksEnv.addGlobal("addLanguageParam", frontendUi.addLanguageParam);
 nunjucksEnv.addGlobal("contactUsUrl", frontendUi.contactUsUrl);
-nunjucksEnv.addGlobal("May_2025_Rebrand", process.env.May_2025_Rebrand == "true");
+nunjucksEnv.addGlobal("MAY_2025_REBRAND_ENABLED", process.env.MAY_2025_REBRAND_ENABLED == "true");
 ```
 Typescript:
 ```typescript
 import {contactUsUrl, addLanguageParam } from "@govuk-one-login/frontend-ui";
 nunjucksEnv.addGlobal("addLanguageParam", addLanguageParam);
 nunjucksEnv.addGlobal("contactUsUrl", contactUsUrl);
-nunjucksEnv.addGlobal("May_2025_Rebrand", process.env.May_2025_Rebrand == "true");
+nunjucksEnv.addGlobal("MAY_2025_REBRAND_ENABLED", process.env.MAY_2025_REBRAND_ENABLED == "true");
 ```
 
-In order to use the `May_2025_Rebrand` variable you will need to create or add to your `.env` file the following `May_2025_Rebrand=`[true/false]
+In order to use the `MAY_2025_REBRAND_ENABLED` variable you will need to create or add to your `.env` file the following `MAY_2025_REBRAND_ENABLED=`[true/false]
 
 ### 4. Load Translations and Configure Middleware
 

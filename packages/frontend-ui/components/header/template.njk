@@ -1,7 +1,7 @@
 {% from "../macros/logo.njk" import govukLogo %}
 {% set header = params.translations %}
 
-{%if May_2025_Rebrand%}
+{%if MAY_2025_REBRAND_ENABLED%}
 {%- set _rebrand = params.rebrand | default(govukRebrand() if govukRebrand is callable else govukRebrand) -%}
 {% endif %}
   <header class="govuk-header {%- if params.classes %} {{ params.classes }}{% endif %}" data-module="govuk-header">
@@ -16,7 +16,7 @@
           classes: "govuk-header__logotype",
           ariaLabelText: "GOV.UK",
           useTudorCrown: params.useTudorCrown,
-          rebrand: May_2025_Rebrand
+          rebrand: MAY_2025_REBRAND_ENABLED
         }) | trim | indent(8) }}
             {% if not params.isEmbeddedMobileApp %}
             </a>
@@ -24,9 +24,9 @@
         </div>
         {% if params.signOutLink %}
           <div class="frontendUi-header__content govuk-header__content">
-            <nav aria-label="{{header.ariaLabel}}" class="govuk-header__navigation {{ govuk-header__navigation--signOut if params.May_2025_Rebrand }}">
+            <nav aria-label="{{header.ariaLabel}}" class="govuk-header__navigation {{ govuk-header__navigation--signOut if params.MAY_2025_REBRAND_ENABLED }}">
               <ul id="navigation" class="frontendUi_header__signOut govuk-header__navigation-list">
-                <li class="{{ 'frontendUi_header_signOut-item--rebrand' if May_2025_Rebrand }} {{'frontendUi_header_signOut-item' if not May_2025_Rebrand}} govuk-header__navigation-item{{ ' govuk-header__navigation-item--active' if item.active }}">
+                <li class="{{ 'frontendUi_header_signOut-item--rebrand' if MAY_2025_REBRAND_ENABLED }} {{'frontendUi_header_signOut-item' if not MAY_2025_REBRAND_ENABLED}} govuk-header__navigation-item{{ ' govuk-header__navigation-item--active' if item.active }}">
                   <a aria-label="{{header.signOutAriaLabel}}" class="govuk-header__link" href="{{params.signOutLink}}">
                     {{header.signOut}}
                   </a>
