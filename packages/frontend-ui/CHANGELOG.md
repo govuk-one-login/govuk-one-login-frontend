@@ -1,3 +1,14 @@
+## 1.2.1 (2025-06-11)
+
+### 🩹 Fixes
+
+- **873:** added device intelligence to basefile ([8a081b5](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/8a081b5))
+- **873:** updated rebrand var for consistency ([d2cab1e](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/d2cab1e))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+
 ## 1.2.0 (2025-06-09)
 
 ### 🚀 Features
