@@ -1,4 +1,5 @@
 import { apiRoute, content, error, state, timers } from "../utils/types";
+
 export const WaitInteractions = (() => {
   const content: content = {
     initial: {

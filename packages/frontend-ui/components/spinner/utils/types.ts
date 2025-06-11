@@ -1,8 +1,8 @@
-export type virtualDom = {
+export interface virtualDom {
   nodeName?: string;
   id?: string;
   classes?: string[];
-};
+}
 
 export type error = {
   spinnerState: string;

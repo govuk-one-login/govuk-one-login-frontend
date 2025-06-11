@@ -55,7 +55,7 @@ export default [
     ],
   },
   {
-    input: "frontend-src/index.js",
+    input: "frontend-src/index.ts",
     output: [
       {
         file: "build/cjs/index-fe.cjs",
