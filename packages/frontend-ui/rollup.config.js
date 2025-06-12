@@ -59,6 +59,11 @@ export default [
     ],
   },
   {
+    plugins: [
+      typescript({
+        tsconfig: "frontend-src/tsconfig.json",
+      }),
+    ],
     input: "frontend-src/index.ts",
     output: [
       {

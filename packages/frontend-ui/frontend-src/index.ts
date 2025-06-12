@@ -1,1 +1,1 @@
-export { WaitInteractions } from "../components/spinner/javascript/spinner.ts";
+export { WaitInteractions } from "./javascript/spinner";

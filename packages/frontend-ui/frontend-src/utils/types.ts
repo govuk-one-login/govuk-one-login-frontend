@@ -23,8 +23,8 @@ export type content = {
 };
 
 export type timers = {
-  updateDomTimer?: unknown;
-  abortUnresponsiveRequest?: unknown;
+  updateDomTimer?: unknown | number;
+  abortUnresponsiveRequest?: unknown | number;
 };
 
 export type state = {
@@ -33,7 +33,23 @@ export type state = {
   done?: boolean;
   virtualDom?: unknown[];
   timers?: {
-    timers;
+    timers: unknown;
   };
   spinnerStateText?: string;
 };
+
+export type node = {
+  text: unknown;
+  innerHTML: HTMLElement;
+  id: string;
+  classes: string[];
+  nodeName: keyof HTMLElementTagNameMap;
+  textContent: unknown | HTMLElement;
+  el: unknown | HTMLElement | string;
+};
+
+export type initialState = {
+  nodeName: string;
+  id: string;
+  classes: (string | undefined)[];
+}[];

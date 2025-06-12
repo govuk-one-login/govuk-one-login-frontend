@@ -1,4 +1,12 @@
-import { apiRoute, content, error, state, timers } from "../utils/types";
+import {
+  apiRoute,
+  content,
+  error,
+  initialState,
+  node,
+  state,
+  timers,
+} from "../utils/types";
 
 export const WaitInteractions = (() => {
   const content: content = {
@@ -17,7 +25,7 @@ export const WaitInteractions = (() => {
   const timers: timers = {};
 
   const createVirtualDom = () => {
-    const initialState = [
+    const initialState: initialState = [
       {
         nodeName: "div",
         id: "spinner",
@@ -28,18 +36,24 @@ export const WaitInteractions = (() => {
     return initialState;
   };
 
-  const vDomHasChanged = (currentVDom, nextVDom) => {
+  const vDomHasChanged = (currentVDom: undefined, nextVDom: undefined) => {
     return JSON.stringify(currentVDom) !== JSON.stringify(nextVDom);
   };
 
   const updateDom = () => {
-    const vDomChanged = vDomHasChanged(state.virtualDom, createVirtualDom());
+    const vDomChanged = vDomHasChanged(
+      state.virtualDom as undefined,
+      createVirtualDom() as unknown as undefined,
+    );
     const container = document.getElementById("spinner-container");
 
+    // to do: tidy up
     if (vDomChanged) {
       state.virtualDom = createVirtualDom();
-      const elements = state?.virtualDom?.map(convert);
-      container?.replaceChildren(...elements);
+      const elements = state?.virtualDom?.map(
+        convert as (value: unknown, index: number, array: unknown[]) => unknown,
+      );
+      container?.replaceChildren(...(elements as unknown as string));
     }
 
     if (state.error as error) {
@@ -63,10 +77,10 @@ export const WaitInteractions = (() => {
     state.error = true;
   };
 
-  const convert = (node) => {
+  const convert = (node: node) => {
     const el = document.createElement(node.nodeName);
-    if (node.text) el.textContent = node.text;
-    if (node.innerHTML) el.innerHTML = node.innerHTML;
+    if (node.text) (el.textContent as unknown as object) = node.text;
+    if (node.innerHTML) (el.innerHTML as unknown as object) = node.innerHTML;
     if (node.id) el.id = node.id;
     if (node.classes) el.classList.add(...node.classes);
     return el;
