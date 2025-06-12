@@ -3,6 +3,8 @@ import copy from "rollup-plugin-copy";
 import scss from "rollup-plugin-scss";
 import typescript from "rollup-plugin-typescript2";
 
+import commonjs from "@rollup/plugin-commonjs";
+import resolve from "@rollup/plugin-node-resolve";
 function onwarn(warning, warn) {
   // Suppress empty chunk warnings for SCSS-only builds
   if (
@@ -30,6 +32,8 @@ export default [
     ],
     plugins: [
       typescript(),
+      resolve(),
+      commonjs(),
       copy({
         targets: [
           {
