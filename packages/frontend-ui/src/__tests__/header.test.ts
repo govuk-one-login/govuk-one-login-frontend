@@ -24,8 +24,9 @@ describe("Header accessibility", () => {
   };
 
   it("should have no accessibility violations in default state", async () => {
-    const template = `{% from "header/macro.njk" import govukHeader %}{{ govukHeader(params) }}`;
-    const renderedComponent = render(template, { params: mockParams });
+    const renderedComponent = render("header", "frontendUiHeader", {
+      params: mockParams,
+    });
     const results = await axe(renderedComponent.documentElement.outerHTML);
     expect(results).toHaveNoViolations();
   });

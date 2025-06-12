@@ -24,10 +24,9 @@ describe("Footer Component", () => {
   };
 
   it("has no accessibility violations", async () => {
-    // const template = `{% from "footer/macro.njk" import govukFooter %}{{ govukFooter(params) }}`;
-    const template = "footer";
-
-    const renderedComponent = render(template, { params: mockParams });
+    const renderedComponent = render("footer", "frontendUiFooter", {
+      params: mockParams,
+    });
     const results = await axe(renderedComponent.documentElement.outerHTML);
     expect(results).toHaveNoViolations();
   });

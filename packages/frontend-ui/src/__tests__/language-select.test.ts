@@ -23,8 +23,11 @@ describe("languageSelect Component", () => {
   };
 
   it("has no accessibility violations", async () => {
-    const template = `{% from "language-select/macro.njk" import govukLanguageSelect %}{{ govukLanguageSelect(params) }}`;
-    const renderedComponent = render(template, { params: mockParams });
+    const renderedComponent = render(
+      "language-select",
+      "frontendUiLanguageSelect",
+      { params: mockParams },
+    );
     const results = await axe(renderedComponent.documentElement.outerHTML);
     expect(results).toHaveNoViolations();
   });
@@ -37,10 +40,13 @@ describe("languageSelect Component", () => {
         ariaLabel: "Change language",
       },
     };
-    const template = `{% from "language-select/macro.njk" import govukLanguageSelect %}{{ govukLanguageSelect(params) }}`;
-    const renderedComponent = render(template, {
-      params: mockParamsWithTranslations,
-    });
+    const renderedComponent = render(
+      "language-select",
+      "frontendUiLanguageSelect",
+      {
+        params: mockParamsWithTranslations,
+      },
+    );
     const results = await axe(renderedComponent.documentElement.outerHTML);
     expect(results).toHaveNoViolations();
   });

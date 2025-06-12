@@ -14,14 +14,9 @@ describe("skipLink Component", () => {
   };
 
   it("has no accessibility violations", async () => {
-    const template = `{% from "skip-link/macro.njk" import govukSkipLink %}
-        {% set skipLink = params.translations %}
-        {{ govukSkipLink({
-        href: "#main-content",
-        text: skipLink.title
-        }) }}`;
-
-    const renderedComponent = render(template, { params: mockParams });
+    const renderedComponent = render("skip-link", "frontendUiSkipLink", {
+      params: mockParams,
+    });
     const results = await axe(renderedComponent.documentElement.outerHTML);
     expect(results).toHaveNoViolations();
   });

@@ -33,10 +33,11 @@ describe("cookieBanner Component", () => {
   };
 
   it("has no accessibility violations", async () => {
-    // const template = `{% from "cookie-banner/macro.njk" import govukCookieBanner %}{{ govukCookieBanner(params) }}`;
-    const template = "cookie-banner";
-
-    const renderedComponent = render(template, { params: mockParams });
+    const renderedComponent = render(
+      "cookie-banner",
+      "frontendUiCookieBanner",
+      { params: mockParams },
+    );
 
     const results = await axe(renderedComponent.documentElement.outerHTML);
     expect(results).toHaveNoViolations();

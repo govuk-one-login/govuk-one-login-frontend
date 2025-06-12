@@ -17,8 +17,9 @@ describe("phaseBanner Component", () => {
   };
 
   it("has no accessibility violations with minimal params", async () => {
-    const template = `{% from "phase-banner/macro.njk" import govukPhaseBanner %}{{ govukPhaseBanner(params) }}`;
-    const renderedComponent = render(template, { params: mockParams });
+    const renderedComponent = render("phase-banner", "frontendUiPhaseBanner", {
+      params: mockParams,
+    });
     const results = await axe(renderedComponent.documentElement.outerHTML);
     expect(results).toHaveNoViolations();
   });
@@ -38,8 +39,9 @@ describe("phaseBanner Component", () => {
       contactUrl: "https://example.com/feedback",
     };
 
-    const template = `{% from "phase-banner/macro.njk" import govukPhaseBanner %}{{ govukPhaseBanner(params) }}`;
-    const renderedComponent = render(template, { params: allParams });
+    const renderedComponent = render("phase-banner", "frontendUiPhaseBanner", {
+      params: allParams,
+    });
     const results = await axe(renderedComponent.documentElement.outerHTML);
     expect(results).toHaveNoViolations();
   });
@@ -50,8 +52,7 @@ describe("phaseBanner Component", () => {
       contactUrl: "https://example.com/feedback",
     };
 
-    const template = `{% from "phase-banner/macro.njk" import govukPhaseBanner %}{{ govukPhaseBanner(params) }}`;
-    const renderedComponent = render(template, {
+    const renderedComponent = render("phase-banner", "frontendUiPhaseBanner", {
       params: contactUrlOnlyParams,
     });
     const results = await axe(renderedComponent.documentElement.outerHTML);

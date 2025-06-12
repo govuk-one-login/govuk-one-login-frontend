@@ -1,36 +1,34 @@
 import nunjucks from "nunjucks";
 import { JSDOM } from "jsdom";
 import path from "path";
+import { addLanguageParam, contactUsUrl } from "../src/index";
 
-const componentsPath = path.resolve(__dirname, "../../frontend-ui/components");
-console.log(componentsPath);
-const nunjucksEnv = nunjucks.configure(componentsPath, {
-  autoescape: true,
-  noCache: true,
-});
+const frontendUIComponentsPath = path.resolve(
+  __dirname,
+  "../../frontend-ui/components",
+);
+const govukComponentsPath = path.resolve(
+  __dirname,
+  "../../../node_modules/govuk-frontend",
+);
+const nunjucksEnv = nunjucks.configure(
+  [frontendUIComponentsPath, govukComponentsPath],
+  {
+    autoescape: true,
+    noCache: true,
+  },
+);
+nunjucksEnv.addGlobal("addLanguageParam", addLanguageParam);
+nunjucksEnv.addGlobal("contactUsUrl", contactUsUrl);
+nunjucksEnv.addGlobal("May_2025_Rebrand", false);
 
-nunjucksEnv.addGlobal('componentsPath', componentsPath);
-
-export function render(macroName: string, params = {}) {
-  if (Object.keys(params).length === 0 && params.constructor === Object) {
-    throw new Error(
-      "Parameters passed to `render` should be an object but are undefined",
-    );
-  }
-
+export function render(macroFolder: string, macroName: string, params = {}) {
   const macroParams = JSON.stringify(params, null, 2);
 
-  const macroPath = `./${macroName}`;
-  let macroString = `{% from "${macroName}/macro.njk" import ${macroName} %}`;
+  let macroString = `{% from "${macroFolder}/macro.njk" import ${macroName} %}`;
   macroString += `{{ ${macroName}(${macroParams}) }}`;
 
-  console.log("COMPONENTS PATH", componentsPath); 
-  console.log("MACRO PATH", macroPath);
-  console.log("NAME:", macroName);
-  console.log("STRING:", macroString);
-
-
-const output = nunjucksEnv.renderString(macroString, params);
-const dom = new JSDOM(output);
-return dom.window.document;
+  const output = nunjucksEnv.renderString(macroString, params);
+  const dom = new JSDOM(output);
+  return dom.window.document;
 }
