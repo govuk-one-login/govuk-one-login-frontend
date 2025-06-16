@@ -36,9 +36,11 @@ describe("cookieBanner Component", () => {
     const renderedComponent = render(
       "cookie-banner",
       "frontendUiCookieBanner",
-      { params: mockParams },
+      {
+        translations: mockParams.translations,
+        activeLanguage: mockParams.activeLanguage,
+      },
     );
-
     const results = await axe(renderedComponent.documentElement.outerHTML);
     expect(results).toHaveNoViolations();
   });

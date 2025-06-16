@@ -31,10 +31,13 @@ describe("Footer Component", () => {
     expect(results).toHaveNoViolations();
   });
 
-  // it("has no accessibility violations - testing May rebrand condition", async () => {
-  //   const template = `{% from "footer/macro.njk" import govukFooter %}{{ govukFooter(params) }}`;
-  //   const renderedComponent = render(template, { params: mockParams, May_2025_Rebrand: true });
-  //   const results = await axe(renderedComponent.outerHTML);
-  //   expect(results).toHaveNoViolations();
-  // });
+  it("has no accessibility violations - testing May rebrand enabled condition", async () => {
+    const renderedComponent = render("footer", "frontendUiFooter", {
+      params: mockParams,
+      May_2025_Rebrand: true,
+    });
+
+    const results = await axe(renderedComponent.documentElement.outerHTML);
+    expect(results).toHaveNoViolations();
+  });
 });

@@ -8,17 +8,20 @@ expect.extend(toHaveNoViolations);
 
 describe("phaseBanner Component", () => {
   const mockParams = {
-    translations: {
-      tag: "Beta",
-      text: "This is a new service – your feedback will help us to improve it.",
-      link: "Give feedback",
-    },
+    tag: "Beta",
+    text: "This is a new service – your feedback will help us to improve it.",
+    link: "Give feedback",
+    ariaLabel: "Release Phase Banner",
+  };
+
+  const mockUrl = {
     url: "/current-page",
   };
 
-  it("has no accessibility violations with minimal params", async () => {
+  it("has no accessibility violations", async () => {
     const renderedComponent = render("phase-banner", "frontendUiPhaseBanner", {
-      params: mockParams,
+      translations: mockParams,
+      url: mockUrl,
     });
     const results = await axe(renderedComponent.documentElement.outerHTML);
     expect(results).toHaveNoViolations();
@@ -40,7 +43,8 @@ describe("phaseBanner Component", () => {
     };
 
     const renderedComponent = render("phase-banner", "frontendUiPhaseBanner", {
-      params: allParams,
+      translations: mockParams,
+      url: mockUrl,
     });
     const results = await axe(renderedComponent.documentElement.outerHTML);
     expect(results).toHaveNoViolations();
@@ -53,7 +57,8 @@ describe("phaseBanner Component", () => {
     };
 
     const renderedComponent = render("phase-banner", "frontendUiPhaseBanner", {
-      params: contactUrlOnlyParams,
+      translations: contactUrlOnlyParams,
+      url: mockUrl,
     });
     const results = await axe(renderedComponent.documentElement.outerHTML);
     expect(results).toHaveNoViolations();

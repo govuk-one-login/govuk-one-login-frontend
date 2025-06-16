@@ -4,7 +4,11 @@
 
 {{ govukSkipLink({
   href: "#main-content",
-  text: skipLink.title 
+  text: skipLink.title,
+  attributes: {
+    "role": "button",
+    "aria-label": skipLink.title
+  }
 }) }}
 
 

@@ -23,7 +23,7 @@ describe("Header accessibility", () => {
     },
   };
 
-  it("should have no accessibility violations in default state", async () => {
+  it("has no accessibility violations", async () => {
     const renderedComponent = render("header", "frontendUiHeader", {
       params: mockParams,
     });
