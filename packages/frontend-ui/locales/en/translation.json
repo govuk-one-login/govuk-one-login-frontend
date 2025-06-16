@@ -55,7 +55,8 @@
   },
   "header": {
     "signOut": "Sign Out",
-    "ariaLabel": "GOV.UK One Login menu"
+    "ariaLabel": "GOV.UK One Login menu",
+    "signOutAriaLabel": "Sign out"
   },
   "languageSelect": {
     "ariaLabel": "Select language"

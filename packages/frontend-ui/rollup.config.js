@@ -3,6 +3,14 @@ import copy from "rollup-plugin-copy";
 import scss from "rollup-plugin-scss";
 import typescript from "rollup-plugin-typescript2";
 
+function onwarn(warning, warn) {
+  // Suppress empty chunk warnings for SCSS-only builds
+  if (warning.code === "EMPTY_BUNDLE" || warning.message.includes("Generated an empty chunk")) {
+    return;
+  }
+  warn(warning);
+}
+
 export default [
   {
     external: ["pino"],
@@ -26,6 +34,7 @@ export default [
           { src: "./src/template.njk", dest: "./build" },
           { src: "./src/header.yaml", dest: "./build" },
           { src: "./components/", dest: "./build/" },
+          { src: "./frontendUiAssets/", dest: "./build/" },
         ],
         hook: "closeBundle",
       }),
@@ -47,14 +56,8 @@ export default [
   },
   {
     input: "./src/all.scss",
-    output: {
-      file: "build/all.css",
-    },
-    plugins: [
-      scss({
-        fileName: "all.css",
-        outputStyle: "compressed",
-      }),
-    ],
+    output: { file: "build/all.css" },
+    plugins: [scss({ fileName: "all.css", outputStyle: "compressed" })],
+    onwarn,
   },
 ];
