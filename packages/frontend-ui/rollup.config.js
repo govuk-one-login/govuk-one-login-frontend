@@ -5,7 +5,10 @@ import typescript from "rollup-plugin-typescript2";
 
 function onwarn(warning, warn) {
   // Suppress empty chunk warnings for SCSS-only builds
-  if (warning.code === "EMPTY_BUNDLE" || warning.message.includes("Generated an empty chunk")) {
+  if (
+    warning.code === "EMPTY_BUNDLE" ||
+    warning.message.includes("Generated an empty chunk")
+  ) {
     return;
   }
   warn(warning);
@@ -29,7 +32,11 @@ export default [
       typescript(),
       copy({
         targets: [
-          { src: "./build/cjs/index.d.ts", dest: "./build/cjs/", rename: "index.d.cts" },
+          {
+            src: "./build/cjs/index.d.ts",
+            dest: "./build/cjs/",
+            rename: "index.d.cts",
+          },
           { src: "./src/macro.njk", dest: "./build" },
           { src: "./src/template.njk", dest: "./build" },
           { src: "./src/header.yaml", dest: "./build" },
@@ -48,7 +55,12 @@ export default [
     ],
   },
   {
-    input: "frontend-src/index.js",
+    plugins: [
+      typescript({
+        tsconfig: "frontend-src/tsconfig.json",
+      }),
+    ],
+    input: "frontend-src/index.ts",
     output: [
       {
         file: "build/cjs/index-fe.cjs",
