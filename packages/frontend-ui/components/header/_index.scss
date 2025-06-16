@@ -19,7 +19,7 @@
 
 .frontendUi_header_signOut-item--rebrand{
   border-left: none;
-  padding: 5px 0px 5px 30px;
+  padding: 5px 0px 5px 0px;
   margin-left: auto;
   font-weight: 700 !important;
 }
@@ -66,7 +66,7 @@
     }
 }
 
-@media (max-width: 340px) {
+@media (max-width: 306px) {
     .frontendUi-header__content {
     margin-left: unset;
 }
