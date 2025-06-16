@@ -6,3 +6,12 @@
   background-image: url("../frontendUiAssets/images/govuk-crest.svg"), url("/frontendUiAssets/images/govuk-crest.svg") !important;
 }
 
+
+@media (max-width: 256px) {
+
+  .govuk-footer__crown{
+    max-width: 100%;
+    max-height: auto;
+  }
+}
+
