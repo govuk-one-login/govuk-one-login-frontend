@@ -28,20 +28,6 @@ describe("phaseBanner Component", () => {
   });
 
   it("has no accessibility violations with all params", async () => {
-    const allParams = {
-      ...mockParams,
-      tag: {
-        html: "Alpha",
-        classes: "custom-tag-class",
-      },
-      classes: "custom-phase-banner-class",
-      attributes: {
-        "data-test": "phase-banner",
-      },
-      phaseBannerText: "Custom phase banner text.",
-      contactUrl: "https://example.com/feedback",
-    };
-
     const renderedComponent = render("phase-banner", "frontendUiPhaseBanner", {
       translations: mockParams,
       url: mockUrl,
