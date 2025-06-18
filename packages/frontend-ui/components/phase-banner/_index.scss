@@ -18,3 +18,9 @@
   text-decoration: none !important;
   text-transform: uppercase !important;
 }
+
+@media (max-width: 256px) {
+.govuk-phase-banner__content{
+  display: block;
+}
+}
