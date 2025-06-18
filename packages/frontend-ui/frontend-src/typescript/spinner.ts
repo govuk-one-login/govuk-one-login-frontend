@@ -1,21 +1,31 @@
+import {
+  apiRoute,
+  content,
+  error,
+  initialState,
+  node,
+  state,
+  timers,
+} from "../utils/types";
+
 export const WaitInteractions = (() => {
-  const content = {
+  const content: content = {
     initial: {
       spinnerState: "pending",
     },
     complete: { spinnerState: "completed" },
   };
 
-  const state = {
-    spinnerState: content.initial.spinnerState,
+  const state: state = {
+    spinnerState: content.initial.spinnerState as string,
     done: false,
     virtualDom: [],
   };
 
-  const timers = {};
+  const timers: timers = {};
 
   const createVirtualDom = () => {
-    const initialState = [
+    const initialState: initialState = [
       {
         nodeName: "div",
         id: "spinner",
@@ -26,26 +36,31 @@ export const WaitInteractions = (() => {
     return initialState;
   };
 
-  const vDomHasChanged = (currentVDom, nextVDom) => {
+  const vDomHasChanged = (currentVDom: undefined, nextVDom: undefined) => {
     return JSON.stringify(currentVDom) !== JSON.stringify(nextVDom);
   };
 
   const updateDom = () => {
-    const vDomChanged = vDomHasChanged(state.virtualDom, createVirtualDom());
+    const vDomChanged = vDomHasChanged(
+      state.virtualDom as undefined,
+      createVirtualDom() as unknown as undefined,
+    );
     const container = document.getElementById("spinner-container");
 
     if (vDomChanged) {
       state.virtualDom = createVirtualDom();
-      const elements = state?.virtualDom?.map(convert);
-      container?.replaceChildren(...elements);
+      const elements = state?.virtualDom?.map(
+        convert as (value: unknown, index: number, array: unknown[]) => unknown,
+      );
+      container?.replaceChildren(...(elements as unknown as string));
     }
 
-    if (state.error) {
+    if (state.error as error) {
       container?.classList.add("spinner-container__error");
     }
 
     if (state.done) {
-      clearInterval(timers.updateDomTimer);
+      clearInterval(timers.updateDomTimer as number);
     }
   };
 
@@ -61,10 +76,11 @@ export const WaitInteractions = (() => {
     state.error = true;
   };
 
-  const convert = (node) => {
+  const convert = (node: node) => {
     const el = document.createElement(node.nodeName);
-    if (node.text) el.textContent = node.text;
-    if (node.innerHTML) el.innerHTML = node.innerHTML;
+    if (node.text) (el.textContent as unknown as object) = node.text;
+    if (node.innerHTML)
+      (el.innerHTML as unknown as HTMLElement) = node.innerHTML;
     if (node.id) el.id = node.id;
     if (node.classes) el.classList.add(...node.classes);
     return el;
@@ -78,7 +94,7 @@ export const WaitInteractions = (() => {
     const apiRoute =
       document?.getElementById("spinner-container")?.dataset.apiRoute;
     try {
-      const response = await fetch(apiRoute);
+      const response = await fetch(apiRoute as apiRoute);
 
       if (response.status !== 200) {
         throw new Error(`Status code ${response.status} received`);
