@@ -1,3 +1,33 @@
+## 1.3.0 (2025-06-18)
+
+### 🚀 Features
+
+- **dfc-870:** fix package.json file ([bb29cf1](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/bb29cf1))
+- **dfc-870:** folder name change ([1750095](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/1750095))
+- **dfc-870:** spinner with ts ([e3f93fe](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/e3f93fe))
+- **DFC-863:** Accessibility testing for frontend-ui components ([8e623aa](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/8e623aa))
+- **DFC-863:** Accessibility testing for frontend-ui components ([c040d4f](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/c040d4f))
+- **DFC-863:** WIP on tests ([ad36abc](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/ad36abc))
+- **DFC-863:** WIP on tests ([714ce6c](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/714ce6c))
+- **DFC-863:** WIP tests added for accessibility testing ([e028afd](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/e028afd))
+- **DFC-863:** WIP for accessibility tests for frontend ui pacakge ([7433633](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/7433633))
+
+### 🩹 Fixes
+
+- **863:** added build javascript to git ignore ([067538c](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/067538c))
+- **863:** updated sonar properties, moved tests, cleaned up build folder ([7e66b5f](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/7e66b5f))
+- **903:** updated privacy link ([7e2152b](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/7e2152b))
+- **906:** updating max width of components ([19215f7](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/19215f7))
+- **905:** updated signout padding for better alignment ([8bcc667](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/8bcc667))
+- get accessibility tests running ([12b40dc](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/12b40dc))
+
+### ❤️ Thank You
+
+- arwatGDS
+- DavidMcMichael-GDS
+- nickhealGDS
+- ug-gds
+
 ## 1.2.1 (2025-06-11)
 
 ### 🩹 Fixes
