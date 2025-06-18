@@ -3,10 +3,7 @@ import { JSDOM } from "jsdom";
 import path from "path";
 import { addLanguageParam, contactUsUrl } from "../index";
 
-const frontendUIComponentsPath = path.resolve(
-  __dirname,
-  "../../components",
-);
+const frontendUIComponentsPath = path.resolve(__dirname, "../../components");
 const govukComponentsPath = path.resolve(
   __dirname,
   "../../../../node_modules/govuk-frontend",
