@@ -43,17 +43,26 @@
           text: cookieBanner.acceptAdditionalCookies,
           type: "button",
           name: "cookiesAccept",
-          value: "accept"
+          value: "accept",
+          attributes: {
+            "aria-label": cookieBanner.acceptAdditionalCookies
+          }
         },
         {
           text: cookieBanner.rejectAdditionalCookies,
           type: "button",
           name: "cookiesReject",
-          value: "reject"
+          value: "reject",
+          attributes: {
+            "aria-label": cookieBanner.rejectAdditionalCookies
+          }
         },
         {
           text: cookieBanner.viewCookies,
-          href: "https://signin.account.gov.uk/cookies"
+          href: "https://signin.account.gov.uk/cookies",
+          attributes: {
+            "aria-label": cookieBanner.viewCookies
+          }
         }
       ]
     },

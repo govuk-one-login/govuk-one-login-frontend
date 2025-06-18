@@ -40,14 +40,8 @@ export default [
           { src: "./src/macro.njk", dest: "./build" },
           { src: "./src/template.njk", dest: "./build" },
           { src: "./src/header.yaml", dest: "./build" },
-          {
-            src: "./components/",
-            dest: "./build/",
-          },
-          {
-            src: "./frontendUiAssets/",
-            dest: "./build/",
-          },
+          { src: "./components/", dest: "./build/" },
+          { src: "./frontendUiAssets/", dest: "./build/" },
         ],
         hook: "closeBundle",
       }),
