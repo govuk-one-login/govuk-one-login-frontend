@@ -15,6 +15,7 @@ function onwarn(warning, warn) {
 }
 
 export default [
+  // Main library build
   {
     external: ["pino"],
     input: "src/index.ts",
@@ -37,9 +38,6 @@ export default [
             dest: "./build/cjs/",
             rename: "index.d.cts",
           },
-          { src: "./src/macro.njk", dest: "./build" },
-          { src: "./src/template.njk", dest: "./build" },
-          { src: "./src/header.yaml", dest: "./build" },
           { src: "./components/", dest: "./build/" },
           { src: "./frontendUiAssets/", dest: "./build/" },
         ],
@@ -48,12 +46,8 @@ export default [
       json(),
     ],
   },
+  // Frontend UI build
   {
-    plugins: [
-      typescript({
-        tsconfig: "frontend-src/tsconfig.json",
-      }),
-    ],
     input: "frontend-src/index.ts",
     output: [
       {
@@ -65,7 +59,13 @@ export default [
         format: "es",
       },
     ],
+    plugins: [
+      typescript({
+        tsconfig: "frontend-src/tsconfig.json",
+      }),
+    ],
   },
+  // SCSS build for components
   {
     input: "./src/all.scss",
     output: { file: "build/all.css" },
