@@ -1,15 +1,15 @@
 import nunjucks from "nunjucks";
 import { JSDOM } from "jsdom";
 import path from "path";
-import { addLanguageParam, contactUsUrl } from "../src/index";
+import { addLanguageParam, contactUsUrl } from "../index";
 
 const frontendUIComponentsPath = path.resolve(
   __dirname,
-  "../../frontend-ui/components",
+  "../../components",
 );
 const govukComponentsPath = path.resolve(
   __dirname,
-  "../../../node_modules/govuk-frontend",
+  "../../../../node_modules/govuk-frontend",
 );
 const nunjucksEnv = nunjucks.configure(
   [frontendUIComponentsPath, govukComponentsPath],
