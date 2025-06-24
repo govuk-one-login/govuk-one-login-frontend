@@ -12,8 +12,8 @@
     "build": "rollup -c",
     "dev": "rollup -c --watch",
     "test": "jest --coverage src",
-    "test:visual": "jest -c jest.visual.config.ts",
-    "test:visual:update": "jest -c jest.visual.config.ts --updateSnapshot"
+    "test:visual": "playwright test browser-tests/functional-tests",
+    "test:visual:update": "playwright test browser-tests/functional-tests --update-snapshots"
   },
   "files": [
     "build/",
