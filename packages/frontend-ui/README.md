@@ -122,38 +122,15 @@ or
 ```
 
 ### 6. Import all.css
-Import the css into your service in the `package.json` via the `build-sass` script.
+
+The way is to import the frontend-ui all.css directly into the bottom of your existing css file
 ```
-sass --no-source-map ../../node_modules/@govuk-one-login/frontend-ui/build/all.css [WhereYouStoreStyleSheets]/frontendUi.css --style compressed"
+@import "../../../node_modules/@govuk-one-login/frontend-ui/build/all";
 ```
 
 You will also need to add the following in order to ensure that the assets all load properly across the basefiles
 ```
 "cp -R ../../node_modules/@govuk-one-login/frontend-ui/build/frontendUiAssets [OneLevelAboveWhereYouStoreStyleSheets/SameFolderAsStyleSheets]/"
-```
-
-include a link to this in your template file, this has been done in the created basefiles already
-```html
-{% block head %}
-     '''
-  <link rel="stylesheet" href="/[WhereYouStoreStyleSheets]/frontendUi.css"/>
-{% endblock %}
-```
-
-Or alternatively you can import the frontend-ui all.css directly into your exisiting css file if you are having a 'flickering' issue
-``` scss
-$govuk-assets-path: "/public/";
-$hmpo-summary-list: false;
-
-@import "../../../node_modules/govuk-frontend/govuk/all";
-@import "../../../node_modules/hmpo-components/all";
-@import "../../../node_modules/@govuk-one-login/frontend-language-toggle/stylesheet/styles";
-@import "../../../node_modules/accessible-autocomplete/dist/accessible-autocomplete.min";
-@import "components/button-spinner";
-@import "components/country-picker";
-
-@import "../../../node_modules/@govuk-one-login/frontend-ui/build/all.css"; // <--- HERE>
-
 ```
 
 ### 7. Add Component to Template
