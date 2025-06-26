@@ -1,3 +1,13 @@
+## 1.3.1 (2025-06-26)
+
+### 🩹 Fixes
+
+- **913:** updated to remove blue bar from footer in non rebranded pages ([823c711](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/823c711))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+
 ## 1.3.0 (2025-06-18)
 
 ### 🚀 Features
