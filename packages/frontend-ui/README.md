@@ -122,29 +122,15 @@ or
 ```
 
 ### 6. Import all.css
-There are two ways to implement the css.
 
-The recommended way is to import the frontend-ui all.css directly into the bottom of your existing css file
+The way is to import the frontend-ui all.css directly into the bottom of your existing css file
 ```
 @import "../../../node_modules/@govuk-one-login/frontend-ui/build/all";
-```
-Or you can import the css into your service in the `package.json` via the `build-sass` script.
-```
-
-sass --no-source-map ../../node_modules/@govuk-one-login/frontend-ui/build/all.css [WhereYouStoreStyleSheets]/frontendUi.css --style compressed"
 ```
 
 You will also need to add the following in order to ensure that the assets all load properly across the basefiles
 ```
 "cp -R ../../node_modules/@govuk-one-login/frontend-ui/build/frontendUiAssets [OneLevelAboveWhereYouStoreStyleSheets/SameFolderAsStyleSheets]/"
-```
-
-include a link to this in your template file, this has been done in the created basefiles already
-```html
-{% block head %}
-     '''
-  <link rel="stylesheet" href="/[WhereYouStoreStyleSheets]/frontendUi.css"/>
-{% endblock %}
 ```
 
 ### 7. Add Component to Template
