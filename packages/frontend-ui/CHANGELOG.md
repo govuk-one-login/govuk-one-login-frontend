@@ -1,3 +1,14 @@
+## 1.3.2 (2025-06-26)
+
+### 🩹 Fixes
+
+- **916:** updated basefiles to use new css method ([5633a12](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/5633a12))
+- **916:** updated basefile to support both css methods ([f11fc90](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/f11fc90))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+
 ## 1.3.1 (2025-06-26)
 
 ### 🩹 Fixes
