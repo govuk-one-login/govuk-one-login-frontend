@@ -6,7 +6,6 @@
   background-image: url("../frontendUiAssets/images/govuk-crest.svg"), url("/frontendUiAssets/images/govuk-crest.svg") !important;
 }
 
-
 @media (max-width: 256px) {
 
   .govuk-footer__crown{
@@ -15,3 +14,31 @@
   }
 }
 
+.govuk-footer{
+    font-family: "GDS Transport", arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+    font-size: .875rem;
+    line-height: 1.1428571429;
+    padding-top: 25px;
+    padding-bottom: 15px;
+    border-top: 1px solid #b1b4b6;
+    color: #0b0c0c;
+    background: #f3f2f1;
+}
+
+.govuk-template--rebranded .govuk-footer {
+    font-family: "GDS Transport", arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+    font-size: 14px;
+    font-size: .875rem;
+    line-height: 1.1428571429;
+    padding-top: 25px;
+    padding-bottom: 15px;
+    border-top: 10px solid #1d70b8;
+    color: #0b0c0c;
+    background: #f3f2f1;
+}
