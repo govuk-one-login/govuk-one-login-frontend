@@ -10,6 +10,11 @@
 {%set htmlClasses = 'govuk-template--rebranded'%}
 {% endif %}
 
+{% block head %}
+  <link rel="stylesheet" href="/public/stylesheets/application.css"/>
+  <link rel="stylesheet" href="/public/stylesheets/frontend-ui.css"/>
+{% endblock %}
+
 {%- block pageTitle %}
     {{- (translate("govuk.error", { default: "Error" }) + ": ") if errorlist.length }}{{ hmpoTitle | safe }}{{ " – " + govukServiceName | safe if govukServiceName !== " " }} – GOV.UK One Login
 {%- endblock %}
