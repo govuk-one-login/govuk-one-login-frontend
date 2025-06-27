@@ -66,8 +66,8 @@ jobs:
         run: npm install
 
       # required set up steps for Github architecture
-      - run: npm i @rollup/rollup-linux-x64-gnu
-      - run: npm i @nx/nx-linux-x64-gnu
+      - run: npm i @rollup/rollup-linux-x64-gnu --no-save
+      - run: npm i @nx/nx-linux-x64-gnu --no-save
 
       - name: Set SHAs for affected packages
         uses: nrwl/nx-set-shas@v4
