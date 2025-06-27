@@ -26,7 +26,6 @@ jobs:
         
         - name: Install Dependencies
           run: npm ci
-          working-directory: packages/frontend-ui
 
         - name: Install Playwright browsers
           run: npx playwright install --with-deps
