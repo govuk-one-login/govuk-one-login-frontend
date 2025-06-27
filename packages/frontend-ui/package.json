@@ -12,7 +12,7 @@
     "build": "rollup -c",
     "dev": "rollup -c --watch",
     "test": "jest --coverage src",
-    "test:visual": "playwright test browser-tests/functional-tests --headed",
+    "test:visual": "playwright test browser-tests/functional-tests --config=playwright.config.ts",
     "test:visual:update": "playwright test browser-tests/functional-tests --headed --update-snapshots"
   },
   "files": [
