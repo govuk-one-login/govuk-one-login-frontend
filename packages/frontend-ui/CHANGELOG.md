@@ -1,3 +1,13 @@
+## 1.3.3 (2025-06-27)
+
+### 🩹 Fixes
+
+- updated colour of footer background ([1a9c587](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/1a9c587))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+
 ## 1.3.2 (2025-06-26)
 
 ### 🩹 Fixes
