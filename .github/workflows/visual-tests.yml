@@ -31,6 +31,11 @@ jobs:
           run: npx playwright install --with-deps
           working-directory: packages/frontend-ui
 
+        - name: Start the Alpha-app for testing purpose
+          run: |
+            npm run start & sleep 5
+          working-directory: packages/alpha-app
+          
         - name: Run visual regression tests
           run: npm run test:visual
           working-directory: packages/frontend-ui
