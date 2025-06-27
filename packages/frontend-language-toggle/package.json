@@ -37,26 +37,7 @@
     "url": "https://github.com/govuk-one-login/govuk-one-login-frontend/issues"
   },
   "homepage": "https://github.com/govuk-one-login/govuk-one-login-frontend/tree/main/packages/frontend-language-toggle#readme",
-  "devDependencies": {
-    "@types/jest": "^29.5.14",
-    "@types/jest-axe": "^3.5.9",
-    "@types/nunjucks": "^3.2.6",
-    "@typescript-eslint/eslint-plugin": "^8.27.0",
-    "@typescript-eslint/parser": "^7.8.0",
-    "clean-css": "^5.3.3",
-    "eslint": "8.57.0",
-    "jest-axe": "^9.0.0",
-    "jest-environment-jsdom": "^29.7.0",
-    "jsdom": "^26.0.0",
-    "nunjucks": "^3.2.4",
-    "prettier": "3.5.3",
-    "rollup": "4.37.0",
-    "rollup-plugin-copy": "^3.5.0",
-    "rollup-plugin-typescript2": "0.36.0",
-    "ts-jest": "29.3.0",
-    "ts-node": "^10.9.2",
-    "typescript": "5.8.2"
-  },
+  "devDependencies": {},
   "exports": {
     "import": "./build/esm/language-param-setter.js",
     "require": "./build/cjs/language-param-setter.cjs"
