@@ -1,3 +1,8 @@
+{% if MAY_2025_REBRAND_ENABLED %}
+{% set govukRebrand = true %}
+{% set assetPath = "/public/frontendUiAssets/rebrand"%}
+{% endif %}
+
 {% extends "hmpo-template.njk" %}
 
 {% from "frontend-ui/build/components/cookie-banner/macro.njk" import frontendUiCookieBanner %}
@@ -5,10 +10,6 @@
 {% from "frontend-ui/build/components/header/macro.njk" import frontendUiHeader %}
 {% from "frontend-ui/build/components/footer/macro.njk" import frontendUiFooter %}
 {% from "frontend-ui/build/components/language-select/macro.njk" import frontendUiLanguageSelect %}
-
-{% if MAY_2025_REBRAND_ENABLED %}
-{%set htmlClasses = 'govuk-template--rebranded'%}
-{% endif %}
 
 {% block head %}
   <link rel="stylesheet" href="/public/stylesheets/application.css"/>

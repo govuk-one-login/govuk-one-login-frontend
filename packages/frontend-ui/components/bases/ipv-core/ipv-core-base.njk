@@ -1,3 +1,8 @@
+{% if MAY_2025_REBRAND_ENABLED %}
+{% set govukRebrand = true %}
+{% set assetPath = "/public/frontendUiAssets/rebrand"%}
+{% endif %}
+
 {% extends "govuk/template.njk" %}
 {% from "frontend-ui/build/components/cookie-banner/macro.njk" import frontendUiCookieBanner %}
 {% from "frontend-ui/build/components/phase-banner/macro.njk" import frontendUiPhaseBanner %}
@@ -8,10 +13,6 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from  basePath ~ "/views/shared/ga4/on-page-load-macro.njk" import ga4OnPageLoad %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
-
-{% if MAY_2025_REBRAND_ENABLED %}
-{%set htmlClasses = 'govuk-template--rebranded'%}
-{% endif %}
 
 {# Set language values for govuk/template.njk #}
 {% set htmlLang = currentLanguage %}
