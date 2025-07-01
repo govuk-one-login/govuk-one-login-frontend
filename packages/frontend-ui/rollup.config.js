@@ -39,7 +39,6 @@ export default [
             rename: "index.d.cts",
           },
           { src: "./components/", dest: "./build/" },
-          { src: "./frontendUiAssets/", dest: "./build/" },
         ],
         hook: "closeBundle",
       }),
