@@ -1,3 +1,7 @@
+{% if MAY_2025_REBRAND_ENABLED %}
+{% set govukRebrand = true %}
+{% endif %}
+
 {% extends "govuk/template.njk" %}
 {% from "common/ga4-opl/macro.njk" import ga4OnPageLoad %}
 {% from "frontend-ui/build/components/cookie-banner/macro.njk" import frontendUiCookieBanner %}
@@ -6,18 +10,12 @@
 {% from "frontend-ui/build/components/language-select/macro.njk" import frontendUiLanguageSelect %}
 {% from "frontend-ui/build/components/footer/macro.njk" import frontendUiFooter %}
 
-{% if MAY_2025_REBRAND_ENABLED %}
-{%set htmlClasses = 'govuk-template--rebranded'%}
-{% endif %}
-
-
 {% block head %}
   {# Dynatrace RUM snippet #}
   {% if dynatraceRumUrl %}
     <script src="{{ dynatraceRumUrl }}" crossorigin="anonymous" nonce="{{ scriptNonce }}"></script>
   {% endif %}
   <link href="/public/style.css" rel="stylesheet">
-  <link rel="stylesheet" href="/public/frontendUi.css"/>
 
 {% endblock %}
 

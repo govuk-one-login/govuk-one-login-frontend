@@ -1,3 +1,7 @@
+{% if MAY_2025_REBRAND_ENABLED %}
+{% set govukRebrand = true %}
+{% endif %}
+
 {% extends "govuk/template.njk" %}
 
 {% from "frontend-ui/build/components/phase-banner/macro.njk" import frontendUiPhaseBanner %}
@@ -6,10 +10,6 @@
 {% from "frontend-ui/build/components/footer/macro.njk" import frontendUiFooter %}
 {% from "frontend-ui/build/components/language-select/macro.njk" import frontendUiLanguageSelect %}
 {% from "ga4-opl/macro.njk" import ga4OnPageLoad %}
-
-{% if MAY_2025_REBRAND_ENABLED %}
-{%set htmlClasses = 'govuk-template--rebranded'%}
-{% endif %}
 
 {% if makeFullWidth %}
   {% set columnWidth = "full" %}
@@ -21,10 +21,8 @@
 {% block head %}
     <link href="/stylesheets/application.css" rel="stylesheet">
     <link href="/stylesheets/language-toggle.css" rel="stylesheet">
-    <link href="/stylesheets/frontend-ui.css" rel="stylesheet">
     <meta name="robots" content="noindex">
 
-  <link rel="stylesheet" href="/stylesheets/frontendUi.css"/>
 {% endblock %}
 
 {% block pageTitle %}
