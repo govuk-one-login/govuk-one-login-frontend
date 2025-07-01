@@ -1,8 +1,10 @@
-@import "../../../../node_modules/govuk-frontend/govuk/base.scss";
+@import "../../../../node_modules/govuk-frontend/govuk/helpers/_colour.scss";
 // Temporarily overwrite the tag component styling to match pre-v5 appearance.
 // This ensures a cohesive phase banner across One Login applications during the transition.
 .govuk-tag {
-  @include govuk-font($size: 16, $weight: bold, $line-height: 1);
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1;
   display: inline-block;
   padding-top: 5px;
   padding-right: 8px;

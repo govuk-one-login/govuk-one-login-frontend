@@ -128,11 +128,6 @@ The way is to import the frontend-ui all.css directly into the bottom of your ex
 @import "../../../node_modules/@govuk-one-login/frontend-ui/build/all";
 ```
 
-You will also need to add the following in order to ensure that the assets all load properly across the basefiles
-```
-"cp -R ../../node_modules/@govuk-one-login/frontend-ui/build/frontendUiAssets [OneLevelAboveWhereYouStoreStyleSheets/SameFolderAsStyleSheets]/"
-```
-
 ### 7. Add Component to Template
 
 Render the component in your template, passing any required data. For the Cookie Banner:
