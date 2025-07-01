@@ -1,3 +1,38 @@
+## 1.3.4 (2025-06-30)
+
+### 🚀 Features
+
+- **927:** updating icon to rebrand ([8315e53](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/8315e53))
+- **DFC-775:** Updated snapshots. Added headless option to run playwright tests. Added Readme ([e27efd2](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/e27efd2))
+- **DFC-775:** npm command fixed. New snapshots generated ([305a8eb](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/305a8eb))
+- **DFC-775:** Visual Regression testing for frontendUI Components ([ae577ae](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/ae577ae))
+
+### ❤️ Thank You
+
+- arwatGDS
+- DavidMcMichael-GDS
+
+## 1.3.3 (2025-06-27)
+
+### 🩹 Fixes
+
+- updated colour of footer background ([1a9c587](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/1a9c587))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+
+## 1.3.2 (2025-06-26)
+
+### 🩹 Fixes
+
+- **916:** updated basefiles to use new css method ([5633a12](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/5633a12))
+- **916:** updated basefile to support both css methods ([f11fc90](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/f11fc90))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+
 ## 1.3.1 (2025-06-26)
 
 ### 🩹 Fixes

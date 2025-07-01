@@ -1,3 +1,8 @@
+{% if MAY_2025_REBRAND_ENABLED %}
+{% set govukRebrand = true %}
+{% set assetPath = "/public/rebrand"%}
+{% endif %}
+
 {% extends "form-template.njk" %}
 
 {% from "frontend-ui/build/components/cookie-banner/macro.njk" import frontendUiCookieBanner %}
@@ -6,9 +11,9 @@
 {% from "frontend-ui/build/components/footer/macro.njk" import frontendUiFooter %}
 {% from "frontend-ui/build/components/language-select/macro.njk" import frontendUiLanguageSelect %}
 
-{% if MAY_2025_REBRAND_ENABLED %}
-{%set htmlClasses = 'govuk-template--rebranded'%}
-{% endif %}
+{% block head %}
+  <link rel="stylesheet" href="/public/stylesheets/application.css"/>
+{% endblock %}
 
 {%- block pageTitle %}
     {{- (translate("govuk.error", { default: "Error" }) + ": ") if errorlist.length }}{{ hmpoTitle | safe }}{{ " – " + govukServiceName | safe if govukServiceName !== " " }} – GOV.UK One Login
