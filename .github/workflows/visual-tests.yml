@@ -31,6 +31,9 @@ jobs:
           run: npx playwright install --with-deps
           working-directory: packages/frontend-ui
 
+        - name: Building the application
+          run: npm run build
+
         - name: Start the Alpha-app for testing purpose
           run: |
             npm run start & sleep 5
