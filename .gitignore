@@ -42,6 +42,7 @@ yarn-error.log*
 testem.log
 lerna-debug.log*
 /typings
+/packages/alpha-app/public
 
 # System Files
 .DS_Store
