@@ -6,6 +6,7 @@ export default defineConfig({
         baseURL: "http://localhost:3000",
         screenshot: "only-on-failure",
         trace: "on-first-retry",
+        viewport: { width: 960, height: 800 },
         deviceScaleFactor: 1,
         headless: true,
     },
