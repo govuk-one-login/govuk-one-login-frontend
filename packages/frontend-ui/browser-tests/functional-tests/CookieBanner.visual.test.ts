@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test';
 
+test.use({ viewport: { width: 960, height: 220 }});
+
 test.describe('Cookie Banner visual regression', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('http://localhost:3000/welcome');
