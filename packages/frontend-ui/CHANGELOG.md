@@ -1,3 +1,14 @@
+## 1.3.5 (2025-07-02)
+
+### 🩹 Fixes
+
+- updated how teams consume assets ([66fd23b](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/66fd23b))
+- updated footer shading ([887a7d8](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/887a7d8))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+
 ## 1.3.4 (2025-06-30)
 
 ### 🚀 Features
