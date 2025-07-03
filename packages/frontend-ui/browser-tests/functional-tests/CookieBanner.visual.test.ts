@@ -13,6 +13,8 @@ test.describe('Cookie Banner visual regression', () => {
 
   test('should match visual snapshot in default state', async ({ page }) => {
     const banner = await page.locator('#cookies-banner-main');
+    await page.waitForTimeout(500);
+    await expect(banner).toBeVisible();
     await expect(banner).toHaveScreenshot('cookie-banner-default.png');
   });
 
