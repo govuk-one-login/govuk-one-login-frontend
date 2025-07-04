@@ -1,3 +1,17 @@
+## 1.3.6 (2025-07-04)
+
+### 🩹 Fixes
+
+- **884:** updated failing dependencies ([a590339](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/a590339))
+- **908:** remove build folder tracking ([fef281e](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/fef281e))
+- **931:** fixed font size inconsistency ([6d49bcd](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/6d49bcd))
+- **884:** updated failing dependencies ([31e6634](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/31e6634))
+- **908:** remove build folder tracking ([2ed083a](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/2ed083a))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+
 ## 1.3.5 (2025-07-02)
 
 ### 🩹 Fixes
