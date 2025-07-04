@@ -36,7 +36,7 @@ jobs:
 
         - name: Start the Alpha-app for testing purpose
           run: |
-            npm run start & sleep 5
+            npm run start
           working-directory: packages/alpha-app
           
         - name: Run visual regression tests
