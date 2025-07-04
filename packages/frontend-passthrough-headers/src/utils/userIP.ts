@@ -47,7 +47,7 @@ function handleCloudfrontIP(req: Request | APIGatewayProxyEvent) {
     if (!header) return null;
     const firstIP = getFirstOrOnly(header);
     return parseIP(firstIP);
-  } catch (e) {
+  } catch {
     logger.warn(
       `Request received with invalid content in "${HEADER_CLOUDFRONT_VIEWER}" header.`,
     );
@@ -65,7 +65,7 @@ function handleForwardedIP(req: Request | APIGatewayProxyEvent) {
     const firstIP = getFirstOrOnly(header);
     const firstEntry = forwardedParse(firstIP)[0];
     return parseIP(firstEntry.for);
-  } catch (e) {
+  } catch {
     logger.warn(
       `Request received with invalid content in "${HEADER_FORWARDED}" header.`,
     );
@@ -86,7 +86,7 @@ function handleXForwardedForIP(req: Request | APIGatewayProxyEvent) {
     } else {
       return req.ip ?? null;
     }
-  } catch (e) {
+  } catch {
     logger.warn(
       `Request received with invalid content in "${HEADER_X_FORWARDED}" header.`,
     );
