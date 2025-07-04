@@ -3,19 +3,13 @@ import { test, expect } from '@playwright/test';
 test.describe('Cookie Banner visual regression', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('http://localhost:3000/welcome');
-    await page.addStyleTag({ content: `
-      * {
-        animation: none !important;
-        transition: none !important;
-      }
-    `})
   });
 
   test('should match visual snapshot in default state', async ({ page }) => {
     const banner = await page.locator('#cookies-banner-main');
     await page.waitForTimeout(500);
     await expect(banner).toBeVisible();
-    // await expect(banner).toHaveScreenshot('cookie-banner-default.png');
+    await expect(banner).toHaveScreenshot('cookie-banner-default.png');
   });
 
   test('should match visual snapshot after accepting cookies', async ({ page }) => {
