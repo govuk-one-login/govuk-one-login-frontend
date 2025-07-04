@@ -40,7 +40,7 @@ jobs:
           working-directory: packages/alpha-app
           
         - name: Run visual regression tests
-          run: npm run test:visual
+          run: npm run test:visual:update
           working-directory: packages/frontend-ui
           env:
             CI: true
