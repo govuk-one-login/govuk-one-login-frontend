@@ -36,7 +36,7 @@ jobs:
 
         - name: Start the Alpha-app for testing purpose in the background
           run: |
-            npm run start
+            npm run start & disown
           working-directory: packages/alpha-app
           
         - name: Building the docker container for visual regression testing
