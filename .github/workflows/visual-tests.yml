@@ -45,10 +45,11 @@ jobs:
         - name: Run visual regression tests inside docker container
           run: |
             docker run -it \
-              --add-host=host.docker.internal:host-gateway \
-              -v $ {{ github-workspace }}/packages/frontend-ui/browser-tests/functional-tests:/app/browser-tests/functional-tests \
-              ui-visual-test \
-              xvfb-run --auto-servernum -- npm run test:visual:update
+              --add-host=host.docker.internal:host-gateway ui-visual-test /bin/bash \
+              curl http://host.docker.internal:3000 \
+              xvfb-run --auto-servernum -- npm run test:visual:update \
+              xvfb-run --auto-servernum -- npm run test:visual \
+              exit
         
         - name: Upload differential failed snapshots (optional step)
           if: failure()
