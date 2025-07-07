@@ -1,19 +1,21 @@
-import { defineConfig } from "@playwright/test";
+import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
     testDir: "browser-tests/functional-tests",
     use: {
-        baseURL: "http://localhost:3000",
+        baseURL: "http://host.docker.internal:3000",
         screenshot: "only-on-failure",
         trace: "on-first-retry",
-        viewport: { width: 1280, height: 720 },
         deviceScaleFactor: 1,
-        headless: true
+        headless: true,
+        ignoreHTTPSErrors: true,
     },
     projects: [
         {
-            name: 'chromium',
-            use: { browserName: "chromium" }
-        }
+            use: {
+                ...devices["Desktop Chrome"],
+                headless: true,
+            },
+        },
     ],
 });
