@@ -24,26 +24,31 @@ jobs:
             node-version: 20
             cache: "npm"
         
-        - name: Install Dependencies
-          run: npm ci
+        - name: Install Root Dependencies
+          run: npm install
 
-        - name: Install Playwright browsers
+        - name: Install Playwright browsers in frontend-ui
           run: npx playwright install --with-deps
           working-directory: packages/frontend-ui
 
         - name: Building the application
           run: npm run build
 
-        - name: Start the Alpha-app for testing purpose
+        - name: Start the Alpha-app for testing purpose in the background
           run: |
             npm run start
           working-directory: packages/alpha-app
           
-        - name: Run visual regression tests
-          run: npm run test:visual:update
-          working-directory: packages/frontend-ui
-          env:
-            CI: true
+        - name: Building the docker container for visual regression testing
+          run: docker build -f Dockerfile -t ui-visual-test .
+
+        - name: Run visual regression tests inside docker container
+          run: |
+            docker run -it \
+              --add-host=host.docker.internal:host-gateway \
+              -v $ {{ github-workspace }}/packages/frontend-ui/browser-tests/functional-tests:/app/browser-tests/functional-tests \
+              ui-visual-test \
+              xvfb-run --auto-servernum -- npm run test:visual:update
         
         - name: Upload differential failed snapshots (optional step)
           if: failure()
@@ -51,4 +56,4 @@ jobs:
           with:
             name: visual-diffs-failed-snapshots
             path: | 
-                ./packages/frontend-ui/browser-tests/functional-tests/**/__diff_output__/
+              packages/frontend-ui/browser-tests/functional-tests/**/__diff_output__/

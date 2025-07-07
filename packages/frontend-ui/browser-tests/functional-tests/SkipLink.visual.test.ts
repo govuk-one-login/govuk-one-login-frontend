@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Skip Link Component', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:3000/welcome');
+    await page.goto('/welcome');
   });
 
   test('should match visual snapshot default state', async ({ page }) => {

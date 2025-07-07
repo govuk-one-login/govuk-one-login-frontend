@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Language Select component visual regression', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:3000/welcome');
+    await page.goto('/welcome');
   });
 
   test('should match visual snapshot of language select component with English default', async ({ page }) => {
@@ -16,7 +16,7 @@ test.describe('Language Select component visual regression', () => {
   });
   
   test('should match visual snapshot with Cymraeg selected', async ({ page }) => {
-    await page.goto('http://localhost:3000/welcome?lang=cy&lng=cy');
+    await page.goto('/welcome?lang=cy&lng=cy');
     
     const languageNav = page.locator('nav.language-select');
     await expect(languageNav).toBeVisible();
