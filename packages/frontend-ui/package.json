@@ -1,6 +1,6 @@
 {
   "name": "@govuk-one-login/frontend-ui",
-  "version": "1.3.6",
+  "version": "1.3.5",
   "description": "",
   "main": "build/cjs/index.cjs",
   "module": "build/esm/index.js",
@@ -12,8 +12,8 @@
     "build": "rollup -c",
     "dev": "rollup -c --watch",
     "test": "jest --coverage src",
-    "test:visual": "playwright test browser-tests/functional-tests --config=playwright.config.ts",
-    "test:visual:update": "playwright test browser-tests/functional-tests --update-snapshots"
+    "test:visual": "playwright test browser-tests/functional-tests --headed",
+    "test:visual:update": "playwright test browser-tests/functional-tests --headed --update-snapshots"
   },
   "files": [
     "build/",
@@ -36,13 +36,13 @@
     "url": "https://github.com/govuk-one-login/govuk-one-login-frontend/issues"
   },
   "homepage": "https://github.com/govuk-one-login/govuk-one-login-frontend#readme",
+  "devDependencies": {},
   "dependencies": {
     "js-yaml": "^4.1.0",
     "pino": "8.20.0"
   },
   "peerDependencies": {
-    "express": "^5.1.0 || >= 4.21.2",
-    "govuk-frontend": "^4.10.1 || ^5.0.0"
+    "express": "^5.1.0 || >= 4.21.2"
   },
   "exports": {
     ".": {
