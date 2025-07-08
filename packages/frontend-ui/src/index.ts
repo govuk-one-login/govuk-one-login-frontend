@@ -153,3 +153,6 @@ export const getTranslationObject = (
   console.warn(`No translation file found for locale: ${locale}`);
   return {}; // Return an empty object as a fallback
 };
+
+export const frontendUiTranslationEn = translationEn;
+export const frontendUiTranslationCy = translationCy;
