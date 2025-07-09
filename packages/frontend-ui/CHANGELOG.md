@@ -1,3 +1,14 @@
+## 1.3.7 (2025-07-09)
+
+### 🩹 Fixes
+
+- **933:** added translation exports and fixed logo colour error ([055cef5](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/055cef5))
+- fixing failing tests ([7c68777](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/7c68777))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+
 ## 1.3.6 (2025-07-04)
 
 ### 🩹 Fixes
