@@ -18,3 +18,11 @@
     border-top: 10px solid #1d70b8;
     background: #f4f8fb;
 }
+
+.govuk-footer__copyright-logo::before {
+  background: rgb(110,119,122,255);
+}
+
+.govuk-template--rebranded .govuk-footer__copyright-logo::before{
+  background: currentcolor
+}
