@@ -30,17 +30,11 @@ export class FormChangeTracker extends FormTracker {
    * @return {boolean} Returns true if the form change tracking is successful, otherwise false.
    */
   trackFormChange(event: Event): boolean {
-    if (!window.DI.analyticsGa4.cookie.consent) {
+    if (window.DI.analyticsGa4.cookie.consent === false) {
       return false;
     }
 
-    if (!this.enableFormChangeTracking) {
-      return false;
-    }
-
-    const form = FormTracker.getFormElement();
-
-    if (!form) {
+    if (this.enableFormChangeTracking === false) {
       return false;
     }
 
