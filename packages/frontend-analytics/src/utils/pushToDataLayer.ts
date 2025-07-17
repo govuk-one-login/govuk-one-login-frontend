@@ -21,6 +21,7 @@ export const pushToDataLayer = (
     | GTMInitInterface,
 ): void => {
   window.dataLayer = window.dataLayer || [];
+
   try {
     window.dataLayer.push(event);
   } catch (err) {

@@ -43,10 +43,10 @@ Scenario: GA4 navigation link event is pushed when user clicks on footer copyrig
   When I click Crown copyright link
   Then The dataLayer includes the navigation footer copyright link event
 
-# Scenario: GA4 navigation link event is pushed when user clicks on Back Link
-#  Given I visit the welcome page
-#  And I accept analytics cookies
-#  And I click Start Now link
-#  And I set up a listener for the data layer push
-#  When I click Back
-#  Then The dataLayer includes the navigation back link event
+ Scenario: GA4 navigation link event is pushed when user clicks on Back Link
+  Given I visit the welcome page
+  And I accept analytics cookies
+  And I click Start Now link
+  And I set up a listener for the data layer push
+  When I click Back
+  Then The dataLayer includes the navigation back link event

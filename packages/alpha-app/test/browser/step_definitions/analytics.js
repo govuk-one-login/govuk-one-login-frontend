@@ -317,7 +317,7 @@ Then(
       section: "undefined",
       action: "undefined",
       url: "http://localhost:3000/welcome",
-      external: "false",
+      external: "true", // true because anything not on "account.gov.uk" is considered external
       link_domain: "http://localhost:3000",
       "link_path_parts.1": "/welcome",
       "link_path_parts.2": "undefined",
@@ -502,8 +502,10 @@ Then(
   },
 );
 
-Then("The dataLayer includes the form change event", async function () {
-  const dataLayer = await this.page.evaluate("window.dataLayer");
+
+Then("The dataLayer includes the form change event", 
+  async function () {
+  const dataLayer = this.context.dataLayer;
   const eventData = dataLayer.find(
     (eventItem) => eventItem.event === "event_data",
   ).event_data;
