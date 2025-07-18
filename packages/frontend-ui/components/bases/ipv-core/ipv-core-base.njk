@@ -1,5 +1,5 @@
 {% if MAY_2025_REBRAND_ENABLED %}
-{% set govukRebrand = true %}
+    {% set govukRebrand = true %}
 {% endif %}
 
 {% extends "govuk/template.njk" %}
@@ -21,7 +21,7 @@
 {% block head %}
     {# Dynatrace RUM snippet #}
     {% if dynatraceRumUrl %}
-    <script src='{{ dynatraceRumUrl }}' crossorigin="anonymous" nonce='{{ cspNonce }}'></script>
+        <script src='{{ dynatraceRumUrl }}' crossorigin="anonymous" nonce='{{ cspNonce }}'></script>
     {% endif %}
 
     <link href="/public/stylesheets/application.css" rel="stylesheet">
@@ -43,57 +43,57 @@
 {%- endblock %}
 
 {% block bodyStart %}
-      {% block cookieBanner %}
-      {{ frontendUiCookieBanner({
+    {% block cookieBanner %}
+        {{ frontendUiCookieBanner({
     translations: translations.translation.cookieBanner
   }
   )}}
 
+        {%endblock%}
+    {% endblock %}
 
-  {%endblock%}
-{% endblock %}
-
-{% block header %}
+    {% block header %}
         {{ frontendUiHeader({
       translations: translations.translation.header,
       homepageUrl: "https://www.gov.uk",
       signOutLink: logoutUrl
     }) }}
-{% endblock %}
+    {% endblock %}
 
-{% block main %}
-    <div class="govuk-width-container {{ containerClasses }}">
-    {{ frontendUiPhaseBanner({
+    {% block main %}
+        <div class="govuk-width-container {{ containerClasses }}">
+            {{ frontendUiPhaseBanner({
       translations: translations.translation.phaseBanner,
       url: currentUrl,
       contactUrl: contactUsUrl
     }) }}
 
-        {% block beforeContent %}{% endblock %}
-        {# {% if showLanguageToggle %} #}
-    {{ frontendUiLanguageSelect({
+            {% block beforeContent %}{% endblock %}
+            {% if showLanguageToggle %}
+                {{ frontendUiLanguageSelect({
       translations: translations.translation.languageSelect,
       url: currentUrl,
       activeLanguage: htmlLang
     }) }}
-        {# {% endif %} #}
-        {% if showBack %}
-            {{ govukBackLink({
+            {% endif %}
+            {% if showBack %}
+                {{ govukBackLink({
                 text: "general.govuk.backLink" | translate,
                 href: hrefBack
             }) }}
-        {% endif %}
-        <main class="govuk-main-wrapper {{ mainClasses }}" id="main-content"{% if currentLanguage %} lang="{{ currentLanguage }}"{% endif %}>
-            <div class="govuk-grid-row">
-                {% if (displayBanner) %}
-                    {{ govukNotificationBanner({
+            {% endif %}
+            <main class="govuk-main-wrapper {{ mainClasses }}" id="main-content"{% if currentLanguage %} lang="{{ currentLanguage }}"{% endif %}>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds {{ rowClasses }}">
+                        {% if (displayBanner) %}
+                            {{ govukNotificationBanner({
                         html: bannerMessage,
                         type: bannerType
                     }) }}
-                {% endif %}
-                <div class="govuk-grid-column-two-thirds {{ rowClasses }}">
-                   {% if errorState %}
-                        {{ govukErrorSummary({
+                        {% endif %}
+
+                        {% if errorState %}
+                            {{ govukErrorSummary({
                             titleText: errorTitle | default('Error Summary'),
                             errorList: [
                                 {
@@ -102,51 +102,53 @@
                                 }
                             ]
                         }) }}
-                    {% endif %}
-                    {% block content %}{% endblock %}
+                        {% endif %}
+                        {% block content %}{% endblock %}
+                    </div>
                 </div>
-            </div>
-        </main>
-    </div>
-{% endblock %}
+            </main>
+        </div>
+    {% endblock %}
 
-{% block footer %}
-      {{ frontendUiFooter({
+    {% block footer %}
+        {{ frontendUiFooter({
     translations: translations.translation.footer
   }) }}
-{% endblock %}
+    {% endblock %}
 
-{% block bodyEnd %}
-    {% block scripts %}{% endblock %}
-    <script nonce='{{ cspNonce }}' src="/public/javascripts/application.js"></script>
-    <script type="module" nonce='{{ cspNonce }}' src="/public/javascripts/govuk-frontend.min.js"></script>
-    <script type="module" nonce='{{ cspNonce }}'>
-        import { initAll } from '/public/javascripts/govuk-frontend.min.js'
-        initAll()
-    </script>
-    {% if useDeviceIntelligence %}
-    <script type="module" nonce='{{ cspNonce }}' src="/public/javascripts/fingerprint.js"></script>
-    <script type="module" nonce='{{ cspNonce }}'>
-        import { setFingerprintCookie } from "/public/javascripts/fingerprint.js";
-        setFingerprintCookie('{{ serviceDomain }}')
-    </script>
-    {% endif %}
-    <script nonce='{{ cspNonce }}'>
-        window.DI = window.DI || {};
-        window.DI.httpStatusCode = {{ statusCode | d(200) }};
-        window.DI.journeyState = "{{ googleTagManagerPageId }}";
-        window.DI.appInit({
-            ga4ContainerId: "{{ ga4ContainerId }}",
-            uaContainerId: "{{ uaContainerId }}",
-        }, {
-        enableGa4Tracking: {{isGa4Enabled}},
-        enableUaTracking: {{isUaEnabled}},
-        cookieDomain: "{{analyticsCookieDomain}}"
-      });
-    </script>
-    {{ ga4OnPageLoad({
+    {% block bodyEnd %}
+        {% block scripts %}{% endblock %}
+        <script nonce='{{ cspNonce }}' src="/public/javascripts/application.js"></script>
+        <script type="module" nonce='{{ cspNonce }}' src="/public/javascripts/govuk-frontend.min.js"></script>
+        <script type="module" nonce='{{ cspNonce }}'>
+            import {initAll} from '/public/javascripts/govuk-frontend.min.js'
+            initAll()
+        </script>
+        {% if useDeviceIntelligence %}
+            <script type="module" nonce='{{ cspNonce }}' src="/public/javascripts/fingerprint.js"></script>
+            <script type="module" nonce='{{ cspNonce }}'>
+                import {setFingerprintCookie} from "/public/javascripts/fingerprint.js";
+                setFingerprintCookie('{{ serviceDomain }}')
+            </script>
+        {% endif %}
+        <script nonce='{{ cspNonce }}'>
+            window.DI = window.DI || {};
+            window.DI.httpStatusCode = {{ statusCode | d(200) }};
+            window.DI.journeyState = "{{ googleTagManagerPageId }}";
+            window
+                .DI
+                .appInit({
+                    ga4ContainerId: "{{ ga4ContainerId }}",
+                    uaContainerId: "{{ uaContainerId }}"
+                }, {
+                    enableGa4Tracking: {{isGa4Enabled}},
+                    enableUaTracking: {{isUaEnabled}},
+                    cookieDomain: "{{analyticsCookieDomain}}"
+                });
+        </script>
+        {{ ga4OnPageLoad({
         cspNonce: cspNonce,
         isPageDynamic: isPageDynamic,
         englishPageTitle: pageTitleKey | translateToEnglish }) }}
 
-{% endblock %}
+    {% endblock %}

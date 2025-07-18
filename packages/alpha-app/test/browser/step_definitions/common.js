@@ -65,6 +65,11 @@ When("I click Back", async function () {
   await this.page.waitForLoadState("networkidle"); // Wait for network calls to finish
 });
 
+When("I click the Change link to return to the organisation page", async function () {
+  await this.page.getByRole('link', { name: 'Change organisationType' }).click();
+  await this.page.waitForLoadState("networkidle"); // Wait for network calls to finish
+});
+
 When("I click {word} {word}", async function (text, element) {
   if (element === "link") element = "a";
   await this.page.locator(`${element}:text-is("${text}"):visible`).click();

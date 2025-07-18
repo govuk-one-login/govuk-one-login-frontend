@@ -43,7 +43,7 @@ jobs:
           run: docker build -f Dockerfile -t ui-visual-test .
 
         - name: Run the docker container in verbose mode
-          run: docker run -it --add-host=host.docker.internal:host-gateway ui-visual-test /bin/bash -c "echo 'Running in verbose mode'"
+          run: docker run --add-host=host.docker.internal:host-gateway ui-visual-test /bin/bash -c "echo 'Running in verbose mode'"
 
         - name: Run visual regression tests inside docker container
           run: xvfb-run --auto-servernum -- npm run test:visual:update && \
