@@ -28,6 +28,7 @@ export type timers = {
 };
 
 export type state = {
+  abortController: unknown;
   error?: boolean | error;
   spinnerState?: string;
   done?: boolean;
