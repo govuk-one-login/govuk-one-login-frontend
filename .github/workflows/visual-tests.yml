@@ -1,0 +1,58 @@
+name: Visual Regression Tests
+
+on: 
+    push:
+        branches: 
+          - main 
+    pull_request:
+        branches:
+          - main
+
+jobs:
+    visual-tests:
+        runs-on: ubuntu-latest
+
+        steps: 
+        - name: Checkout code
+          uses: actions/checkout@v4
+          with:
+            fetch-depth: 0
+        
+        - name: Setup Node.js
+          uses: actions/setup-node@v4
+          with: 
+            node-version: 20
+            cache: "npm"
+        
+        - name: Install Root Dependencies
+          run: npm install
+
+        - name: Install Playwright browsers in frontend-ui
+          run: npx playwright install --with-deps
+          working-directory: packages/frontend-ui
+
+        - name: Building the application
+          run: npm run build
+
+        - name: Start the Alpha-app for testing purpose in the background
+          run: |
+            npm run start & disown
+          working-directory: packages/alpha-app
+          
+        - name: Building the docker container for visual regression testing
+          run: docker build -f Dockerfile -t ui-visual-test .
+
+        - name: Run the docker container in verbose mode
+          run: docker run --add-host=host.docker.internal:host-gateway ui-visual-test /bin/bash -c "echo 'Running in verbose mode'"
+
+        - name: Run visual regression tests inside docker container
+          run: xvfb-run --auto-servernum -- npm run test:visual:update && \
+              xvfb-run --auto-servernum -- npm run test:visual
+        
+        - name: Upload differential failed snapshots (optional step)
+          if: failure()
+          uses: actions/upload-artifact@v4
+          with:
+            name: visual-diffs-failed-snapshots
+            path: | 
+              packages/frontend-ui/browser-tests/functional-tests/**/__diff_output__/
