@@ -42,14 +42,12 @@ jobs:
         - name: Building the docker container for visual regression testing
           run: docker build -f Dockerfile -t ui-visual-test .
 
+        - name: Run the docker container in verbose mode
+          run: docker run -it --add-host=host.docker.internal:host-gateway ui-visual-test /bin/bash -c "echo 'Running in verbose mode'"
+
         - name: Run visual regression tests inside docker container
-          run: |
-            docker run -it \
-              --add-host=host.docker.internal:host-gateway ui-visual-test /bin/bash \
-              curl http://host.docker.internal:3000 \
-              xvfb-run --auto-servernum -- npm run test:visual:update \
-              xvfb-run --auto-servernum -- npm run test:visual \
-              exit
+          run: xvfb-run --auto-servernum -- npm run test:visual:update && \
+              xvfb-run --auto-servernum -- npm run test:visual
         
         - name: Upload differential failed snapshots (optional step)
           if: failure()
