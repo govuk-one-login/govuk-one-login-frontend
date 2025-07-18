@@ -96,7 +96,7 @@ jobs:
 
       - name: Scan
         uses: SonarSource/sonarcloud-github-action@v3.1.0
-        if: github.event_name == 'push' || contains(env.affectedPackages, matrix.TAG)
+        if: contains(env.affectedPackages, matrix.TAG)
         with:
           projectBaseDir: ./packages/${{ matrix.TAG }}
         env:
