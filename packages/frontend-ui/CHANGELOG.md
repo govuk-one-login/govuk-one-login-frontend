@@ -1,3 +1,15 @@
+## 1.3.8 (2025-07-18)
+
+### 🩹 Fixes
+
+- only sonar scan changed packages ([42b3406](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/42b3406))
+- updated core basefile to match their most uptodate alignment ([e7d6529](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/e7d6529))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+- nickhealGDS
+
 ## 1.3.7 (2025-07-09)
 
 ### 🩹 Fixes
