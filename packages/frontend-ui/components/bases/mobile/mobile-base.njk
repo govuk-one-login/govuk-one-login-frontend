@@ -124,4 +124,9 @@
             .back()
         })
   </script>
+
+  <script type="module" nonce="{{scriptNonce}}">
+    import { setFingerprintCookie } from "/public/scripts/index.js";
+    await setFingerprintCookie("{{analyticsCookieDomain}}");
+  </script>
 {% endblock %}
