@@ -25,6 +25,15 @@ export const WaitInteractions = (() => {
 
   const timers: timers = {};
 
+  const updateAccordingToTimeElapsed = () => {
+    const elapsedMilliseconds = Date.now - initTime;
+    if (elapsedMilliseconds >= config.msBeforeAbort) {
+      reflectError();
+    } else if (elapsedMilliseconds >= config.msBeforeInformingOfLongWait) {
+      reflectLongWait();
+    }
+  };
+
   const createVirtualDom = () => {
     const initialState: initialState = [
       {
@@ -68,16 +77,26 @@ export const WaitInteractions = (() => {
   const reflectCompletion = () => {
     state.spinnerState = "spinner__ready";
     state.spinnerStateText = content.complete.spinnerState;
+    state.buttonDisabled = false;
+    state.ariaButtonEnabledMessage = content.complete.ariaButtonEnabledMessage;
     state.done = true;
     sessionStorage.removeItem("spinnerInitTime");
   };
 
   const reflectError = () => {
+    state.heading = content.error.heading;
+    state.messageText = content.error.messageText;
     state.spinnerState = "spinner__failed";
     state.done = true;
     state.error = true;
     sessionStorage.removeItem("spinnerInitTime");
     state.abortController.abort();
+  };
+
+  const reflectLongWait = () => {
+    if (state.spinnerState !== "ready") {
+      state.spinnerStateText = content.longWait.spinnerStateText;
+    }
   };
 
   const convert = (node: node) => {
