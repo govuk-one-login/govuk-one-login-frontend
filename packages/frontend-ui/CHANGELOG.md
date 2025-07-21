@@ -1,3 +1,13 @@
+## 1.3.9 (2025-07-21)
+
+### 🩹 Fixes
+
+- added fingerprint to basefile ([cecdeda](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/cecdeda))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+
 ## 1.3.8 (2025-07-18)
 
 ### 🩹 Fixes
