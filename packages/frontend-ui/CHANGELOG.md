@@ -1,3 +1,15 @@
+## 1.3.11 (2025-07-22)
+
+### 🩹 Fixes
+
+- uodated mobiles contact link and removed double appending ([1e82274](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/1e82274))
+- tidy up errors in alpha-app and move spinner to /spinner page ([cdd1d48](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/cdd1d48))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+- nickhealGDS
+
 ## 1.3.10 (2025-07-22)
 
 ### 🩹 Fixes
