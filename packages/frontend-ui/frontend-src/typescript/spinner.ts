@@ -37,13 +37,52 @@ export const WaitInteractions = (() => {
   const createVirtualDom = () => {
     const initialState: initialState = [
       {
+        nodeName: "h1",
+        text: state.heading,
+        classes: ["govuk-heading-l"],
+      },
+      {
         nodeName: "div",
         id: "spinner",
         classes: ["spinner", "spinner__pending", "centre", state.spinnerState],
       },
+      {
+        nodeName: "p",
+        text: state.spinnerStateText,
+        classes: ["centre", "spinner-state-text", "govuk-body"],
+      },
+      {
+        nodeName: "button",
+        text: content.continueButton.text,
+        buttonDisabled: state.buttonDisabled,
+        classes: ["govuk-button", "govuk-!-margin-top-4"],
+      },
     ];
 
-    return initialState;
+    const domErrorState = [
+      {
+        nodeName: "h1",
+        text: state.heading,
+        classes: ["govuk-heading-l"],
+      },
+      {
+        nodeName: "p",
+        text: state.messageText,
+        classes: ["govuk-body"],
+      },
+      {
+        nodeName: "h2",
+        text: content.error.whatYouCanDo.heading,
+        classes: ["govuk-heading-m"],
+      },
+      {
+        nodeName: "p",
+        innerHTML: `${content.error.whatYouCanDo.message.text1}<a href="${content.error.whatYouCanDo.message.link.href}">${this.content.error.whatYouCanDo.message.link.text}</a>${this.content.error.whatYouCanDo.message.text2}`,
+        classes: ["govuk-body"],
+      },
+    ];
+
+    return state.error ? domErrorState : initialState;
   };
 
   const vDomHasChanged = (currentVDom: undefined, nextVDom: undefined) => {
@@ -58,6 +97,7 @@ export const WaitInteractions = (() => {
     const container = document.getElementById("spinner-container");
 
     if (vDomChanged) {
+      document.title = state.heading;
       state.virtualDom = createVirtualDom();
       const elements = state?.virtualDom?.map(
         convert as (value: unknown, index: number, array: unknown[]) => unknown,
@@ -71,6 +111,10 @@ export const WaitInteractions = (() => {
 
     if (state.done) {
       clearInterval(timers.updateDomTimer as number);
+    }
+
+    if (state.ariaButtonEnabledMessage !== "") {
+      updateAriaAlert(config.ariaButtonEnabledMessage);
     }
   };
 
@@ -106,7 +150,19 @@ export const WaitInteractions = (() => {
       (el.innerHTML as unknown as HTMLElement) = node.innerHTML;
     if (node.id) el.id = node.id;
     if (node.classes) el.classList.add(...node.classes);
+    if (node.buttonDisabled) el.setAttribute("disabled", node.buttonDisabled);
     return el;
+  };
+
+  // to do: add a variable to initialise ariaLiveContainer
+  const updateAriaAlert = (messageText: unknown) => {
+    while (ariaLiveContainer.firstChild) {
+      ariaLiveContainer.removeChild(ariaLiveContainer.firstChild);
+    }
+
+    /* Create new message and append it to the live region */
+    const messageNode = document.createTextNode(messageText);
+    ariaLiveContainer.appendChild(messageNode);
   };
 
   const notInErrorOrDoneState = () => {
@@ -114,6 +170,7 @@ export const WaitInteractions = (() => {
   };
 
   const requestIDProcessingStatus = async () => {
+    const signal = abortController.signal;
     const apiRoute =
       document?.getElementById("spinner-container")?.dataset.apiRoute;
     try {
