@@ -7,12 +7,15 @@ function onwarn(warning, warn) {
   // Suppress empty chunk warnings for SCSS-only builds
   if (
     warning.code === "EMPTY_BUNDLE" ||
-    warning.message.includes("Generated an empty chunk")
+    warning.message.includes("Generated an empty chunk") ||
+    warning.message.includes("Deprecation Warning")
   ) {
     return;
   }
   warn(warning);
 }
+
+
 
 export default [
   // Main library build
@@ -21,11 +24,11 @@ export default [
     input: "src/index.ts",
     output: [
       {
-        file: "build/cjs/index.cjs",
+        file: "build/cjs/backend/index.cjs",
         format: "cjs",
       },
       {
-        file: "build/esm/index.js",
+        file: "build/esm/backend/index.js",
         format: "es",
       },
     ],
@@ -34,8 +37,8 @@ export default [
       copy({
         targets: [
           {
-            src: "./build/cjs/index.d.ts",
-            dest: "./build/cjs/",
+            src: "./build/cjs/backend/index.d.ts",
+            dest: "./build/cjs/backend/",
             rename: "index.d.cts",
           },
           { src: "./components/", dest: "./build/" },
@@ -50,17 +53,27 @@ export default [
     input: "frontend-src/index.ts",
     output: [
       {
-        file: "build/cjs/index-fe.cjs",
+        file: "build/cjs/frontend/index.cjs",
         format: "cjs",
       },
       {
-        file: "build/esm/index-fe.js",
+        file: "build/esm/frontend/index.js",
         format: "es",
       },
     ],
     plugins: [
       typescript({
         tsconfig: "frontend-src/tsconfig.json",
+      }),
+      copy({
+        targets: [
+          {
+            src: "./build/cjs/frontend/index.d.ts",
+            dest: "./build/cjs/frontend/",
+            rename: "index.d.cts",
+          }
+        ],
+        hook: "closeBundle",
       }),
     ],
   },
