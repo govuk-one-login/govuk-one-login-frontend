@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+const { logger } = require("../utils/logger");
+
 function validateChooseLocation(req, res) {
   try {
     const { chooseLocation } = req.body;
@@ -20,7 +23,7 @@ function validateChooseLocation(req, res) {
     }
   } catch (error) {
     // Handle unexpected errors
-    console.error(error);
+    logger.error(error);
     res.status(500).send("Internal Server Error");
   }
 }

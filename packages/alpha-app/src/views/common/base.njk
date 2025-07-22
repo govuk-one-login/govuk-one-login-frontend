@@ -20,7 +20,6 @@
 {% from "frontend-ui/build/components/footer/macro.njk" import frontendUiFooter %}
 {% from "frontend-ui/build/components/cookie-banner/macro.njk" import frontendUiCookieBanner %}
 {% from "frontend-ui/build/components/skip-link/macro.njk" import frontendUiSkipLink %}
-{% from "frontend-ui/build/components/spinner/macro.njk" import frontendUiSpinner%}
 
 
 {% block skipLink %}
@@ -61,7 +60,6 @@
     {% block backLink %}{% endblock %}
 
     <main id="main-content" class="govuk-main-wrapper govuk-!-padding-top-3" >
-    {{frontendUiSpinner()}} 
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
           {% block content %}{% endblock %}
@@ -69,42 +67,6 @@
       </div>
     </main>
   </div>
-
-  <script src="/javascript/ua/{{ assets['init.js'] }}"></script>
-  <script src="/ga4-assets/analytics.js"></script>
-  <script>
-    window.DI.appInit(
-      {
-        uaContainerId: "{{ uaContainerId }}",
-        ga4ContainerId: "{{ ga4ContainerId }}"
-      },
-      {
-        isDataSensitive: false,
-        isPageDataSensitive: false,
-        enableGa4Tracking: true,
-        enableUaTracking: true,
-        cookieDomain: "localhost"
-      }
-    );
-
-    window.DI.analyticsGa4.pageViewTracker.trackOnPageLoad({
-      statusCode: "{{statusCode}}",
-      englishPageTitle: "{{englishPageTitle}}",
-      taxonomy_level1: "{{taxonomyLevel1}}",
-      taxonomy_level2: "{{taxonomyLevel2}}",
-      content_id: "{{contentId}}",
-      logged_in_status: false,
-      dynamic: false
-    });
-  </script>
-
-  <script type="module" src="/fingerprint/index.js"></script>
-  <script type="module">
-    import { setFingerprintCookie, setLogLevel } from "/fingerprint/index.js";
-    setFingerprintCookie('localhost')
-    setLogLevel("silent");
-  </script>
-
 {% endblock %}
 
 {% block footer %}
@@ -115,16 +77,16 @@
 
 {% block bodyEnd %}
   {% block scripts %}
-    <script src="/javascript/index.js"></script>
+    <script type="module" src="/javascript/index.js"></script>
     <script src="/ga4-assets/analytics.js"></script>
     <script>
       window.DI.appInit(
         {
-          uaContainerId: "{{ uaContainerId }}",
           ga4ContainerId: "{{ ga4ContainerId }}"
         },
         {
           isDataSensitive: false,
+          isPageDataSensitive: false,
           enableGa4Tracking: true,
           enableUaTracking: false,
           cookieDomain: "localhost"
@@ -140,6 +102,13 @@
         logged_in_status: false,
         dynamic: false
       });
+    </script>
+
+    <script type="module" src="/fingerprint/index.js"></script>
+    <script type="module">
+      import { setFingerprintCookie, setLogLevel } from "/fingerprint/index.js";
+      setFingerprintCookie('localhost')
+      setLogLevel("silent");
     </script>
   {% endblock %}
 {% endblock %}

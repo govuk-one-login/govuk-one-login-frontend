@@ -1,0 +1,9 @@
+{% extends 'common/base.njk' %}
+
+{% set title = 'pages.serviceDescription.title' %}
+
+{% from "frontend-ui/build/components/spinner/macro.njk" import frontendUiSpinner %}
+
+{% block content %}
+  {{frontendUiSpinner()}} 
+{% endblock %}
