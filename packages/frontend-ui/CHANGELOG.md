@@ -1,3 +1,13 @@
+## 1.3.10 (2025-07-22)
+
+### 🩹 Fixes
+
+- changed build folders to seperate front and backend ([739e00a](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/739e00a))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+
 ## 1.3.9 (2025-07-21)
 
 ### 🩹 Fixes
