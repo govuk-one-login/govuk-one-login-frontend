@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+const { logger } = require("../utils/logger");
+
 function validateServiceDescription(req, res) {
   try {
     const { serviceDescription } = req.body;
@@ -18,7 +21,7 @@ function validateServiceDescription(req, res) {
       });
     }
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     throw error; // Rethrow the error for debugging purposes
   }
 }

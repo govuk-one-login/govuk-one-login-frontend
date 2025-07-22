@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+const { logger } = require("../utils/logger");
+
 function validateOrganisationType(req, res) {
   try {
     const { organisationType } = req.body;
@@ -18,7 +21,7 @@ function validateOrganisationType(req, res) {
       });
     }
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(500).send("Internal Server Error");
   }
 }

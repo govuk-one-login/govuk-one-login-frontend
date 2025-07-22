@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+const { logger } = require("../utils/logger");
+
 function validateEnterEmail(req, res) {
   try {
     const { enterEmail } = req.body;
@@ -14,7 +17,7 @@ function validateEnterEmail(req, res) {
     }
   } catch (error) {
     // Handle unexpected errors
-    console.error(error);
+    logger.error(error);
     res.status(500).send("Internal Server Error");
   }
 }

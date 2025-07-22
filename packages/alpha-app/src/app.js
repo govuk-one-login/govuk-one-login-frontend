@@ -5,6 +5,7 @@ dotenv.config();
 const express = require("express");
 const path = require("path");
 const session = require("express-session");
+const { logger } = require("./utils/logger");
 const { configureNunjucks } = require("./config/nunjucks");
 const {
   validateOrganisationType,
@@ -48,7 +49,7 @@ let counter = 0;
 app.get("/api", (req, res) => {
   counter++;
   const processingTime = req.query.processingTime || 1;
-  console.log(
+  logger.info(
     `Elapsed processing seconds: ${counter}. Processing time limit is: ${processingTime}`,
   );
   if (counter >= processingTime) {
@@ -61,7 +62,7 @@ app.get("/api", (req, res) => {
 const protect = require("overload-protection")("express", {
   production: process.env.NODE_ENV === "production",
   maxEventLoopDelay: 400,
-  logging: console.warn,
+  logging: logger.warn,
 });
 app.use(protect);
 const port = 3000;
@@ -90,7 +91,7 @@ i18next
       setFrontendUiTranslations(i18next);
 
       if (err) {
-        console.error("i18next init failed:", err);
+        logger.error("i18next init failed:", err);
       }
     },
   );
@@ -130,7 +131,7 @@ app.use((req, res, next) => {
         req.protocol + "://" + req.get("host") + req.originalUrl,
       );
     } catch (error) {
-      console.error("Failed to set currentUrl:", error.message);
+      logger.error("Failed to set currentUrl:", error.message);
     }
     next();
   }
@@ -181,6 +182,10 @@ app.get("/feedback", (req, res) => {
   res.render("feedback.njk");
 });
 
+app.get("/spinner", (req, res) => {
+  res.render("spinner.njk");
+});
+
 app.get(
   "/xDncNmqheVoQoeOTnVmwUnsuByWwKwwAPUZAWRYBnzgrDOCObSzFqMpwAxQRpHMUehzTfzGJjuFJOtWyQBdHQbtpEpxmopVEnghdxyz",
   (req, res) => {
@@ -189,7 +194,7 @@ app.get(
 );
 
 const server = app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  logger.info(`Example app listening on port ${port}`);
 });
 
 frontendVitalSignsInit(server, {

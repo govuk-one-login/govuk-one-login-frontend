@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+const { logger } = require("../utils/logger");
+
 function validateHelpWithHint(req, res) {
   try {
     const { helpWithHint } = req.body;
@@ -21,7 +24,7 @@ function validateHelpWithHint(req, res) {
     }
   } catch (error) {
     // Handle unexpected errors
-    console.error(error);
+    logger.error(error);
     res.status(500).send("Internal Server Error");
   }
 }

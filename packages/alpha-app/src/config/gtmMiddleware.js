@@ -4,6 +4,7 @@ const {
   UA_CONTAINER_ID,
   ROUTE_INFO,
 } = require("./constants");
+const { logger } = require("../utils/logger");
 
 // This function makes sure that the GA4 Container ID is accessible to all pages,
 // so we don't have to repeat it in every route
@@ -32,7 +33,7 @@ const setStatusCode = (req, res, next) => {
 function getPath(req) {
   const { url } = req;
   const path = ROUTE_INFO.find((route) => route.path === url.split("?")[0]);
-  if (!path) console.log("Path not found");
+  if (!path) logger.debug("Path not found");
   return path;
 }
 
