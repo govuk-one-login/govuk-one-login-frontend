@@ -1,3 +1,5 @@
+import { type LogLevelNames } from "loglevel";
+
 export interface AppConfigInterface {
   ga4ContainerId: string;
   uaContainerId: string;
@@ -15,4 +17,5 @@ export interface OptionsInterface {
   enableNavigationTracking?: boolean;
   enablePageViewTracking?: boolean;
   enableSelectContentTracking?: boolean;
+  logLevel?: LogLevelNames;
 }
