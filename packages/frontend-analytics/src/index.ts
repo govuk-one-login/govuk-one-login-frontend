@@ -28,7 +28,10 @@ function appInit(
     enableNavigationTracking: true,
     enablePageViewTracking: true,
     enableSelectContentTracking: true,
+    logLevel: 'info',
   });
+
+  logger.setLevel(defaultedOptions.logLevel!);
 
   try {
     window.DI.analyticsGa4 = new Analytics(

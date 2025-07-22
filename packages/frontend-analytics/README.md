@@ -32,6 +32,7 @@
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#installation">Installation</a></li>
+        <li><a href="#debugging">Debugging</a></li>
       </ul>
     </li>
     <li>
@@ -346,6 +347,31 @@ If a checkbox or radio field has been implemented without a legend, please follo
     </div>
   </div>
 </div>
+```
+
+### Debugging
+
+For additional debug logging you can provide a logLevel to the appInit function. This defaults to `info`. If you set it to `trace` or `debug` you will get additional logs in the browser with more information about how the trackers are working. Please keep it at `info` or above in production.
+
+```js
+window.DI.appInit(
+  {
+    ga4ContainerId: "{{ga4ContainerId}}",
+  },
+  {
+    // Setting logLevel to 'debug' will show more logs in the browser console.
+    logLevel: 'debug',
+    enableGa4Tracking:{{ga4Enabled}},
+    enablePageViewTracking:{{ga4PageViewEnabled}},
+    enableFormErrorTracking:{{ga4FormErrorEnabled}},
+    enableFormChangeTracking:{{ga4FormChangeEnabled}},
+    enableFormResponseTracking:{{ga4FormResponseEnabled}},
+    enableNavigationTracking:{{ga4NavigationEnabled}},
+    enableSelectContentTracking:{{ga4SelectContentEnabled}},
+    cookieDomain:"{{analyticsCookieDomain}}",
+    isDataSensitive:{{analyticsDataSensitive}},
+  },
+);
 ```
 
 ## Upgrading to V4
