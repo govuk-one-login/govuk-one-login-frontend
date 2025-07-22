@@ -19,7 +19,8 @@
        aria-label= "{{ phaseBanner.ariaLabel }}"
        rel="noopener"
        target="_blank"
-       href="{{ contactUsUrl(params.contactUrl, params.url) or contactUsUrl('https://signin.account.gov.uk/contact-us', params.url) }}">
+       {% if params.noAppend %} href="{{ params.contactUrl }}" {% endif %}
+       {% if params.noAppend != 'true' %} href="{{ contactUsUrl(params.contactUrl, params.url) or contactUsUrl('https://signin.account.gov.uk/contact-us', params.url) }}" {% endif %}>
       {{ phaseBanner.link }}
     </a>
   </span>
