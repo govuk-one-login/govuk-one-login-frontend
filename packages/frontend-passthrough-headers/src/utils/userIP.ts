@@ -19,7 +19,7 @@ enum IPSources {
 function isAPIGatewayProxyEvent(
   obj: Request | APIGatewayProxyEvent,
 ): obj is APIGatewayProxyEvent {
-  return Object.prototype.hasOwnProperty.call(obj, "requestContext");
+  return Object.hasOwn(obj, "requestContext");
 }
 
 function parseIP(ip: string) {
