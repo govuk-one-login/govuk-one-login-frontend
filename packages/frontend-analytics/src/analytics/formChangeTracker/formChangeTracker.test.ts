@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, jest, test } from "@jest/globals";
 import { FormChangeTracker } from "./formChangeTracker";
 import * as pushToDataLayer from "../../utils/pushToDataLayerUtil/pushToDataLayer";
+import { acceptCookies, rejectCookies } from "../../../test/utils";
 
 function createForm() {
   document.body.innerHTML = `
@@ -24,7 +25,7 @@ describe("FormChangeTracker", () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    window.DI = { analyticsGa4: { cookie: { consent: true } } };
+    acceptCookies();
 
     jest.spyOn(pushToDataLayer, "pushToDataLayer");
     jest.spyOn(FormChangeTracker.prototype, "initialiseEventListener");
@@ -72,7 +73,7 @@ describe("FormChangeTracker", () => {
   });
 
   test("trackFormChange should return false if not cookie consent", () => {
-    window.DI.analyticsGa4.cookie.consent = false;
+    rejectCookies();
     const { changeLink } = createForm();
     changeLink.dispatchEvent(action);
     expect(pushToDataLayer.pushToDataLayer).not.toHaveBeenCalled();

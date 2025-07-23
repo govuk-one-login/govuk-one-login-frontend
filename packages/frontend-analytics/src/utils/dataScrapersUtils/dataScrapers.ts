@@ -31,3 +31,8 @@ export const isChangeLink = (element: HTMLElement): boolean => {
   }
   return false;
 };
+
+export const isFormErrorPage = (): boolean => {
+  const errorMessage = document.getElementsByClassName("govuk-error-message");
+  return errorMessage.length > 0;
+};

@@ -16,6 +16,10 @@ Given("I accept analytics cookies", async function () {
   await acceptButton.click();
 });
 
+Given("I refresh the page", async function () {
+  await this.page.reload();
+});
+
 Given(
   "I have neither accepted nor rejected analytics cookies",
   async function () {
@@ -502,9 +506,7 @@ Then(
   },
 );
 
-
-Then("The dataLayer includes the form change event", 
-  async function () {
+Then("The dataLayer includes the form change event", async function () {
   const dataLayer = this.context.dataLayer;
   const eventData = dataLayer.find(
     (eventItem) => eventItem.event === "event_data",
