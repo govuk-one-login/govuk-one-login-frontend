@@ -174,13 +174,29 @@ export const WaitInteractions = (() => {
     const apiRoute =
       document?.getElementById("spinner-container")?.dataset.apiRoute;
     try {
-      const response = await fetch(apiRoute as apiRoute);
+      const response = await fetch(apiRoute as apiRoute, { signal });
 
       if (response.status !== 200) {
         throw new Error(`Status code ${response.status} received`);
       }
 
       const data = await response.json();
+
+      if (
+        data.status === ("COMPLETED" as unknown) ||
+        data.status === ("INTERVENTION" as unknown)
+      ) {
+        reflectCompletion();
+      } else if (data.status === ("ERROR" as unknown)) {
+        reflectError();
+      } else if (notInErrorOrDoneState()) {
+        setTimeout(async () => {
+          if (Date.now() - initTime >= config.msBeforeAbort) {
+            return;
+          }
+          await requestIDProcessingStatus();
+        }, config.msBetweenRequests);
+      }
 
       if (data.status === "Clear to proceed") {
         reflectCompletion();
@@ -192,7 +208,36 @@ export const WaitInteractions = (() => {
     } catch (e) {
       console.log(e);
       reflectError();
+      if (e.name !== "AbortError") {
+        console.error("Error in requestIdProcessingStatus:", e);
+        reflectError();
+      }
     }
+    // await fetch(apiRoute as apiRoute, { signal })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     if (data.status === "COMPLETED" || data.status === "INTERVENTION") {
+    //       reflectCompletion();
+    //     } else if (data.status === "ERROR") {
+    //       reflectError();
+    //     } else if (notInErrorOrDoneState()) {
+    //       setTimeout(async () => {
+    //         if (Date.now() - initTime >= config.msBeforeAbort) {
+    //           return;
+    //         }
+    //         await requestIDProcessingStatus();
+    //       }, config.msBetweenRequests);
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     if (error.name !== "AbortError") {
+    //       console.error("Error in requestIDProcessingStatus:", error);
+    //       reflectError();
+    //     }
+    //   })
+    //   .finally(() => {
+    //     updateDom();
+    //   });
   };
 
   return {
