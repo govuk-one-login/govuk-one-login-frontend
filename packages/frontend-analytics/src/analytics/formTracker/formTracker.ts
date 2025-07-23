@@ -1,9 +1,10 @@
 import { FormField } from "./formTracker.interface";
 
+export const FREE_TEXT_FIELD_TYPE = "free text field";
+export const DROPDOWN_FIELD_TYPE = "drop-down list";
+export const RADIO_FIELD_TYPE = "radio buttons";
+
 export class FormTracker {
-  FREE_TEXT_FIELD_TYPE = "free text field";
-  DROPDOWN_FIELD_TYPE = "drop-down list";
-  RADIO_FIELD_TYPE = "radio buttons";
   private selectedFields: FormField[] = [];
 
   static isExcludedType(element: HTMLInputElement): boolean {
@@ -115,16 +116,16 @@ export class FormTracker {
    * @param {FormField[]} elements - An array of FormField objects.
    * @return {string} The field type based on the elements.
    */
-  getFieldType(elements: FormField[]): string {
+  static getFieldType(elements: FormField[]): string {
     switch (elements[0].type) {
       case "select-one":
-        return this.DROPDOWN_FIELD_TYPE;
+        return DROPDOWN_FIELD_TYPE;
       case "radio":
-        return this.RADIO_FIELD_TYPE;
+        return RADIO_FIELD_TYPE;
       case "checkbox":
         return elements[0].type;
       default:
-        return this.FREE_TEXT_FIELD_TYPE;
+        return FREE_TEXT_FIELD_TYPE;
     }
   }
 

@@ -10,6 +10,7 @@ import {
   isChangeLink,
 } from "../../utils/dataScrapers";
 import { pushToDataLayer } from "../../utils/pushToDataLayer";
+import { hasConsentForAnalytics } from "../../cookie/cookie";
 
 export class NavigationTracker {
   eventName: string = "event_data";
@@ -85,7 +86,7 @@ export class NavigationTracker {
   }
 
   isEnabled() {
-    if (!window.DI.analyticsGa4.cookie.consent) {
+    if (!hasConsentForAnalytics()) {
       return false;
     }
     if (!this.enableNavigationTracking) {
