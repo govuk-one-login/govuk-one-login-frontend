@@ -2,8 +2,8 @@ import { describe, expect, jest, test, beforeEach } from "@jest/globals";
 import { FormResponseTracker } from "./formResponseTracker";
 import { FormEventInterface } from "../formTracker/formTracker.interface";
 import * as pushToDataLayer from "../../utils/pushToDataLayerUtil/pushToDataLayer";
-
-window.DI = { analyticsGa4: { cookie: { consent: true } } };
+import { FREE_TEXT_FIELD_TYPE } from "../formTracker/formTracker";
+import { acceptCookies, rejectCookies } from "../../../test/utils";
 
 describe("form with multiple fields", () => {
   const action = new Event("submit", {
@@ -12,14 +12,14 @@ describe("form with multiple fields", () => {
   });
 
   beforeEach(() => {
-    // Remove any existing elements from document.body if needed
+    acceptCookies();
     document.body.innerHTML = "";
   });
 
   jest.spyOn(pushToDataLayer, "pushToDataLayer");
 
   test("trackFormResponse should return false if tracking is deactivated", () => {
-    window.DI.analyticsGa4.cookie.consent = true;
+    acceptCookies();
     const isDataSensitive = false;
     const isPageSensitive = false;
     const enableFormResponseTracking = false;
@@ -44,7 +44,7 @@ describe("form with multiple fields", () => {
     const isDataSensitive = false;
     const isPageSensitive = false;
     const enableFormResponseTracking = true;
-    const instance = new FormResponseTracker(
+    new FormResponseTracker(
       isDataSensitive,
       isPageSensitive,
       enableFormResponseTracking,
@@ -119,7 +119,7 @@ describe("form with multiple fields", () => {
       event: "event_data",
       event_data: {
         event_name: "form_response",
-        type: instance.FREE_TEXT_FIELD_TYPE,
+        type: FREE_TEXT_FIELD_TYPE,
         url: "http://localhost/test-url",
         text: "undefined",
         section: "text input section",
@@ -137,7 +137,7 @@ describe("form with multiple fields", () => {
       event: "event_data",
       event_data: {
         event_name: "form_response",
-        type: instance.FREE_TEXT_FIELD_TYPE,
+        type: FREE_TEXT_FIELD_TYPE,
         url: "http://localhost/test-url",
         text: "undefined",
         section: "password input section",
@@ -173,7 +173,7 @@ describe("form with multiple fields", () => {
       event: "event_data",
       event_data: {
         event_name: "form_response",
-        type: instance.FREE_TEXT_FIELD_TYPE,
+        type: FREE_TEXT_FIELD_TYPE,
         url: "http://localhost/test-url",
         text: "undefined",
         section: "textarea section",
@@ -386,7 +386,7 @@ describe("form with input text", () => {
     const isDataSensitive = false;
     const isPageSensitive = false;
     const enableFormResponseTracking = true;
-    const instance = new FormResponseTracker(
+    new FormResponseTracker(
       isDataSensitive,
       isPageSensitive,
       enableFormResponseTracking,
@@ -404,7 +404,7 @@ describe("form with input text", () => {
       event: "event_data",
       event_data: {
         event_name: "form_response",
-        type: instance.FREE_TEXT_FIELD_TYPE,
+        type: FREE_TEXT_FIELD_TYPE,
         url: "http://localhost/test-url",
         text: "undefined",
         section: "test label username",
@@ -434,7 +434,7 @@ describe("form with input textarea", () => {
     const isDataSensitive = false;
     const isPageSensitive = false;
     const enableFormResponseTracking = true;
-    const instance = new FormResponseTracker(
+    new FormResponseTracker(
       isDataSensitive,
       isPageSensitive,
       enableFormResponseTracking,
@@ -452,7 +452,7 @@ describe("form with input textarea", () => {
       event: "event_data",
       event_data: {
         event_name: "form_response",
-        type: instance.FREE_TEXT_FIELD_TYPE,
+        type: FREE_TEXT_FIELD_TYPE,
         url: "http://localhost/test-url",
         text: "undefined",
         section: "test label username",
@@ -527,7 +527,7 @@ describe("Cookie Management", () => {
   const instance = new FormResponseTracker(true, true, true);
 
   test("trackFormResponse should return false if not cookie consent", () => {
-    window.DI.analyticsGa4.cookie.consent = false;
+    rejectCookies();
     document.body.innerHTML =
       '<div id="main-content">' +
       '<form action="/test-url" method="post">' +
@@ -550,7 +550,7 @@ describe("cancel event if form is invalid", () => {
   const instance = new FormResponseTracker(true, true, true);
 
   test("trackFormResponse should return false if form is invalid", () => {
-    window.DI.analyticsGa4.cookie.consent = true;
+    acceptCookies();
     document.body.innerHTML =
       '<div id="main-content">' +
       '<form action="/test-url" method="post">' +

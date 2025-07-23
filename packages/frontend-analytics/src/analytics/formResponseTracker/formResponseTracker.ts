@@ -10,6 +10,7 @@ import {
   getDomainPath,
 } from "../../utils/dataScrapersUtils/dataScrapers";
 import { pushToDataLayer } from "../../utils/pushToDataLayerUtil/pushToDataLayer";
+import { hasConsentForAnalytics } from "../../cookie/cookie";
 
 export class FormResponseTracker extends FormTracker {
   eventName: string = "form_response";
@@ -54,7 +55,7 @@ export class FormResponseTracker extends FormTracker {
    * @return {boolean} Returns true if the form response is successfully tracked, otherwise false.
    */
   trackFormResponse(event: SubmitEvent): boolean {
-    if (!window.DI.analyticsGa4.cookie.consent) {
+    if (!hasConsentForAnalytics()) {
       return false;
     }
 
@@ -98,7 +99,7 @@ export class FormResponseTracker extends FormTracker {
           event: this.eventType,
           event_data: {
             event_name: this.eventName,
-            type: validateParameter(this.getFieldType([field]), 100),
+            type: validateParameter(FormTracker.getFieldType([field]), 100),
             url: validateParameter(submitUrl, 100),
             text: this.redactPII(
               validateParameter(FormTracker.getFieldValue([field]), 100),

@@ -1,6 +1,7 @@
 import logger from "loglevel";
 import { SelectContentEventInterface } from "./selectContentTracker.interface";
 import { pushToDataLayer } from "../../utils/pushToDataLayerUtil/pushToDataLayer";
+import { hasConsentForAnalytics } from "../../cookie/cookie";
 
 export class SelectContentTracker {
   eventName: string = "select_content";
@@ -36,7 +37,7 @@ export class SelectContentTracker {
    * @return {boolean} Returns true if the event is successfully tracked, otherwise false.
    */
   trackSelectContent(event: Event): boolean {
-    if (!window.DI.analyticsGa4.cookie.consent) {
+    if (!hasConsentForAnalytics()) {
       return false;
     }
     if (!this.enableSelectContentTracking) {

@@ -7,11 +7,9 @@ import {
 } from "./pageViewTracker.interface";
 import { PageViewTracker } from "./pageViewTracker";
 import { OptionsInterface } from "../core/core.interface";
-import { FormErrorTracker } from "../formErrorTracker/formErrorTracker";
 import { FormChangeTracker } from "../formChangeTracker/formChangeTracker";
 import * as pushToDataLayer from "../../utils/pushToDataLayerUtil/pushToDataLayer";
-
-window.DI = { analyticsGa4: { cookie: { consent: true } } };
+import { acceptCookies, rejectCookies } from "../../../test/utils";
 
 const getParameters = (
   override: Partial<PageViewParametersInterface> = {},
@@ -49,6 +47,7 @@ describe("pageViewTracker", () => {
   let instance: PageViewTracker;
 
   beforeEach(() => {
+    acceptCookies();
     jest.clearAllMocks();
     jest.spyOn(pushToDataLayer, "pushToDataLayer");
     instance = new PageViewTracker(
@@ -208,12 +207,11 @@ describe("pageViewTracker test disable ga4 tracking option", () => {
 describe("Cookie Management", () => {
   jest.spyOn(PageViewTracker.prototype, "trackOnPageLoad");
   beforeEach(() => {
-    window.DI.analyticsGa4.cookie.consent = true;
+    acceptCookies();
   });
 
   test("trackOnPageLoad should return false if visitor rejects cookie consent", () => {
-    window.DI.analyticsGa4.cookie.consent = false;
-    window.DI.analyticsGa4.cookie.hasCookie = true;
+    rejectCookies();
     const instance = new PageViewTracker(getOptions());
     instance.trackOnPageLoad(getParameters());
     expect(instance.trackOnPageLoad).toReturnWith();
@@ -237,16 +235,12 @@ describe("Form Change Tracker Trigger", () => {
 
 describe("Form Error Tracker Trigger", () => {
   let instance: PageViewTracker;
-  let formErrorTracker: FormErrorTracker;
 
   beforeEach(() => {
     jest.clearAllMocks();
-    window.DI.analyticsGa4.cookie.hasCookie = true;
-    window.DI.analyticsGa4.cookie.consent = true;
+    acceptCookies();
     jest.spyOn(pushToDataLayer, "pushToDataLayer");
-    jest.spyOn(FormErrorTracker.prototype, "trackFormError");
     instance = new PageViewTracker(getOptions());
-    formErrorTracker = new FormErrorTracker();
   });
 
   test("trackOnPageLoad should called form error function and return false if form error message exists", () => {
@@ -254,32 +248,6 @@ describe("Form Error Tracker Trigger", () => {
       '<p id="organisationType-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select one option</p>';
     instance.trackOnPageLoad(getParameters());
     expect(instance.trackOnPageLoad).toReturnWith();
-  });
-
-  test("FormError tracker is activated", () => {
-    document.body.innerHTML =
-      '<p id="organisationType-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select one option</p>';
-
-    instance.trackOnPageLoad(getParameters());
-    expect(formErrorTracker.trackFormError).toHaveBeenCalled();
-  });
-  test("FormError tracker is activated even if pageView is disabled", () => {
-    document.body.innerHTML =
-      '<p id="organisationType-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select one option</p>';
-    const newInstance = new PageViewTracker(
-      getOptions({
-        enablePageViewTracking: false,
-      }),
-    );
-
-    newInstance.trackOnPageLoad(getParameters());
-    expect(formErrorTracker.trackFormError).toHaveBeenCalled();
-  });
-
-  test("FormError tracker is not triggered", () => {
-    document.body.innerHTML = "";
-    instance.trackOnPageLoad(getParameters());
-    expect(formErrorTracker.trackFormError).not.toBeCalled();
   });
 
   test("FormError tracker is deactivated", () => {

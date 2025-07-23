@@ -2,8 +2,7 @@ import { describe, expect, jest, test } from "@jest/globals";
 import { NavigationTracker } from "./navigationTracker";
 import * as pushToDataLayer from "../../utils/pushToDataLayerUtil/pushToDataLayer";
 import { NavigationElement } from "./navigationTracker.interface";
-
-window.DI = { analyticsGa4: { cookie: { consent: true } } };
+import { acceptCookies, rejectCookies } from "../../../test/utils";
 
 describe("navigationTracker", () => {
   const enableNavigationTracking = true;
@@ -16,6 +15,10 @@ describe("navigationTracker", () => {
   jest.spyOn(pushToDataLayer, "pushToDataLayer");
   jest.spyOn(NavigationTracker.prototype, "trackNavigation");
   jest.spyOn(NavigationTracker.prototype, "initialiseEventListener");
+
+  beforeEach(() => {
+    acceptCookies();
+  });
 
   test("new instance should call initialiseEventListener", () => {
     new NavigationTracker(true);
@@ -139,7 +142,7 @@ describe("navigationTracker", () => {
 describe("Cookie Management", () => {
   test("trackNavigation should return false if not cookie consent", () => {
     jest.spyOn(NavigationTracker.prototype, "trackNavigation");
-    window.DI.analyticsGa4.cookie.consent = false;
+    rejectCookies();
     const instance = new NavigationTracker(true);
     const href = document.createElement("A");
     href.className = "govuk-footer__link";
