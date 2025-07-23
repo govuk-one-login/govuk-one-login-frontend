@@ -239,6 +239,41 @@ export const WaitInteractions = (() => {
     //     updateDom();
     //   });
   };
+  const initTimer = () => {
+    let spinnerInitTime = sessionStorage.getItem("spinnerInitTime");
+    if (spinnerInitTime === null) {
+      spinnerInitTime = Date.now();
+      sessionStorage.setItem("spinnerInitTime", spinnerInitTime.toString());
+    } else {
+      spinnerInitTime = parseInt(spinnerInitTime, 10);
+    }
+    initTime = spinnerInitTime;
+    updateAccordingToTimeElapsed();
+
+    updateDomTimer = setInterval(() => {
+      updateAccordingToTimeElapsed();
+      updateDom();
+    }, config.msBetweenDomUpdate);
+  };
+
+  const initialiseContainers = () => {
+    const spinnerContainer = document.createElement("div");
+    const ariaLiveContainer = document.createElement("div");
+    ariaLiveContainer.setAttribute("aria-live", "assertive");
+    ariaLiveContainer.classList.add("govuk-visually-hidden");
+    ariaLiveContainer.appendChild(document.createTextNode(""));
+    container.replaceChildren(spinnerContainer, ariaLiveContainer);
+  };
+
+  // const handleAbort = () => {
+  //   abortController.abort();
+  // };
+
+  // const initialiseAbortController = () => {
+  //   abortController = new AbortController();
+  //   window.removeEventListener("beforeunload", handleAbort);
+  //   window.addEventListener("beforeunload", handleAbort);
+  // };
 
   return {
     state: state,
@@ -254,6 +289,13 @@ export const WaitInteractions = (() => {
       requestIDProcessingStatus().then(() => {
         updateDom();
       });
+
+      if (domRequirementsMet) {
+        initTimer();
+        initialiseContainers();
+        updateDom();
+        requestIDProcessingStatus();
+      }
     },
   };
 })();
