@@ -64,8 +64,7 @@
   "phaseBanner": {
     "tag": "BETA",
     "text": "Mae hwn yn wasanaeth newydd. Helpwch ni i'w wella a ",
-    "link": "rhoi eich adborth (agor mewn tab newydd).",
-    "ariaLabel": "Rhyddhau Baner Cyfnod"
+    "link": "rhoi eich adborth (agor mewn tab newydd)."
   },
   "skipLink": {
     "title": "Neidio i'r prif gynnwys"
