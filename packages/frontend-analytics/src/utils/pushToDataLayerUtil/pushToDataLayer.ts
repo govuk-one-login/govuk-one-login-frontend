@@ -2,9 +2,9 @@ import logger from "loglevel";
 import {
   PageViewEventInterface,
   GTMInitInterface,
-} from "../analytics/pageViewTracker/pageViewTracker.interface";
-import { NavigationEventInterface } from "../analytics/navigationTracker/navigationTracker.interface";
-import { FormEventInterface } from "../analytics/formTracker/formTracker.interface";
+} from "../../analytics/pageViewTracker/pageViewTracker.interface";
+import { NavigationEventInterface } from "../../analytics/navigationTracker/navigationTracker.interface";
+import { FormEventInterface } from "../../analytics/formTracker/formTracker.interface";
 
 declare global {
   interface Window {

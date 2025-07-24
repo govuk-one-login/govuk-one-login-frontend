@@ -4,7 +4,7 @@ import {
   FormEventInterface,
   FormField,
 } from "../formTracker/formTracker.interface";
-import * as pushToDataLayer from "../../utils/pushToDataLayer";
+import * as pushToDataLayer from "../../utils/pushToDataLayerUtil/pushToDataLayer";
 
 window.DI = { analyticsGa4: { cookie: { consent: true } } };
 

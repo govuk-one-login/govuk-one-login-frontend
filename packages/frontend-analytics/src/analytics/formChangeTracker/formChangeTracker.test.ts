@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, jest, test } from "@jest/globals";
 import { FormChangeTracker } from "./formChangeTracker";
-import * as pushToDataLayer from "../../utils/pushToDataLayer";
+import * as pushToDataLayer from "../../utils/pushToDataLayerUtil/pushToDataLayer";
 
 function createForm() {
   document.body.innerHTML = `

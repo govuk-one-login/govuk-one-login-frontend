@@ -1,7 +1,7 @@
 import {
   PageViewParametersInterface,
   TaxonomyLevels,
-} from "../analytics/pageViewTracker/pageViewTracker.interface";
+} from "../../analytics/pageViewTracker/pageViewTracker.interface";
 
 export const setTaxonomies = (pageViewParams: PageViewParametersInterface) => {
   for (const [key, value] of Object.entries(pageViewParams)) {

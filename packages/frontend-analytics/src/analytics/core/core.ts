@@ -6,7 +6,7 @@ import { NavigationTracker } from "../navigationTracker/navigationTracker";
 import { PageViewTracker } from "../pageViewTracker/pageViewTracker";
 import { SelectContentTracker } from "../selectContentTracker/selectContentTracker";
 import { OptionsInterface } from "./core.interface";
-import { pushToDataLayer } from "../../utils/pushToDataLayer";
+import { pushToDataLayer } from "../../utils/pushToDataLayerUtil/pushToDataLayer";
 
 export class Analytics {
   gtmId: string;

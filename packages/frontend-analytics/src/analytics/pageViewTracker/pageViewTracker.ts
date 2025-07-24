@@ -2,11 +2,14 @@ import {
   PageViewParametersInterface,
   PageViewEventInterface,
 } from "./pageViewTracker.interface";
-import { validateParameter } from "../../utils/validateParameter";
+import { validateParameter } from "../../utils/validateParameterUtils/validateParameter";
 import { FormErrorTracker } from "../formErrorTracker/formErrorTracker";
 import { OptionsInterface } from "../core/core.interface";
-import { getTaxonomy, setTaxonomies } from "../../utils/taxonomyUtils";
-import { pushToDataLayer } from "../../utils/pushToDataLayer";
+import {
+  getTaxonomy,
+  setTaxonomies,
+} from "../../utils/taxonomyUtils/taxonomyUtils";
+import { pushToDataLayer } from "../../utils/pushToDataLayerUtil/pushToDataLayer";
 
 export class PageViewTracker {
   eventName: string = "page_view_ga4";
