@@ -9,7 +9,7 @@ import { PageViewTracker } from "./pageViewTracker";
 import { OptionsInterface } from "../core/core.interface";
 import { FormErrorTracker } from "../formErrorTracker/formErrorTracker";
 import { FormChangeTracker } from "../formChangeTracker/formChangeTracker";
-import * as pushToDataLayer from "../../utils/pushToDataLayer";
+import * as pushToDataLayer from "../../utils/pushToDataLayerUtil/pushToDataLayer";
 
 window.DI = { analyticsGa4: { cookie: { consent: true } } };
 

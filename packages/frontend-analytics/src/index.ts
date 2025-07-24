@@ -4,7 +4,7 @@ import {
   OptionsInterface,
 } from "./analytics/core/core.interface";
 import { Analytics } from "./analytics/core/core";
-import { applyDefaults } from "./utils/applyDefaults";
+import { applyDefaults } from "./utils/applyDefaultsUtil/applyDefaults";
 
 declare global {
   interface Window {

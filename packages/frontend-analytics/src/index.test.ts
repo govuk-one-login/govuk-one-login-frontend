@@ -1,6 +1,6 @@
 import "./index";
 import { type FormEventInterface } from "./analytics/formTracker/formTracker.interface";
-import * as pushToDataLayer from "./utils/pushToDataLayer";
+import * as pushToDataLayer from "./utils/pushToDataLayerUtil/pushToDataLayer";
 
 declare global {
   interface Window {
