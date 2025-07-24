@@ -8,6 +8,9 @@ on:
         branches:
           - main
 
+permissions:
+  contents: write
+
 jobs:
     visual-tests:
         runs-on: ubuntu-latest
@@ -41,8 +44,29 @@ jobs:
           run: npx wait-on http://localhost:3000
 
         - name: Run visual regression test updates
+          if: github.event_name == 'pull_request' && contains(github.event.pull_request.title, '[visual-update]')
           run: npm run test:visual:update
           working-directory: packages/frontend-ui
+
+        - name: Checkout code
+          if: github.event_name == 'pull_request' && contains(github.event.pull_request.title, '[visual-update]')
+          uses: actions/checkout@v4
+          with:
+            fetch-depth: 0
+            ref: ${{ github.head_ref }}
+
+        - name: Prepare branch for commit
+          if: github.event_name == 'pull_request' && contains(github.event.pull_request.title, '[visual-update]')
+          run: git checkout -B "${{ github.head_ref }}"
+
+        - name: Commit and push updated visual snapshots
+          if: github.event_name == 'pull_request' && contains(github.event.pull_request.title, '[visual-update]')
+          run: |
+            git config --global user.name "github-actions[bot]"
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            git add packages/frontend-ui/browser-tests/visual/visual-tests.spec.ts-snapshots/
+            git commit -m "chore: update visual snapshots [skip ci]" || echo "No changes to commit"
+            git push origin HEAD:${{ github.head_ref }}
 
         - name: Run visual regression tests
           run: npm run test:visual
