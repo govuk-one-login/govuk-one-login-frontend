@@ -1,7 +1,7 @@
 import { defineConfig } from "@playwright/test";
 
 export default defineConfig({
-    testDir: "browser-tests/functional-tests",
+    testDir: "browser-tests/visual",
     use: {
         baseURL: "http://localhost:3000",
         screenshot: "only-on-failure",
