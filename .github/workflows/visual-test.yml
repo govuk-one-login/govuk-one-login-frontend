@@ -56,8 +56,9 @@ jobs:
         - name: Commit and push updated visual snapshots
           if: github.event_name == 'pull_request' && contains(github.event.pull_request.title, '[visual-update]')
           run: |
-            git config --global user.name "github-actions[bot]"
-            git config --global user.email "github-actions[bot]@users.noreply.github.com"
-            git add packages/frontend-ui/browser-tests/visual/visual-tests.spec.ts-snapshots/
-            git commit -m "chore: update visual snapshots [skip ci]" --no-verify || echo "No changes to commit"
+            git config --global user.name "David McMichael"
+            git config --global user.email "david.mcmichael1@digital.cabinet-office.gov.uk"
+            git add -A
+            git commit -m "chore: update visual snapshots " --no-verify || echo "No changes to commit"
             git push origin HEAD:${{ github.head_ref }}
+            
