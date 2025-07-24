@@ -43,7 +43,7 @@ jobs:
         - name: Wait for Alpha-app to be ready
           run: npx wait-on http://localhost:3000
 
-        - name: Run visual regression test updates
+        - name: Update the visual snapshots
           if: github.event_name == 'pull_request' && contains(github.event.pull_request.title, '[visual-update]')
           run: npm run test:visual:update
           working-directory: packages/frontend-ui
