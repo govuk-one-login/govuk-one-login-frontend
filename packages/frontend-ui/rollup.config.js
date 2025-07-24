@@ -2,6 +2,8 @@ import json from "@rollup/plugin-json";
 import copy from "rollup-plugin-copy";
 import scss from "rollup-plugin-scss";
 import typescript from "rollup-plugin-typescript2";
+import fs from 'fs';
+import path from 'path';
 
 function onwarn(warning, warn) {
   // Suppress empty chunk warnings for SCSS-only builds
@@ -14,8 +16,6 @@ function onwarn(warning, warn) {
   }
   warn(warning);
 }
-
-
 
 export default [
   // Main library build
@@ -71,7 +71,7 @@ export default [
             src: "./build/cjs/frontend/index.d.ts",
             dest: "./build/cjs/frontend/",
             rename: "index.d.cts",
-          }
+          },
         ],
         hook: "closeBundle",
       }),
