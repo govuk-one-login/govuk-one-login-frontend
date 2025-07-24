@@ -41,15 +41,6 @@ export default [
             dest: "./build/cjs/backend/",
             rename: "index.d.cts",
           },
-          // {
-          //   src: "./browser-tests/visual/visual-tests.spec.ts-snapshots/*",
-          //   dest: "./browser-tests/visual/visual-tests.spec.ts-snapshots",
-          //   rename: (name, extension) => {
-          //     // Replace 'darwin' with 'linux' in the filename
-          //     const newName = name.replace(/darwin/g, "linux");
-          //     return `${newName}${extension ? "." + extension : ""}`;
-          //   },
-          // },
           { src: "./components/", dest: "./build/" },
         ],
         hook: "closeBundle",
