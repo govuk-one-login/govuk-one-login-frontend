@@ -109,8 +109,20 @@ export function contactUsUrl(baseUrl: string, urlToAppend: string) {
   if (!baseUrl) {
     return null;
   }
-  const searchParams = new URLSearchParams({ fromURL: urlToAppend });
-  return `${baseUrl}?${searchParams.toString()}`;
+
+  try {
+    const newUrl = new URL(urlToAppend); // Create a new URL object to modify
+    newUrl.search = ''; // Remove the query parameters
+
+    const encodedUrl = encodeURIComponent(newUrl.toString()); // Encode the entire URL
+
+    const searchParams = new URLSearchParams({ fromURL: encodedUrl });
+    return `${baseUrl}?${searchParams.toString()}`;
+  } catch {
+    const encodedUrlToAppend = encodeURIComponent(urlToAppend);
+    const searchParams = new URLSearchParams({ fromURL: encodedUrlToAppend });
+    return `${baseUrl}?${searchParams.toString()}`;
+  }
 }
 
 export const setBaseTranslations = (
