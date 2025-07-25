@@ -1,3 +1,15 @@
+## 1.3.12 (2025-07-25)
+
+### 🩹 Fixes
+
+- removed parameters from contactUsUrl ([f37f9a5](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/f37f9a5))
+- remove surplus aria label that confused screen readers ([18882be](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/18882be))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+- nickhealGDS
+
 ## 1.3.11 (2025-07-22)
 
 ### 🩹 Fixes
