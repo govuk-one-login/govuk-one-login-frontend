@@ -1,29 +1,69 @@
-# Browser tests
+# GOV.UK One Login Frontend UI – Browser Tests
 
-This folder contains two folders; functional tests and snapshot tests.
-The functional tests runs the frontend ui components against a browser using Playwright.
-The snapshot tests are then captured from the functional tests. When the update test command is ran, playwright compares the new snapshot with the old snapshot.
+This directory contains Playwright-based browser tests for visual regression and functional validation of GOV.UK One Login frontend UI components.
 
-## Functional tests
+## Structure
 
-## Running Playwright tests
-- Install playwright `npx playwright install`
-- By default, headless mode is active which means a chromium browser window will open when runnning the tests. If you do not want this, it is optional and you can remove the --headless flags from the run commands or set headless to false in the playwright.config.ts
-- To run the tests = `npm run test:visual` (Tests will fail first time if there are no snapshots as there is nothing to test against)
+- **functional-tests/**  
+  Contains Playwright test files for each UI component, as well as their corresponding visual regression snapshot folders.
+  - `CookieBanner.visual.test.ts`  
+    Tests the Cookie Banner component, including default, accepted, and rejected states.
+  - `Footer.visual.test.ts`  
+    Tests the Footer component's visual appearance.
+  - `Header.visual.test.ts`  
+    Tests the Header component, including sign-out interactions.
+  - `LanguageSelect.visual.test.ts`  
+    Tests the Language Select component in English and Welsh.
+  - `PhaseBanner.visual.test.ts`  
+    Tests the Phase Banner component.
+  - `SkipLink.visual.test.ts`  
+    Tests the Skip Link component, including full-page screenshots.
 
-- Optionally, you can install the playwright VSCode Extension that will give you a UI to run the playwright tests.
+  Each test file has a corresponding `*-snapshots/` folder containing images generated during visual regression tests.
 
-## Snapshot folder
-This folder contains all the snapshots that are taken for each of the frontend-ui components in order to verify the 
-correct styling of the component. If the styling changes after the initial snapshot that is taken, the second time the 
-test is ran, the snapshots will be compared. This visually tests the looks of the components. 
-Be aware that when running the snapshot tests locally you will be using the browser on your
-machine instead of the browser in the test container and so subtle differences could appear and the snapshot files
-generated will be named differently.
+## Running Tests
 
-### Updating snapshots
-If you make a change that affects the appearance of a page then you will need to update the saved snapshot file.
-- `npm run test:visual:update: "playwright test browser-tests/functional-tests --headed --update-snapshots"`
+To run all browser tests:
 
-## Ports
-3000 frontend ui components viewed from the testing alpha-app
+```sh
+npm run test:visual
+```
+
+To update visual regression snapshots:
+
+```sh
+npm run test:visual:update
+```
+
+## Adding New Tests
+
+1. Create a new `.visual.test.ts` file in `functional-tests/` for your component.
+2. Use Playwright's `expect(...).toHaveScreenshot(...)` to generate and compare snapshots.
+3. Snapshots will be saved in a folder named `<Component>.visual.test.ts-snapshots/`.
+
+## Notes
+
+- Ensure your local server is running at `http://localhost:3000/welcome` before running tests.
+- Snapshots are platform-specific (e.g., `*-darwin.png` for macOS).
+
+
+## Updating Visual Regression Snapshots via GitHub Workflow
+
+You can update the Playwright visual regression snapshots automatically using the GitHub Actions workflow.
+
+### How to Update Snapshots
+
+1. Go to the **Actions** tab in your repository on GitHub.
+2. Select the **branch** in which you've made the changes
+3. Select the **Update Visual Regression Tests** workflow.
+4. Click **Run workflow** and confirm.
+
+This workflow will:
+- Build and start the application.
+- Run the visual regression tests and update the snapshots.
+- Commit and push any updated snapshot files back to the repository automatically.
+
+> **Note:**  
+> Make sure your changes are committed before running the workflow, as it will push updates to the current branch.
+
+For more details, see [`.github/workflows/update-visual-test.yml`](../../.github/workflows/update-visual-test.yml).
