@@ -7,10 +7,9 @@ declare global {
   }
 }
 
+const COOKIES_PREFERENCES_SET = "cookies_preferences_set";
+
 export class Cookie {
-  public consent: boolean = false;
-  public hasCookie: boolean = false;
-  public COOKIES_PREFERENCES_SET = "cookies_preferences_set";
   public cookiesAccepted = document.getElementById("cookies-accepted");
   public cookiesRejected = document.getElementById("cookies-rejected");
   public hideCookieBanner =
@@ -34,12 +33,9 @@ export class Cookie {
    */
   initialise(): void {
     // Check if a cookie preference has been set
-    const savedCookiePreference = Cookie.getCookie(
-      this.COOKIES_PREFERENCES_SET,
-    );
+    const savedCookiePreference = Cookie.getCookie(COOKIES_PREFERENCES_SET);
     if (savedCookiePreference) {
-      this.consent = this.hasConsentForAnalytics();
-      this.initDynatrace(this.consent);
+      this.initDynatrace();
       this.hideElement(this.cookieBannerContainer[0] as HTMLElement);
     } else {
       // add event listeners
@@ -63,12 +59,11 @@ export class Cookie {
       this.showElement(this.cookieBannerContainer[0] as HTMLElement);
     }
 
-    if (!this.consent) {
+    if (!hasConsentForAnalytics()) {
       window.addEventListener(
         "cookie-consent",
         () => {
-          const newConsent = this.hasConsentForAnalytics();
-          this.initDynatrace(newConsent);
+          this.initDynatrace();
         },
         { once: true },
       );
@@ -83,7 +78,6 @@ export class Cookie {
   handleAcceptClickEvent(event: Event): void {
     event.preventDefault();
     this.setBannerCookieConsent(true, this.cookieDomain);
-    this.consent = true;
     window.DI.analyticsGa4.loadGtmScript();
   }
 
@@ -94,7 +88,6 @@ export class Cookie {
    */
   handleRejectClickEvent(event: Event): void {
     event.preventDefault();
-    this.consent = false;
     this.setBannerCookieConsent(false, this.cookieDomain);
   }
 
@@ -116,7 +109,7 @@ export class Cookie {
    */
   setBannerCookieConsent(analyticsConsent: boolean, domain: string): void {
     Cookie.setCookie(
-      this.COOKIES_PREFERENCES_SET,
+      COOKIES_PREFERENCES_SET,
       { analytics: analyticsConsent },
       domain,
       365,
@@ -144,15 +137,7 @@ export class Cookie {
    * @return {boolean} - Returns true if the user has given consent for analytics, false otherwise.
    */
   hasConsentForAnalytics(): boolean {
-    const cookieValue = Cookie.getCookie(this.COOKIES_PREFERENCES_SET);
-
-    if (!cookieValue) {
-      return false;
-    }
-    this.hasCookie = true;
-
-    const cookieConsent = JSON.parse(decodeURIComponent(cookieValue));
-    return cookieConsent ? cookieConsent.analytics === true : false;
+    return hasConsentForAnalytics();
   }
 
   /**
@@ -239,13 +224,22 @@ export class Cookie {
    * Enables/disables Dynatrace accordingly to the user consent from the cookie.
    * @param {boolean} hasConsentedForAnalytics
    */
-  initDynatrace(hasConsentedForAnalytics: boolean): void {
+  initDynatrace(): void {
     if (window.dtrum) {
-      if (hasConsentedForAnalytics) {
+      if (hasConsentForAnalytics()) {
         window.dtrum.enable();
       } else {
         window.dtrum.disable();
       }
     }
   }
+}
+
+export function hasConsentForAnalytics(): boolean {
+  const cookieValue = Cookie.getCookie(COOKIES_PREFERENCES_SET);
+
+  if (!cookieValue) return false;
+
+  const cookieConsent = JSON.parse(decodeURIComponent(cookieValue));
+  return cookieConsent ? cookieConsent.analytics === true : false;
 }
