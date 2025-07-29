@@ -1,6 +1,6 @@
 import logger from "loglevel";
 import { SelectContentEventInterface } from "./selectContentTracker.interface";
-import { pushToDataLayer } from "../../utils/pushToDataLayer";
+import { pushToDataLayer } from "../../utils/pushToDataLayerUtil/pushToDataLayer";
 
 export class SelectContentTracker {
   eventName: string = "select_content";

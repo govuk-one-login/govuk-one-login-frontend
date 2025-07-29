@@ -1,4 +1,4 @@
-import { PageViewEventInterface } from "../analytics/pageViewTracker/pageViewTracker.interface";
+import { PageViewEventInterface } from "../../analytics/pageViewTracker/pageViewTracker.interface";
 import * as pushToDataLayer from "./pushToDataLayer";
 
 describe("should push to dataLayer", () => {
