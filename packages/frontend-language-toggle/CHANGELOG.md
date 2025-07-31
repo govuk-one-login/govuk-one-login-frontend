@@ -1,3 +1,66 @@
+## 2.2.2 (2025-07-31)
+
+### 🚀 Features
+
+- **912:** added workflow for visual testing ([3aa935c](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/3aa935c))
+- **DFC-775:** Visual Regression testing for frontendUI Components ([ae577ae](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/ae577ae))
+- **dfc-870:** fix package.json file ([bb29cf1](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/bb29cf1))
+- **dfc-870:** spinner with ts ([e3f93fe](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/e3f93fe))
+- **DFC-863:** WIP for accessibility tests for frontend ui pacakge ([7433633](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/7433633))
+- **849:** Rebreand updates, asset import, basefile changes, bug fixes ([61bc629](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/61bc629))
+- **728:** added overload for functions and edited basefiles, configured rollup for js ([36d80ec](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/36d80ec))
+- **dfc-736:** remove dependecy ([065c281](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/065c281))
+- **dfc-736:** spinner switch to js due to roll up errors and parsing not compatible with ts ([e785ab8](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/e785ab8))
+- **dfc-736:** loading spinner ([c0625f8](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/c0625f8))
+- **dfc-736:** remove dependecy ([3efeccc](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/3efeccc))
+- **dfc-736:** spinner switch to js due to roll up errors and parsing not compatible with ts ([afd0c25](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/afd0c25))
+- **dfc-736:** loading spinner ([13cbd47](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/13cbd47))
+- **DFC-826:** LogLevel Logger added to device intelligence package. Logs silent by default ([a6f236c](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/a6f236c))
+- **DFC-818:** Tests added and refactored code ([48f1ee6](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/48f1ee6))
+- **DFC-818:** Font and Hash fields with RFC ([33df869](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/33df869))
+- **DFC-809:** updated package versions ([02232c0](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/02232c0))
+- **DFC-809:** updated package-lock ([7ee1745](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/7ee1745))
+- **DFC-810:** Updated changelog and readme. Removed unused code from fingerprint function ([01480b2](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/01480b2))
+- **DFC-810:** Clone thumbmarkjs into device intelligence package ([70f7405](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/70f7405))
+- **DFC-809:** Updates to sonar workflow and package.json ([8a3ea81](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/8a3ea81))
+- **DFC-809:** Adding device intelligence package to github workflows ([fbb3f4e](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/fbb3f4e))
+- **dfc-749:** skip link ([502bfda](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/502bfda))
+- **746:** updated css imports ([5af8aff](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/5af8aff))
+- **746:** updated style dependancies ([764ba2f](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/764ba2f))
+- **746:** Migrating headers to frontend-ui ([44c115d](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/44c115d))
+- **734:** remove unnecessary code changes ([819b313](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/819b313))
+- **734:** update translations approach ([5e21e72](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/5e21e72))
+- **734:** add service name variable ([7473a0d](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/7473a0d))
+- **739:** converted script files from js to ts and updated linting rules of monorepo ([8b41b9b](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/8b41b9b))
+- **739:** migrating scripts, analytics and middleware files from Common-express ([4f3069e](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/4f3069e))
+
+### 🩹 Fixes
+
+- tidy up errors in alpha-app and move spinner to /spinner page ([cdd1d48](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/cdd1d48))
+- only sonar scan changed packages ([42b3406](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/42b3406))
+- fixing failing tests ([7c68777](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/7c68777))
+- **884:** updated failing dependencies ([a590339](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/a590339))
+- **908:** remove build folder tracking ([fef281e](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/fef281e))
+- **884:** updated failing dependencies ([31e6634](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/31e6634))
+- **908:** remove build folder tracking ([2ed083a](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/2ed083a))
+- **873:** updated rebrand var for consistency ([d2cab1e](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/d2cab1e))
+- updated express to peerDependency ([4b569a4](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/4b569a4))
+- added npm installs for linux ([079411b](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/079411b))
+- **analytics:** Update analytics package.json files/ value ([a71f191](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/a71f191))
+- **739:** adding test coverage and fixing bug in helmet file ([fd80cb5](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/fd80cb5))
+- **DFC739:** adding missing comma ([c4dc407](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/c4dc407))
+
+### ❤️ Thank You
+
+- arwa.tawawala
+- arwatGDS
+- DavidMcMichael-GDS
+- DavidMcMichaelGov
+- di-aholme
+- Joanneyoung01
+- nickhealGDS
+- ug-gds
+
 ## 2.2.1 (2025-01-24)
 
 ### 🚀 Features
