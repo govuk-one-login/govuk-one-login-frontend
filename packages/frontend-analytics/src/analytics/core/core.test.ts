@@ -2,8 +2,7 @@ import { describe, expect, test } from "@jest/globals";
 import { Analytics } from "./core";
 import { PageViewTracker } from "../pageViewTracker/pageViewTracker";
 import { OptionsInterface } from "./core.interface";
-
-window.DI = { analyticsGa4: { cookie: { consent: true } } };
+import { acceptCookies, unsetCookies } from "../../../test/utils";
 
 describe("should initialize the ga4 class", () => {
   const options: OptionsInterface = {
@@ -19,6 +18,11 @@ describe("should initialize the ga4 class", () => {
   };
   const gtmId = "GTM-XXXX";
 
+  beforeEach(() => {
+    document.body.innerHTML = "";
+    acceptCookies();
+  });
+
   test("gtmId property", () => {
     const newInstance = new Analytics(gtmId, options);
     expect(newInstance.gtmId).toEqual(gtmId);
@@ -30,6 +34,8 @@ describe("should initialize the ga4 class", () => {
   });
 
   test("tag manager script not added to document if no consent", () => {
+    unsetCookies();
+    new Analytics(gtmId, options);
     expect(document.getElementsByTagName("script")[0]).toBe(undefined);
   });
 

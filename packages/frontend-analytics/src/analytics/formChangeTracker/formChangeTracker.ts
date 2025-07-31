@@ -8,6 +8,7 @@ import {
   isChangeLink,
 } from "../../utils/dataScrapersUtils/dataScrapers";
 import { pushToDataLayer } from "../../utils/pushToDataLayerUtil/pushToDataLayer";
+import { hasConsentForAnalytics } from "../../cookie/cookie";
 
 export class FormChangeTracker extends FormTracker {
   eventName: string = "form_change_response";
@@ -30,7 +31,7 @@ export class FormChangeTracker extends FormTracker {
    * @return {boolean} Returns true if the form change tracking is successful, otherwise false.
    */
   trackFormChange(event: Event): boolean {
-    if (window.DI.analyticsGa4.cookie.consent === false) {
+    if (!hasConsentForAnalytics()) {
       return false;
     }
 
