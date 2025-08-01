@@ -166,7 +166,9 @@ describe("contactUsUrl function", () => {
     const baseUrl = "https://www.example.com";
     const urlToAppend = "https://some-page.com/some-path?example=123";
     const result = contactUsUrl(baseUrl, urlToAppend);
-    expect(result).toContain("https://www.example.com?fromURL=https%253A%252F%252Fsome-page.com%252Fsome-path");
+    expect(result).toContain(
+      "https://www.example.com?fromURL=https%253A%252F%252Fsome-page.com%252Fsome-path",
+    );
   });
 
   it("should return null if baseUrl is undefined", () => {

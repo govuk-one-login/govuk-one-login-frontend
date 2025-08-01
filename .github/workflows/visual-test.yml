@@ -8,6 +8,9 @@ on:
         branches:
           - main
 
+permissions:
+  contents: write
+
 jobs:
     visual-tests:
         runs-on: ubuntu-latest
@@ -39,6 +42,20 @@ jobs:
 
         - name: Wait for Alpha-app to be ready
           run: npx wait-on http://localhost:3000
+
+        - name: Run visual regression tests update TEMPORARY
+          run: npm run test:visual:update
+          working-directory: packages/frontend-ui
+
+        - name: Commit and push updated visual snapshots
+          run: |
+            git config --global user.name "github-actions[bot]"
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            git fetch origin ${{ github.head_ref }}
+            git checkout ${{ github.head_ref }}
+            git add -A
+            git commit -m "chore: update visual snapshots " --no-verify || echo "No changes to commit"
+            git push origin ${{ github.head_ref }} || exit 1
 
         - name: Run visual regression tests
           run: npm run test:visual
