@@ -31,11 +31,8 @@ export const WaitInteractions = (() => {
 
   let {
     container,
-    // spinnerContainer,
     ariaLiveContainer,
-    // content,
     domRequirementsMet,
-    // state,
     initTime,
     updateDomTimer,
     abortController,
