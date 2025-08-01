@@ -1,6 +1,13 @@
-import { describe, expect, test, beforeEach } from "@jest/globals";
+import { beforeEach, describe, expect, test } from "@jest/globals";
 import { FormTracker } from "./formTracker";
 import { FormField } from "./formTracker.interface";
+import {
+  getElementValue,
+  getFieldLabel,
+  getFieldValue,
+  getFormElement,
+} from "./formTrackerUtils/getFieldValues/getFieldValues";
+import { getSectionValue } from "./formTrackerUtils/getSectionValue/getSectionValue";
 
 window.DI = { analyticsGa4: { cookie: { consent: true } } };
 
@@ -11,36 +18,6 @@ describe("FormTracker", () => {
     instance = new FormTracker();
     // Remove any existing elements from document.body if needed
     document.body.innerHTML = "";
-  });
-
-  test("isFormValid should return false if field value is empty", () => {
-    const fields: FormField[] = [
-      { id: "test", name: "test", value: "", type: "textarea" },
-    ];
-    expect(FormTracker.isFormValid(fields)).toBe(false);
-  });
-
-  test("isFormValid should return true if field value is here", () => {
-    const fields: FormField[] = [
-      { id: "test", name: "test", value: "testtest", type: "textarea" },
-    ];
-    expect(FormTracker.isFormValid(fields)).toBe(true);
-  });
-
-  test("isFormValid should return false if one of the field value is empty", () => {
-    const fields: FormField[] = [
-      { id: "test", name: "test", value: "", type: "textarea" },
-      { id: "test2", name: "test2", value: "test2", type: "checkbox" },
-    ];
-    expect(FormTracker.isFormValid(fields)).toBe(false);
-  });
-
-  test("isFormValid should return true if all field values are here", () => {
-    const fields: FormField[] = [
-      { id: "test", name: "test", value: "test1", type: "textarea" },
-      { id: "test2", name: "test2", value: "test2", type: "checkbox" },
-    ];
-    expect(FormTracker.isFormValid(fields)).toBe(true);
   });
 
   // getFormElement Tests
@@ -59,7 +36,7 @@ describe("FormTracker", () => {
       "</select>";
     divElement.appendChild(form);
     document.body.appendChild(divElement);
-    expect(FormTracker.getFormElement()).toEqual(form);
+    expect(getFormElement()).toEqual(form);
   });
 
   // getFormFields Tests
@@ -115,34 +92,6 @@ describe("FormTracker", () => {
     ]);
   });
 
-  // isExcludedType Tests
-
-  test("isExcludedType should return true for hidden input type", () => {
-    const element: HTMLInputElement = { type: "hidden" } as HTMLInputElement;
-    const result = FormTracker.isExcludedType(element);
-    expect(result).toBe(true);
-  });
-  test("isExcludedType should return true for submit input type", () => {
-    const element: HTMLInputElement = { type: "submit" } as HTMLInputElement;
-    const result = FormTracker.isExcludedType(element);
-    expect(result).toBe(true);
-  });
-  test("isExcludedType should return true for button type", () => {
-    const element: HTMLInputElement = { type: "button" } as HTMLInputElement;
-    const result = FormTracker.isExcludedType(element);
-    expect(result).toBe(true);
-  });
-  test("isExcludedType should return true for fieldset input type", () => {
-    const element: HTMLInputElement = { type: "fieldset" } as HTMLInputElement;
-    const result = FormTracker.isExcludedType(element);
-    expect(result).toBe(true);
-  });
-  test("isExcludedType should return false for other input types", () => {
-    const element: HTMLInputElement = { type: "text" } as HTMLInputElement;
-    const result = FormTracker.isExcludedType(element);
-    expect(result).toBe(false);
-  });
-
   // getElementValue Tests
 
   test("getElementValue should return trimmed label text content", () => {
@@ -158,7 +107,7 @@ describe("FormTracker", () => {
     document.body.appendChild(element);
     document.body.appendChild(label);
 
-    const result = FormTracker.getElementValue(element);
+    const result = getElementValue(element);
     expect(result).toBe("Test Label");
   });
 
@@ -169,7 +118,7 @@ describe("FormTracker", () => {
     // Append the input to the document body
     document.body.appendChild(element);
 
-    const result = FormTracker.getElementValue(element);
+    const result = getElementValue(element);
     expect(result).toBe("undefined");
   });
 
@@ -392,21 +341,21 @@ describe("FormTracker", () => {
     const fields: FormField[] = [
       { id: "test", name: "test", value: "test value", type: "checkbox" },
     ];
-    expect(FormTracker.getFieldValue(fields)).toBe("test value");
+    expect(getFieldValue(fields)).toBe("test value");
   });
 
   test("getFieldValue should return empty value if type is text", () => {
     const fields: FormField[] = [
       { id: "test", name: "test", value: "test value", type: "text" },
     ];
-    expect(FormTracker.getFieldValue(fields)).toBe("");
+    expect(getFieldValue(fields)).toBe("");
   });
 
   test("getFieldValue should return empty value if type is textarea", () => {
     const fields: FormField[] = [
       { id: "test", name: "test", value: "test value", type: "textarea" },
     ];
-    expect(FormTracker.getFieldValue(fields)).toBe("");
+    expect(getFieldValue(fields)).toBe("");
   });
 
   test("getFieldType should return free text field if type is text", () => {
@@ -448,49 +397,7 @@ describe("FormTracker", () => {
     const label = document.createElement("label");
     label.textContent = "test label";
     document.body.appendChild(label);
-    expect(FormTracker.getFieldLabel()).toBe("test label");
-  });
-
-  test("getSubmitUrl should return submit url", () => {
-    const form = document.createElement("form");
-    form.action = "/test-url";
-    form.innerHTML =
-      '<input id="test" name="test" value="test value" type="text"/>';
-    document.body.appendChild(form);
-    expect(FormTracker.getSubmitUrl(form)).toBe("http://localhost/test-url");
-  });
-
-  test("getSubmitUrl should return submit url with the query params also", () => {
-    const form = document.createElement("form");
-    form.action = "/test-url?edit=true";
-    form.innerHTML =
-      '<input id="test" name="test" value="test value" type="text"/>';
-    document.body.appendChild(form);
-    expect(FormTracker.getSubmitUrl(form)).toBe(
-      "http://localhost/test-url?edit=true",
-    );
-  });
-
-  test("getHeadingText should return h1 content if it has a rel attribute matching commonId", () => {
-    // create h1 with rel attribute
-
-    const h1 = document.createElement("h1");
-    h1.textContent = "H1 with rel attribute";
-    h1.setAttribute("rel", "example");
-
-    document.body.appendChild(h1);
-
-    expect(FormTracker.getHeadingText("example_1")).toBe(
-      "H1 with rel attribute",
-    );
-  });
-
-  test("getHeadingText should return undefined if there is no h1/h2 with a rel attribute matching commonId", () => {
-    // create h2
-    const h2 = document.createElement("h2");
-    document.body.appendChild(h2);
-
-    expect(FormTracker.getHeadingText("example_1")).toBe("undefined");
+    expect(getFieldLabel()).toBe("test label");
   });
 
   test("getSectionValue should return label text if field is not within a fieldset ", () => {
@@ -513,7 +420,7 @@ describe("FormTracker", () => {
     const input = document.createElement("input");
     input.id = formField.id;
     document.body.appendChild(input);
-    expect(FormTracker.getSectionValue(formField)).toBe("test label");
+    expect(getSectionValue(formField)).toBe("test label");
   });
   test("getSectionValue returns legend text when input is inside a fieldset with legend , i.e radio", () => {
     const formField: FormField = {
@@ -536,7 +443,7 @@ describe("FormTracker", () => {
 
     // Append fieldset to the document body
     document.body.appendChild(fieldset);
-    expect(FormTracker.getSectionValue(formField)).toBe("test legend");
+    expect(getSectionValue(formField)).toBe("test legend");
   });
   test("getSectionValue should return undefined if there is no label or legend", () => {
     const formField: FormField = {
@@ -550,7 +457,7 @@ describe("FormTracker", () => {
     const input = document.createElement("input");
     input.id = formField.id;
     document.body.appendChild(input);
-    expect(FormTracker.getSectionValue(formField)).toBe("undefined");
+    expect(getSectionValue(formField)).toBe("undefined");
   });
   test("getSectionValue should return h1 with rel attribute matching element.id if there is a radio button without a legend", () => {
     const formField: FormField = {
@@ -576,7 +483,7 @@ describe("FormTracker", () => {
     h1.textContent = "Hello, World!";
     h1.setAttribute("rel", formField.id);
     document.body.appendChild(h1);
-    expect(FormTracker.getSectionValue(formField)).toBe("Hello, World!");
+    expect(getSectionValue(formField)).toBe("Hello, World!");
   });
   test("getSectionValue should return h1 with rel attribute matching element.id if there is a radio button without a legend, inside a fieldset", () => {
     const formField: FormField = {
@@ -608,7 +515,7 @@ describe("FormTracker", () => {
     h1.textContent = "Hello, World!";
     h1.setAttribute("rel", "fieldId");
     document.body.appendChild(h1);
-    expect(FormTracker.getSectionValue(formField)).toBe("Hello, World!");
+    expect(getSectionValue(formField)).toBe("Hello, World!");
   });
   test("getSectionValue should return h2 with rel attribute matching element.id if there is a checkbox without a legend", () => {
     const formField: FormField = {
@@ -634,7 +541,7 @@ describe("FormTracker", () => {
     h2.textContent = "Hello, World!";
     h2.setAttribute("rel", formField.id);
     document.body.appendChild(h2);
-    expect(FormTracker.getSectionValue(formField)).toBe("Hello, World!");
+    expect(getSectionValue(formField)).toBe("Hello, World!");
   });
   test("getSectionValue should return first h1, if there is a checkbox without a legend", () => {
     const formField: FormField = {
@@ -662,7 +569,7 @@ describe("FormTracker", () => {
     const secondh1 = document.createElement("h1");
     secondh1.textContent = "Bye, World!";
     document.body.appendChild(secondh1);
-    expect(FormTracker.getSectionValue(formField)).toBe("Hello, World!");
+    expect(getSectionValue(formField)).toBe("Hello, World!");
   });
   test("getSectionValue should return the FIRST h2 if there is a checkbox with a legend", () => {
     const formField: FormField = {
@@ -690,7 +597,7 @@ describe("FormTracker", () => {
     const secondh2 = document.createElement("h2");
     secondh2.textContent = "Bye, World!";
     document.body.appendChild(secondh2);
-    expect(FormTracker.getSectionValue(formField)).toBe("Hello, World!");
+    expect(getSectionValue(formField)).toBe("Hello, World!");
   });
   test("getSectionValue should return the FIRST h2 when there are radio buttons without a legend", () => {
     const formField: FormField = {
@@ -716,7 +623,7 @@ describe("FormTracker", () => {
     h2.setAttribute("rel", formField.id);
     h2.textContent = "Hello, World!";
     document.body.appendChild(h2);
-    expect(FormTracker.getSectionValue(formField)).toBe("Hello, World!");
+    expect(getSectionValue(formField)).toBe("Hello, World!");
   });
   test("getSectionValue should return label when there is a dropdown with a label", () => {
     const formField: FormField = {
@@ -739,175 +646,6 @@ describe("FormTracker", () => {
     document.body.appendChild(dropdown);
     document.body.appendChild(label);
 
-    expect(FormTracker.getSectionValue(formField)).toBe("Your Label Text");
-  });
-  test("isDateFields should return true if date fields are present", () => {
-    const formFields: FormField[] = [
-      {
-        id: "fieldId-day",
-        name: "fieldId-day",
-        value: "01",
-        type: "text",
-      },
-      {
-        id: "fieldId-month",
-        name: "fieldId-month",
-        value: "01",
-        type: "text",
-      },
-      {
-        id: "fieldId-year",
-        name: "fieldId-year",
-        value: "2000",
-        type: "text",
-      },
-    ];
-    expect(FormTracker.isDateFields(formFields)).toBe(true);
-  });
-  test("isDateFields should return true if date fields are present", () => {
-    const formFields: FormField[] = [
-      {
-        id: "fieldId-day",
-        name: "fieldId-day",
-        value: "01",
-        type: "text",
-      },
-      {
-        id: "fieldId-month",
-        name: "fieldId-month",
-        value: "01",
-        type: "text",
-      },
-      {
-        id: "fieldId-year",
-        name: "fieldId-year",
-        value: "2000",
-        type: "text",
-      },
-      {
-        id: "fieldname",
-        name: "fieldname",
-        value: "myname",
-        type: "text",
-      },
-      {
-        id: "fieldId2-day",
-        name: "fieldId2-day",
-        value: "01",
-        type: "text",
-      },
-      {
-        id: "fieldId2-month",
-        name: "fieldId2-month",
-        value: "01",
-        type: "text",
-      },
-      {
-        id: "fieldId2-year",
-        name: "fieldId2-year",
-        value: "2000",
-        type: "text",
-      },
-    ];
-    expect(FormTracker.isDateFields(formFields)).toBe(true);
-  });
-  test("isDateFields should return false if date fields are not present", () => {
-    const formFields: FormField[] = [
-      {
-        id: "fieldId",
-        name: "fieldId",
-        value: "test",
-        type: "text",
-      },
-    ];
-    expect(FormTracker.isDateFields(formFields)).toBe(false);
-  });
-  test("combineDateFields should return 1 specific formField from date fields", () => {
-    const formFields: FormField[] = [
-      {
-        id: "fieldId-day",
-        name: "fieldId-day",
-        value: "01",
-        type: "text",
-      },
-      {
-        id: "fieldId-month",
-        name: "fieldId-month",
-        value: "01",
-        type: "text",
-      },
-      {
-        id: "fieldId-year",
-        name: "fieldId-year",
-        value: "2000",
-        type: "text",
-      },
-    ];
-
-    const result: FormField[] = [
-      {
-        id: "fieldId-day",
-        name: "fieldId",
-        value: "01-01-2000",
-        type: "date",
-      },
-    ];
-    expect(FormTracker.combineDateFields(formFields)).toStrictEqual(result);
-  });
-  test("combineDateFields should return 2 formFields from date fields", () => {
-    const formFields: FormField[] = [
-      {
-        id: "fieldId-day",
-        name: "fieldId-day",
-        value: "01",
-        type: "text",
-      },
-      {
-        id: "fieldId-month",
-        name: "fieldId-month",
-        value: "01",
-        type: "text",
-      },
-      {
-        id: "fieldId-year",
-        name: "fieldId-year",
-        value: "2000",
-        type: "text",
-      },
-      {
-        id: "fieldId2-day",
-        name: "fieldId2-day",
-        value: "02",
-        type: "text",
-      },
-      {
-        id: "fieldId2-month",
-        name: "fieldId2-month",
-        value: "02",
-        type: "text",
-      },
-      {
-        id: "fieldId2-year",
-        name: "fieldId2-year",
-        value: "2002",
-        type: "text",
-      },
-    ];
-
-    const result: FormField[] = [
-      {
-        id: "fieldId-day",
-        name: "fieldId",
-        value: "01-01-2000",
-        type: "date",
-      },
-      {
-        id: "fieldId2-day",
-        name: "fieldId2",
-        value: "02-02-2002",
-        type: "date",
-      },
-    ];
-    expect(FormTracker.combineDateFields(formFields)).toStrictEqual(result);
+    expect(getSectionValue(formField)).toBe("Your Label Text");
   });
 });

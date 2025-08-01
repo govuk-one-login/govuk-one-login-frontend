@@ -10,6 +10,17 @@ import {
   getDomainPath,
 } from "../../utils/dataScrapersUtils/dataScrapers";
 import { pushToDataLayer } from "../../utils/pushToDataLayerUtil/pushToDataLayer";
+import { getSectionValue } from "../formTracker/formTrackerUtils/getSectionValue/getSectionValue";
+import {
+  getFieldValue,
+  getFormElement,
+} from "../formTracker/formTrackerUtils/getFieldValues/getFieldValues";
+import {
+  isDateFields,
+  combineDateFields,
+} from "../formTracker/formTrackerUtils/dateUtils/dateUtils";
+import { isFormValid } from "../formTracker/formTrackerUtils/isFormValid/isFormValid";
+import { getSubmitUrl } from "../formTracker/formTrackerUtils/getSubmitUrl/getSubmitUrl";
 
 export class FormResponseTracker extends FormTracker {
   eventName: string = "form_response";
@@ -62,7 +73,7 @@ export class FormResponseTracker extends FormTracker {
       return false;
     }
 
-    const form = FormTracker.getFormElement();
+    const form = getFormElement();
 
     if (!form) {
       return false;
@@ -81,16 +92,16 @@ export class FormResponseTracker extends FormTracker {
     }
 
     // check if form is valid
-    if (!FormTracker.isFormValid(fields)) {
+    if (!isFormValid(fields)) {
       return false;
     }
 
     // manage date (day/month/year) fields
-    if (FormTracker.isDateFields(fields)) {
-      fields = FormTracker.combineDateFields(fields);
+    if (isDateFields(fields)) {
+      fields = combineDateFields(fields);
     }
 
-    const submitUrl = FormTracker.getSubmitUrl(form);
+    const submitUrl = getSubmitUrl(form);
 
     try {
       fields.forEach((field) => {
@@ -101,9 +112,9 @@ export class FormResponseTracker extends FormTracker {
             type: validateParameter(this.getFieldType([field]), 100),
             url: validateParameter(submitUrl, 100),
             text: this.redactPII(
-              validateParameter(FormTracker.getFieldValue([field]), 100),
+              validateParameter(getFieldValue([field]), 100),
             ),
-            section: validateParameter(FormTracker.getSectionValue(field), 100),
+            section: validateParameter(getSectionValue(field), 100),
             action: validateParameter(
               FormResponseTracker.getButtonLabel(event),
               100,

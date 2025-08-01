@@ -10,6 +10,9 @@ import {
   getDomainPath,
 } from "../../utils/dataScrapersUtils/dataScrapers";
 import { pushToDataLayer } from "../../utils/pushToDataLayerUtil/pushToDataLayer";
+import { getFormElement } from "../formTracker/formTrackerUtils/getFieldValues/getFieldValues";
+import { getSectionValue } from "../formTracker/formTrackerUtils/getSectionValue/getSectionValue";
+import { getSubmitUrl } from "../formTracker/formTrackerUtils/getSubmitUrl/getSubmitUrl";
 
 export class FormErrorTracker extends FormTracker {
   eventName: string = "form_error";
@@ -25,7 +28,7 @@ export class FormErrorTracker extends FormTracker {
       return false;
     }
 
-    const form = FormTracker.getFormElement();
+    const form = getFormElement();
 
     if (!form) {
       return false;
@@ -42,7 +45,7 @@ export class FormErrorTracker extends FormTracker {
       return false;
     }
 
-    const submitUrl = FormTracker.getSubmitUrl(form);
+    const submitUrl = getSubmitUrl(form);
 
     try {
       fields.forEach((field) => {
@@ -56,7 +59,7 @@ export class FormErrorTracker extends FormTracker {
               FormErrorTracker.getErrorMessage(field),
               100,
             ),
-            section: validateParameter(FormTracker.getSectionValue(field), 100),
+            section: validateParameter(getSectionValue(field), 100),
             action: "error",
             external: "false",
             link_domain: getDomain(submitUrl),
