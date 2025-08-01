@@ -89,9 +89,45 @@
 {% endblock %}
 
 {% block footer %}
-  {{ frontendUiFooter({
-    translations: translations.translation.footer
-  }) }}
+    {{ frontendUiFooter({
+        translations: {
+          footerNavItems: [
+            {
+              href: "/accessibilitystatement",
+              text: 'general.base.footer.accessibility' | translate
+            },
+            {
+              href: 'general.cookieBanner.viewCookiesLink' | translate,
+              text: 'general.base.footer.cookies' | translate
+            },
+            {
+              href: 'general.base.footer.termsAndConditions.link' | translate,
+              text: 'general.base.footer.termsAndConditions.linkText' | translate,
+              attributes: { "data-pw": "terms-and-conditions-link" }
+            },
+            {
+              href: 'general.base.footer.privacy.link' | translate | safe,
+              text: 'general.base.footer.privacy.linkText' | translate,
+              attributes: { "data-pw": "privacy-notice-link" }
+            },
+            {
+              href: supportFormLink,
+              text: 'general.base.footer.support.linkText' | translate,
+              attributes: {
+                target: "_blank",
+                rel: "noopener noreferrer",
+                "data-pw": "footer-support-form-link"
+              }
+            }
+          ],
+          contentLicence: {
+              html: 'general.base.footer.contentLicence.linkText' | translate | safe
+          },
+          copyright: {
+              text: 'general.base.footer.copyright.linkText' | translate
+          }
+        }
+    }) }}
 {% endblock %}
 
 {% block bodyEnd %}
