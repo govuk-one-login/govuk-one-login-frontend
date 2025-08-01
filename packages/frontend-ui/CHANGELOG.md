@@ -1,3 +1,18 @@
+## 1.3.13 (2025-08-01)
+
+### 🚀 Features
+
+- **912:** added workflow for visual testing ([3aa935c](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/3aa935c))
+
+### 🩹 Fixes
+
+- updating visual test update workflow ([f875aba](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/f875aba))
+- updating mobile base file footer ([cad2916](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/cad2916))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+
 ## 1.3.12 (2025-07-25)
 
 ### 🩹 Fixes
