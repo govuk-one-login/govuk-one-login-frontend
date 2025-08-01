@@ -48,6 +48,8 @@ jobs:
           run: |
             git config --global user.name "github-actions[bot]"
             git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            git fetch origin ${{ github.head_ref }}
+            git checkout ${{ github.head_ref }}
             git add -A
             git commit -m "chore: update visual snapshots " --no-verify || echo "No changes to commit"
             git push origin ${{ github.head_ref }} || exit 1

@@ -1,5 +1,5 @@
 {% if MAY_2025_REBRAND_ENABLED %}
-{% set govukRebrand = true %}
+  {% set govukRebrand = true %}
 {% endif %}
 
 {% extends "govuk/template.njk" %}
@@ -9,6 +9,7 @@
 {% from "frontend-ui/build/components/header/macro.njk" import frontendUiHeader %}
 {% from "frontend-ui/build/components/footer/macro.njk" import frontendUiFooter %}
 {% from "frontend-ui/build/components/language-select/macro.njk" import frontendUiLanguageSelect %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 {% from "ga4-opl/macro.njk" import ga4OnPageLoad %}
 
 {% if makeFullWidth %}
@@ -17,20 +18,19 @@
   {% set columnWidth = 'two-thirds' %}
 {% endif %}
 
-
 {% block head %}
-    <link href="/stylesheets/application.css" rel="stylesheet">
-    <link href="/stylesheets/language-toggle.css" rel="stylesheet">
-    <meta name="robots" content="noindex">
+  <link href="/stylesheets/application.css" rel="stylesheet">
+  <link href="/stylesheets/language-toggle.css" rel="stylesheet">
+  <meta name="robots" content="noindex">
 
 {% endblock %}
 
 {% block pageTitle %}
-    {% if pageTitleName %}
-        {{ pageTitleName }}
+  {% if pageTitleName %}
+    {{ pageTitleName }}
         -
     {% endif %}
-    {{ 'general.serviceNameTitle' | translate }}
+  {{ 'general.serviceNameTitle' | translate }}
 {% endblock %}
 
 {% block bodyStart %}
@@ -43,7 +43,7 @@
 {% endblock %}
 
 {% block header %}
-    {{ frontendUiHeader({
+  {{ frontendUiHeader({
       translations: translations.translation.header,
       homepageUrl: "https://www.gov.uk"
     }) }}
@@ -53,7 +53,7 @@
   <div class="govuk-width-container {{ containerClasses }}">
     {% if doNotShowPhaseBanner %}
     {% else %}
-    {{ frontendUiPhaseBanner({
+      {{ frontendUiPhaseBanner({
       translations: translations.translation.phaseBanner,
       url: currentUrl,
       contactUrl: supportFormLink,
@@ -62,7 +62,7 @@
     {% endif %}
 
     {% if showLanguageToggle %}
-     {{ frontendUiLanguageSelect({
+      {{ frontendUiLanguageSelect({
       translations: translations.translation.languageSelect,
       url: currentUrl,
       activeLanguage: htmlLang
@@ -76,20 +76,26 @@
         }) }}
     {% endif %}
     {% if showBackLinkHtml %}
-    <a href="#" id="back-button" class="govuk-back-link">{{'general.buttons.back' | translate}}</a>
+      <a href="#" id="back-button" class="govuk-back-link">{{'general.buttons.back' | translate}}</a>
     {% endif %}
     <main class="govuk-main-wrapper {{ mainClasses }} govuk-!-padding-top-2" id="main-content" role="main" >
-        <div class="govuk-grid-row">
-            <div class="govuk-grid-column-{{columnWidth}} {{ rowClasses }}">
-            {% block content %}{% endblock %}
-            </div>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-{{columnWidth}} {{ rowClasses }}">
+          {% if (displayBanner) %}
+            {{ govukNotificationBanner({
+                        html: bannerMessage,
+                        type: bannerType
+                    }) }}
+          {% endif %}
+          {% block content %}{% endblock %}
+        </div>
       </div>
     </main>
   </div>
 {% endblock %}
 
 {% block footer %}
-    {{ frontendUiFooter({
+  {{ frontendUiFooter({
         translations: {
           footerNavItems: [
             {
@@ -163,7 +169,7 @@
   </script>
 
   <script type="module" nonce="{{scriptNonce}}">
-    import { setFingerprintCookie } from "/public/scripts/index.js";
+    import {setFingerprintCookie} from "/public/scripts/index.js";
     await setFingerprintCookie("{{analyticsCookieDomain}}");
   </script>
 {% endblock %}
