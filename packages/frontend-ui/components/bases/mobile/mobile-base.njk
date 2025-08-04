@@ -84,7 +84,8 @@
           {% if (displayBanner) %}
             {{ govukNotificationBanner({
                         html: bannerMessage,
-                        type: bannerType
+                        type: bannerType,
+                        titleText: bannerTitleText
                     }) }}
           {% endif %}
           {% block content %}{% endblock %}
@@ -157,7 +158,7 @@
       });
   </script>
   <script type="text/javascript" nonce='{{scriptNonce}}'>
-    if (document.getElementById('back-button')) 
+    if (document.getElementById('back-button'))
       document
         .getElementById('back-button')
         .addEventListener('click', (e) => {

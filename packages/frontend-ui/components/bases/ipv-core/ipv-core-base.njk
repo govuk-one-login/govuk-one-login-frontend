@@ -88,7 +88,8 @@
                         {% if (displayBanner) %}
                             {{ govukNotificationBanner({
                         html: bannerMessage,
-                        type: bannerType
+                        type: bannerType,
+                        titleText: bannerTitleText
                     }) }}
                         {% endif %}
 
