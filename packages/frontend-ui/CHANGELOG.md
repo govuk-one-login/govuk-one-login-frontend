@@ -1,3 +1,13 @@
+## 1.3.14 (2025-08-04)
+
+### 🚀 Features
+
+- Add bannerTitleText parameter to core and mobile base templates ([5c41be5](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/5c41be5))
+
+### ❤️ Thank You
+
+- Dan Corder
+
 ## 1.3.13 (2025-08-01)
 
 ### 🚀 Features
