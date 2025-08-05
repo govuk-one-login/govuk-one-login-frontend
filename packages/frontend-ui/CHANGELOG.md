@@ -1,3 +1,15 @@
+## 1.4.0 (2025-08-05)
+
+### 🚀 Features
+
+- **888:** added frontend-analytics to core basefile ([21d7f6d](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/21d7f6d))
+- **dfc-927:** spinner script update ([325cfb7](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/325cfb7))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+- ug-gds
+
 ## 1.3.14 (2025-08-04)
 
 ### 🚀 Features
