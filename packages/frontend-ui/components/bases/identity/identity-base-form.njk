@@ -3,8 +3,10 @@
 {% set assetPath = "/public/rebrand"%}
 {% endif %}
 
+{% set isPageDataSensitive = false %}
 {% extends "form-template.njk" %}
 
+{% from "frontend-analytics/components/ga4-opl/macro.njk" import frontendAnalyticsGa4OnPageLoad %}
 {% from "frontend-ui/build/components/cookie-banner/macro.njk" import frontendUiCookieBanner %}
 {% from "frontend-ui/build/components/phase-banner/macro.njk" import frontendUiPhaseBanner %}
 {% from "frontend-ui/build/components/header/macro.njk" import frontendUiHeader %}
@@ -83,7 +85,8 @@
           enableNavigationTracking:{{ga4NavigationEnabled}},
           enableSelectContentTracking:{{ga4SelectContentEnabled}},
           cookieDomain:"{{analyticsCookieDomain}}",
-          isDataSensitive:{{analyticsDataSensitive}}
+          isDataSensitive: false,
+          isPageDataSensitive: {{ isPageDataSensitive }},
         }
       );
     </script>
@@ -95,6 +98,12 @@
       setFingerprintCookie("{{deviceIntelligenceDomain}}")
     </script>
     {% endif %}
+
+  {{ frontendAnalyticsGa4OnPageLoad({
+        nonce: cspNonce,
+        dynamic: isPageDynamic,
+        englishPageTitle: pageTitleKey | translateToEnglish
+  })}}
 
   {% endblock %}
 {% endblock %}
