@@ -2,15 +2,17 @@
     {% set govukRebrand = true %}
 {% endif %}
 
+{% set isPageDataSensitive = false %}
+
 {% extends "govuk/template.njk" %}
 {% from "frontend-ui/build/components/cookie-banner/macro.njk" import frontendUiCookieBanner %}
 {% from "frontend-ui/build/components/phase-banner/macro.njk" import frontendUiPhaseBanner %}
 {% from "frontend-ui/build/components/header/macro.njk" import frontendUiHeader %}
 {% from "frontend-ui/build/components/footer/macro.njk" import frontendUiFooter %}
 {% from "frontend-ui/build/components/language-select/macro.njk" import frontendUiLanguageSelect %}
+{% from "frontend-analytics/components/ga4-opl/macro.njk" import frontendAnalyticsGa4OnPageLoad %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
-{% from  basePath ~ "/views/shared/ga4/on-page-load-macro.njk" import ga4OnPageLoad %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 
 {# Set language values for govuk/template.njk #}
@@ -142,14 +144,16 @@
                     ga4ContainerId: "{{ ga4ContainerId }}",
                     uaContainerId: "{{ uaContainerId }}"
                 }, {
+                    isDataSensitive: false,
+                    isPageDataSensitive: {{ isPageDataSensitive }},
                     enableGa4Tracking: {{isGa4Enabled}},
                     enableUaTracking: {{isUaEnabled}},
                     cookieDomain: "{{analyticsCookieDomain}}"
                 });
         </script>
-        {{ ga4OnPageLoad({
-        cspNonce: cspNonce,
-        isPageDynamic: isPageDynamic,
+        {{ frontendAnalyticsGa4OnPageLoad({
+        nonce: cspNonce,
+        dynamic: isPageDynamic,
         englishPageTitle: pageTitleKey | translateToEnglish }) }}
 
     {% endblock %}
