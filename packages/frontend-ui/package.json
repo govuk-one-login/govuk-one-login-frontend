@@ -1,6 +1,6 @@
 {
   "name": "@govuk-one-login/frontend-ui",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "",
   "main": "build/cjs/backend/index.cjs",
   "module": "build/esm/backend/index.js",
@@ -57,6 +57,6 @@
   "types": "./build/esm/backend/index.d.ts",
   "optionalDependencies": {
     "hmpo-components": "^7.1.0",
-    "@govuk-one-login/frontend-analytics": "^4.0.0"
+    "@govuk-one-login/frontend-analytics": "^4.0.1"
   }
 }

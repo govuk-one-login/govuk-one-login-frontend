@@ -1,3 +1,51 @@
+## 4.0.1 (2025-08-06)
+
+### 🚀 Features
+
+- **912:** added workflow for visual testing ([3aa935c](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/3aa935c))
+- add debug logging to analytics package ([376ec38](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/376ec38))
+- **DFC-775:** Visual Regression testing for frontendUI Components ([ae577ae](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/ae577ae))
+- **dfc-870:** fix package.json file ([bb29cf1](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/bb29cf1))
+- **dfc-870:** spinner with ts ([e3f93fe](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/e3f93fe))
+- **DFC-863:** WIP for accessibility tests for frontend ui pacakge ([7433633](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/7433633))
+- **849:** Rebreand updates, asset import, basefile changes, bug fixes ([61bc629](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/61bc629))
+- **DFC-784:** Removing console logs after testing ([b8ebae9](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/b8ebae9))
+- **DFC-784:** Tests added for dynatrace cookie consent ([a768947](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/a768947))
+- **DFC-784:** Dynatrace implemented into the cookie banner ([8a2d48b](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/8a2d48b))
+- **728:** added overload for functions and edited basefiles, configured rollup for js ([36d80ec](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/36d80ec))
+- **dfc-736:** remove dependecy ([065c281](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/065c281))
+- **dfc-736:** spinner switch to js due to roll up errors and parsing not compatible with ts ([e785ab8](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/e785ab8))
+- **dfc-736:** loading spinner ([c0625f8](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/c0625f8))
+- **dfc-736:** remove dependecy ([3efeccc](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/3efeccc))
+- **dfc-736:** spinner switch to js due to roll up errors and parsing not compatible with ts ([afd0c25](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/afd0c25))
+- **dfc-736:** loading spinner ([13cbd47](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/13cbd47))
+
+### 🩹 Fixes
+
+- **DFC-923:** bugfix and refactor ([c0fc2a4](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/c0fc2a4))
+- **DFC-939:** Update Front-end-ui base template to include PII flag ([104ce93](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/104ce93))
+- updating visual test update workflow ([f875aba](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/f875aba))
+- **DFC-917:** refactor and fix for navigation event not firing on method switch ([8698abf](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/8698abf))
+- tidy up errors in alpha-app and move spinner to /spinner page ([cdd1d48](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/cdd1d48))
+- only sonar scan changed packages ([42b3406](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/42b3406))
+- **DFC-823:** fix failing integration tests ([ed7a054](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/ed7a054))
+- fixing failing tests ([7c68777](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/7c68777))
+- **884:** updated failing dependencies ([a590339](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/a590339))
+- **908:** remove build folder tracking ([fef281e](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/fef281e))
+- **884:** updated failing dependencies ([31e6634](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/31e6634))
+- **908:** remove build folder tracking ([2ed083a](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/2ed083a))
+- **873:** updated rebrand var for consistency ([d2cab1e](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/d2cab1e))
+- updated express to peerDependency ([4b569a4](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/4b569a4))
+
+### ❤️ Thank You
+
+- arwatGDS
+- DavidMcMichael-GDS
+- keirbetts1
+- keirbetts2
+- nickhealGDS
+- ug-gds
+
 # 4.0.0 (2025-04-25)
 
 ### 🚀 Features
