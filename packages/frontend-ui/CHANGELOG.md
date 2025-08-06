@@ -1,3 +1,13 @@
+## 1.4.1 (2025-08-06)
+
+### 🩹 Fixes
+
+- **DFC-939:** Update Front-end-ui base template to include PII flag ([104ce93](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/104ce93))
+
+### ❤️ Thank You
+
+- keirbetts1
+
 ## 1.4.0 (2025-08-05)
 
 ### 🚀 Features
