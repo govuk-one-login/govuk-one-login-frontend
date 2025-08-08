@@ -3,6 +3,9 @@
 {% endif %}
 
 {% set isPageDataSensitive = false %}
+{% set taxLevel1 = 'web cri' %}
+{% set taxLevel2 = 'pre cri' %}
+
 
 {% extends "govuk/template.njk" %}
 {% from "frontend-ui/build/components/cookie-banner/macro.njk" import frontendUiCookieBanner %}
@@ -10,9 +13,7 @@
 {% from "frontend-ui/build/components/header/macro.njk" import frontendUiHeader %}
 {% from "frontend-ui/build/components/footer/macro.njk" import frontendUiFooter %}
 {% from "frontend-ui/build/components/language-select/macro.njk" import frontendUiLanguageSelect %}
-{# {% from "frontend-analytics/components/ga4-opl/macro.njk" import frontendAnalyticsGa4OnPageLoad %} #}
-
-{% from  basePath ~ "/views/shared/ga4/on-page-load-macro.njk" import ga4OnPageLoad %}
+{% from "frontend-analytics/components/ga4-opl/macro.njk" import ga4OnPageLoad %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
@@ -146,18 +147,23 @@
                     ga4ContainerId: "{{ ga4ContainerId }}",
                     uaContainerId: "{{ uaContainerId }}"
                 }, {
+                    isDataSensitive: false,
+                    isPageDataSensitive: {{isPageDataSensitive}},
                     enableGa4Tracking: {{isGa4Enabled}},
                     enableUaTracking: {{isUaEnabled}},
                     cookieDomain: "{{analyticsCookieDomain}}"
                 });
         </script>
         {{ ga4OnPageLoad({
-        cspNonce: cspNonce,
-        isPageDynamic: isPageDynamic,
-         englishPageTitle: pageTitleKey | translateToEnglish }) }}
-        {# {{ frontendAnalyticsGa4OnPageLoad({
         nonce: cspNonce,
         dynamic: isPageDynamic,
-        englishPageTitle: pageTitleKey | translateToEnglish }) }} #}
+        englishPageTitle: pageTitleKey | translateToEnglish,
+        taxonomyLevel1: taxLevel1,
+        taxonomyLevel2: taxLevel2,
+        taxonomyLevel3: taxLevel3,
+        taxonomyLevel4: taxLevel4,
+        taxonomyLevel5: taxLevel5,
+        content_id: contentID
+    }) }}
 
     {% endblock %}
