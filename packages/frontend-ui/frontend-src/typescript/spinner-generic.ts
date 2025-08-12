@@ -17,7 +17,7 @@ export const WaitInteractions = (() => {
   };
 
   const state: state = {
-    spinnerState: content.initial.spinnerState as string,
+    spinnerState: content?.initial?.spinnerState as string,
     done: false,
     virtualDom: [],
   };
@@ -66,7 +66,7 @@ export const WaitInteractions = (() => {
 
   const reflectCompletion = () => {
     state.spinnerState = "spinner__ready";
-    state.spinnerStateText = content.complete.spinnerState;
+    state.spinnerStateText = content?.complete?.spinnerState;
     state.done = true;
   };
 

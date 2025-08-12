@@ -54,7 +54,7 @@ export type timers = {
 };
 
 export type state = {
-  abortController: null | {
+  abortController?: null | {
     abort: any;
   };
   abort?: unknown;
