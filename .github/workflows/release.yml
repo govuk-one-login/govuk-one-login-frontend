@@ -53,6 +53,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          GITHUB_TOKEN: ${{ secrets.PAT }}
 
       - name: Set up Node.js and cache node modules
         uses: actions/setup-node@v4
@@ -91,4 +92,5 @@ jobs:
         if: ${{ github.ref == 'refs/heads/main' }}
         run: npx nx release ${{ github.event.inputs.increment }} --projects=${{ github.event.inputs.target }} --yes ${{ github.event.inputs.first_release == 'true' && '--first-release' || '' }} ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
         env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
           NODE_AUTH_TOKEN: ${{secrets.NPM_ACCESS_TOKEN}}
