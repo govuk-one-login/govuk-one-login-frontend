@@ -1,0 +1,73 @@
+params:
+  - name: initial-heading
+    type: string
+    required: false
+    description: Initial heading text
+  - name: spinner-state-text  
+    type: string
+    required: false
+    description: Initial spinner state text
+  - name: spinner-state 
+    type: string  
+    required: false
+    description: pending
+  - name: error-heading
+    type: string
+    required: false
+    description: Error heading 
+  - name: error-message-text
+    type: string
+    required: false
+    description: Error message text 
+  - name: error-whatYouCanDo-heading  
+    type: string
+    required: false
+    description: Error what you can do heading 
+  - name: error-whatYouCanDo-message-text1
+    type: string
+    required: false
+    description: Error what you can do message text1
+  - name: error-whatYouCanDo-message-link-text
+    type: string
+    required: false
+    description: Error what you can do message link text
+  - name: error-whatYouCanDo-message-text2
+    type: string
+    required: false
+    description: Error what you can do message link text2
+  - name: error-whatYouCanDo-message-link-href
+    type: string
+    required: false
+    description: Error what you can do message link href 
+  - name: complete-spinnerState
+    type: string
+    required: false
+    description: complete
+  - name: longWait-spinnerStateText
+    type: string
+    required: false
+    description: long wait spinner state 
+  - name: continueButton-text
+    type: string
+    required: false
+    description: continue button text
+  - name: aria-button-enabled-message
+    type: string
+    required: false
+    description: aria button enabled message
+  - name: api-url
+    type: string
+    required: false
+    description: api url
+  - name: ms-between-requests
+    type: string
+    required: false
+    description: ms between requests
+  - name: ms-before-informing-of-long-waits
+    type: string
+    required: false
+    description: ms before informing of long waits
+  - name: ms-before-abort  
+    type: string
+    required: false
+    description: ms before abort 
