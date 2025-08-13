@@ -30,10 +30,10 @@ jobs:
       - run: npm install
 
       # required set up steps for Github architecture
-      - run: npm i @rollup/rollup-linux-x64-gnu
-      - run: npm i @nx/nx-linux-x64-gnu
+      - run: npm i @rollup/rollup-linux-x64-gnu --no-save
+      - run: npm i @nx/nx-linux-x64-gnu --no-save
       - run: npx playwright install --with-deps
-      
+
       - uses: nrwl/nx-set-shas@v4
 
       - run: git branch --track main origin/main
@@ -44,7 +44,7 @@ jobs:
       - run: npx nx affected -t lint test test:integration:ci --verbose
         env:
           NX_DISABLE_DB: true
-      
+
       - name: Cache test coverage reports
         id: cache-coverage-reports
         uses: actions/cache@v4
