@@ -14,7 +14,7 @@ on:
           - "@govuk-one-login/frontend-vital-signs"
           - "@govuk-one-login/frontend-ui"
           - "@govuk-one-login/frontend-asset-loader"
-          - "@govuk-one-login/frontend-device-intelligence"          
+          - "@govuk-one-login/frontend-device-intelligence"
       version:
         description: "Package Version"
         required: true
@@ -31,7 +31,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.PAT }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -42,6 +41,6 @@ jobs:
 
       - name: Deprecate Package Version
         run: |
-            npm deprecate ${{ github.event.inputs.target }}@${{ github.event.inputs.version }} "This version is deprecated. Please upgrade to the latest version."
+          npm deprecate ${{ github.event.inputs.target }}@${{ github.event.inputs.version }} "This version is deprecated. Please upgrade to the latest version."
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_ACCESS_TOKEN}}
