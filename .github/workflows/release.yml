@@ -89,6 +89,11 @@ jobs:
         run: git branch --track main origin/main
         if: ${{ github.event_name == 'pull_request' }}
 
+      - name: Configure git user
+        run: |
+          git config --global user.email "226340596+govuk-one-login-frontend-publisher[bot]@users.noreply.github.com"
+          git config --global user.name "govuk-one-login-frontend-publisher[bot]"
+
       - name: Publish packages
         if: ${{ github.ref == 'refs/heads/main' }}
         run: npx nx release ${{ github.event.inputs.increment }} --projects=${{ github.event.inputs.target }} --yes ${{ github.event.inputs.first_release == 'true' && '--first-release' || '' }} ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
