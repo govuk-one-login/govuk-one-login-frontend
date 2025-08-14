@@ -2,8 +2,10 @@
 
 {% set url = "/api?processingTime=2" %}
 
+{% set customUrl = {{params.customUrl}} %}
 
-<div id="spinner-container" data-api-route="{{ url }}">
+
+<div id="spinner-container" data-api-route="{{ url }} | {{ customUrl }}">
    
 </div>
 

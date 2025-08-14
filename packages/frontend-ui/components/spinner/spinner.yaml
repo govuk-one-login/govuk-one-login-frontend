@@ -71,3 +71,19 @@ params:
     type: string
     required: false
     description: ms before abort 
+  - name: urlCustom
+    type: string  
+    required: false
+    description: custom url setting 
+  - name: general
+    type: boolean
+    required: false
+    description: general spinner with defaults
+  - name: spinnerCustomParams
+    type: boolean
+    required: false
+    description: spinner with custom params
+  - name: ipvcore
+    type: boolean
+    required: false
+    description: ipv core specific spinner 

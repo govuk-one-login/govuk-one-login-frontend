@@ -2,10 +2,13 @@
 
 {% set url = "/api" %}
 
+{% set urlCustom = "{{params.urlCustom}}"%}
+
 {# use an if block with params for different containers between the generic version and ipv core #}
 
 {% block content %}
 
+{% if general%}
     <div id="spinner-container"
         data-initial-heading="Initial heading text"
         data-initial-spinnerStateText="Initial spinner state text"
@@ -20,7 +23,9 @@
         data-complete-spinnerState="complete"
         data-longWait-spinnerStateText="Long wait spinner state">
     </div>
+{% end if %}
 
+{%if spinnerCustomParams%}
     <div id="spinner-container"
         data-initial-heading="{{ params.initial-heading }}"
         data-initial-spinnerStateText="{{ params.spinner-state-text }}"
@@ -35,7 +40,9 @@
         data-complete-spinnerState="{{ params.complete-spinnerState }}"
         data-longWait-spinnerStateText="{{ params.longWait-spinnerStateText}}">
     </div>
+{% end if %}
 
+{% if ipvcore%}
     <div id="spinner-container"
         data-initial-heading="{{ params.initial-heading }}"
         data-initial-spinnerStateText="{{ params.spinner-state-text }}"
@@ -58,6 +65,7 @@
         >
         
     </div>
+{% end if %}
 
      {# <div id="spinner-container"
           data-initial-heading="{{ 'pages.checkMobileAppResult.content.spinner.initial.heading' | translate }}{{ serviceName }}"
