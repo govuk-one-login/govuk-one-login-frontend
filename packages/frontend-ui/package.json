@@ -1,6 +1,6 @@
 {
   "name": "@govuk-one-login/frontend-ui",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "",
   "main": "build/cjs/backend/index.cjs",
   "module": "build/esm/backend/index.js",

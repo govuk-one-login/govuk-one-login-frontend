@@ -1,3 +1,13 @@
+## 1.4.3 (2025-08-15)
+
+### 🩹 Fixes
+
+- identity basefile GA4 changes reverted ([b3a51b0](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/b3a51b0))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+
 ## 1.4.2 (2025-08-06)
 
 ### 🧱 Updated Dependencies
