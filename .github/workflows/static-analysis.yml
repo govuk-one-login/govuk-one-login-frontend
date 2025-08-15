@@ -18,6 +18,8 @@ jobs:
   coverage:
     name: Collect coverage
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.generate-matrix.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -52,40 +54,24 @@ jobs:
           path: "**/coverage"
           key: ${{ runner.os }}-${{ github.run_id }}-coverage-reports
 
+      - name: Generate matrix for affected packages
+        id: generate-matrix
+        run: |
+          OUTPUT=$(npx nx show projects --affected --json)
+          echo "::set-output name=matrix::$(echo $OUTPUT | jq -c '[.[] | select(startswith("@govuk-one-login/")) | sub("^@govuk-one-login/"; "")]')"
+
   sonarcloud:
     name: SonarCloud
     needs: coverage
+    if: ${{ needs.coverage.outputs.matrix != '[]' }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        TAG:
-          [
-            "frontend-analytics",
-            "frontend-asset-loader",
-            "frontend-language-toggle",
-            "frontend-passthrough-headers",
-            "frontend-ui",
-            "frontend-vital-signs",
-            "frontend-device-intelligence",
-          ]
+        TAG: ${{ fromJson(needs.coverage.outputs.matrix || '[]') }}
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: "npm"
-
-      - run: npm install
-
-      - uses: nrwl/nx-set-shas@v4
-
-      - name: List affected packages
-        run: |
-          OUTPUT=$(npx nx show projects --affected --json)
-          echo "affectedPackages=$OUTPUT" >> $GITHUB_ENV
 
       - name: Restore cached coverage reports
         id: cache-coverage-reports-restore
@@ -96,7 +82,6 @@ jobs:
 
       - name: Scan
         uses: SonarSource/sonarcloud-github-action@v3.1.0
-        if: contains(env.affectedPackages, matrix.TAG)
         with:
           projectBaseDir: ./packages/${{ matrix.TAG }}
         env:
