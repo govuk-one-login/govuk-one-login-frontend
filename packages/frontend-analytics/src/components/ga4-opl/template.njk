@@ -13,8 +13,14 @@
               taxonomy_level4: '{{params.taxonomyLevel4}}', // Access taxonomy level 4
               taxonomy_level5: '{{params.taxonomyLevel5}}', // Access taxonomy level 5
               content_id: '{{params.contentId}}',
-              logged_in_status: {{params.loggedInStatus}},
+              {% if params.dynamic %}
               dynamic: {{params.dynamic}}
+              {%else%}
+              dynamic: 'undefined'
+              {% endif %}
+              {% if params.loggedInStatus %},
+              logged_in_status: {{params.loggedInStatus}}
+              {% endif %}
           });
   });
 </script>
