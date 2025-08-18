@@ -6,8 +6,67 @@
 
 
 <div id="spinner-container" data-api-route="{{ url }} | {{ customUrl }}">
-   
+
 </div>
+
+{% if general%}
+    <div id="spinner-container"
+        data-initial-heading="Initial heading text"
+        data-initial-spinnerStateText="Initial spinner state text"
+        data-initial-spinnerState="pending"
+        data-error-heading="Error heading"
+        data-error-messageText="Error message text"
+        data-error-whatYouCanDo-heading="Error what you can do heading"
+        data-error-whatYouCanDo-message-text1="Error what you can do message text1"
+        data-error-whatYouCanDo-message-link-href="Error what you can do message link href"
+        data-error-whatYouCanDo-message-link-text="Error what you can do message link text"
+        data-error-whatYouCanDo-message-text2="Error what you can do message link text2"
+        data-complete-spinnerState="complete"
+        data-longWait-spinnerStateText="Long wait spinner state">
+    </div>
+{% end if %}
+
+{% if spinnerCustomParams %}
+    <div id="spinner-container"
+        data-initial-heading="{{ params.initial-heading }}"
+        data-initial-spinnerStateText="{{ params.spinner-state-text }}"
+        data-initial-spinnerState="{{ params.spinner-state }}"
+        data-error-heading="{{ params.error-heading }}"
+        data-error-messageText="{{ params.error-message-text }}"
+        data-error-whatYouCanDo-heading="{{ params.error-whatYouCanDo-heading }}"
+        data-error-whatYouCanDo-message-text1="{{ params.whatYouCanDo-message-link-text1 }}"
+        data-error-whatYouCanDo-message-link-href="{{ params.whatYouCanDo-message-link-href }}"
+        data-error-whatYouCanDo-message-link-text="{{ params.whatYouCanDo-message-link-text }}"
+        data-error-whatYouCanDo-message-text2="{{ params.whatYouCanDo-message-text2 }}"
+        data-complete-spinnerState="{{ params.complete-spinnerState }}"
+        data-longWait-spinnerStateText="{{ params.longWait-spinnerStateText}}">
+    </div>
+{% end if %}
+
+{% if ipvcore %}
+    <div id="spinner-container"
+        data-initial-heading="{{ params.initial-heading }}"
+        data-initial-spinnerStateText="{{ params.spinner-state-text }}"
+        data-initial-spinnerState="{{ params.spinner-state }}"
+        data-error-heading="{{ params.error-heading }}"
+        data-error-messageText="{{ params.error-message-text }}"
+        data-error-whatYouCanDo-heading="{{ params.error-whatYouCanDo-heading }}"
+        data-error-whatYouCanDo-message-text1="{{ params.whatYouCanDo-message-link-text1 }}"
+        data-error-whatYouCanDo-message-link-href="{{ params.whatYouCanDo-message-link-href }}"
+        data-error-whatYouCanDo-message-link-text="{{ params.whatYouCanDo-message-link-text }}"
+        data-error-whatYouCanDo-message-text2="{{ params.whatYouCanDo-message-text2 }}"
+        data-complete-spinnerState="{{ params.complete-spinnerState }}"
+        data-longWait-spinnerStateText="{{ params.longWait-spinnerStateText}}"
+        data-continueButton-text="{{ params.continueButton-text }}"
+        data-aria-button-enabled-message="{{ params.aria-button-enabled-message }}"
+        data-api-url="{{ params.api-url }}"
+        data-ms-between-requests="{{ params.ms-between-requests }}"
+        data-ms-before-informing-of-long-wait="{{ params.ms-before-informing-of-long-wait }}"
+        data-ms-before-abort="{{ params.ms-before-abort }}"
+        >
+        
+    </div>
+{% end if %}
 
 
 {% endblock %}

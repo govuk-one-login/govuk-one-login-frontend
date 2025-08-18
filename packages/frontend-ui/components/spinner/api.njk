@@ -2,7 +2,7 @@
 
 {% set url = "/api" %}
 
-{% set urlCustom = "{{params.urlCustom}}"%}
+{% set urlCustom = "{{params.urlCustom}}" %}
 
 {# use an if block with params for different containers between the generic version and ipv core #}
 
@@ -25,7 +25,7 @@
     </div>
 {% end if %}
 
-{%if spinnerCustomParams%}
+{% if spinnerCustomParams %}
     <div id="spinner-container"
         data-initial-heading="{{ params.initial-heading }}"
         data-initial-spinnerStateText="{{ params.spinner-state-text }}"
@@ -42,7 +42,7 @@
     </div>
 {% end if %}
 
-{% if ipvcore%}
+{% if ipvcore %}
     <div id="spinner-container"
         data-initial-heading="{{ params.initial-heading }}"
         data-initial-spinnerStateText="{{ params.spinner-state-text }}"

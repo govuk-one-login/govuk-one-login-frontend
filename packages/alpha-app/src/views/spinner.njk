@@ -5,5 +5,19 @@
 {% from "frontend-ui/build/components/spinner/macro.njk" import frontendUiSpinner %}
 
 {% block content %}
-  {{frontendUiSpinner()}} 
+  {{frontendUiSpinner(
+    {
+      general: true
+    }
+  )}} 
+  {{frontendUiSpinner(
+    {
+      spinnerCustomParams: true
+    }
+  )}} 
+  {{frontendUiSpinner(
+  {
+    ipvcore: true
+  }
+  )}} 
 {% endblock %}
