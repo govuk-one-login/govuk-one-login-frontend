@@ -34,7 +34,6 @@ jobs:
       # required set up steps for Github architecture
       - run: npm i @rollup/rollup-linux-x64-gnu --no-save
       - run: npm i @nx/nx-linux-x64-gnu --no-save
-      - run: npx playwright install --with-deps
 
       - uses: nrwl/nx-set-shas@v4
 
