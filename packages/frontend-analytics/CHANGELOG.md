@@ -1,3 +1,7 @@
+## 4.0.2 (2025-08-19)
+
+This was a version bump only for @govuk-one-login/frontend-analytics to align it with other projects, there were no code changes.
+
 ## 4.0.1 (2025-08-06)
 
 ### 🚀 Features
