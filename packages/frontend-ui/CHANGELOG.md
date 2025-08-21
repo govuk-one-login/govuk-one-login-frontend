@@ -1,3 +1,17 @@
+## 1.4.5 (2025-08-21)
+
+### 🩹 Fixes
+
+- speed up tests ([2b5288b](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/2b5288b))
+
+### 🧱 Updated Dependencies
+
+- Updated @govuk-one-login/frontend-analytics to 4.0.3
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+
 ## 1.4.4 (2025-08-19)
 
 ### 🧱 Updated Dependencies
