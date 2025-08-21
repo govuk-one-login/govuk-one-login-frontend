@@ -13,7 +13,7 @@
               taxonomy_level4: '{{params.taxonomyLevel4}}', // Access taxonomy level 4
               taxonomy_level5: '{{params.taxonomyLevel5}}', // Access taxonomy level 5
               content_id: '{{params.contentId}}',
-              {% if params.dynamic %}
+              {% if params.dynamic is defined %}
               dynamic: {{params.dynamic}}
               {%else%}
               dynamic: 'undefined'
