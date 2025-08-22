@@ -640,6 +640,7 @@ describe("the spinner component", () => {
 
   describe("when scheduled setTimeout tries to execute recursive function after msBeforeAbort", () => {
     beforeEach(() => {
+      jest.useFakeTimers();
       document.body.innerHTML = getValidSpinnerDivHtml({
         msBeforeAbort: 15,
         msBetweenRequests: 10,
@@ -656,6 +657,7 @@ describe("the spinner component", () => {
     });
 
     afterEach(() => {
+      jest.useRealTimers();
       jest.restoreAllMocks();
     });
 
@@ -665,7 +667,16 @@ describe("the spinner component", () => {
         "requestIDProcessingStatus",
       );
       spinner.init();
-      await wait(500);
+      // Await the fetch
+      await jest.runAllTicks();
+      // Await the json processing
+      await jest.runAllTicks();
+      // Await the data arriving
+      await jest.runAllTicks();
+      // Await the timeout creation
+      await jest.runAllTicks();
+      // Await the timout finishing
+      await jest.runAllTimers();
       expect(spyRequestIDProcessingStatus).toHaveBeenCalledTimes(2);
     });
   });
