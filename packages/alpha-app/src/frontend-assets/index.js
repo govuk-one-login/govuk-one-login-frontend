@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
-import { WaitInteractions } from "@govuk-one-login/frontend-ui/frontend";
+import { useSpinner } from "@govuk-one-login/frontend-ui/frontend";
 
-WaitInteractions.init();
+useSpinner();
 
 window.DI = window.DI || {};
 window.DI.analyticsUa = window.DI.analyticsUa || {};

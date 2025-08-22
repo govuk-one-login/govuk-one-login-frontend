@@ -153,3 +153,15 @@ or
 {% extends "frontend-ui/build/components/bases/identity/identity-base-page.njk" %}
 
 ```
+
+### 8. Import frontend JS
+
+If you need to use a component that incorporates frontend (ie. in-browser) code then you will also need to include the frontend javascript bundle by either importing it in to you existing frontend bundling solution if you use one, or copying and exposing the esm version (`@govuk-one-login/frontend-ui/build/esm/frontend/index.js`) in your public folder. Then add the script tag on to any page where you use it.
+
+```html
+  <script nonce='{{ cspNonce }}' defer type="module" src="/public/javascripts/frontend-ui.js"></script>
+  <script nonce='{{ cspNonce }}' defer type="module">
+    import { useSpinner } from "/public/javascripts/frontend-ui.js";
+    useSpinner();
+  </script>
+```
