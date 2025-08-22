@@ -57,7 +57,7 @@ jobs:
         id: generate-matrix
         run: |
           OUTPUT=$(npx nx show projects --affected --json)
-          echo "::set-output name=matrix::$(echo $OUTPUT | jq -c '[.[] | select(startswith("@govuk-one-login/")) | sub("^@govuk-one-login/"; "")]')"
+          echo "::set-output name=matrix::$(echo $OUTPUT | jq -c '[.[] | select(startswith("@govuk-one-login/frontend")) | sub("^@govuk-one-login/"; "")]')"
 
   sonarcloud:
     name: SonarCloud
