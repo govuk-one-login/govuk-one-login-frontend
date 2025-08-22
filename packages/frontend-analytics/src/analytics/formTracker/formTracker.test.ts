@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, test } from "@jest/globals";
-import { FormTracker } from "./formTracker";
+import { FormTracker, FREE_TEXT_FIELD_TYPE } from "./formTracker";
 import { FormField } from "./formTracker.interface";
 import {
   getElementValue,
@@ -8,13 +8,13 @@ import {
   getFormElement,
 } from "./formTrackerUtils/getFieldValues/getFieldValues";
 import { getSectionValue } from "./formTrackerUtils/getSectionValue/getSectionValue";
-
-window.DI = { analyticsGa4: { cookie: { consent: true } } };
+import { acceptCookies } from "../../../test/utils";
 
 describe("FormTracker", () => {
   let instance: FormTracker;
 
   beforeEach(() => {
+    acceptCookies();
     instance = new FormTracker();
     // Remove any existing elements from document.body if needed
     document.body.innerHTML = "";
@@ -362,35 +362,35 @@ describe("FormTracker", () => {
     const fields: FormField[] = [
       { id: "test", name: "test", value: "test value", type: "text" },
     ];
-    expect(instance.getFieldType(fields)).toBe(instance.FREE_TEXT_FIELD_TYPE);
+    expect(FormTracker.getFieldType(fields)).toBe(FREE_TEXT_FIELD_TYPE);
   });
 
   test("getFieldType should return free text field if type is textarea", () => {
     const fields: FormField[] = [
       { id: "test", name: "test", value: "test value", type: "textarea" },
     ];
-    expect(instance.getFieldType(fields)).toBe(instance.FREE_TEXT_FIELD_TYPE);
+    expect(FormTracker.getFieldType(fields)).toBe(FREE_TEXT_FIELD_TYPE);
   });
 
   test("getFieldType should return drop-down list if type is select-one", () => {
     const fields: FormField[] = [
       { id: "test", name: "test", value: "test value", type: "select-one" },
     ];
-    expect(instance.getFieldType(fields)).toBe("drop-down list");
+    expect(FormTracker.getFieldType(fields)).toBe("drop-down list");
   });
 
   test("getFieldType should return checkbox if type is checkbox", () => {
     const fields: FormField[] = [
       { id: "test", name: "test", value: "test value", type: "checkbox" },
     ];
-    expect(instance.getFieldType(fields)).toBe("checkbox");
+    expect(FormTracker.getFieldType(fields)).toBe("checkbox");
   });
 
   test("getFieldType should return radio buttons if type is radio", () => {
     const fields: FormField[] = [
       { id: "test", name: "test", value: "test value", type: "radio" },
     ];
-    expect(instance.getFieldType(fields)).toBe("radio buttons");
+    expect(FormTracker.getFieldType(fields)).toBe("radio buttons");
   });
 
   test("getFieldLabel should return field label", () => {

@@ -1,6 +1,7 @@
 import "./index";
 import { type FormEventInterface } from "./analytics/formTracker/formTracker.interface";
 import * as pushToDataLayer from "./utils/pushToDataLayerUtil/pushToDataLayer";
+import { acceptCookies } from "../test/utils";
 
 declare global {
   interface Window {
@@ -16,6 +17,8 @@ const action = new Event("submit", {
 
 describe("appInit", () => {
   it("should redact data by default if isPageDataSensitive is unset", () => {
+    acceptCookies();
+
     jest.spyOn(pushToDataLayer, "pushToDataLayer");
 
     document.body.innerHTML = `
@@ -34,8 +37,6 @@ describe("appInit", () => {
     `;
 
     window.DI.appInit({}, { enableGa4Tracking: true, isDataSensitive: false });
-
-    global.window.DI.analyticsGa4.cookie = { consent: true };
 
     document.dispatchEvent(action);
 

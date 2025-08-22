@@ -1,5 +1,5 @@
 import logger from "loglevel";
-import { Cookie } from "../../cookie/cookie";
+import { Cookie, hasConsentForAnalytics } from "../../cookie/cookie";
 import { FormChangeTracker } from "../formChangeTracker/formChangeTracker";
 import { FormResponseTracker } from "../formResponseTracker/formResponseTracker";
 import { NavigationTracker } from "../navigationTracker/navigationTracker";
@@ -7,6 +7,7 @@ import { PageViewTracker } from "../pageViewTracker/pageViewTracker";
 import { SelectContentTracker } from "../selectContentTracker/selectContentTracker";
 import { OptionsInterface } from "./core.interface";
 import { pushToDataLayer } from "../../utils/pushToDataLayerUtil/pushToDataLayer";
+import { trackFormError } from "../formErrorTracker/formErrorTracker";
 
 export class Analytics {
   gtmId: string;
@@ -16,6 +17,7 @@ export class Analytics {
   enableNavigationTracking: boolean;
   enableFormChangeTracking: boolean;
   enableSelectContentTracking: boolean;
+  enableFormErrorTracking: boolean;
   uaContainerId: string | undefined;
   pageViewTracker: PageViewTracker | undefined;
   navigationTracker: NavigationTracker | undefined;
@@ -43,6 +45,7 @@ export class Analytics {
     this.enableSelectContentTracking = Boolean(
       options.enableSelectContentTracking,
     );
+    this.enableFormErrorTracking = Boolean(options.enableFormErrorTracking);
 
     this.pageViewTracker = new PageViewTracker({
       enableGa4Tracking: options.enableGa4Tracking,
@@ -77,7 +80,8 @@ export class Analytics {
       this.selectContentTracker = new SelectContentTracker(
         this.enableSelectContentTracking,
       );
-      if (this.cookie.consent) {
+      trackFormError(this.enableFormErrorTracking);
+      if (hasConsentForAnalytics()) {
         this.loadGtmScript(this.gtmId);
       }
     }

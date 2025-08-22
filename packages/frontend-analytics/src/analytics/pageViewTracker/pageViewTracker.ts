@@ -3,18 +3,18 @@ import {
   PageViewEventInterface,
 } from "./pageViewTracker.interface";
 import { validateParameter } from "../../utils/validateParameterUtils/validateParameter";
-import { FormErrorTracker } from "../formErrorTracker/formErrorTracker";
 import { OptionsInterface } from "../core/core.interface";
 import {
   getTaxonomy,
   setTaxonomies,
 } from "../../utils/taxonomyUtils/taxonomyUtils";
 import { pushToDataLayer } from "../../utils/pushToDataLayerUtil/pushToDataLayer";
+import { isFormErrorPage } from "../../utils/dataScrapersUtils/dataScrapers";
+import { hasConsentForAnalytics } from "../../cookie/cookie";
 
 export class PageViewTracker {
   eventName: string = "page_view_ga4";
   enableGa4Tracking: boolean;
-  enableFormErrorTracking: boolean;
   enablePageViewTracking: boolean;
   organisations: string = "<OT1056>";
   primary_publishing_organisation: string =
@@ -22,35 +22,14 @@ export class PageViewTracker {
 
   constructor(options: OptionsInterface) {
     this.enableGa4Tracking = options.enableGa4Tracking ?? false;
-    this.enableFormErrorTracking = options.enableFormErrorTracking ?? true;
     this.enablePageViewTracking = options.enablePageViewTracking ?? true;
   }
 
   trackOnPageLoad(parameters: PageViewParametersInterface): void {
-    if (
-      window.DI.analyticsGa4.cookie.hasCookie &&
-      !window.DI.analyticsGa4.cookie.consent
-    ) {
-      return;
-    }
-    if (!this.enableGa4Tracking) {
-      return;
-    }
-
-    // trigger form error tracking if pageView is enabled
-    const errorTrigger = document.getElementsByClassName("govuk-error-message");
-
-    if (errorTrigger.length) {
-      if (this.enableFormErrorTracking) {
-        const formErrorTracker = new FormErrorTracker();
-        formErrorTracker.trackFormError();
-      }
-      return;
-    }
-
-    if (!this.enablePageViewTracking) {
-      return;
-    }
+    if (!hasConsentForAnalytics()) return;
+    if (!this.enableGa4Tracking) return;
+    if (!this.enablePageViewTracking) return;
+    if (isFormErrorPage()) return;
 
     setTaxonomies(parameters);
 
