@@ -632,7 +632,7 @@ describe("the spinner component", () => {
     test("should update contents correctly", async () => {
       await spinner.init();
 
-      await wait(50);
+      await wait(500);
 
       expect(container.innerHTML).toMatchSnapshot();
     });
@@ -665,7 +665,7 @@ describe("the spinner component", () => {
         "requestIDProcessingStatus",
       );
       spinner.init();
-      await wait(50);
+      await wait(500);
       expect(spyRequestIDProcessingStatus).toHaveBeenCalledTimes(2);
     });
   });
