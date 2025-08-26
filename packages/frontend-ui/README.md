@@ -165,3 +165,8 @@ If you need to use a component that incorporates frontend (ie. in-browser) code 
     useSpinner();
   </script>
 ```
+
+# Upgrading to V2
+
+## On Page Load has now been added to basefiles
+When upgrading to major version 2, GA4 on page load will be within the idenity and core basefiles, this will be a breaking change and implement some duplication on pages if GA4OPL is already being used on them
