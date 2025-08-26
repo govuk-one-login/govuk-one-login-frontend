@@ -1,3 +1,48 @@
+## 1.5.0 (2025-08-22)
+
+### 🚀 Features
+
+- copy across latest spinner ([02dd438](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/02dd438))
+
+### 🩹 Fixes
+
+- speed up tests ([2b5288b](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/2b5288b))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+- nickhealGDS
+
+## 1.4.5 (2025-08-21)
+
+### 🩹 Fixes
+
+- speed up tests ([2b5288b](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/2b5288b))
+
+### 🧱 Updated Dependencies
+
+- Updated @govuk-one-login/frontend-analytics to 4.0.3
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+
+## 1.4.4 (2025-08-19)
+
+### 🧱 Updated Dependencies
+
+- Updated @govuk-one-login/frontend-analytics to 4.0.2
+
+## 1.4.3 (2025-08-15)
+
+### 🩹 Fixes
+
+- identity basefile GA4 changes reverted ([b3a51b0](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/b3a51b0))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+
 ## 1.4.2 (2025-08-06)
 
 ### 🧱 Updated Dependencies

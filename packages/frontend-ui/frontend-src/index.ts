@@ -1,1 +1,1 @@
-export { WaitInteractions } from "./typescript/spinner";
+export { useSpinner } from "./spinner/spinner";

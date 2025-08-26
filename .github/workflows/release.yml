@@ -49,10 +49,17 @@ jobs:
     name: Prepare branch for main
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ vars.PUBLISHER_APP_ID }}
+          private-key: ${{ secrets.PUBLISHER_APP_SECRET }}
+
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          token: ${{ steps.app-token.outputs.token }}
 
       - name: Set up Node.js and cache node modules
         uses: actions/setup-node@v4
@@ -84,11 +91,12 @@ jobs:
 
       - name: Configure git user
         run: |
-          git config --global user.email "152856676+nickhealGDS@users.noreply.github.com"
-          git config --global user.name "nickhealGDS"
+          git config --global user.email "226340596+govuk-one-login-frontend-publisher[bot]@users.noreply.github.com"
+          git config --global user.name "govuk-one-login-frontend-publisher[bot]"
 
       - name: Publish packages
         if: ${{ github.ref == 'refs/heads/main' }}
         run: npx nx release ${{ github.event.inputs.increment }} --projects=${{ github.event.inputs.target }} --yes ${{ github.event.inputs.first_release == 'true' && '--first-release' || '' }} ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
         env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
           NODE_AUTH_TOKEN: ${{secrets.NPM_ACCESS_TOKEN}}

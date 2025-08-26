@@ -2,6 +2,7 @@ import { describe, expect, jest, test, beforeEach } from "@jest/globals";
 import { SelectContentTracker } from "./selectContentTracker";
 import { SelectContentEventInterface } from "./selectContentTracker.interface";
 import * as pushToDataLayer from "../../utils/pushToDataLayerUtil/pushToDataLayer";
+import { acceptCookies, rejectCookies } from "../../../test/utils";
 
 describe("selectContentTracker", () => {
   let newInstance: SelectContentTracker;
@@ -9,7 +10,7 @@ describe("selectContentTracker", () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    window.DI = { analyticsGa4: { cookie: { consent: true } } };
+    acceptCookies();
 
     newInstance = new SelectContentTracker(true);
     action = new MouseEvent("toggle", {
@@ -135,7 +136,7 @@ describe("selectContentTracker", () => {
 describe("Cookie Management", () => {
   test("trackSelectContent should return false if not cookie consent", () => {
     jest.spyOn(SelectContentTracker.prototype, "trackSelectContent");
-    window.DI.analyticsGa4.cookie.consent = false;
+    rejectCookies();
     const enableSelectContentTracking = true;
     const instance = new SelectContentTracker(enableSelectContentTracking);
     const details = document.createElement("details");

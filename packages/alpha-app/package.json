@@ -1,6 +1,6 @@
 {
   "name": "@govuk-one-login/alpha-app",
-  "version": "0.0.41",
+  "version": "0.0.45",
   "scripts": {
     "start": "npm-run-all build-sass --parallel dev",
     "dev": "node --watch src/app.js",
@@ -9,17 +9,17 @@
     "precommit": "npm run test && npm run format && git add .",
     "prod": "export NODE_ENV=production && node src/app.js",
     "test": "node -e \"console.log('No tests currently defined');\"",
-    "test:integration:ci": "npx playwright install && start-server-and-test start http://localhost:3000 test:integration",
+    "test:integration:ci": "npx playwright install --with-deps && start-server-and-test start http://localhost:3000 test:integration",
     "test:integration": "cucumber-js test/browser/features/v1/analytics --require test/browser/support/setup.js --require test/browser/step_definitions/**/*.js cucumber --tags 'not @skip'",
     "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,md}\"",
     "build": "rollup -c",
     "dev-js": "rollup -c --watch"
   },
   "dependencies": {
-    "@govuk-one-login/frontend-analytics": "4.0.1",
+    "@govuk-one-login/frontend-analytics": "4.0.3",
     "@govuk-one-login/frontend-asset-loader": "0.0.5",
     "@govuk-one-login/frontend-language-toggle": "2.2.2",
-    "@govuk-one-login/frontend-ui": "^1.4.2",
+    "@govuk-one-login/frontend-ui": "^1.5.0",
     "@govuk-one-login/frontend-vital-signs": "0.1.3",
     "@rollup/plugin-node-resolve": "^16.0.1",
     "dotenv": "^16.4.5",

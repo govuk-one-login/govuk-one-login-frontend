@@ -1,6 +1,6 @@
 {
   "name": "@govuk-one-login/frontend-ui",
-  "version": "1.4.2",
+  "version": "1.5.0",
   "description": "",
   "main": "build/cjs/backend/index.cjs",
   "module": "build/esm/backend/index.js",
@@ -12,8 +12,8 @@
     "build": "rollup -c",
     "dev": "rollup -c --watch",
     "test": "jest --coverage src",
-    "test:visual": "playwright test browser-tests/functional-tests",
-    "test:visual:update": "playwright test browser-tests/functional-tests --update-snapshots"
+    "test:visual": "npx playwright install --with-deps && playwright test browser-tests/functional-tests",
+    "test:visual:update": "npx playwright install --with-deps && playwright test browser-tests/functional-tests --update-snapshots"
   },
   "files": [
     "build/",
@@ -43,7 +43,7 @@
   "peerDependencies": {
     "express": "^5.1.0 || >= 4.21.2",
     "govuk-frontend": "^4.10.1 || ^5.0.0",
-    "@govuk-one-login/frontend-analytics": "^4.0.1"
+    "@govuk-one-login/frontend-analytics": " ^3.0.1 || ^4.0.3"
   },
   "exports": {
     ".": {
@@ -58,6 +58,6 @@
   "types": "./build/esm/backend/index.d.ts",
   "optionalDependencies": {
     "hmpo-components": "^7.1.0",
-    "@govuk-one-login/frontend-analytics": "^4.0.1"
+    "@govuk-one-login/frontend-analytics": "^4.0.3"
   }
 }

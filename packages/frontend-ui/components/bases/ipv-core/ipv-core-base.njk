@@ -147,7 +147,7 @@
                     ga4ContainerId: "{{ ga4ContainerId }}",
                     uaContainerId: "{{ uaContainerId }}"
                 }, {
-                    isDataSensitive: false,
+                    isDataSensitive: {{analyticsDataSensitive}},
                     isPageDataSensitive: {{isPageDataSensitive}},
                     enableGa4Tracking: {{isGa4Enabled}},
                     enableUaTracking: {{isUaEnabled}},

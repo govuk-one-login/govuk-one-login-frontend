@@ -91,7 +91,7 @@
           enableNavigationTracking: {{ga4NavigationEnabled}},
           enableSelectContentTracking: {{ga4SelectContentEnabled}},
           cookieDomain: "{{analyticsCookieDomain}}",
-          isDataSensitive: false,
+          isDataSensitive: {{analyticsDataSensitive}},
           isPageDataSensitive: {{isPageDataSensitive}}
         });
     </script>
@@ -117,6 +117,5 @@
         contentId: contentID,
         loggedInStatus: loggedInStatus
     }) }}
-
   {% endblock %}
 {% endblock %}
