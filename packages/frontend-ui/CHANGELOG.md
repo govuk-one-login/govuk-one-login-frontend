@@ -1,3 +1,13 @@
+# 2.0.0 (2025-08-26)
+
+### 🚀 Features
+
+- **888:** updating core basefile and adding analytics as a peer dependency ([298e45b](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/298e45b))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+
 ## 1.5.0 (2025-08-22)
 
 ### 🚀 Features
