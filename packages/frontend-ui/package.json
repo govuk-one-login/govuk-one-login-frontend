@@ -42,7 +42,8 @@
   },
   "peerDependencies": {
     "express": "^5.1.0 || >= 4.21.2",
-    "govuk-frontend": "^4.10.1 || ^5.0.0"
+    "govuk-frontend": "^4.10.1 || ^5.0.0",
+    "@govuk-one-login/frontend-analytics": " ^3.0.1 || ^4.0.3"
   },
   "exports": {
     ".": {

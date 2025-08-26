@@ -1,10 +1,14 @@
 {% if MAY_2025_REBRAND_ENABLED %}
-{% set govukRebrand = true %}
-{% set assetPath = "/public/rebrand"%}
+  {% set govukRebrand = true %}
+  {% set assetPath = "/public/rebrand"%}
 {% endif %}
+
+{% set isPageDataSensitive = true %}
+{% set taxLevel1 = 'web cri' %}
 
 {% extends "form-template.njk" %}
 
+{% from "frontend-analytics/components/ga4-opl/macro.njk" import ga4OnPageLoad %}
 {% from "frontend-ui/build/components/cookie-banner/macro.njk" import frontendUiCookieBanner %}
 {% from "frontend-ui/build/components/phase-banner/macro.njk" import frontendUiPhaseBanner %}
 {% from "frontend-ui/build/components/header/macro.njk" import frontendUiHeader %}
@@ -16,12 +20,12 @@
 {% endblock %}
 
 {%- block pageTitle %}
-    {{- (translate("govuk.error", { default: "Error" }) + ": ") if errorlist.length }}{{ hmpoTitle | safe }}{{ " – " + govukServiceName | safe if govukServiceName !== " " }} – GOV.UK One Login
+  {{- (translate("govuk.error", { default: "Error" }) + ": ") if errorlist.length }}{{ hmpoTitle | safe }}{{ " – " + govukServiceName | safe if govukServiceName !== " " }} – GOV.UK One Login
 {%- endblock %}
 
 {% block header %}
   {% block cookieBanner %}
-      {{ frontendUiCookieBanner({
+    {{ frontendUiCookieBanner({
     translations: translations.cookieBanner
   }
   )}}
@@ -36,7 +40,7 @@
 {% endblock %}
 
 {% block beforeContent %}
-    {{ frontendUiPhaseBanner({
+  {{ frontendUiPhaseBanner({
       translations: translations.phaseBanner,
       url: currentUrl,
       contactUrl: 'https://signin.account.gov.uk/contact-us'
@@ -47,17 +51,16 @@
       url: currentUrl,
       activeLanguage: htmlLang
     }) }}
-      {% if backLink %}
-        {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
-        <span id="back">{{ govukBackLink({
+    {% if backLink %}
+      {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+      <span id="back">{{ govukBackLink({
           text: translate("govuk.backLink"),
           href: backLink}) }}
-        </span>
-      {% endif %}
+      </span>
+    {% endif %}
 
   {% endblock %}
 {% endblock %}
-
 
 {% block footer %}
   {{ frontendUiFooter({
@@ -70,31 +73,49 @@
     <script type="text/javascript" src="/public/javascripts/all.js"></script>
     <script type="text/javascript" src="/public/javascripts/analytics.js"></script>
     <script type="text/javascript" {% if cspNonce %} nonce="{{ cspNonce }}"{%  endif %}>
-      window.GOVUKFrontend.initAll()
-      window.DI.appInit({
-        ga4ContainerId: "{{ga4ContainerId}}",
-        uaContainerId:"{{uaContainerId}}"},{
-          enableGa4Tracking:{{ga4Enabled}},
-          enableUaTracking:{{uaEnabled}},
-          enablePageViewTracking:{{ga4PageViewEnabled}},
-          enableFormErrorTracking:{{ga4FormErrorEnabled}},
-          enableFormChangeTracking:{{ga4FormChangeEnabled}},
-          enableFormResponseTracking:{{ga4FormResponseEnabled}},
-          enableNavigationTracking:{{ga4NavigationEnabled}},
-          enableSelectContentTracking:{{ga4SelectContentEnabled}},
-          cookieDomain:"{{analyticsCookieDomain}}",
-          isDataSensitive:{{analyticsDataSensitive}}
-        }
-      );
+      window
+        .GOVUKFrontend
+        .initAll()
+      window
+        .DI
+        .appInit({
+          ga4ContainerId: "{{ga4ContainerId}}",
+          uaContainerId: "{{uaContainerId}}"
+        }, {
+          enableGa4Tracking: {{ga4Enabled}},
+          enableUaTracking: {{uaEnabled}},
+          enablePageViewTracking: {{ga4PageViewEnabled}},
+          enableFormErrorTracking: {{ga4FormErrorEnabled}},
+          enableFormChangeTracking: {{ga4FormChangeEnabled}},
+          enableFormResponseTracking: {{ga4FormResponseEnabled}},
+          enableNavigationTracking: {{ga4NavigationEnabled}},
+          enableSelectContentTracking: {{ga4SelectContentEnabled}},
+          cookieDomain: "{{analyticsCookieDomain}}",
+          isDataSensitive: {{analyticsDataSensitive}},
+          isPageDataSensitive: {{isPageDataSensitive}}
+        });
     </script>
 
     {% if deviceIntelligenceEnabled %}
-    <script type="module" src="/public/javascripts/deviceIntelligence.js"></script>
-    <script type="module" {% if cspNonce %} nonce="{{ cspNonce }}"{%  endif %}>
-      import { setFingerprintCookie } from "/public/javascripts/deviceIntelligence.js";
-      setFingerprintCookie("{{deviceIntelligenceDomain}}")
-    </script>
+      <script type="module" src="/public/javascripts/deviceIntelligence.js"></script>
+      <script type="module" {% if cspNonce %} nonce="{{ cspNonce }}"{%  endif %}>
+        import {setFingerprintCookie} from "/public/javascripts/deviceIntelligence.js";
+        setFingerprintCookie("{{deviceIntelligenceDomain}}")
+      </script>
     {% endif %}
 
+    {{ ga4OnPageLoad({
+        nonce: cspNonce,
+        statusCode: statusCode,
+        dynamic: isPageDynamic,
+        englishPageTitle: pageTitleKey | translate,
+        taxonomyLevel1: taxLevel1,
+        taxonomyLevel2: taxLevel2,
+        taxonomyLevel3: taxLevel3,
+        taxonomyLevel4: taxLevel4,
+        taxonomyLevel5: taxLevel5,
+        contentId: contentID,
+        loggedInStatus: loggedInStatus
+    }) }}
   {% endblock %}
 {% endblock %}
