@@ -68,5 +68,10 @@
   },
   "skipLink": {
     "title": "Neidio i'r prif gynnwys"
+  },
+  "progressButton": {
+    "text": "Parhau",
+    "waitingText": "Aros",
+    "longWaitingText": "Parhau i aros"
   }
 }

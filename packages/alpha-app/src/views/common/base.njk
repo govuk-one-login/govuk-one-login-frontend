@@ -5,8 +5,8 @@
 {% extends "govuk/template.njk" %}
 
 {% block head %}
-  <link rel="stylesheet" href="/stylesheets/{{ assets['stylesheet.css'] }}"/>
-  <link rel="stylesheet" href="/stylesheets/{{ assets['application.css'] }}"/>
+  {# <link rel="stylesheet" href="/stylesheets/{{ assets['stylesheet.css'] }}"/>
+  <link rel="stylesheet" href="/stylesheets/{{ assets['application.css'] }}"/> #}
   <link rel="stylesheet" href="/stylesheets/govuk-frontend.css"/>
   <link rel="stylesheet" href="/stylesheets/frontendUi.css"/>
 {% endblock %}
@@ -20,6 +20,8 @@
 {% from "frontend-ui/build/components/footer/macro.njk" import frontendUiFooter %}
 {% from "frontend-ui/build/components/cookie-banner/macro.njk" import frontendUiCookieBanner %}
 {% from "frontend-ui/build/components/skip-link/macro.njk" import frontendUiSkipLink %}
+{% from "frontend-ui/build/components/progress-button/macro.njk" import frontendUiProgressButton %}
+
 
 
 {% block skipLink %}
@@ -63,6 +65,13 @@
     <main id="main-content" class="govuk-main-wrapper govuk-!-padding-top-3" >
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
+
+
+          {{ frontendUiProgressButton({
+            translations: translations.translation.progressButton,
+            href: "#",
+            errorPage: '/404'
+          }) }}
           {% block content %}{% endblock %}
         </div>
       </div>
