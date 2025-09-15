@@ -1,0 +1,44 @@
+.govuk-button--progress{
+  border-bottom: 8px;
+  position: relative;
+}
+
+.govuk-button--progress-loading{
+   background-color: #505A5F !important;
+   color: #fff !important;
+   pointer-events: none !important;
+   padding-left: 40px !important;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+.govuk-button--progress-loading::before {
+  content: "";
+  border: 3px solid rgba(255, 255, 255, 0.35);
+  border-top: 3px solid #fff;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: rotate 1s infinite linear;
+  position: absolute;
+  top: 12% !important;
+  left: 8px;
+}
+  
+@media (prefers-reduced-motion: reduce) {
+.govuk-button--progress-loading {
+     animation: none;
+  }
+}
+
+
+

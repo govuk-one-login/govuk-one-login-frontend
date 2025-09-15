@@ -68,5 +68,10 @@
   },
   "skipLink": {
     "title": "Skip to main content"
+  },
+  "progressButton": {
+    "text": "Continue",
+    "waitingText": "Wait",
+    "longWaitingText": "Keep waiting"
   }
 }
