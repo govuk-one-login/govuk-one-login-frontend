@@ -49,6 +49,7 @@ treat it as an interactive element - without this it will be
 <a href="{{ params.href if params.href else '#' }}" role="button" draggable="false" {{- commonAttributes | safe }}
 onclick="
     this.blur();
+    this.dataPreventDoubleClick = 'true';
     this.classList.add('govuk-button--progress-loading');
     this.innerText = '{{ progressButton.waitingText }}';
     setTimeout(() => {
@@ -72,6 +73,7 @@ onclick="
 <button {%- if params.value %} value="{{ params.value }}"{% endif %}{%- if params.type %} type="{{ params.type }}"{% endif %} {{- buttonAttributes | safe }} {{- commonAttributes | safe }}
 onclick="
     this.blur();
+    this.dataPreventDoubleClick = 'true';
     this.classList.add('govuk-button--progress-loading');
     this.innerText = '{{ progressButton.waitingText }}';
     setTimeout(() => {
@@ -89,12 +91,14 @@ onclick="
     {{ progressButton.text }}
   {% endif %}
   {{- iconHtml | safe | trim | indent(2, true) if iconHtml -}}
+  
 </button>
 
 {%- elseif element == 'input' %}
 <input value="{{ params.value }}" type="{{ params.type if params.type else 'submit'}}"{{- buttonAttributes | safe }} {{- commonAttributes | safe }}
   onclick="
     this.blur();
+    this.dataPreventDoubleClick = 'true';
     this.classList.add('govuk-button--progress-loading');
     this.value = '{{ progressButton.waitingText }}'; 
     setTimeout(() => {
