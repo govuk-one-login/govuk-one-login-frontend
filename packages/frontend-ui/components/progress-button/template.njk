@@ -47,12 +47,15 @@ treat it as an interactive element - without this it will be
 
 {%- if element == 'a' %}
 <a href="{{ params.href if params.href else '#' }}" role="button" draggable="false" {{- commonAttributes | safe }}
+aria-live="assertive"
 onclick="
     this.blur();
     this.classList.add('govuk-button--progress-loading');
     this.innerText = '{{ progressButton.waitingText }}';
+    this.ariaLabel = '{{ progressButton.waitingText }}';
     setTimeout(() => {
       this.innerText = '{{ progressButton.longWaitingText }}';
+      this.ariaLabel = '{{ progressButton.longWaitingText }}';
     }, 5000);
     setTimeout(() => {
       window.location.href = '{{ params.errorPage | default('#') }}';
@@ -70,12 +73,15 @@ onclick="
 
 {%- elseif element == 'button' %}
 <button {%- if params.value %} value="{{ params.value }}"{% endif %}{%- if params.type %} type="{{ params.type }}"{% endif %} {{- buttonAttributes | safe }} {{- commonAttributes | safe }}
+aria-live="assertive"
 onclick="
     this.blur();
     this.classList.add('govuk-button--progress-loading');
     this.innerText = '{{ progressButton.waitingText }}';
+    this.ariaLabel = '{{ progressButton.waitingText }}';
     setTimeout(() => {
       this.innerText = '{{ progressButton.longWaitingText }}';
+      this.ariaLabel = '{{ progressButton.longWaitingText }}';
     }, 5000);
     setTimeout(() => {
       window.location.href = '{{ params.errorPage | default('#') }}';
@@ -93,12 +99,15 @@ onclick="
 
 {%- elseif element == 'input' %}
 <input value="{{ params.value }}" type="{{ params.type if params.type else 'submit'}}"{{- buttonAttributes | safe }} {{- commonAttributes | safe }}
+  aria-live="assertive"
   onclick="
     this.blur();
     this.classList.add('govuk-button--progress-loading');
     this.value = '{{ progressButton.waitingText }}'; 
+    this.ariaLabel = '{{ progressButton.waitingText }}';
     setTimeout(() => {
       this.value = '{{ progressButton.longWaitingText }}';
+      this.ariaLabel = '{{ progressButton.longWaitingText }}';
     }, 5000);
     setTimeout(() => {
       window.location.href = '{{ params.errorPage | default('#') }}';
