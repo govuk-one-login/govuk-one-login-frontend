@@ -72,6 +72,7 @@
   "progressButton": {
     "text": "Parhau",
     "waitingText": "Aros",
-    "longWaitingText": "Parhau i aros"
+    "longWaitingText": "Parhau i aros",
+    "noJavascriptMessage": "Gall gymryd hyd at 10 eiliad i barhau i'r dudalen nesaf. Ar ôl i chi barhau, peidiwch ag ail-lwytho na chau'r dudalen hon."
   }
 }

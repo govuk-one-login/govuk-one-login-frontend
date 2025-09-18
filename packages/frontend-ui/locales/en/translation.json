@@ -72,6 +72,7 @@
   "progressButton": {
     "text": "Continue",
     "waitingText": "Wait",
-    "longWaitingText": "Keep waiting"
+    "longWaitingText": "Keep waiting",
+    "noJavascriptMessage": "It can take up to 10 seconds to continue to the next page. After you continue, do not reload or close this page."
   }
 }

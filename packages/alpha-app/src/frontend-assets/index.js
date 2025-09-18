@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
-import { useSpinner } from "@govuk-one-login/frontend-ui/frontend";
+import { useSpinner, initialiseProgressButtons } from "@govuk-one-login/frontend-ui/frontend";
 
+initialiseProgressButtons();
 useSpinner();
 
 window.DI = window.DI || {};
