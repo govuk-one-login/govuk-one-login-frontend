@@ -170,3 +170,40 @@ If you need to use a component that incorporates frontend (ie. in-browser) code 
 
 ## On Page Load has now been added to basefiles
 When upgrading to major version 2, GA4 on page load will be within the idenity and core basefiles, this will be a breaking change and implement some duplication on pages if GA4OPL is already being used on them
+
+
+# Implementation Guide - Progress Button
+
+# When to use the Progress Button
+
+The progress button has veen designed for implementation in use cases such as when the user has clicked to submit a form and the request is in progress.
+
+The aim is to prevent multiple submissions of forms and provide a visual cue whilst the page is loading.
+
+It should be used when there is more than a 2 second delay and less than a 10 second delay between the user clicking the button and seeing the result.
+
+It is best suited to actions which trigger submission of information to an external API or performing short Back End processes.
+
+# When not to use the Progress Button
+
+This should not be used when a user needs to take further action for example when checking their email, opening another app, or retrieving a security code.
+
+The Progress button should not be used when there is less than a 2 second delay between clicking the button and seeing the outcome.
+
+Similarly the button should not be used when there is a delay of more than 10 seconds. 
+
+when is it applicable and when is it not?
+
+# How to implement the progress button.
+ 
+ ### 1. Render component in the progress button template and pass in the necessary data
+
+Provided the above integration steps have been followed (Frontend UI Component Integration Guide) it should be possible to utilise the progress button by adding to the template as below.
+
+ ```html
+  {{ frontendUiProgressButton({
+    translations: translations.translation.progressButton,
+    href: "#",
+    errorPage: '/404'
+  }) }}
+  ```
