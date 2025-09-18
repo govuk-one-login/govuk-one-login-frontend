@@ -1,46 +1,77 @@
 # Spinner
 
-This component can be imported to be displayed before the page loads. Currently the logic has been set up to **display** the spinner.
+This component:
+- Displays an animated spinner graphic
+- Repeatedly calls a supplied function
+- Stops the spinner animation when the function returns success, failure, or doesn't return either after a certain amount of time
+- Displays different HTML for the different phases of its lifecycle
 
-Should you need to ensure it displays before the page renders any data, this should be done within the app.
+It consists of code in `../../frontend-src/spinner/spinner.ts` and styling in `_index.scss`
 
-## Timer
+## Requirements
 
-The timer is set to two seconds and this is done in the route. There is a file called `api.njk` and this binds the data attributes that are needed for the script to be run.
+For the spinner to perform correctly it requires the following:
+- A container `div` to display within
+- A polling function to call repeatedly until it returns success or failure
+- An optional success function to call once if the polling function returns success
+- An optional error function to call once if the polling function returns failure, or we reach the abort duration
+- A div with id `no-js-content`. This should contain the HTML to display if the user has JS disabled
+- An optional div with id `wait-content`. This should contain the default HTML to display under the spinner
+- An optional div with id `long-wait-content`. This should contain the HTML to display under the spinner once it has been spinning for the specified long wait duration
+- An optional div with id `success-content`. This should contain the HTML to display under the spinner once the polling function returns success
+- An optional div with id `error-content`. This should contain the HTML to display under the spinner if the polling function returns failure, or doesn't return success before the abort duration is reached
+- An optional data attribute `data-ms-before-informing-of-long-wait` to set the amount of time the spinner will spin before displaying the `long-wait-content`
+- An optional data attribute `data-ms-before-abort` to set the amount of time the spinner will spin before displaying the `error-content` and calling the `errorFunction`
+- An optional data attribute `data-ms-between-dom-update` to set the amount of time between updates to the spinner UI
+- An optional data attribute `data-ms-between-requests` to set the amount of time between calls to the `pollingFunction`
 
-```njk
-{% extends "layouts/main.njk" %}
+For example:
 
-{% set url = "/api" %}
-
-{% block content %}
-  <div id="spinner-container"
-     data-initial-heading="Initial heading text"
-     data-initial-spinnerStateText="Initial spinner state text"
-     data-initial-spinnerState="pending"
-     data-error-heading="Error heading"
-     data-error-messageText="Error message text"
-     data-error-whatYouCanDo-heading="Error what you can do heading"
-     data-error-whatYouCanDo-message-text1="Error what you can do message text1"
-     data-error-whatYouCanDo-message-link-href="Error what you can do message link href"
-     data-error-whatYouCanDo-message-link-text="Error what you can do message link text"
-     data-error-whatYouCanDo-message-text2="Error what you can do message link text2"
-     data-complete-spinnerState="complete"
-     data-longWait-spinnerStateText="Long wait spinner state">
-  </div>
-
-{% endblock %}
-
-{% block pageScripts %}
-
-{% endblock %}
-
-
+```html
+<div id="spinner-container"
+     data-ms-before-informing-of-long-wait="10000"
+     data-ms-before-abort="30000"
+     data-ms-between-dom-update="1000"
+     data-ms-between-requests="2000">
+  <div id="no-js-content">JS is disabled</div>
+  <div id="wait-content" style="display:none">Waiting</div>
+  <div id="long-wait-content" style="display:none">Long wait</div>
+  <div id="success-content" style="display:none">Success</div>
+  <div id="error-content" style="display:none">Error</div>
+</div>
 ```
 
-## Scripts
+Note that the content divs (except for the no-js div) have `style="display:none"` to hide them until they are needed.
 
-The script finds the DOM element of the ID `spinner-container` and then runs the animation, it has the flexibility for an error state to be handled or for spinner to take longer/shorter.
+```typescript
+async function pollFunction(abortSignal): PollResult {
+  // Check for success
+}
+
+function successFunction(): void {
+  // Optionally do stuff, e.g. enable a button, redirect, etc
+}
+
+function errorFunction(): void {
+  // Optionally do stuff, e.g. enable a button, redirect, etc
+}
+
+useSpinner("spinner-container", pollingFunction, successFunction, errorFunction);
+```
+
+## Lifecycle
+
+The spinner starts in the waiting state and displays the `wait` content under the animated spinner graphic content.
+If a call to the polling function returns `success` the spinner will stop animating, display the `success-content` content, and call the `successFunction` (if specified)
+If a call to the polling function returns `failure` the spinner will stop animating, display the `error-content` content, and call the `errorFunction` (if specified)
+If the spinner waits past the `long-wait` duration while the polling function keeps returning `pending` the spinner will display the `long-wait-content` content
+If the spinner waits past the `abort` duration while the polling function keeps returning `pending` the spinner will stop animating, display the `error-content` content, and call the `errorFunction` (if specified)
+
+### Page refreshes
+
+When the spinner starts for the first time it stores the current time in session storage. If the page is refreshed the spinner will retrieve the initial start time from session storage and update itself appropriately. 
+
+## Scripts
 
 Within the frontend-ui package, this script is bundled within `frontend-src`, so that it can be used in the alpha-app.
 
@@ -63,11 +94,13 @@ The default import is at the top and the one at the bottom ensures, the correct 
 
 Configurations to the alpha-app have also been made to ensure these script files work accordingly however this should not affect any users wanting to use the spinner component from the frontend-ui package.
 
-## Routes
+## Manual Testing
 
-The way testing is done for visual purposes of the components within the frontend-ui package is through the alpha-app.
+The nunjucks files in this folder are to allow manual testing in the alpha-app, most users of the spinner component will only need the CSS and script files.
 
-The routes are set with Express and it is important to note, this route setting is important within the user's application to ensure the spinner works effectively.
+There is a `/spinner` page in the alpha-app that will display the spinner component.
+
+An endpoint has been created in the alpha-app at `/api` that will return a pending result for a specified number of requests before returning a success response.
 
 ```js
 let counter = 0;
@@ -86,22 +119,3 @@ app.get("/api", (req, res) => {
   }
 });
 ```
-
-This block of code is used **before** any middleware is set, to ensure the params at the end of the route can be captured. This is also helpful as usually the spinner is the first thing to render, whilst the page waits for data to be loaded.
-
-There is a counter set here and within `template.njk` the url sets the processing time (defaulted to 2 currently).
-
-```njk
-{% block content %}
-
-{% set url = "/api?processingTime=2" %}
-
-
-<div id="spinner-container" data-api-route="{{ url }}">
-
-</div>
-
-{% endblock %}
-```
-
-It is important that the url is set and the page uses the correct ID.
