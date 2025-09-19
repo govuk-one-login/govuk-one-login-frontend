@@ -40,6 +40,7 @@ type SpinnerConfig = {
   msBeforeAbort: number;
   msBetweenRequests: number;
   msBetweenDomUpdate: number;
+  ariaAlertCompletionText?: string;
 };
 
 export class Spinner {
@@ -49,6 +50,7 @@ export class Spinner {
   longWaitContent?: HTMLElement;
   successContent?: HTMLElement;
   errorContent?: HTMLElement;
+  ariaLiveContainer: HTMLDivElement;
 
   visibleElementsContainer: HTMLDivElement;
 
@@ -62,8 +64,12 @@ export class Spinner {
   onSuccess: VoidFunction;
   onError: VoidFunction;
 
-
-  constructor(domContainer: HTMLDivElement, pollingFunction: PollingFunction, onSuccess: VoidFunction, onError: VoidFunction) {
+  constructor(
+    domContainer: HTMLDivElement,
+    pollingFunction: PollingFunction,
+    onSuccess: VoidFunction,
+    onError: VoidFunction,
+  ) {
     this.container = domContainer;
 
     this.pollingFunction = pollingFunction;
@@ -77,13 +83,19 @@ export class Spinner {
     this.noJsContent = this.getElementOrThrow("no-js-content");
     this.noJsContent.style.display = "none";
 
-    this.waitContent = this.container.querySelector("#wait-content") || undefined;
-    this.longWaitContent = this.container.querySelector("#long-wait-content") || undefined;
-    this.successContent = this.container.querySelector("#success-content") || undefined;
-    this.errorContent = this.container.querySelector("#error-content") || undefined;
+    this.waitContent =
+      this.container.querySelector("#wait-content") || undefined;
+    this.longWaitContent =
+      this.container.querySelector("#long-wait-content") || undefined;
+    this.successContent =
+      this.container.querySelector("#success-content") || undefined;
+    this.errorContent =
+      this.container.querySelector("#error-content") || undefined;
 
     if (!this.successContent && !onSuccess) {
-      throw new Error("One of success-content or successFunction must be provided");
+      throw new Error(
+        "One of success-content or successFunction must be provided",
+      );
     }
     if (!this.errorContent && !onError) {
       throw new Error("One of error-content or errorFunction must be provided");
@@ -93,11 +105,23 @@ export class Spinner {
 
     this.visibleElementsContainer = document.createElement("div");
     this.container.appendChild(this.visibleElementsContainer);
+    this.ariaLiveContainer = this.createAriaLiveContainer();
+    this.container.appendChild(this.ariaLiveContainer);
 
     this.abortController = this.createAbortController();
   }
 
-  getElementOrThrow(elementId: string): HTMLElement {
+  async init() {
+    const initTime = this.getInitTime();
+
+    this.updateStateAccordingToTimeElapsed(initTime);
+
+    this.updateDom();
+    this.initTimer(initTime);
+    await this.callPollingFunction(initTime);
+  }
+
+  private getElementOrThrow(elementId: string): HTMLElement {
     const element = this.container.querySelector(`#${elementId}`);
     if (element === null || !(element instanceof HTMLElement)) {
       throw new Error(`HTML Element with id ${elementId} must be provided`);
@@ -105,7 +129,7 @@ export class Spinner {
     return element;
   }
 
-  getConfig(element: HTMLDivElement): SpinnerConfig {
+  private getConfig(element: HTMLDivElement): SpinnerConfig {
     return {
       msBeforeInformingOfLongWait: element.dataset.msBeforeInformingOfLongWait
         ? parseInt(element.dataset.msBeforeInformingOfLongWait)
@@ -119,31 +143,24 @@ export class Spinner {
       msBetweenDomUpdate: element.dataset.msBetweenDomUpdate
         ? parseInt(element.dataset.msBetweenDomUpdate)
         : 1000,
+      ariaAlertCompletionText: element.dataset.ariaAlertCompletionText
+        ? element.dataset.ariaAlertCompletionText
+        : undefined,
     };
   }
 
-  createAbortController(): AbortController {
+  private createAbortController(): AbortController {
     const abortController = new AbortController();
     window.removeEventListener("beforeunload", this.handleAbort);
     window.addEventListener("beforeunload", this.handleAbort);
     return abortController;
-  };
+  }
 
-  handleAbort = () => {
+  private handleAbort = () => {
     this.abortController.abort();
   };
 
-  async init() {
-    const initTime = this.getInitTime();
-
-    this.updateStateAccordingToTimeElapsed(initTime);
-
-    this.updateDom();
-    this.initTimer(initTime);
-    await this.callPollingFunction(initTime);
-  }
-
-  getInitTime() {
+  private getInitTime() {
     const storedSpinnerInitTime = sessionStorage.getItem("spinnerInitTime");
     let spinnerInitTime: number;
     if (storedSpinnerInitTime === null) {
@@ -155,35 +172,37 @@ export class Spinner {
     return spinnerInitTime;
   }
 
-  initTimer = (initTime: number) => {
+  private initTimer = (initTime: number) => {
     this.updateDomTimer = setInterval(() => {
       this.updateStateAccordingToTimeElapsed(initTime);
       this.updateDom();
     }, this.config.msBetweenDomUpdate);
   };
 
-  hasCompleted(): boolean {
-    return this.state === SpinnerState.Error || this.state === SpinnerState.Complete;
+  private hasCompleted(): boolean {
+    return (
+      this.state === SpinnerState.Error || this.state === SpinnerState.Complete
+    );
   }
 
-  reflectSuccess = () => {
+  private reflectSuccess = () => {
     this.state = SpinnerState.Complete;
     sessionStorage.removeItem("spinnerInitTime");
   };
 
-  reflectError = () => {
+  private reflectError = () => {
     this.state = SpinnerState.Error;
     sessionStorage.removeItem("spinnerInitTime");
     this.abortController.abort();
   };
 
-  reflectLongWait() {
+  private reflectLongWait() {
     if (!this.hasCompleted()) {
       this.state = SpinnerState.LongWaiting;
     }
   }
 
-  updateStateAccordingToTimeElapsed = (initTime: number) => {
+  private updateStateAccordingToTimeElapsed = (initTime: number) => {
     const elapsedMilliseconds = Date.now() - initTime;
     if (this.hasCompleted()) {
       // If we've already finished waiting then there's no need to update again.
@@ -196,7 +215,7 @@ export class Spinner {
     }
   };
 
-  createSpinnerElement(spinnerStateClass: string): HTMLDivElement {
+  private createSpinnerElement(spinnerStateClass: string): HTMLDivElement {
     const spinner = document.createElement("div");
     spinner.id = "spinner";
     spinner.classList.add("spinner", "centre");
@@ -206,8 +225,7 @@ export class Spinner {
     return spinner;
   }
 
-  updateDom = () => {
-
+  private updateDom = () => {
     if (this.hasCompleted()) {
       // We've reached an end state so stop updating the DOM after this
       clearInterval(this.updateDomTimer);
@@ -231,26 +249,33 @@ export class Spinner {
         this.cloneAndAddIfExists(newElementsToDisplay, this.longWaitContent);
         break;
       case SpinnerState.Complete:
-        newElementsToDisplay.push(this.createSpinnerElement("spinner__finished"));
+        newElementsToDisplay.push(
+          this.createSpinnerElement("spinner__finished"),
+        );
         this.cloneAndAddIfExists(newElementsToDisplay, this.successContent);
         break;
       case SpinnerState.Error:
-        newElementsToDisplay.push(this.createSpinnerElement("spinner__finished"));
+        newElementsToDisplay.push(
+          this.createSpinnerElement("spinner__finished"),
+        );
         this.cloneAndAddIfExists(newElementsToDisplay, this.errorContent);
         break;
     }
 
     this.visibleElementsContainer.replaceChildren(...newElementsToDisplay);
 
-    if (this.displayState === SpinnerState.Complete && !!this.onSuccess) {
-      this.onSuccess();
+    if (this.displayState === SpinnerState.Complete) {
+      if (this.onSuccess) {
+        this.onSuccess();
+      }
+      this.updateAriaAlert(this.config.ariaAlertCompletionText);
     }
     if (this.displayState === SpinnerState.Error && !!this.onError) {
       this.onError();
     }
   };
 
-  cloneAndAddIfExists(list: HTMLElement[], element: HTMLElement | undefined) {
+  private cloneAndAddIfExists(list: HTMLElement[], element: HTMLElement | undefined) {
     if (element) {
       const cloned = element.cloneNode(true) as HTMLElement;
       cloned.style.display = "";
@@ -259,7 +284,7 @@ export class Spinner {
     }
   }
 
-  async callPollingFunction(initTime: number) {
+  private async callPollingFunction(initTime: number) {
     if (Date.now() - initTime >= this.config.msBeforeAbort) {
       return;
     }
@@ -287,5 +312,26 @@ export class Spinner {
       .finally(() => {
         this.updateDom();
       });
+  }
+
+  private createAriaLiveContainer() {
+    // For the Aria alert to work reliably we need to create its container once and then update the contents
+    // https://tetralogical.com/blog/2024/05/01/why-are-my-live-regions-not-working/
+    const container = document.createElement("div");
+    container.setAttribute("aria-live", "assertive");
+    container.classList.add("govuk-visually-hidden");
+    return container;
+  }
+
+  private updateAriaAlert(messageText?: string) {
+    if (messageText) {
+      while (this.ariaLiveContainer.firstChild) {
+        this.ariaLiveContainer.removeChild(this.ariaLiveContainer.firstChild);
+      }
+
+      /* Create new message and append it to the live region */
+      const messageNode = document.createTextNode(messageText);
+      this.ariaLiveContainer.appendChild(messageNode);
+    }
   }
 }

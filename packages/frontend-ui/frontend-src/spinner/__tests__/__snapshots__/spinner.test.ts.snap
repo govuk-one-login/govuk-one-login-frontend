@@ -7,7 +7,7 @@ exports[`Init time Spinner shows long wait on page refresh 1`] = `
           <div id="long-wait-content" style="display:none">Long wait</div>
           <div id="success-content" style="display:none">Success</div>
           <div id="error-content" style="display:none">Error</div>
-    <div><div id="spinner" class="spinner centre"></div><div style="">Long wait</div></div>"
+    <div><div id="spinner" class="spinner centre"></div><div style="">Long wait</div></div><div aria-live="assertive" class="govuk-visually-hidden"></div>"
 `;
 
 exports[`Init time Spinner shows timeout on page refresh 1`] = `
@@ -17,7 +17,7 @@ exports[`Init time Spinner shows timeout on page refresh 1`] = `
           <div id="long-wait-content" style="display:none">Long wait</div>
           <div id="success-content" style="display:none">Success</div>
           <div id="error-content" style="display:none">Error</div>
-    <div><div id="spinner" class="spinner centre spinner__finished"></div><div style="">Error</div></div>"
+    <div><div id="spinner" class="spinner centre spinner__finished"></div><div style="">Error</div></div><div aria-live="assertive" class="govuk-visually-hidden"></div>"
 `;
 
 exports[`Spinner behaviour error 1`] = `
@@ -27,7 +27,7 @@ exports[`Spinner behaviour error 1`] = `
           <div id="long-wait-content" style="display:none">Long wait</div>
           <div id="success-content" style="display:none">Success</div>
           <div id="error-content" style="display:none">Error</div>
-    <div><div id="spinner" class="spinner centre spinner__finished"></div><div style="">Error</div></div>"
+    <div><div id="spinner" class="spinner centre spinner__finished"></div><div style="">Error</div></div><div aria-live="assertive" class="govuk-visually-hidden"></div>"
 `;
 
 exports[`Spinner behaviour initial waiting 1`] = `
@@ -37,7 +37,7 @@ exports[`Spinner behaviour initial waiting 1`] = `
           <div id="long-wait-content" style="display:none">Long wait</div>
           <div id="success-content" style="display:none">Success</div>
           <div id="error-content" style="display:none">Error</div>
-    <div><div id="spinner" class="spinner centre"></div><div style="">Waiting</div></div>"
+    <div><div id="spinner" class="spinner centre"></div><div style="">Waiting</div></div><div aria-live="assertive" class="govuk-visually-hidden"></div>"
 `;
 
 exports[`Spinner behaviour long waiting 1`] = `
@@ -47,7 +47,7 @@ exports[`Spinner behaviour long waiting 1`] = `
           <div id="long-wait-content" style="display:none">Long wait</div>
           <div id="success-content" style="display:none">Success</div>
           <div id="error-content" style="display:none">Error</div>
-    <div><div id="spinner" class="spinner centre"></div><div style="">Long wait</div></div>"
+    <div><div id="spinner" class="spinner centre"></div><div style="">Long wait</div></div><div aria-live="assertive" class="govuk-visually-hidden"></div>"
 `;
 
 exports[`Spinner behaviour success 1`] = `
@@ -57,7 +57,17 @@ exports[`Spinner behaviour success 1`] = `
           <div id="long-wait-content" style="display:none">Long wait</div>
           <div id="success-content" style="display:none">Success</div>
           <div id="error-content" style="display:none">Error</div>
-    <div><div id="spinner" class="spinner centre spinner__finished"></div><div style="">Success</div></div>"
+    <div><div id="spinner" class="spinner centre spinner__finished"></div><div style="">Success</div></div><div aria-live="assertive" class="govuk-visually-hidden">Aria success text</div>"
+`;
+
+exports[`Spinner behaviour success with no aria text 1`] = `
+"
+          <div id="no-js-content" style="display: none;">JS is disabled</div>
+          <div id="wait-content" style="display:none">Waiting</div>
+          <div id="long-wait-content" style="display:none">Long wait</div>
+          <div id="success-content" style="display:none">Success</div>
+          <div id="error-content" style="display:none">Error</div>
+    <div><div id="spinner" class="spinner centre spinner__finished"></div><div style="">Success</div></div><div aria-live="assertive" class="govuk-visually-hidden"></div>"
 `;
 
 exports[`Spinner behaviour timeout 1`] = `
@@ -67,7 +77,7 @@ exports[`Spinner behaviour timeout 1`] = `
           <div id="long-wait-content" style="display:none">Long wait</div>
           <div id="success-content" style="display:none">Success</div>
           <div id="error-content" style="display:none">Error</div>
-    <div><div id="spinner" class="spinner centre spinner__finished"></div><div style="">Error</div></div>"
+    <div><div id="spinner" class="spinner centre spinner__finished"></div><div style="">Error</div></div><div aria-live="assertive" class="govuk-visually-hidden"></div>"
 `;
 
 exports[`Validation useSpinner method should display Spinner constructor errors in the container 1`] = `"<p>Error configuring spinner: Error: Polling function must be provided</p>"`;

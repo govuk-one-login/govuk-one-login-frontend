@@ -11,14 +11,21 @@ function getValidSpinnerDivHtml(
     msBeforeInformingOfLongWait?: number;
     msBetweenDomUpdate?: number;
     msBetweenRequests?: number;
+    ariaAlertCompletionText?: string;
   } = {},
 ) {
+  let ariaAlertCompletionTextData = "";
+  if (params.ariaAlertCompletionText) {
+    ariaAlertCompletionTextData = `data-aria-alert-completion-text="${params.ariaAlertCompletionText}`;
+  }
+
   return `
         <div id="spinner-container"
          data-ms-before-informing-of-long-wait="${params.msBeforeInformingOfLongWait || 6000}"
          data-ms-before-abort="${params.msBeforeAbort || 30000}"
          data-ms-between-dom-update="${params.msBetweenDomUpdate || 2000}"
-         data-ms-between-requests="${params.msBetweenRequests || 5000}">
+         data-ms-between-requests="${params.msBetweenRequests || 5000}"
+         ${ariaAlertCompletionTextData}">
           <div id="no-js-content">JS is disabled</div>
           <div id="wait-content" style="display:none">Waiting</div>
           <div id="long-wait-content" style="display:none">Long wait</div>
@@ -27,7 +34,7 @@ function getValidSpinnerDivHtml(
     </div>`;
 }
 
-const validSpinnerHtml = getValidSpinnerDivHtml();
+const validSpinnerHtml = getValidSpinnerDivHtml({ariaAlertCompletionText: "Aria success text"});
 
 let container: HTMLDivElement;
 const pollingFunction: jest.Mock = jest.fn();
@@ -46,7 +53,7 @@ beforeEach(() => {
 describe("Validation", () => {
 
   describe("useSpinner method", () => {
-    
+
     test("should display Spinner constructor errors in the container", () => {
       // Act
       useSpinner("spinner-container", null as never, successFunction, errorFunction);
@@ -136,6 +143,7 @@ describe("Spinner behaviour", () => {
       msBetweenRequests: 1000,
       msBetweenDomUpdate: 10,
       msBeforeAbort: 30000,
+      ariaAlertCompletionText: "Aria success text",
     });
     container = document.getElementById("spinner-container") as HTMLDivElement;
     const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
@@ -154,6 +162,7 @@ describe("Spinner behaviour", () => {
       msBetweenRequests: 1000,
       msBetweenDomUpdate: 5,
       msBeforeAbort: 30000,
+      ariaAlertCompletionText: "Aria success text",
     });
     container = document.getElementById("spinner-container") as HTMLDivElement;
     const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
@@ -167,6 +176,29 @@ describe("Spinner behaviour", () => {
   });
 
   test("success", async () => {
+    // Arrange
+    document.body.innerHTML = getValidSpinnerDivHtml({
+      msBeforeInformingOfLongWait: 1000,
+      msBetweenRequests: 10,
+      msBetweenDomUpdate: 5,
+      msBeforeAbort: 30000,
+      ariaAlertCompletionText: "Aria success text",
+    });
+    container = document.getElementById("spinner-container") as HTMLDivElement;
+    pollingFunction.mockResolvedValue(PollResult.Success);
+    const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
+
+    // Act
+    await spinner.init();
+    await wait(30);
+
+    // Assert
+    expect(container.innerHTML).toMatchSnapshot();
+    expect(pollingFunction).toHaveBeenCalledTimes(1);
+    expect(successFunction).toHaveBeenCalledTimes(1);
+  });
+
+  test("success with no aria text", async () => {
     // Arrange
     document.body.innerHTML = getValidSpinnerDivHtml({
       msBeforeInformingOfLongWait: 1000,
@@ -195,6 +227,7 @@ describe("Spinner behaviour", () => {
       msBetweenRequests: 10,
       msBetweenDomUpdate: 5,
       msBeforeAbort: 30000,
+      ariaAlertCompletionText: "Aria success text",
     });
     container = document.getElementById("spinner-container") as HTMLDivElement;
     pollingFunction.mockResolvedValue(PollResult.Failure);
@@ -217,6 +250,7 @@ describe("Spinner behaviour", () => {
       msBetweenRequests: 10,
       msBetweenDomUpdate: 5,
       msBeforeAbort: 25,
+      ariaAlertCompletionText: "Aria success text",
     });
     container = document.getElementById("spinner-container") as HTMLDivElement;
     const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
@@ -301,6 +335,7 @@ describe("Init time", () => {
       msBetweenRequests: 5,
       msBetweenDomUpdate: 5,
       msBeforeAbort: 25,
+      ariaAlertCompletionText: "Aria success text",
     });
     container = document.getElementById("spinner-container") as HTMLDivElement;
     const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
@@ -320,6 +355,7 @@ describe("Init time", () => {
       msBetweenRequests: 5,
       msBetweenDomUpdate: 5,
       msBeforeAbort: 25,
+      ariaAlertCompletionText: "Aria success text",
     });
     container = document.getElementById("spinner-container") as HTMLDivElement;
     const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
