@@ -1,3 +1,2 @@
-export { useSpinner } from "./spinner/spinner";
-
-export { WaitInteractions } from "./spinner/spinnerAlpha";
+export { useSpinner, PollResult } from "./spinner/spinner";
+export type { PollingFunction } from "./spinner/spinner";

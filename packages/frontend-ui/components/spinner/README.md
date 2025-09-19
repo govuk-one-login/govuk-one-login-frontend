@@ -33,11 +33,11 @@ For example:
      data-ms-before-abort="30000"
      data-ms-between-dom-update="1000"
      data-ms-between-requests="2000">
-  <div id="no-js-content">JS is disabled</div>
-  <div id="wait-content" style="display:none">Waiting</div>
-  <div id="long-wait-content" style="display:none">Long wait</div>
-  <div id="success-content" style="display:none">Success</div>
-  <div id="error-content" style="display:none">Error</div>
+  <div id="no-js-content"><p class="centre govuk-body">JS is disabled</p></div>
+  <div id="wait-content" style="display:none"><p class="centre govuk-body">Waiting</p></div>
+  <div id="long-wait-content" style="display:none"><p class="centre govuk-body">Still waiting</p></div>
+  <div id="success-content" style="display:none"><p class="centre govuk-body">Success!</p></div>
+  <div id="error-content" style="display:none"><p class="centre govuk-body">Error :(</p></div>
 </div>
 ```
 

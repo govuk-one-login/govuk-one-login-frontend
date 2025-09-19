@@ -53,10 +53,10 @@ app.get("/api", (req, res) => {
     `Elapsed processing seconds: ${counter}. Processing time limit is: ${processingTime}`,
   );
   if (counter >= processingTime) {
-    res.json({ status: "Clear to proceed", counter: counter });
+    res.json({ status: "COMPLETED", counter: counter });
     counter = 0;
   } else {
-    res.json({ status: "Still processing", counter: counter });
+    res.json({ status: "PENDING", counter: counter });
   }
 });
 const protect = require("overload-protection")("express", {
