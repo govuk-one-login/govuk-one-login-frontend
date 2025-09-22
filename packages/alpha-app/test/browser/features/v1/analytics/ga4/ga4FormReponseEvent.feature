@@ -10,6 +10,7 @@ Scenario: GA4 form response event is pushed when user accepts analytics cookies 
   When I select Other option
   And I submit the form
   Then The dataLayer includes the organisation type form response event
+  # Then I should not have any automatically detectable accessibility issues
 
 Scenario: GA4 form response event is pushed when user accepts analytics cookies and submits checkboxes form
   Given I visit the welcome page
@@ -19,6 +20,7 @@ Scenario: GA4 form response event is pushed when user accepts analytics cookies 
   When I select Other option
   And I submit the form
   Then The dataLayer includes the help with hint form response event
+  # Then I should not have any automatically detectable accessibility issues
 
 Scenario: GA4 form response event is pushed when user accepts analytics cookies and submits textarea form
   Given I visit the welcome page
@@ -28,6 +30,7 @@ Scenario: GA4 form response event is pushed when user accepts analytics cookies 
   When I fill service-description field
   And I submit the form
   Then The dataLayer includes the service description form response event
+  # Then I should not have any automatically detectable accessibility issues
 
 Scenario: GA4 form response event is pushed when user accepts analytics cookies and submits input text form
   Given I visit the welcome page
@@ -37,6 +40,7 @@ Scenario: GA4 form response event is pushed when user accepts analytics cookies 
   When I fill enter-email field
   And I submit the form
   Then The dataLayer includes the enter email form response event
+  # Then I should not have any automatically detectable accessibility issues
 
 Scenario: GA4 form response event is pushed when user accepts analytics cookies and submits dropdown form
   Given I visit the welcome page
@@ -46,3 +50,4 @@ Scenario: GA4 form response event is pushed when user accepts analytics cookies 
   When I choose London value
   And I submit the form
   Then The dataLayer includes the choose location form response event
+  # Then I should not have any automatically detectable accessibility issues
