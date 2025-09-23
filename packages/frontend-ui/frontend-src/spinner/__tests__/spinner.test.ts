@@ -246,10 +246,10 @@ describe("Spinner behaviour", () => {
   test("timeout", async () => {
     // Arrange
     document.body.innerHTML = getValidSpinnerDivHtml({
-      msBeforeInformingOfLongWait: 1000,
-      msBetweenRequests: 10,
-      msBetweenDomUpdate: 5,
-      msBeforeAbort: 25,
+      msBeforeInformingOfLongWait: 5000,
+      msBetweenRequests: 50,
+      msBetweenDomUpdate: 50,
+      msBeforeAbort: 125,
       ariaAlertCompletionText: "Aria success text",
     });
     container = document.getElementById("spinner-container") as HTMLDivElement;
@@ -257,7 +257,7 @@ describe("Spinner behaviour", () => {
 
     // Act
     await spinner.init();
-    await wait(30);
+    await wait(200);
 
     // Assert
     expect(container.innerHTML).toMatchSnapshot();
