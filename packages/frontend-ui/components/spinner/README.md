@@ -98,6 +98,8 @@ Configurations to the alpha-app have also been made to ensure these script files
 
 ## Manual Testing
 
+The nunjucks files in this folder are to allow automated accessibility testing, most users of the spinner component will only need the CSS and script files.
+
 There is a `/spinner` page in the alpha-app that will display the spinner component.
 
 An endpoint has been created in the alpha-app at `/api` that will return a pending result for a specified number of requests before returning a success response.
