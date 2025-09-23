@@ -1,32 +1,83 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`the spinner component when instantiated with a badly formed HTMLDivElement should not have replaced the container contents 1`] = `
+exports[`Init time Spinner shows long wait on page refresh 1`] = `
 "
-          <form action="/ipv-callback" method="post" novalidate="novalidate">
-              <input type="hidden" name="_csrf" value="csrfToken">
-              <div class="govuk-form-group">
-                  <h1 class="govuk-label-wrapper">
-                      <label class="govuk-label govuk-label--l" for="more-detail">
-                          Label text
-                      </label>
-                  </h1>
-                  <p class="govuk-body">Paragraph</p>
-                  <button type="submit" class="govuk-button">
-                      Button text
-                  </button>
-              </div>
-          </form>
-      "
+          <div id="no-js-content" style="display: none;">JS is disabled</div>
+          <div id="wait-content" style="display:none">Waiting</div>
+          <div id="long-wait-content" style="display:none">Long wait</div>
+          <div id="success-content" style="display:none">Success</div>
+          <div id="error-content" style="display:none">Error</div>
+    <div><div id="spinner" class="spinner centre"></div><div style="">Long wait</div></div><div aria-live="assertive" class="govuk-visually-hidden"></div>"
 `;
 
-exports[`the spinner component when instantiated with a correctly formed HTMLDivElement should set up the spinner HTML correctly with initial values 1`] = `"<div><h1 class="govuk-heading-l">Initial heading text</h1><div id="spinner" class="spinner spinner__pending centre pending"></div><p class="centre spinner-state-text govuk-body">Initial spinner state text</p><button class="govuk-button govuk-!-margin-top-4" disabled="true">Continue</button></div><div aria-live="assertive" class="govuk-visually-hidden"></div>"`;
+exports[`Init time Spinner shows timeout on page refresh 1`] = `
+"
+          <div id="no-js-content" style="display: none;">JS is disabled</div>
+          <div id="wait-content" style="display:none">Waiting</div>
+          <div id="long-wait-content" style="display:none">Long wait</div>
+          <div id="success-content" style="display:none">Success</div>
+          <div id="error-content" style="display:none">Error</div>
+    <div><div id="spinner" class="spinner centre spinner__finished"></div><div style="">Error</div></div><div aria-live="assertive" class="govuk-visually-hidden"></div>"
+`;
 
-exports[`the spinner component when the API call returns COMPLETED should update contents correctly 1`] = `"<div><h1 class="govuk-heading-l">Initial heading text</h1><div id="spinner" class="spinner spinner__pending centre spinner__ready"></div><p class="centre spinner-state-text govuk-body">Spinner state complete</p><button class="govuk-button govuk-!-margin-top-4">Continue</button></div><div aria-live="assertive" class="govuk-visually-hidden">Button enabled</div>"`;
+exports[`Spinner behaviour error 1`] = `
+"
+          <div id="no-js-content" style="display: none;">JS is disabled</div>
+          <div id="wait-content" style="display:none">Waiting</div>
+          <div id="long-wait-content" style="display:none">Long wait</div>
+          <div id="success-content" style="display:none">Success</div>
+          <div id="error-content" style="display:none">Error</div>
+    <div><div id="spinner" class="spinner centre spinner__finished"></div><div style="">Error</div></div><div aria-live="assertive" class="govuk-visually-hidden"></div>"
+`;
 
-exports[`the spinner component when the API call returns ERROR should update contents correctly 1`] = `"<div class="spinner-container__error"><h1 class="govuk-heading-l">Error heading</h1><p class="govuk-body">Error message text</p><h2 class="govuk-heading-m">Error what you can do heading</h2><p class="govuk-body">Error what you can do message text1<a href="Error what you can do message link href">Error what you can do message link text</a>Error what you can do message link text2</p></div><div aria-live="assertive" class="govuk-visually-hidden"></div>"`;
+exports[`Spinner behaviour initial waiting 1`] = `
+"
+          <div id="no-js-content" style="display: none;">JS is disabled</div>
+          <div id="wait-content" style="display:none">Waiting</div>
+          <div id="long-wait-content" style="display:none">Long wait</div>
+          <div id="success-content" style="display:none">Success</div>
+          <div id="error-content" style="display:none">Error</div>
+    <div><div id="spinner" class="spinner centre"></div><div style="">Waiting</div></div><div aria-live="assertive" class="govuk-visually-hidden"></div>"
+`;
 
-exports[`the spinner component when the API call returns INTERVENTION should update contents correctly 1`] = `"<div><h1 class="govuk-heading-l">Initial heading text</h1><div id="spinner" class="spinner spinner__pending centre spinner__ready"></div><p class="centre spinner-state-text govuk-body">Spinner state complete</p><button class="govuk-button govuk-!-margin-top-4">Continue</button></div><div aria-live="assertive" class="govuk-visually-hidden">Button enabled</div>"`;
+exports[`Spinner behaviour long waiting 1`] = `
+"
+          <div id="no-js-content" style="display: none;">JS is disabled</div>
+          <div id="wait-content" style="display:none">Waiting</div>
+          <div id="long-wait-content" style="display:none">Long wait</div>
+          <div id="success-content" style="display:none">Success</div>
+          <div id="error-content" style="display:none">Error</div>
+    <div><div id="spinner" class="spinner centre"></div><div style="">Long wait</div></div><div aria-live="assertive" class="govuk-visually-hidden"></div>"
+`;
 
-exports[`the spinner component when the abort time elapses should update contents correctly 1`] = `"<div class="spinner-container__error"><h1 class="govuk-heading-l">Error heading</h1><p class="govuk-body">Error message text</p><h2 class="govuk-heading-m">Error what you can do heading</h2><p class="govuk-body">Error what you can do message text1<a href="Error what you can do message link href">Error what you can do message link text</a>Error what you can do message link text2</p></div><div aria-live="assertive" class="govuk-visually-hidden"></div>"`;
+exports[`Spinner behaviour success 1`] = `
+"
+          <div id="no-js-content" style="display: none;">JS is disabled</div>
+          <div id="wait-content" style="display:none">Waiting</div>
+          <div id="long-wait-content" style="display:none">Long wait</div>
+          <div id="success-content" style="display:none">Success</div>
+          <div id="error-content" style="display:none">Error</div>
+    <div><div id="spinner" class="spinner centre spinner__finished"></div><div style="">Success</div></div><div aria-live="assertive" class="govuk-visually-hidden">Aria success text</div>"
+`;
 
-exports[`the spinner component when the long wait time elapses should update contents correctly 1`] = `"<div><h1 class="govuk-heading-l">Initial heading text</h1><div id="spinner" class="spinner spinner__pending centre pending"></div><p class="centre spinner-state-text govuk-body">Long wait spinner text</p><button class="govuk-button govuk-!-margin-top-4" disabled="true">Continue</button></div><div aria-live="assertive" class="govuk-visually-hidden"></div>"`;
+exports[`Spinner behaviour success with no aria text 1`] = `
+"
+          <div id="no-js-content" style="display: none;">JS is disabled</div>
+          <div id="wait-content" style="display:none">Waiting</div>
+          <div id="long-wait-content" style="display:none">Long wait</div>
+          <div id="success-content" style="display:none">Success</div>
+          <div id="error-content" style="display:none">Error</div>
+    <div><div id="spinner" class="spinner centre spinner__finished"></div><div style="">Success</div></div><div aria-live="assertive" class="govuk-visually-hidden"></div>"
+`;
+
+exports[`Spinner behaviour timeout 1`] = `
+"
+          <div id="no-js-content" style="display: none;">JS is disabled</div>
+          <div id="wait-content" style="display:none">Waiting</div>
+          <div id="long-wait-content" style="display:none">Long wait</div>
+          <div id="success-content" style="display:none">Success</div>
+          <div id="error-content" style="display:none">Error</div>
+    <div><div id="spinner" class="spinner centre spinner__finished"></div><div style="">Error</div></div><div aria-live="assertive" class="govuk-visually-hidden"></div>"
+`;
+
+exports[`Validation useSpinner method should display Spinner constructor errors in the container 1`] = `"<p>Error configuring spinner: Error: Polling function must be provided</p>"`;

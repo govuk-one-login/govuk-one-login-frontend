@@ -1,7 +1,19 @@
 /* eslint-disable no-undef */
-import { WaitInteractions } from "@govuk-one-login/frontend-ui/frontend";
+async function callTestApi(abortSignal) {
+  await fetch("/api?processingTime=3", { signal: abortSignal })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.status === "COMPLETED") {
+        return PollResult.Success;
+      } else {
+        return PollResult.Pending;
+      }
+    });
+}
 
-WaitInteractions.init();
+import { useSpinner, PollResult } from "@govuk-one-login/frontend-ui/frontend"; // Maps to node_modules/@govuk-one-login/frontend-ui/build/esm/frontend
+
+useSpinner("spinner-container", callTestApi);
 
 window.DI = window.DI || {};
 window.DI.analyticsUa = window.DI.analyticsUa || {};
