@@ -11,7 +11,8 @@ async function callTestApi(abortSignal) {
     });
 }
 
-import { useSpinner, PollResult } from "@govuk-one-login/frontend-ui/frontend"; // Maps to node_modules/@govuk-one-login/frontend-ui/build/esm/frontend
+import { useSpinner, PollResult, initialiseProgressButtons } from "@govuk-one-login/frontend-ui/frontend"; // Maps to node_modules/@govuk-one-login/frontend-ui/build/esm/frontend
+initialiseProgressButtons();
 
 useSpinner("spinner-container", callTestApi);
 
