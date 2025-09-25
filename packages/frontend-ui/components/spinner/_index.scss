@@ -6,7 +6,7 @@
   border-style: solid;
   border-color: #dee0e2;
   border-top-color: #005ea5;
-  margin-bottom: govuk-spacing(3);
+  margin-bottom: 15px;
 
   @media (forced-colors: active) {
     forced-color-adjust: none;
@@ -22,19 +22,10 @@
     transform: rotate(0.125turn);
   }
 
-  &__ready {
+  &__finished {
     border-color: #005ea5;
     -webkit-animation: none;
     animation: none;
-  }
-}
-
-#spinner-container {
-  &__error {
-    .spinner,
-    .spinner-state-text {
-      display: none;
-    }
   }
 }
 
