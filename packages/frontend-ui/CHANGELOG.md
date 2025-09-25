@@ -1,3 +1,28 @@
+# 3.0.0 (2025-09-25)
+
+### 🚀 Features
+
+- **PYIC-8277:** Add option to hide spinner on error ([34ba00b](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/34ba00b))
+- **PYIC-8277:** Increase time periods in timeout test to make it more reliable ([08e474c](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/08e474c))
+- **PYIC-8277:** Add landmark to template for accessibility test ([e41e544](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/e41e544))
+- **PYIC-8277:** Re-instate templates for accessibility tests ([8b87ee2](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/8b87ee2))
+- **PYIC-8277:** Delete unused code ([c6ad0c5](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/c6ad0c5))
+- **PYIC-8277:** Remove unneeded templates ([2359af0](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/2359af0))
+- **PYIC-8277:** Fix spacing below spinner ([7378075](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/7378075))
+- **PYIC-8277:** Add ARIA alert on completion ([38922fe](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/38922fe))
+- **PYIC-8277:** Update alpha-app to use new spinner ([6e8bb22](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/6e8bb22))
+- **PYIC-8277:** Update spinner component ([6635f9a](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/6635f9a))
+- **dfc-946:** progress button accessibility ([659c734](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/659c734))
+- **dfc-942:** latency design double click ([3006d76](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/3006d76))
+- **dfc-974:** spinner rendering temp ([15509c3](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/15509c3))
+- **941:** added progress button to frontend-ui ([5357f1d](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/5357f1d))
+
+### ❤️ Thank You
+
+- Dan Corder
+- DavidMcMichael-GDS
+- ug-gds
+
 # 2.0.0 (2025-08-26)
 
 ### 🚀 Features
