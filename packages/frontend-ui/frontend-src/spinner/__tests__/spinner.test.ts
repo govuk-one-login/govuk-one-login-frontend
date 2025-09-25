@@ -11,6 +11,7 @@ function getValidSpinnerDivHtml(
     msBeforeInformingOfLongWait?: number;
     msBetweenDomUpdate?: number;
     msBetweenRequests?: number;
+    hideSpinnerOnError?: boolean;
     ariaAlertCompletionText?: string;
   } = {},
 ) {
@@ -25,6 +26,7 @@ function getValidSpinnerDivHtml(
          data-ms-before-abort="${params.msBeforeAbort || 30000}"
          data-ms-between-dom-update="${params.msBetweenDomUpdate || 2000}"
          data-ms-between-requests="${params.msBetweenRequests || 5000}"
+         data-hide-spinner-on-error="${params.hideSpinnerOnError || false}"
          ${ariaAlertCompletionTextData}">
           <div id="no-js-content">JS is disabled</div>
           <div id="wait-content" style="display:none">Waiting</div>
@@ -227,6 +229,30 @@ describe("Spinner behaviour", () => {
       msBetweenRequests: 10,
       msBetweenDomUpdate: 5,
       msBeforeAbort: 30000,
+      ariaAlertCompletionText: "Aria success text",
+    });
+    container = document.getElementById("spinner-container") as HTMLDivElement;
+    pollingFunction.mockResolvedValue(PollResult.Failure);
+    const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
+
+    // Act
+    await spinner.init();
+    await wait(30);
+
+    // Assert
+    expect(container.innerHTML).toMatchSnapshot();
+    expect(pollingFunction).toHaveBeenCalledTimes(1);
+    expect(errorFunction).toHaveBeenCalledTimes(1);
+  });
+
+  test("error with hidden spinner", async () => {
+    // Arrange
+    document.body.innerHTML = getValidSpinnerDivHtml({
+      msBeforeInformingOfLongWait: 1000,
+      msBetweenRequests: 10,
+      msBetweenDomUpdate: 5,
+      msBeforeAbort: 30000,
+      hideSpinnerOnError: true,
       ariaAlertCompletionText: "Aria success text",
     });
     container = document.getElementById("spinner-container") as HTMLDivElement;

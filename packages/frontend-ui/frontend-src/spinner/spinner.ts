@@ -41,6 +41,7 @@ type SpinnerConfig = {
   msBetweenRequests: number;
   msBetweenDomUpdate: number;
   ariaAlertCompletionText?: string;
+  hideSpinnerOnError: boolean;
 };
 
 export class Spinner {
@@ -146,6 +147,9 @@ export class Spinner {
       ariaAlertCompletionText: element.dataset.ariaAlertCompletionText
         ? element.dataset.ariaAlertCompletionText
         : undefined,
+      hideSpinnerOnError: element.dataset.hideSpinnerOnError
+        ? (element.dataset.hideSpinnerOnError === 'true')
+        : false,
     };
   }
 
@@ -255,9 +259,11 @@ export class Spinner {
         this.cloneAndAddIfExists(newElementsToDisplay, this.successContent);
         break;
       case SpinnerState.Error:
-        newElementsToDisplay.push(
-          this.createSpinnerElement("spinner__finished"),
-        );
+        if (!this.config.hideSpinnerOnError) {
+          newElementsToDisplay.push(
+            this.createSpinnerElement("spinner__finished"),
+          );
+        }
         this.cloneAndAddIfExists(newElementsToDisplay, this.errorContent);
         break;
     }

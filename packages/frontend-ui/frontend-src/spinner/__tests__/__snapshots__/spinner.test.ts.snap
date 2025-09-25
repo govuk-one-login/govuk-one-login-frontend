@@ -30,6 +30,16 @@ exports[`Spinner behaviour error 1`] = `
     <div><div id="spinner" class="spinner centre spinner__finished"></div><div style="">Error</div></div><div aria-live="assertive" class="govuk-visually-hidden"></div>"
 `;
 
+exports[`Spinner behaviour error with hidden spinner 1`] = `
+"
+          <div id="no-js-content" style="display: none;">JS is disabled</div>
+          <div id="wait-content" style="display:none">Waiting</div>
+          <div id="long-wait-content" style="display:none">Long wait</div>
+          <div id="success-content" style="display:none">Success</div>
+          <div id="error-content" style="display:none">Error</div>
+    <div><div style="">Error</div></div><div aria-live="assertive" class="govuk-visually-hidden"></div>"
+`;
+
 exports[`Spinner behaviour initial waiting 1`] = `
 "
           <div id="no-js-content" style="display: none;">JS is disabled</div>
