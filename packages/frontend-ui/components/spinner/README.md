@@ -24,6 +24,7 @@ For the spinner to perform correctly it requires the following:
 - An optional data attribute `data-ms-before-abort` to set the amount of time the spinner will spin before displaying the `error-content` and calling the `errorFunction`
 - An optional data attribute `data-ms-between-dom-update` to set the amount of time between updates to the spinner UI
 - An optional data attribute `data-ms-between-requests` to set the amount of time between calls to the `pollingFunction`
+- An optional data attribute `data-hide-spinner-on-error` to hide the spinner graphic on error (defaults to false)
 - An optional data attribute `aria-alert-completion-text`. If supplied this text will be set as an aria alert if the spinner completes successfully
 
 For example:
@@ -34,6 +35,7 @@ For example:
      data-ms-before-abort="30000"
      data-ms-between-dom-update="1000"
      data-ms-between-requests="2000"
+     data-hide-spinner-on-error="true"
      data-aria-alert-completion-text="Task completed successfully, you may now continue">
   <div id="no-js-content"><p class="centre govuk-body">JS is disabled</p></div>
   <div id="wait-content" style="display:none"><p class="centre govuk-body">Waiting</p></div>
