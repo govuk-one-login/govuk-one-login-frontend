@@ -1,5 +1,6 @@
 const { Given, When, Then } = require("@cucumber/cucumber");
 const { expect } = require("chai");
+const AxeBuilder = require('@axe-core/playwright')
 
 const getSessionIdCookieValue = (cookies) => {
   return cookies.find((cookie) => cookie.name === "sessionId").value;
@@ -131,6 +132,15 @@ Then(
       expect(cookie.value).to.equal(cookieValue);
     }
   },
+);
+
+Then(
+  "I should not have any automatically detectable accessibility issues",
+  async function () {
+
+    const accessibilityScanResults = await new AxeBuilder({ page: this.page }).analyze();
+    expect(accessibilityScanResults.violations).to.deep.equal([]);
+  }
 );
 
 module.exports = {
