@@ -5,6 +5,7 @@ Scenario: User sets cookie consent
   Given I visit the welcome page
   Then I see the cookies-banner-main element
   And The cookies_preferences_set cookie is not set
+  Then I should not have any automatically detectable accessibility issues
 
 Scenario: User accepts cookie consent
   Given I visit the welcome page
@@ -14,6 +15,7 @@ Scenario: User accepts cookie consent
   And The cookies_preferences_set cookie is set to true
   When I click Hide
   Then I do not see the cookie banner
+  Then I should not have any automatically detectable accessibility issues
 
 Scenario: User rejects cookie consent
   Given I visit the welcome page
@@ -23,3 +25,4 @@ Scenario: User rejects cookie consent
   And The cookies_preferences_set cookie is set to false
   When I click Hide
   Then I do not see the cookie banner
+  Then I should not have any automatically detectable accessibility issues
