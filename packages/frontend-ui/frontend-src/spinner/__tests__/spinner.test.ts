@@ -13,6 +13,7 @@ function getValidSpinnerDivHtml(
     msBetweenRequests?: number;
     hideSpinnerOnError?: boolean;
     ariaAlertCompletionText?: string;
+    maxBackoffTries?: number;
   } = {},
 ) {
   let ariaAlertCompletionTextData = "";
@@ -27,6 +28,7 @@ function getValidSpinnerDivHtml(
          data-ms-between-dom-update="${params.msBetweenDomUpdate || 2000}"
          data-ms-between-requests="${params.msBetweenRequests || 5000}"
          data-hide-spinner-on-error="${params.hideSpinnerOnError || false}"
+         data-max-back-off-tries="${params.maxBackoffTries || 3}"
          ${ariaAlertCompletionTextData}">
           <div id="no-js-content">JS is disabled</div>
           <div id="wait-content" style="display:none">Waiting</div>
@@ -395,5 +397,122 @@ describe("Init time", () => {
     expect(pollingFunction).toHaveBeenCalledTimes(0);
     expect(errorFunction).toHaveBeenCalledTimes(1);
     expect(sessionStorage.getItem("spinnerInitTime")).toBeNull();
+  });
+});
+
+describe("Backoff functionality", () => {
+  beforeEach(() => {
+    document.body.innerHTML = getValidSpinnerDivHtml({
+      msBeforeInformingOfLongWait: 1000,
+      msBetweenRequests: 10,
+      msBetweenDomUpdate: 5,
+      msBeforeAbort: 50000,
+      maxBackoffTries: 2,
+    });
+    container = document.getElementById("spinner-container") as HTMLDivElement;
+  });
+
+  test("should retry with exponential backoff on Backoff result", async () => {
+    // Arrange
+    pollingFunction
+      .mockResolvedValueOnce(PollResult.Backoff)
+      .mockResolvedValueOnce(PollResult.Backoff)
+      .mockResolvedValueOnce(PollResult.Success);
+    const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
+
+    // Act
+    await spinner.init();
+    await wait(40); // Wait for all backoff attempts (15 + 20 + margin)
+
+    // Assert
+    expect(pollingFunction).toHaveBeenCalledTimes(3);
+    expect(successFunction).toHaveBeenCalledTimes(1);
+    expect(errorFunction).not.toHaveBeenCalled();
+  });
+
+  test("should error after max backoff tries exceeded", async () => {
+    // Arrange
+    pollingFunction.mockResolvedValue(PollResult.Backoff);
+    const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
+
+    // Act
+    await spinner.init();
+    await wait(40); // Wait for all backoff attempts (15 + 20 + margin)
+
+    // Assert
+    expect(pollingFunction).toHaveBeenCalledTimes(3); // Initial + 2 backoff tries
+    expect(errorFunction).toHaveBeenCalledTimes(1);
+    expect(successFunction).not.toHaveBeenCalled();
+  });
+
+  test("should reset backoff count on successful poll", async () => {
+    // Arrange
+    pollingFunction
+      .mockResolvedValueOnce(PollResult.Backoff)
+      .mockResolvedValueOnce(PollResult.Pending)
+      .mockResolvedValueOnce(PollResult.Backoff)
+      .mockResolvedValueOnce(PollResult.Backoff)
+      .mockResolvedValueOnce(PollResult.Success);
+    const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
+
+    // Act
+    await spinner.init();
+    await wait(65); // Wait for all backoff attempts (15 + 10 + 15 + 20 + margin)
+
+    // Assert
+    expect(pollingFunction).toHaveBeenCalledTimes(5);
+    expect(successFunction).toHaveBeenCalledTimes(1);
+    expect(errorFunction).not.toHaveBeenCalled();
+  });
+
+  test("backoff waits should be longer", async () => {
+    // Arrange
+    document.body.innerHTML = getValidSpinnerDivHtml({
+      msBeforeInformingOfLongWait: 1000,
+      msBetweenRequests: 10,
+      msBetweenDomUpdate: 5,
+      msBeforeAbort: 5000,
+      maxBackoffTries: 4,
+    });
+    pollingFunction
+      .mockResolvedValueOnce(PollResult.Backoff)
+      .mockResolvedValueOnce(PollResult.Backoff)
+      .mockResolvedValueOnce(PollResult.Backoff)
+      .mockResolvedValueOnce(PollResult.Backoff)
+      .mockResolvedValueOnce(PollResult.Success);
+    const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
+
+    // Act
+    await spinner.init();
+    // Normal time between requests is 10mS so this would take just over 40mS to complete if backoffs didn't take longer
+    // With backoff delay it should take just over 65mS to make 4 calls (15  + 20 + 30)
+    await wait(50);
+
+    // Assert
+    expect(pollingFunction).toHaveBeenCalledTimes(3);
+    expect(successFunction).not.toHaveBeenCalled();
+    expect(errorFunction).not.toHaveBeenCalled();
+  });
+
+  test("should use custom maxBackoffTries from config", async () => {
+    // Arrange
+    document.body.innerHTML = getValidSpinnerDivHtml({
+      msBeforeInformingOfLongWait: 1000,
+      msBetweenRequests: 10,
+      msBetweenDomUpdate: 5,
+      msBeforeAbort: 5000,
+      maxBackoffTries: 1,
+    });
+    container = document.getElementById("spinner-container") as HTMLDivElement;
+    pollingFunction.mockResolvedValue(PollResult.Backoff);
+    const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
+
+    // Act
+    await spinner.init();
+    await wait(20);
+
+    // Assert
+    expect(pollingFunction).toHaveBeenCalledTimes(2); // Initial + 1 backoff try
+    expect(errorFunction).toHaveBeenCalledTimes(1);
   });
 });

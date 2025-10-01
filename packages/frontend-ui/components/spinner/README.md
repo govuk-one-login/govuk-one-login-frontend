@@ -25,6 +25,7 @@ For the spinner to perform correctly it requires the following:
 - An optional data attribute `data-ms-between-dom-update` to set the amount of time between updates to the spinner UI
 - An optional data attribute `data-ms-between-requests` to set the amount of time between calls to the `pollingFunction`
 - An optional data attribute `data-hide-spinner-on-error` to hide the spinner graphic on error (defaults to false)
+- An optional data attribute `data-max-backoff-tries` to set the number of times in a row the polling function can return `backoff` before the error content is displayed (defaults to 3)
 - An optional data attribute `aria-alert-completion-text`. If supplied this text will be set as an aria alert if the spinner completes successfully
 
 For example:
@@ -36,6 +37,7 @@ For example:
      data-ms-between-dom-update="1000"
      data-ms-between-requests="2000"
      data-hide-spinner-on-error="true"
+     data-max-backoff-tries="3"
      data-aria-alert-completion-text="Task completed successfully, you may now continue">
   <div id="no-js-content"><p class="centre govuk-body">JS is disabled</p></div>
   <div id="wait-content" style="display:none"><p class="centre govuk-body">Waiting</p></div>
@@ -70,6 +72,9 @@ If a call to the polling function returns `success` the spinner will stop animat
 If a call to the polling function returns `failure` the spinner will stop animating, display the `error-content` content, and call the `errorFunction` (if specified)
 If the spinner waits past the `long-wait` duration while the polling function keeps returning `pending` the spinner will display the `long-wait-content` content
 If the spinner waits past the `abort` duration while the polling function keeps returning `pending` the spinner will stop animating, display the `error-content` content, and call the `errorFunction` (if specified)
+The polling function can optionally return `backoff` if it should be tried again but after a delay (e.g. to account for network instability). On receiving `backoff` the spinner will exponentially increase the time before the
+next call to the polling function. If the polling function returns `backoff` more times than the `max-backoff-tries` value in a row then the final call is treated as if had returned `failure` instead. If a call to the polling
+function returns `pending` then the backoff counter resets. 
 
 ### Page refreshes
 

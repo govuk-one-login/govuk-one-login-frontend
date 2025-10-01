@@ -26,6 +26,7 @@ export enum PollResult {
   Success,
   Failure,
   Pending,
+  Backoff,
 }
 
 enum SpinnerState {
@@ -42,6 +43,7 @@ type SpinnerConfig = {
   msBetweenDomUpdate: number;
   ariaAlertCompletionText?: string;
   hideSpinnerOnError: boolean;
+  maxBackoffTries: number;
 };
 
 export class Spinner {
@@ -60,6 +62,7 @@ export class Spinner {
   updateDomTimer?: NodeJS.Timeout;
   abortController: AbortController;
   config: SpinnerConfig;
+  backOffCount: number = 0;
 
   pollingFunction: PollingFunction;
   onSuccess: VoidFunction;
@@ -150,6 +153,9 @@ export class Spinner {
       hideSpinnerOnError: element.dataset.hideSpinnerOnError
         ? (element.dataset.hideSpinnerOnError === 'true')
         : false,
+      maxBackoffTries: element.dataset.maxBackoffTries
+        ? parseInt(element.dataset.maxBackoffTries)
+        : 3,
     };
   }
 
@@ -301,12 +307,25 @@ export class Spinner {
         } else if (response === PollResult.Failure) {
           this.reflectError();
         } else if (!this.hasCompleted()) {
+          let timeToNextPoll = this.config.msBetweenRequests;
+
+          if (response === PollResult.Backoff) {
+            this.backOffCount++;
+            if (this.backOffCount > this.config.maxBackoffTries) {
+              this.reflectError();
+              return;
+            }
+            timeToNextPoll = this.calculateBackoffTime(this.backOffCount);
+          } else {
+            this.backOffCount = 0;
+          }
+
           setTimeout(async () => {
             if (Date.now() - initTime >= this.config.msBeforeAbort) {
               return;
             }
             await this.callPollingFunction(initTime);
-          }, this.config.msBetweenRequests);
+          }, timeToNextPoll);
         }
       })
       .catch((error) => {
@@ -318,6 +337,11 @@ export class Spinner {
       .finally(() => {
         this.updateDom();
       });
+  }
+
+  private calculateBackoffTime(backOffCount: number): number {
+    const extraDelay = Math.pow(2, backOffCount - 2) * this.config.msBetweenRequests;
+    return this.config.msBetweenRequests + extraDelay;
   }
 
   private createAriaLiveContainer() {
