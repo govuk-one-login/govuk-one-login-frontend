@@ -1,11 +1,12 @@
 {
   "name": "@govuk-one-login/alpha-app",
   "version": "0.0.47",
+  "main": "index.js",
   "scripts": {
-    "start": "npm-run-all build-sass --parallel dev",
+    "start": "npm-run-all build-sass --parallel dev-js serve",
+    "serve": "node server.js",
     "dev": "node --watch src/app.js",
     "build-sass": "rm -rf public/styles.css && sass --no-source-map ../../node_modules/@govuk-one-login/frontend-language-toggle/src/stylesheet/styles.css public/stylesheets/application-ifsdjkn.css --style compressed && sass --no-source-map ../../node_modules/govuk-frontend/govuk/all.scss public/stylesheets/govuk-frontend.css --style compressed && sass --no-source-map ../../node_modules/@govuk-one-login/frontend-ui/build/all.css public/stylesheets/frontendUi.css --style compressed",
-    "serve": "nodemon serve",
     "precommit": "npm run test && npm run format && git add .",
     "prod": "export NODE_ENV=production && node src/app.js",
     "test": "node -e \"console.log('No tests currently defined');\"",
@@ -16,6 +17,7 @@
     "dev-js": "rollup -c --watch"
   },
   "dependencies": {
+    "@babel/preset-react": "^7.27.1",
     "@govuk-one-login/frontend-analytics": "4.0.3",
     "@govuk-one-login/frontend-asset-loader": "0.0.5",
     "@govuk-one-login/frontend-language-toggle": "2.2.2",
@@ -31,7 +33,8 @@
     "i18next-http-middleware": "^3.7.1",
     "nunjucks": "^3.2.4",
     "overload-protection": "^1.2.3",
-    "pino": "^9.7.0"
+    "pino": "^9.7.0",
+    "rollup-plugin-jsx": "^1.0.3"
   },
   "engines": {
     "node": "20.x"
@@ -40,5 +43,6 @@
     "hooks": {
       "pre-commit": "npm run precommit"
     }
-  }
+  },
+  "type": "module"
 }

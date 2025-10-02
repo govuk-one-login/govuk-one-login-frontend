@@ -1,5 +1,5 @@
 import presetReact from "@babel/preset-react";
-import resolve, { nodeResolve } from "@rollup/plugin-node-resolve";
+import resolve from "@rollup/plugin-node-resolve";
 import jsx from "rollup-plugin-jsx";
 
 export default [
@@ -8,7 +8,7 @@ export default [
     input: "src/index.js",
 
     plugins: [
-      nodeResolve(),
+      //nodeResolve(),
       resolve(),
       jsx({
         factory: "h", // Use a simple 'h' function for element creation
