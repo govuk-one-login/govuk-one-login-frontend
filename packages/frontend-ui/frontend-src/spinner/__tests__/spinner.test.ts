@@ -28,7 +28,7 @@ function getValidSpinnerDivHtml(
          data-ms-between-dom-update="${params.msBetweenDomUpdate || 2000}"
          data-ms-between-requests="${params.msBetweenRequests || 5000}"
          data-hide-spinner-on-error="${params.hideSpinnerOnError || false}"
-         data-max-back-off-tries="${params.maxBackoffTries || 3}"
+         data-max-backoff-tries="${params.maxBackoffTries || 3}"
          ${ariaAlertCompletionTextData}">
           <div id="no-js-content">JS is disabled</div>
           <div id="wait-content" style="display:none">Waiting</div>
@@ -46,12 +46,19 @@ const successFunction: jest.Mock = jest.fn();
 const errorFunction: jest.Mock = jest.fn();
 
 beforeEach(() => {
+  jest.useFakeTimers();
   pollingFunction.mockReset();
   successFunction.mockReset();
   errorFunction.mockReset();
   pollingFunction.mockResolvedValue(PollResult.Pending);
   document.body.innerHTML = validSpinnerHtml;
   container = document.getElementById("spinner-container") as HTMLDivElement;
+});
+
+afterEach(() => {
+  sessionStorage.clear();
+  jest.clearAllTimers();
+  jest.useRealTimers();
 });
 
 describe("Validation", () => {
@@ -154,6 +161,7 @@ describe("Spinner behaviour", () => {
 
     // Act
     await spinner.init();
+    await jest.advanceTimersByTimeAsync(20);
 
     // Assert
     expect(container.innerHTML).toMatchSnapshot();
@@ -173,13 +181,13 @@ describe("Spinner behaviour", () => {
 
     // Act
     await spinner.init();
-    await wait(20);
+    await jest.advanceTimersByTimeAsync(20);
 
     // Assert
     expect(container.innerHTML).toMatchSnapshot();
   });
 
-  test("success", async () => {
+  test("immediate success", async () => {
     // Arrange
     document.body.innerHTML = getValidSpinnerDivHtml({
       msBeforeInformingOfLongWait: 1000,
@@ -194,11 +202,37 @@ describe("Spinner behaviour", () => {
 
     // Act
     await spinner.init();
-    await wait(30);
 
     // Assert
     expect(container.innerHTML).toMatchSnapshot();
     expect(pollingFunction).toHaveBeenCalledTimes(1);
+    expect(successFunction).toHaveBeenCalledTimes(1);
+  });
+
+  test("success after polling", async () => {
+    // Arrange
+    document.body.innerHTML = getValidSpinnerDivHtml({
+      msBeforeInformingOfLongWait: 1000,
+      msBetweenRequests: 10,
+      msBetweenDomUpdate: 5,
+      msBeforeAbort: 30000,
+      ariaAlertCompletionText: "Aria success text",
+    });
+    container = document.getElementById("spinner-container") as HTMLDivElement;
+
+    pollingFunction
+      .mockResolvedValueOnce(PollResult.Pending)
+      .mockResolvedValueOnce(PollResult.Pending)
+      .mockResolvedValueOnce(PollResult.Success);
+    const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
+
+    // Act
+    await spinner.init();
+    await jest.runAllTimersAsync();
+
+    // Assert
+    expect(container.innerHTML).toMatchSnapshot();
+    expect(pollingFunction).toHaveBeenCalledTimes(3);
     expect(successFunction).toHaveBeenCalledTimes(1);
   });
 
@@ -216,7 +250,6 @@ describe("Spinner behaviour", () => {
 
     // Act
     await spinner.init();
-    await wait(30);
 
     // Assert
     expect(container.innerHTML).toMatchSnapshot();
@@ -224,7 +257,7 @@ describe("Spinner behaviour", () => {
     expect(successFunction).toHaveBeenCalledTimes(1);
   });
 
-  test("error", async () => {
+  test("immediate error", async () => {
     // Arrange
     document.body.innerHTML = getValidSpinnerDivHtml({
       msBeforeInformingOfLongWait: 1000,
@@ -239,11 +272,37 @@ describe("Spinner behaviour", () => {
 
     // Act
     await spinner.init();
-    await wait(30);
 
     // Assert
     expect(container.innerHTML).toMatchSnapshot();
     expect(pollingFunction).toHaveBeenCalledTimes(1);
+    expect(errorFunction).toHaveBeenCalledTimes(1);
+  });
+
+  test("error after polling", async () => {
+    // Arrange
+    document.body.innerHTML = getValidSpinnerDivHtml({
+      msBeforeInformingOfLongWait: 1000,
+      msBetweenRequests: 10,
+      msBetweenDomUpdate: 5,
+      msBeforeAbort: 30000,
+      ariaAlertCompletionText: "Aria success text",
+    });
+    container = document.getElementById("spinner-container") as HTMLDivElement;
+
+    pollingFunction
+      .mockResolvedValueOnce(PollResult.Pending)
+      .mockResolvedValueOnce(PollResult.Pending)
+      .mockResolvedValueOnce(PollResult.Failure);
+    const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
+
+    // Act
+    await spinner.init();
+    await jest.advanceTimersByTimeAsync(30);
+
+    // Assert
+    expect(container.innerHTML).toMatchSnapshot();
+    expect(pollingFunction).toHaveBeenCalledTimes(3);
     expect(errorFunction).toHaveBeenCalledTimes(1);
   });
 
@@ -263,7 +322,6 @@ describe("Spinner behaviour", () => {
 
     // Act
     await spinner.init();
-    await wait(30);
 
     // Assert
     expect(container.innerHTML).toMatchSnapshot();
@@ -285,7 +343,7 @@ describe("Spinner behaviour", () => {
 
     // Act
     await spinner.init();
-    await wait(200);
+    await jest.advanceTimersByTimeAsync(200);
 
     // Assert
     expect(container.innerHTML).toMatchSnapshot();
@@ -303,10 +361,6 @@ describe("Init time", () => {
       msBeforeAbort: 25,
     });
     container = document.getElementById("spinner-container") as HTMLDivElement;
-  });
-
-  afterEach(() => {
-    sessionStorage.clear();
   });
 
   test("should save init time in session storage when spinner is initialised", async () => {
@@ -350,7 +404,7 @@ describe("Init time", () => {
 
     // Act
     await spinner.init();
-    await wait(30);
+    await jest.advanceTimersByTimeAsync(30);
 
     // Assert
     expect(sessionStorage.getItem("spinnerInitTime")).toBeNull();
@@ -401,45 +455,65 @@ describe("Init time", () => {
 });
 
 describe("Backoff functionality", () => {
-  beforeEach(() => {
-    document.body.innerHTML = getValidSpinnerDivHtml({
-      msBeforeInformingOfLongWait: 1000,
-      msBetweenRequests: 10,
-      msBetweenDomUpdate: 5,
-      msBeforeAbort: 50000,
-      maxBackoffTries: 2,
-    });
-    container = document.getElementById("spinner-container") as HTMLDivElement;
-  });
 
   test("should retry with exponential backoff on Backoff result", async () => {
     // Arrange
+    document.body.innerHTML = getValidSpinnerDivHtml({
+      msBeforeInformingOfLongWait: 30000,
+      msBetweenRequests: 10,
+      msBetweenDomUpdate: 1000,
+      msBeforeAbort: 300000,
+      maxBackoffTries: 2,
+    });
+    container = document.getElementById("spinner-container") as HTMLDivElement;
+
     pollingFunction
       .mockResolvedValueOnce(PollResult.Backoff)
       .mockResolvedValueOnce(PollResult.Backoff)
       .mockResolvedValueOnce(PollResult.Success);
     const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
 
-    // Act
+    // Act & assert
     await spinner.init();
-    await wait(40); // Wait for all backoff attempts (15 + 20 + margin)
-
-    // Assert
+    // Polling function called once during initialisation
+    expect(pollingFunction).toHaveBeenCalledTimes(1);
+    await jest.advanceTimersByTimeAsync(10);
+    // Polling function not called again after polling period
+    expect(pollingFunction).toHaveBeenCalledTimes(1);
+    await jest.advanceTimersByTimeAsync(5);
+    // Polling function called again after polling + backoff
+    expect(pollingFunction).toHaveBeenCalledTimes(2);
+    await jest.advanceTimersByTimeAsync(10);
+    // Polling function not called again after second polling period
+    expect(pollingFunction).toHaveBeenCalledTimes(2);
+    await jest.advanceTimersByTimeAsync(10);
+    // Polling function called again after longer backoff
     expect(pollingFunction).toHaveBeenCalledTimes(3);
     expect(successFunction).toHaveBeenCalledTimes(1);
     expect(errorFunction).not.toHaveBeenCalled();
+    expect(container.innerHTML).toMatchSnapshot();
   });
 
   test("should error after max backoff tries exceeded", async () => {
     // Arrange
+    document.body.innerHTML = getValidSpinnerDivHtml({
+      msBeforeInformingOfLongWait: 30000,
+      msBetweenRequests: 2000,
+      msBetweenDomUpdate: 1000,
+      msBeforeAbort: 300000,
+      maxBackoffTries: 2,
+    });
+    container = document.getElementById("spinner-container") as HTMLDivElement;
+
     pollingFunction.mockResolvedValue(PollResult.Backoff);
     const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
 
     // Act
     await spinner.init();
-    await wait(40); // Wait for all backoff attempts (15 + 20 + margin)
+    await jest.runAllTimersAsync();
 
     // Assert
+    expect(container.innerHTML).toMatchSnapshot();
     expect(pollingFunction).toHaveBeenCalledTimes(3); // Initial + 2 backoff tries
     expect(errorFunction).toHaveBeenCalledTimes(1);
     expect(successFunction).not.toHaveBeenCalled();
@@ -447,6 +521,15 @@ describe("Backoff functionality", () => {
 
   test("should reset backoff count on successful poll", async () => {
     // Arrange
+    document.body.innerHTML = getValidSpinnerDivHtml({
+      msBeforeInformingOfLongWait: 10000,
+      msBetweenRequests: 10,
+      msBetweenDomUpdate: 5,
+      msBeforeAbort: 30000,
+      maxBackoffTries: 2,
+    });
+    container = document.getElementById("spinner-container") as HTMLDivElement;
+
     pollingFunction
       .mockResolvedValueOnce(PollResult.Backoff)
       .mockResolvedValueOnce(PollResult.Pending)
@@ -457,61 +540,35 @@ describe("Backoff functionality", () => {
 
     // Act
     await spinner.init();
-    await wait(65); // Wait for all backoff attempts (15 + 10 + 15 + 20 + margin)
+    await jest.runAllTimersAsync();
 
     // Assert
+    expect(container.innerHTML).toMatchSnapshot();
     expect(pollingFunction).toHaveBeenCalledTimes(5);
     expect(successFunction).toHaveBeenCalledTimes(1);
-    expect(errorFunction).not.toHaveBeenCalled();
-  });
-
-  test("backoff waits should be longer", async () => {
-    // Arrange
-    document.body.innerHTML = getValidSpinnerDivHtml({
-      msBeforeInformingOfLongWait: 1000,
-      msBetweenRequests: 10,
-      msBetweenDomUpdate: 5,
-      msBeforeAbort: 5000,
-      maxBackoffTries: 4,
-    });
-    pollingFunction
-      .mockResolvedValueOnce(PollResult.Backoff)
-      .mockResolvedValueOnce(PollResult.Backoff)
-      .mockResolvedValueOnce(PollResult.Backoff)
-      .mockResolvedValueOnce(PollResult.Backoff)
-      .mockResolvedValueOnce(PollResult.Success);
-    const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
-
-    // Act
-    await spinner.init();
-    // Normal time between requests is 10mS so this would take just over 40mS to complete if backoffs didn't take longer
-    // With backoff delay it should take just over 65mS to make 4 calls (15  + 20 + 30)
-    await wait(50);
-
-    // Assert
-    expect(pollingFunction).toHaveBeenCalledTimes(3);
-    expect(successFunction).not.toHaveBeenCalled();
     expect(errorFunction).not.toHaveBeenCalled();
   });
 
   test("should use custom maxBackoffTries from config", async () => {
     // Arrange
     document.body.innerHTML = getValidSpinnerDivHtml({
-      msBeforeInformingOfLongWait: 1000,
-      msBetweenRequests: 10,
-      msBetweenDomUpdate: 5,
-      msBeforeAbort: 5000,
+      msBeforeInformingOfLongWait: 30000,
+      msBetweenRequests: 2000,
+      msBetweenDomUpdate: 1000,
+      msBeforeAbort: 300000,
       maxBackoffTries: 1,
     });
     container = document.getElementById("spinner-container") as HTMLDivElement;
+
     pollingFunction.mockResolvedValue(PollResult.Backoff);
     const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
 
     // Act
     await spinner.init();
-    await wait(20);
+    await jest.runAllTimersAsync();
 
     // Assert
+    expect(container.innerHTML).toMatchSnapshot();
     expect(pollingFunction).toHaveBeenCalledTimes(2); // Initial + 1 backoff try
     expect(errorFunction).toHaveBeenCalledTimes(1);
   });
