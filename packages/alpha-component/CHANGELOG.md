@@ -1,3 +1,17 @@
+## 0.0.31 (2025-10-03)
+
+### 🚀 Features
+
+- **768:** updating workflows with provenance verification ([01c1666](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/01c1666))
+
+### 🩹 Fixes
+
+- speed up tests ([2b5288b](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/2b5288b))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+
 ## 0.0.30 (2025-08-14)
 
 ### 🚀 Features
