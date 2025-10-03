@@ -25,5 +25,10 @@
   "license": "ISC",
   "devDependencies": {},
   "types": "./build/esm/language-param-setter.d.ts",
-  "dependencies": {}
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/govuk-one-login/govuk-one-login-frontend.git",
+    "directory": "packages/alpha-component"
+  }
 }
