@@ -23,7 +23,7 @@ export default [
     ],
     output: [
       {
-        file: "alpha-app/public/javascript/index.js",
+        file: "public/javascript/index.js",
         format: "iife",
       },
     ],
