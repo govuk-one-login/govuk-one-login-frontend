@@ -1,32 +1,86 @@
 export function initialiseProgressButtons(){
-  const progressButtons = document.querySelectorAll<HTMLElement>('[data-frontendui="di-progress-button"]');
+  const progressButtons = Array.prototype.slice.call(
+    document.querySelectorAll('[data-frontendui="di-progress-button"]')
+  );
 
-  progressButtons.forEach((button) => {
-    button.addEventListener('click', (event) => {
+  function findClosestForm(element: HTMLElement): HTMLFormElement | null {
+    let el: HTMLElement | null = element;
+    while (el && el.nodeName !== 'FORM') {
+      el = el.parentElement;
+    }
+    return el as HTMLFormElement;
+  }
+
+  progressButtons.forEach(function(button: HTMLElement) {
+    const form = findClosestForm(button);
+    let isSubmitting = false;
+
+    button.addEventListener('click', function(event) {
+      if (isSubmitting) {
+        event.preventDefault();
+        return;
+      }
+
       const waitingText = button.getAttribute('data-waiting-text');
       const longWaitingText = button.getAttribute('data-long-waiting-text');
       const errorPage = button.getAttribute('data-error-page');
       const isInput = button.tagName.toLowerCase() === 'input';
+      
       if (!waitingText || !longWaitingText || !errorPage) {
         console.error('Progress button is missing required data attributes.');
         return;
       }
-      handleProgressButtonClick(button, waitingText, longWaitingText, errorPage, isInput);
+
+      isSubmitting = true;
+      
+      if (!form) {
+        handleProgressButtonClick(button, waitingText, longWaitingText, errorPage, isInput);
+      }
     });
+
+    if (form) {
+      form.addEventListener('submit', function(event) {
+        if (isSubmitting) {
+          event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+          return;
+        }
+
+        var waitingText = button.getAttribute('data-waiting-text');
+        var longWaitingText = button.getAttribute('data-long-waiting-text');
+        var errorPage = button.getAttribute('data-error-page');
+        var isInput = button.tagName.toLowerCase() === 'input';
+
+        if (!waitingText || !longWaitingText || !errorPage) {
+          console.error('Progress button is missing required data attributes.');
+          return;
+        }
+
+        isSubmitting = true;
+        handleProgressButtonClick(button, waitingText, longWaitingText, errorPage, isInput);
+      });
+    }
   });
 }
 
-const handleProgressButtonClick = (
-  
+function handleProgressButtonClick(
   element: HTMLElement,
   waitingText: string,
   longWaitingText: string,
   errorPage: string,
-  isInput: boolean = false
-) => {
-  element.blur();
+  isInput: boolean
+): () => void {
+  var originalText = isInput && element instanceof HTMLInputElement ? element.value : element.innerText;
+  
+  if (typeof element.blur === 'function') {
+    element.blur();
+  }
   element.setAttribute('data-prevent-double-click', 'true');
-  element.classList.add('govuk-button--progress-loading');
+  
+  var classes = element.className.split(' ');
+  if (classes.indexOf('govuk-button--progress-loading') === -1) {
+    classes.push('govuk-button--progress-loading');
+    element.className = classes.join(' ');
+  }
   
   if (isInput && element instanceof HTMLInputElement) {
     element.value = waitingText;
@@ -35,7 +89,7 @@ const handleProgressButtonClick = (
   }
   element.setAttribute('aria-label', waitingText);
 
-  setTimeout(() => {
+  var longWaitTimeout = window.setTimeout(function() {
     if (isInput && element instanceof HTMLInputElement) {
       element.value = longWaitingText;
     } else {
@@ -44,10 +98,32 @@ const handleProgressButtonClick = (
     element.setAttribute('aria-label', longWaitingText);
   }, 5000);
 
-  setTimeout(() => {
+  var errorTimeout = window.setTimeout(function() {
     window.location.href = errorPage;
   }, 10000);
 
+  function resetButton() {
+    var classes = element.className.split(' ');
+    var loadingIndex = classes.indexOf('govuk-button--progress-loading');
+    if (loadingIndex !== -1) {
+      classes.splice(loadingIndex, 1);
+      element.className = classes.join(' ');
+    }
+    
+    element.setAttribute('data-prevent-double-click', 'false');
+    
+    if (isInput && element instanceof HTMLInputElement) {
+      element.value = originalText;
+    } else {
+      element.innerText = originalText;
+    }
+    element.setAttribute('aria-label', originalText);
+    
+    window.clearTimeout(errorTimeout);
+    window.clearTimeout(longWaitTimeout);
+  }
 
-  
-};
+  (element as any).resetProgressButton = resetButton;
+
+  return resetButton;
+}
