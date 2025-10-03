@@ -43,6 +43,7 @@ run-name: Release ${{ github.event.inputs.target }} ${{ github.event.inputs.incr
 permissions:
   actions: read
   contents: write
+  id-token: write # needed for provenance data generation
 
 jobs:
   prepare-branch-for-main:
@@ -99,4 +100,3 @@ jobs:
         run: npx nx release ${{ github.event.inputs.increment }} --projects=${{ github.event.inputs.target }} --yes ${{ github.event.inputs.first_release == 'true' && '--first-release' || '' }} ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
-          NODE_AUTH_TOKEN: ${{secrets.NPM_ACCESS_TOKEN}}
