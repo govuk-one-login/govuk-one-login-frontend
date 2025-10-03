@@ -41,5 +41,10 @@
     "hooks": {
       "pre-commit": "npm run precommit"
     }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/govuk-one-login/govuk-one-login-frontend.git",
+    "directory": "packages/alpha-app"
   }
 }
