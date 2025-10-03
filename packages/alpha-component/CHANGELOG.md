@@ -1,3 +1,13 @@
+## 0.0.33 (2025-10-03)
+
+### 🩹 Fixes
+
+- update node version for release ([00e8580](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/00e8580))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+
 ## 0.0.32 (2025-10-03)
 
 This was a version bump only for @govuk-one-login/alpha-component to align it with other projects, there were no code changes.
