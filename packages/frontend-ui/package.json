@@ -22,7 +22,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/govuk-one-login/govuk-one-login-frontend.git"
+    "url": "git+https://github.com/govuk-one-login/govuk-one-login-frontend.git",
+    "directory": "packages/frontend-ui"
   },
   "keywords": [
     "govuk-one-login",
