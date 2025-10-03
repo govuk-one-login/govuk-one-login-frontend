@@ -116,5 +116,8 @@
     "hooks": {
       "pre-commit": "npm run precommit"
     }
+  },
+  "repository": {
+    "url": "https://github.com/govuk-one-login/govuk-one-login-frontend"
   }
 }
