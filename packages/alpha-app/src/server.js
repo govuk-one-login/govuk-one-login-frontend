@@ -8,8 +8,9 @@ const PORT = 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Serve static files from ../public
+// Serve static files from ../public and ../dist
 app.use(express.static(path.join(__dirname, "../public")));
+app.use("/dist", express.static(path.join(__dirname, "../dist")));
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../public", "index.html"));
