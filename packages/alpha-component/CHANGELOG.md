@@ -1,3 +1,13 @@
+## 0.0.34 (2025-10-03)
+
+### 🩹 Fixes
+
+- added repository to package.json ([856381f](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/856381f))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+
 ## 0.0.33 (2025-10-03)
 
 ### 🩹 Fixes
