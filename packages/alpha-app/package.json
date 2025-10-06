@@ -6,7 +6,16 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "serve": "node src/server.js",
+    "build-sass": "rm -rf public/styles.css && sass --no-source-map ../../node_modules/@govuk-one-login/frontend-language-toggle/src/stylesheet/styles.css public/stylesheets/application-ifsdjkn.css --style compressed && sass --no-source-map ../../node_modules/govuk-frontend/govuk/all.scss public/stylesheets/govuk-frontend.css --style compressed && sass --no-source-map ../../node_modules/@govuk-one-login/frontend-ui/build/all.css public/stylesheets/frontendUi.css --style compressed",
+    "precommit": "npm run test && npm run format && git add .",
+    "prod": "export NODE_ENV=production && node src/app.js",
+    "test": "node -e \"console.log('No tests currently defined');\"",
+    "test:integration:ci": "npx playwright install --with-deps && start-server-and-test start http://localhost:3000 test:integration",
+    "test:integration": "cucumber-js test/browser/features/v1/analytics --require test/browser/support/setup.js --require test/browser/step_definitions/**/*.js cucumber --tags 'not @skip'",
+    "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,md}\"",
+    "dev-js": "rollup -c --watch"
   },
   "dependencies": {
     "@babel/preset-react": "^7.27.1",
@@ -36,9 +45,5 @@
       "pre-commit": "npm run precommit"
     }
   },
-  "type": "module",
-  "devDependencies": {
-    "@types/react": "^19.2.0",
-    "@types/react-dom": "^19.2.0"
-  }
+  "type": "module"
 }
