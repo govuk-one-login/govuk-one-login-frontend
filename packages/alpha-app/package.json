@@ -3,6 +3,11 @@
   "version": "0.0.47",
   "main": "index.js",
   "scripts": {
+    // "dev": "next dev --turbopack",
+    // "build": "next build",
+    // "start": "next start",
+    // "lint": "eslint"
+  
     "start": "npm-run-all build-sass --parallel dev-js serve",
     "serve": "node src/server.js",
     "dev": "node --watch src/app.js",
