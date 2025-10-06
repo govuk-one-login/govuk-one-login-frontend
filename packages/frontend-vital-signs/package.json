@@ -22,7 +22,8 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://github.com/govuk-one-login/govuk-one-login-frontend.git"
+    "url": "git+https://github.com/govuk-one-login/govuk-one-login-frontend.git",
+    "directory": "packages/frontend-vital-signs"
   },
   "bugs": {
     "url": "https://github.com/govuk-one-login/govuk-one-login-frontend/issues"

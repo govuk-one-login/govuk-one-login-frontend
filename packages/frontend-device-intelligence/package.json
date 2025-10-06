@@ -20,10 +20,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/govuk-one-login/govuk-one-login-frontend.git"
-  },
   "keywords": [
     "govuk-one-login",
     "gds",
@@ -46,5 +42,10 @@
   "types": "./build/esm/index.d.ts",
   "dependencies": {
     "loglevel": "^1.9.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/govuk-one-login/govuk-one-login-frontend.git",
+    "directory": "packages/frontend-device-intelligence"
   }
 }
