@@ -1,3 +1,24 @@
+## 3.1.0 (2025-10-07)
+
+### 🚀 Features
+
+- **PYIC-8674:** Add tests and improve existing tests to use mock timers ([462feb7](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/462feb7))
+- **768:** updating workflows with provenance verification ([01c1666](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/01c1666))
+- **PYIC-8674:** Add exponential backoff to polling ([21ab981](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/21ab981))
+- **944:** support for no javascript ([491c616](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/491c616))
+
+### 🩹 Fixes
+
+- updating vulnerable versions of packages ([6b2843f](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/6b2843f))
+- updated all package.jsons for OIPC ([c793b32](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/c793b32))
+- added repository to package.json ([856381f](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/856381f))
+- update node version for release ([00e8580](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/00e8580))
+
+### ❤️ Thank You
+
+- Dan Corder
+- DavidMcMichael-GDS
+
 # 3.0.0 (2025-09-25)
 
 ### 🚀 Features
