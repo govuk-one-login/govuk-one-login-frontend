@@ -1,6 +1,5 @@
 export function h(type, props, ...children) {
   const el = document.createElement(type);
-  let document;
   for (const key in props) {
     if (key === "className") el.className = props[key];
     else if (key === "style" && typeof props[key] === "object")

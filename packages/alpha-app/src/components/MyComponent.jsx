@@ -1,6 +1,6 @@
-import { h } from "..h.js";
-let window;
+import { h } from "../h.js";
 window.h = h;
+globalThis.h = h;
 function MyComponent(props) {
   return (
     <div>

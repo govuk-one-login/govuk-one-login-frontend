@@ -1,8 +1,6 @@
 import { h } from "./h.js";
 window.h = h;
-
-let window;
-let document;
+globalThis.h = h;
 
 import MyComponent from "./components/MyComponent.jsx";
 
