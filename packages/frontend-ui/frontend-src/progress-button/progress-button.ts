@@ -1,4 +1,4 @@
-export function initialiseProgressButtons(){
+export function initialiseProgressButtons(document: Document = window.document) {
   const progressButtons = Array.prototype.slice.call(
     document.querySelectorAll('[data-frontendui="di-progress-button"]')
   );
@@ -33,30 +33,32 @@ export function initialiseProgressButtons(){
 
       isSubmitting = true;
       
+      // Always handle the button click, regardless of form presence
+      handleProgressButtonClick(button, waitingText, longWaitingText, errorPage, isInput);
+
+      // If no form, we're done. If there is a form, the form submit handler will take over
       if (!form) {
-        handleProgressButtonClick(button, waitingText, longWaitingText, errorPage, isInput);
+        return;
       }
+      
+      // For form buttons, let the click propagate to trigger form submission
     });
 
     if (form) {
       form.addEventListener('submit', function(event) {
+        // The button click handler has already set isSubmitting and handled the button state
         if (isSubmitting) {
+          // Allow the first submission, prevent subsequent ones
+          if (event.target === form && event.submitter === button) {
+            return; // Allow the first submission to proceed
+          }
           event.preventDefault ? event.preventDefault() : (event.returnValue = false);
           return;
         }
 
-        var waitingText = button.getAttribute('data-waiting-text');
-        var longWaitingText = button.getAttribute('data-long-waiting-text');
-        var errorPage = button.getAttribute('data-error-page');
-        var isInput = button.tagName.toLowerCase() === 'input';
-
-        if (!waitingText || !longWaitingText || !errorPage) {
-          console.error('Progress button is missing required data attributes.');
-          return;
-        }
-
+        // If the form is submitted through another method (not our button),
+        // prevent double submission but don't show progress state
         isSubmitting = true;
-        handleProgressButtonClick(button, waitingText, longWaitingText, errorPage, isInput);
       });
     }
   });
