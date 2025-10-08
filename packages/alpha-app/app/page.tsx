@@ -1,3 +1,9 @@
+import "./govuk-frontend.css";
+
 export default function Page() {
-  return <h1>Hello, Next.js!</h1>;
+  return (
+    <button type="submit" className="govuk-button" data-module="govuk-button">
+      Save and continue
+    </button>
+  );
 }
