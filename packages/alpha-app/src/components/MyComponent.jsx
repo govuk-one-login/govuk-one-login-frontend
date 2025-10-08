@@ -1,3 +1,6 @@
+import { h } from "..h.js";
+let window;
+window.h = h;
 function MyComponent(props) {
   return (
     <div>

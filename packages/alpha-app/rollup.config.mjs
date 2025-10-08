@@ -1,4 +1,3 @@
-import presetReact from "@babel/preset-react";
 import resolve from "@rollup/plugin-node-resolve";
 import jsx from "rollup-plugin-jsx";
 
@@ -11,13 +10,10 @@ export default [
       //nodeResolve(),
       resolve(),
       jsx({
-        factory: "h", // Use a simple 'h' function for element creation
-        fragment: "Fragment", // Define a Fragment component (optional)
+        factory: "h",
+        fragment: "Fragment",
         babelConfig: {
-          presets: [presetReact],
-          plugins: [
-            // Add Babel plugins here if needed
-          ],
+          presets: ["@babel/preset-react"],
         },
       }),
     ],
