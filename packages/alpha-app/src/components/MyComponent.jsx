@@ -1,9 +1,10 @@
 import { h } from "../h.js";
 window.h = h;
 globalThis.h = h;
+
 function MyComponent(props) {
   return (
-    <div>
+    <div className="govuk-template--rebranded">
       <p className="govuk-body">
         To view the skip link component tab to this example, or click inside
         this example and press tab.
