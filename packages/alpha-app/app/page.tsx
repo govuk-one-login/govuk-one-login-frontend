@@ -2,7 +2,7 @@ import "./govuk-frontend.css";
 
 export default function Page() {
   return (
-    <>
+    <div className="govuk-template--rebranded">
       {/* skip link */}
       <p className="govuk-body">
         To view the skip link component tab to this example, or click inside
@@ -200,6 +200,6 @@ export default function Page() {
           Save and continue
         </button>
       </div>
-    </>
+    </div>
   );
 }
