@@ -33,7 +33,7 @@ describe("appInit", () => {
           </fieldset>
           <button id="button" type="submit">submit</button>
         </form>
-      </div>
+      </div> 
     `;
 
     window.DI.appInit({}, { enableGa4Tracking: true, isDataSensitive: false });

@@ -10,7 +10,7 @@ const govukComponentsPath = path.resolve(
 const frontendUIComponentsPath = path.resolve(__dirname, "../../components");
 const frontendUIBuildPath = path.resolve(__dirname, "../../../");
 const stubs = path.resolve(__dirname, "./stubs");
-const nunjucksEnv = nunjucks.configure(
+export const nunjucksEnv = nunjucks.configure(
   [frontendUIComponentsPath, govukComponentsPath, frontendUIBuildPath, stubs],
   {
     autoescape: true,

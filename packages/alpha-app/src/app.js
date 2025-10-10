@@ -59,6 +59,13 @@ app.get("/api", (req, res) => {
     res.json({ status: "PENDING", counter: counter });
   }
 });
+
+app.post("/api/test-submit-button", (req, res) => {
+  setTimeout(() => {
+    res.json({ status: "COMPLETED" });
+  }, 11000);
+});
+
 const protect = require("overload-protection")("express", {
   production: process.env.NODE_ENV === "production",
   maxEventLoopDelay: 400,
@@ -184,6 +191,10 @@ app.get("/feedback", (req, res) => {
 
 app.get("/spinner", (req, res) => {
   res.render("spinner.njk");
+});
+
+app.get("/test-progress-button", (req, res) => {
+  res.render("test-progress-button.njk");
 });
 
 app.get(
