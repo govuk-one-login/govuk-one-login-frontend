@@ -1,3 +1,17 @@
+## 3.1.1 (2025-10-10)
+
+### 🚀 Features
+
+- **932:** preventing double form submission ([8b4c707](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/8b4c707))
+
+### 🩹 Fixes
+
+- adding tests to progress button ([1d167e2](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/1d167e2))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+
 ## 3.1.0 (2025-10-07)
 
 ### 🚀 Features
