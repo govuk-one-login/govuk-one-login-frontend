@@ -1,3 +1,23 @@
+## 4.0.4 (2025-10-16)
+
+### 🚀 Features
+
+- **768:** updating workflows with provenance verification ([01c1666](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/01c1666))
+
+### 🩹 Fixes
+
+- adding tests to progress button ([1d167e2](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/1d167e2))
+- updating vulnerable versions of packages ([6b2843f](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/6b2843f))
+- updated all package.jsons for OIPC ([c793b32](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/c793b32))
+- added repository to package.json ([856381f](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/856381f))
+- update node version for release ([00e8580](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/00e8580))
+- break the dependency between onPageLoad and formError trackers ([74aadd5](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/74aadd5))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+- nickhealGDS
+
 ## 4.0.3 (2025-08-21)
 
 ### 🩹 Fixes
