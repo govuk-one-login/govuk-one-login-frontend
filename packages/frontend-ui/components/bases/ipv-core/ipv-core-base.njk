@@ -2,7 +2,9 @@
     {% set govukRebrand = true %}
 {% endif %}
 
-{% set isPageDataSensitive = true %}
+{% if isPageDataSensitive is not defined %}
+    {% set isPageDataSensitive = true %}
+{% endif %}
 {% set taxLevel1 = 'web cri' %}
 {% set taxLevel2 = 'pre cri' %}
 
