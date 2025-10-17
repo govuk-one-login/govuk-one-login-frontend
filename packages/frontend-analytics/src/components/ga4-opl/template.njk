@@ -24,6 +24,8 @@
               {% endif %}
               {% if params.loggedInStatus is defined %}
               logged_in_status: {{params.loggedInStatus}}
+              {%else%}
+              logged_in_status: 'undefined'
               {% endif %}
           });
   });
