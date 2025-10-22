@@ -35,8 +35,12 @@
 }
   
 @media (prefers-reduced-motion: reduce) {
-.govuk-button--progress-loading {
-     animation: none;
+  .govuk-button--progress-loading {
+    padding-left: 10px !important; 
+
+    &::before {
+      display: none; 
+    }
   }
 }
 

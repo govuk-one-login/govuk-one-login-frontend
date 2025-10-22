@@ -1,4 +1,4 @@
-const noSessionPages = ["/welcome", "/spinner"];
+const noSessionPages = ["/welcome", "/spinner", "/test-progress-button"];
 
 const checkSessionAndRedirect = (req, res, next) => {
   // Check if the user has an active session
