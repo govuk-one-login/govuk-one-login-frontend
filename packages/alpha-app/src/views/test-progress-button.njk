@@ -3,11 +3,10 @@
 
 {% block content %}
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-l">Test Progress Button</h1>
 
             <form method="post" id="myForm" action="/api/test-submit-button" novalidate>
-            <input type="text">
+            <input type="text" style="margin-bottom: 10px;">
                 {{ frontendUiProgressButton({
                 translations: translations.translation.progressButton,
                 errorPage: "/error"
@@ -20,7 +19,6 @@
                 href: "#",
                 errorPage: "/error"
             }) }}
-        </div>
 
     </div>
 {% endblock %}

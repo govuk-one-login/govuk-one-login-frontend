@@ -29,9 +29,10 @@ test.describe('Progress Button visual regression', () => {
 
   test('should match visual snapshot after clicking and waiting 5 seconds', async ({ page }) => {
     const button = page.locator('.govuk-button--progress').first();
-    button.click({force: true});
-    const waited = await page.getByText("Keep waiting");
-    await expect(waited).toHaveScreenshot('progress-button-clicked-and-waited.png', { timeout: 10000 });
+    await button.click({force: true});
+    await page.waitForTimeout(5100); // slightly over 5s to ensure the timeout has triggered
+    await page.waitForSelector('.govuk-button--progress:has-text("Keep waiting")', { state: 'visible' });
+    await expect(button).toHaveScreenshot('progress-button-clicked-and-waited.png', { timeout: 10000 });
   });
 
 
@@ -51,9 +52,10 @@ test.describe('Progress Button visual regression', () => {
   test('should match visual snapshot after clicking and waiting 5 seconds - reduced motion', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     const button = page.locator('.govuk-button--progress').first();
-    button.click();
-    const waited = await page.getByText("Keep waiting")
-    await expect(waited).toHaveScreenshot('progress-button-clicked-and-waited-no-motion.png', { timeout: 10000 });
+    await button.click({force: true});
+    await page.waitForTimeout(5100); // slightly over 5s to ensure the timeout has triggered
+    await page.waitForSelector('.govuk-button--progress:has-text("Keep waiting")', { state: 'visible' });
+    await expect(button).toHaveScreenshot('progress-button-clicked-and-waited-no-motion.png', { timeout: 10000 });
   });
 
 });

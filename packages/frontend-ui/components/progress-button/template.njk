@@ -65,8 +65,7 @@ treat it as an interactive element - without this it will be
       </div>
     </noscript>
 
-    <a href="{{ params.href if params.href else '#' }}" role="button" draggable="false" {{- commonAttributes | safe }} class = "{{ classNames }}"
-aria-live="assertive" data-frontendui="di-progress-button" data-waiting-text="{{ progressButton.waitingText }}" data-long-waiting-text="{{ progressButton.longWaitingText }}" data-error-page="{{ params.errorPage | default('#') }}" >
+    <a href="{{ params.href if params.href else '#' }}" role="button" draggable="false" {{- commonAttributes | safe }} class = "{{ classNames }}" data-frontendui="di-progress-button" data-waiting-text="{{ progressButton.waitingText }}" data-long-waiting-text="{{ progressButton.longWaitingText }}" data-error-page="{{ params.errorPage | default('#') }}" >
       {% if params.html %}
         {{ params.html | safe }}
       {% elseif params.text %}
@@ -86,8 +85,7 @@ aria-live="assertive" data-frontendui="di-progress-button" data-waiting-text="{{
       </div>
     </noscript>
 
-    <button {%- if params.value %} value="{{ params.value }}"{% endif %}{%- if params.type %} type="{{ params.type }}"{% endif %} {{- buttonAttributes | safe }} {{- commonAttributes | safe }} class = "{{ classNames }}"
-aria-live="assertive" data-frontendui="di-progress-button" data-waiting-text="{{ progressButton.waitingText }}" data-long-waiting-text="{{ progressButton.longWaitingText }}" data-error-page="{{ params.errorPage | default('#') }}" >
+    <button {%- if params.value %} value="{{ params.value }}"{% endif %}{%- if params.type %} type="{{ params.type }}"{% endif %} {{- buttonAttributes | safe }} {{- commonAttributes | safe }} class = "{{ classNames }}" data-frontendui="di-progress-button" data-waiting-text="{{ progressButton.waitingText }}" data-long-waiting-text="{{ progressButton.longWaitingText }}" data-error-page="{{ params.errorPage | default('#') }}" >
       {% if params.html %}
         {{ params.html | safe }}
       {% elseif params.text %}
@@ -107,8 +105,7 @@ aria-live="assertive" data-frontendui="di-progress-button" data-waiting-text="{{
         {{ progressButton.noJavascriptMessage }}
       </div>
     </noscript>
-    <input value="{{ params.value }}" type="{{ params.type if params.type else 'submit'}}"{{- buttonAttributes | safe }} {{- commonAttributes | safe }} class = "{{ classNames }}"
-  aria-live="assertive" data-frontendui="di-progress-button" data-waiting-text="{{ progressButton.waitingText }}" data-long-waiting-text="{{ progressButton.longWaitingText }}" data-error-page="{{ params.errorPage | default('#') }}" >
+    <input value="{{ params.value }}" type="{{ params.type if params.type else 'submit'}}"{{- buttonAttributes | safe }} {{- commonAttributes | safe }} class = "{{ classNames }}" data-frontendui="di-progress-button" data-waiting-text="{{ progressButton.waitingText }}" data-long-waiting-text="{{ progressButton.longWaitingText }}" data-error-page="{{ params.errorPage | default('#') }}" >
     {{- iconHtml | safe | trim | indent(2, true) if iconHtml -}}
   </div>
 
