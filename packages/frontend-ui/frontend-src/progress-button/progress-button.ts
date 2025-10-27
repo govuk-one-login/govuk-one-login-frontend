@@ -22,6 +22,16 @@ export function initialiseProgressButtons(document: Document = window.document) 
     const form = findClosestForm(button);
     let isSubmitting = false;
 
+    // Handle spacebar press for anchor tags
+    if (button.tagName.toLowerCase() === 'a') {
+      button.addEventListener('keydown', function(event) {
+        if (event.code === 'Space') {
+          event.preventDefault();
+          button.click();
+        }
+      });
+    }
+
     button.addEventListener('click', function(event) {
       if (isSubmitting) {
         event.preventDefault();
