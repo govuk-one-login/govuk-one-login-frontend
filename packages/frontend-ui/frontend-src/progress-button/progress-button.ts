@@ -1,4 +1,11 @@
 export function initialiseProgressButtons(document: Document = window.document) {
+  // Create a single live region for button status announcements
+  const statusRegion = document.createElement('div');
+  statusRegion.setAttribute('aria-live', 'assertive');
+  statusRegion.setAttribute('role', 'status');
+  statusRegion.className = 'govuk-visually-hidden';
+  document.body.appendChild(statusRegion);
+
   const progressButtons = Array.prototype.slice.call(
     document.querySelectorAll('[data-frontendui="di-progress-button"]')
   );
@@ -72,6 +79,7 @@ function handleProgressButtonClick(
   isInput: boolean
 ): () => void {
   var originalText = isInput && element instanceof HTMLInputElement ? element.value : element.innerText;
+  const statusRegion = document.querySelector('.govuk-visually-hidden[role="status"]');
   
   if (typeof element.blur === 'function') {
     element.blur();
@@ -89,7 +97,11 @@ function handleProgressButtonClick(
   } else {
     element.innerText = waitingText;
   }
-  element.setAttribute('aria-label', waitingText);
+
+  // Announce the initial waiting state
+  if (statusRegion) {
+    statusRegion.textContent = waitingText;
+  }
 
   var longWaitTimeout = window.setTimeout(function() {
     if (isInput && element instanceof HTMLInputElement) {
@@ -97,7 +109,11 @@ function handleProgressButtonClick(
     } else {
       element.innerText = longWaitingText;
     }
-    element.setAttribute('aria-label', longWaitingText);
+    
+    // Announce the long wait state
+    if (statusRegion) {
+      statusRegion.textContent = longWaitingText;
+    }
   }, 5000);
 
   var errorTimeout = window.setTimeout(function() {
@@ -119,7 +135,12 @@ function handleProgressButtonClick(
     } else {
       element.innerText = originalText;
     }
-    element.setAttribute('aria-label', originalText);
+    
+    // Clear status region without announcement
+    const statusRegion = document.querySelector('.govuk-visually-hidden[role="status"]');
+    if (statusRegion) {
+      statusRegion.textContent = '';
+    }
     
     window.clearTimeout(errorTimeout);
     window.clearTimeout(longWaitTimeout);
