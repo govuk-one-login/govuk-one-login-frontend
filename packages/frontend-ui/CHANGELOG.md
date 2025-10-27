@@ -1,3 +1,19 @@
+## 4.1.0 (2025-10-27)
+
+### 🚀 Features
+
+- **1020:** added spacebar activation support to button ([a8396aa](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/a8396aa))
+- **1018:** added visual testing ([b554e57](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/b554e57))
+
+### 🩹 Fixes
+
+- updating aria label for screen readers ([6fbd85f](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/6fbd85f))
+- **1018:** added reduced motion to progress-button ([39e2042](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/39e2042))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+
 ## 4.0.2 (2025-10-17)
 
 ### 🧱 Updated Dependencies
