@@ -39,12 +39,12 @@
   "homepage": "https://github.com/govuk-one-login/govuk-one-login-frontend#readme",
   "dependencies": {
     "js-yaml": "^4.1.0",
-    "pino": "8.20.0"
+    "pino": "^10.1.0"
   },
   "peerDependencies": {
+    "@govuk-one-login/frontend-analytics": " ^3.0.1 || ^4.0.3",
     "express": "^5.1.0 || >= 4.21.2",
-    "govuk-frontend": "^4.10.1 || ^5.0.0",
-    "@govuk-one-login/frontend-analytics": " ^3.0.1 || ^4.0.3"
+    "govuk-frontend": "^4.10.1 || ^5.0.0"
   },
   "exports": {
     ".": {
@@ -58,7 +58,7 @@
   },
   "types": "./build/esm/backend/index.d.ts",
   "optionalDependencies": {
-    "hmpo-components": "^7.1.0",
-    "@govuk-one-login/frontend-analytics": "^4.0.5"
+    "@govuk-one-login/frontend-analytics": "^4.0.5",
+    "hmpo-components": "^7.1.0"
   }
 }

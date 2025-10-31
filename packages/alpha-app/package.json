@@ -32,7 +32,7 @@
     "i18next-http-middleware": "^3.7.1",
     "nunjucks": "^3.2.4",
     "overload-protection": "^1.2.3",
-    "pino": "^9.7.0"
+    "pino": "^10.1.0"
   },
   "engines": {
     "node": "24.x"
