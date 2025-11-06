@@ -28,7 +28,6 @@
     "url": "https://github.com/govuk-one-login/govuk-one-login-frontend/issues"
   },
   "homepage": "https://github.com/govuk-one-login/govuk-one-login-frontend/tree/main/packages/frontend-passthrough-headers#readme",
-  "devDependencies": {},
   "exports": {
     "import": "./build/esm/index.js",
     "require": "./build/cjs/index.cjs"
@@ -37,6 +36,6 @@
   "dependencies": {
     "aws-lambda": "^1.0.7",
     "forwarded-parse": "^2.1.2",
-    "pino": "^8.21.0"
+    "pino": "^10.1.0"
   }
 }
