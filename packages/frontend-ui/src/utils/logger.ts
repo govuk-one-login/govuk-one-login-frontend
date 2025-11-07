@@ -1,6 +1,7 @@
+import type { Logger } from "pino";
 import { pino } from "pino";
 
-let logger: pino.Logger | undefined | CustomLogger;
+let logger: Logger | undefined | CustomLogger;
 
 export type CustomLogger = {
   trace: (message: string) => void;
@@ -11,7 +12,7 @@ export const setCustomLogger = (customLogger: CustomLogger) => {
   logger = customLogger;
 };
 
-export const getLogger = (): pino.Logger | CustomLogger => {
+export const getLogger = (): Logger | CustomLogger => {
   if (!logger) {
     logger = pino({
       name: "@govuk-one-login/frontend-passthrough-headers",

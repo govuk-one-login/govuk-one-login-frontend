@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from "express";
-import { getLogger, CustomLogger, setCustomLogger } from "../utils/logger";
+import { NextFunction, Request, Response } from "express";
+import { CustomLogger, getLogger, setCustomLogger } from "../utils/logger";
 
 const getGTM = (req: Request, res: Response, next: NextFunction): void => {
   res.locals.ga4ContainerId = req.app.get("APP.GTM.GA4_CONTAINER_ID");
@@ -57,10 +57,13 @@ const getLanguageToggle = (
     );
   } catch (e: unknown) {
     if (e instanceof Error) {
-      logger.warn("Error constructing url for language toggle", e.message);
+      logger.warn(
+        "Error constructing url for language toggle",
+        e.message as unknown as undefined,
+      );
     }
   }
   next();
 };
 
-export { getGTM, getAssetPath, getLanguageToggle };
+export { getAssetPath, getGTM, getLanguageToggle };
