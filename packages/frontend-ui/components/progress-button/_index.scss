@@ -32,6 +32,10 @@
   top: 12% !important;
   left: 8px;
 }
+
+.govuk-progress-button--disabled{
+  opacity: 1 !important;
+}
   
 @media (prefers-reduced-motion: reduce) {
   .govuk-button--progress-loading {
