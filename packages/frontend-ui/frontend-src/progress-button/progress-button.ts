@@ -96,6 +96,14 @@ function handleProgressButtonClick(
   }
   element.setAttribute('data-prevent-double-click', 'true');
   
+  if (element instanceof HTMLButtonElement || element instanceof HTMLInputElement) {
+    element.disabled = true;
+  } else if (element.tagName.toLowerCase() === 'a') {
+    element.setAttribute('aria-disabled', 'true');
+    element.style.pointerEvents = 'none';
+  }
+  element.classList.add('govuk-progress-button--disabled');
+  
   var classes = element.className.split(' ');
   if (classes.indexOf('govuk-button--progress-loading') === -1) {
     classes.push('govuk-button--progress-loading');
@@ -137,6 +145,14 @@ function handleProgressButtonClick(
       classes.splice(loadingIndex, 1);
       element.className = classes.join(' ');
     }
+    
+    if (element instanceof HTMLButtonElement || element instanceof HTMLInputElement) {
+      element.disabled = false;
+    } else if (element.tagName.toLowerCase() === 'a') {
+      element.removeAttribute('aria-disabled');
+      element.style.pointerEvents = '';
+    }
+    element.classList.remove('govuk-progress-button--disabled');
     
     element.setAttribute('data-prevent-double-click', 'false');
     
