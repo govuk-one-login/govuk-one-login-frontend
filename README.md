@@ -95,6 +95,12 @@ To ensure that NX is running the latest versions of all packages within the mono
 1. Start the development process by running `npm run dev`.
 2. Ensure that this package is running alongside the `dev` command to reflect updates properly.
 
+## Running `alpha-app`
+
+1. `npm run build` at the root
+2. `npm run start` in `alpha-app`
+3. The app should be running on `localhost:3000`
+
 ## Publishing Packages
 
 To release a package from the monorepo, use the **GitHub Actions Release workflow**. This workflow automates versioning and package publishing to NPM. Follow these steps to initiate a release:
