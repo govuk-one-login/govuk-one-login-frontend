@@ -6,6 +6,8 @@ import {
 import { Analytics } from "./analytics/core/core";
 import { applyDefaults } from "./utils/applyDefaultsUtil/applyDefaults";
 
+console.log("this is a dummy change");
+
 declare global {
   interface Window {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -28,7 +30,7 @@ function appInit(
     enableNavigationTracking: true,
     enablePageViewTracking: true,
     enableSelectContentTracking: true,
-    logLevel: 'info',
+    logLevel: "info",
   });
 
   logger.setLevel(defaultedOptions.logLevel!);
