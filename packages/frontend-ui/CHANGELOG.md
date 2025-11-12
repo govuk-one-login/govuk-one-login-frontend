@@ -1,3 +1,16 @@
+## 4.1.1 (2025-11-12)
+
+### 🩹 Fixes
+
+- **1040:** updated button state when clicked ([265817d](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/265817d))
+- **dfc-1025:** fix pino version ([f8f6630](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/f8f6630))
+- update git commit body line length ([e45654e](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/e45654e))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+- ug-gds
+
 ## 4.1.0 (2025-10-27)
 
 ### 🚀 Features
