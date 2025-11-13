@@ -79,21 +79,27 @@ To check and fix code formatting issues in a specific package:
 
 The rules for linting and formatting are defined in .eslintrc and can be customized as needed. The configuration includes recommended rulesets from ESLint, TypeScript, and Prettier.
 
-### Setup Instructions
+## Setup Instructions
 
 To ensure that NX is running the latest versions of all packages within the monorepository, follow these steps:
 
-#### At the Root Level:
+### At the Root Level:
 1. Install dependencies by running `npm install`.
 2. Build the entire project by running `npm run build`.
 
-#### At the `alpha-app` Level:
+### At the `alpha-app` Level:
 1. Start the development server by running `npm run dev`.
    This will automatically refresh the symlink as part of the watch command, ensuring that changes to linked packages are up-to-date.
 
-#### At the `frontend-language-toggle` Level:
+### At the `frontend-language-toggle` Level:
 1. Start the development process by running `npm run dev`.
 2. Ensure that this package is running alongside the `dev` command to reflect updates properly.
+
+## Running `alpha-app`
+
+1. `npm run build` at the root
+2. `npm run start` in `alpha-app`
+3. The app should be running on `localhost:3000`
 
 ## Publishing Packages
 
