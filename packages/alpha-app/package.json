@@ -3,7 +3,7 @@
   "version": "0.0.55",
   "scripts": {
     "start": "npm-run-all build-sass --parallel dev",
-    "dev": "node --watch src/app.js",
+    "dev": "node --watch src/server.js",
     "build-sass": "rm -rf public/styles.css && sass --no-source-map ../../node_modules/@govuk-one-login/frontend-language-toggle/src/stylesheet/styles.css public/stylesheets/application-ifsdjkn.css --style compressed && sass --no-source-map ../../node_modules/govuk-frontend/govuk/all.scss public/stylesheets/govuk-frontend.css --style compressed && sass --no-source-map ../../node_modules/@govuk-one-login/frontend-ui/build/all.css public/stylesheets/frontendUi.css --style compressed",
     "serve": "nodemon serve",
     "precommit": "npm run test && npm run format && git add .",
@@ -30,6 +30,7 @@
     "i18next": "^23.16.8",
     "i18next-fs-backend": "^2.6.0",
     "i18next-http-middleware": "^3.7.1",
+    "liquidjs": "^10.24.0",
     "nunjucks": "^3.2.4",
     "overload-protection": "^1.2.3",
     "pino": "^10.1.0"

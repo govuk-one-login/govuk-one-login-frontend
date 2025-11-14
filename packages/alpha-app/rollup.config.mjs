@@ -6,7 +6,8 @@ export default [
     plugins: [nodeResolve()],
     output: [
       {
-        file: "public/javascript/index.js",
+        // file: "public/javascript/index.js",
+        file: "public/bundle.js",
         format: "iife",
       },
     ],

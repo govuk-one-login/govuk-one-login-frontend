@@ -18,3 +18,4 @@ coverage
 **/*.md
 **/coverage/
 **/*.json
+*.liquid
