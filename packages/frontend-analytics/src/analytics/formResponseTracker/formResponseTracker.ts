@@ -11,10 +11,7 @@ import {
 } from "../../utils/dataScrapersUtils/dataScrapers";
 import { pushToDataLayer } from "../../utils/pushToDataLayerUtil/pushToDataLayer";
 import { getSectionValue } from "../formTracker/formTrackerUtils/getSectionValue/getSectionValue";
-import {
-  getFieldValue,
-  getFormElement,
-} from "../formTracker/formTrackerUtils/getFieldValues/getFieldValues";
+import { getFormElement } from "../formTracker/formTrackerUtils/getFieldValues/getFieldValues";
 import {
   isDateFields,
   combineDateFields,
@@ -23,6 +20,9 @@ import { isFormValid } from "../formTracker/formTrackerUtils/isFormValid/isFormV
 import { getSubmitUrl } from "../formTracker/formTrackerUtils/getSubmitUrl/getSubmitUrl";
 import { hasConsentForAnalytics } from "../../cookie/cookie";
 
+function isElementTypeAlwaysUnsafe(type: string) {
+  return !["checkbox", "radio", "select-one"].includes(type);
+}
 export class FormResponseTracker extends FormTracker {
   eventName: string = "form_response";
   eventType: string = "event_data";
@@ -110,10 +110,11 @@ export class FormResponseTracker extends FormTracker {
           event: this.eventType,
           event_data: {
             event_name: this.eventName,
-            type: validateParameter(FormTracker.getFieldType([field]), 100),
+            type: validateParameter(FormTracker.getFieldType(field), 100),
             url: validateParameter(submitUrl, 100),
             text: this.redactPII(
-              validateParameter(getFieldValue([field]), 100),
+              field.type,
+              validateParameter(field.value + "", 100),
             ),
             section: validateParameter(getSectionValue(field), 100),
             action: validateParameter(
@@ -159,9 +160,19 @@ export class FormResponseTracker extends FormTracker {
    * @param {string} string - Text field input
    * @return {string} The text field or undefined
    */
-  redactPII(parameter: string): string {
-    return this.isPageDataSensitive || this.isDataSensitive
-      ? "undefined"
-      : parameter.trim();
+  redactPII(type: string, parameter: string): string {
+    if (isElementTypeAlwaysUnsafe(type)) {
+      logger.debug(
+        `Redacting data from field type ${type} which is always considered unsafe.`,
+      );
+      return "undefined";
+    }
+
+    if (this.isPageDataSensitive || this.isDataSensitive) {
+      logger.debug(`Redacting data because page is marked as sensitive.`);
+      return "undefined";
+    }
+
+    return parameter.trim();
   }
 }

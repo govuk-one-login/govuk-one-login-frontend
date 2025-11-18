@@ -47,7 +47,7 @@ export function trackFormError(enabled: boolean = false) {
         event: "event_data",
         event_data: {
           event_name: "form_error",
-          type: validateParameter(FormTracker.getFieldType([field]), 100),
+          type: validateParameter(FormTracker.getFieldType(field), 100),
           url: validateParameter(submitUrl, 100),
           text: validateParameter(getErrorMessage(field), 100),
           section: validateParameter(getSectionValue(field), 100),
