@@ -1,8 +1,8 @@
 /* eslint-disable no-undef */
 import {
-  useSpinner,
   PollResult,
   initialiseProgressButtons,
+  useSpinner,
 } from "@govuk-one-login/frontend-ui/frontend"; // Maps to node_modules/@govuk-one-login/frontend-ui/build/esm/frontend
 
 async function callTestApi(abortSignal) {

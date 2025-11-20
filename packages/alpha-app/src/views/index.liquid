@@ -3,7 +3,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ title }}</title>
-  <link rel="stylesheet" href="/bundle.css">
+  {% comment %} <link rel="stylesheet" href="/bundle.css"> {% endcomment %}
+  <link rel="stylesheet" href="/public/stylesheets/govuk-frontend.css" />
+  <link rel="stylesheet" href="/public/stylesheets/frontendUi.css" />
+  <script src="/bundle.js" defer></script>
 </head>
 <body>
   <h1>{{ message }}</h1>
@@ -51,6 +54,8 @@
       </div>
     </div>
   </div>
+
+  <div id="spinner-container"></div>
   {% comment %} header {% endcomment %}
 
   <header class="govuk-header" data-module="govuk-header">
@@ -205,5 +210,4 @@
     </div>
   </footer>
 
-  <script src="/bundle.js"></script>
-</body></!DOCTYPE>
+</body>
