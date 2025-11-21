@@ -1,0 +1,40 @@
+{
+  "name": "@govuk-one-login/event-catalogue-utils",
+  "version": "1.3.1",
+  "description": "Utils for generating events from the event catalogue",
+  "type": "module",
+  "main": "build/cjs/index.cjs",
+  "module": "build/esm/index.js",
+  "scripts": {
+    "build": "rollup -c",
+    "test": "jest -c --coverage"
+  },
+  "files": [
+    "build/",
+    "package.json",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "DI Frontend Capability Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/govuk-one-login/govuk-one-login-frontend.git",
+    "directory": "packages/event-catalogue-utils"
+  },
+  "bugs": {
+    "url": "https://github.com/govuk-one-login/govuk-one-login-frontend/issues"
+  },
+  "homepage": "https://github.com/govuk-one-login/govuk-one-login-frontend/tree/main/packages/event-catalogue-utils#readme",
+  "exports": {
+    "import": "./build/esm/index.js",
+    "require": "./build/cjs/index.cjs"
+  },
+  "types": "./build/esm/index.d.ts",
+  "dependencies": {
+    "@govuk-one-login/event-catalogue": "39.2.0",
+    "@govuk-one-login/event-catalogue-schemas": "39.2.0"
+  }
+}
