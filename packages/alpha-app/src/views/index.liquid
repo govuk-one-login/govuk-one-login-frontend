@@ -10,6 +10,9 @@
 </head>
 <body>
   <h1>{{ message }}</h1>
+  {% if MAY_2025_REBRAND_ENABLED %}
+    {% let govukRebrand = true %}
+  {% endif %}
   <p>The current date is: {{ "now" | date: "%Y-%m-%d" }}</p>
 
   {% comment %} skip link {% endcomment %}

@@ -34,13 +34,15 @@ console.log(`Express is configured to look in: ${publicPath}`);
 app.use(express.static(publicPath));
 
 // app.use(express.static(path.resolve(__dirname, "public", )));
-
+const myFlagBoolean =
+  process.env.MY_FLAG && process.env.MY_FLAG.toLowerCase() === "true";
 // --- Route ---
 app.get("/", (req, res) => {
   // Renders the 'views/index.liquid' file
   res.render("index", {
     title: "Working Setup!",
     message: "This is rendering via LiquidJS.",
+    myFlagBoolean: myFlagBoolean,
   });
 });
 
