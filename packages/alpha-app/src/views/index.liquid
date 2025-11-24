@@ -8,11 +8,11 @@
   <link rel="stylesheet" href="/public/stylesheets/frontendUi.css" />
   <script src="/bundle.js" defer></script>
 </head>
-<body>
+<body class="govuk-template--rebranded">
   <h1>{{ message }}</h1>
-  {% if MAY_2025_REBRAND_ENABLED %}
-    {% let govukRebrand = true %}
-  {% endif %}
+  {% comment %} {% if MAY_2025_REBRAND_ENABLED %}
+            {% let govukRebrand = true %}
+      {% endif %} {% endcomment %}
   <p>The current date is: {{ "now" | date: "%Y-%m-%d" }}</p>
 
   {% comment %} skip link {% endcomment %}
