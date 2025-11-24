@@ -9,11 +9,11 @@
   <script src="/bundle.js" defer></script>
 </head>
 <body class="govuk-template--rebranded">
-  <h1>{{ message }}</h1>
+  {% comment %} <h1>{{ message }}</h1> {% endcomment %}
   {% comment %} {% if MAY_2025_REBRAND_ENABLED %}
-            {% let govukRebrand = true %}
-      {% endif %} {% endcomment %}
-  <p>The current date is: {{ "now" | date: "%Y-%m-%d" }}</p>
+                {% let govukRebrand = true %}
+        {% endif %} {% endcomment %}
+  {% comment %} <p>The current date is: {{ "now" | date: "%Y-%m-%d" }}</p> {% endcomment %}
 
   {% comment %} skip link {% endcomment %}
   <p class="govuk-body">To view the skip link component tab to this example, or click inside this example and press tab.</p>
