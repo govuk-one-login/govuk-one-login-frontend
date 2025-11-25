@@ -4,7 +4,6 @@ import { FormField } from "./formTracker.interface";
 import {
   getElementValue,
   getFieldLabel,
-  getFieldValue,
   getFormElement,
 } from "./formTrackerUtils/getFieldValues/getFieldValues";
 import { getSectionValue } from "./formTrackerUtils/getSectionValue/getSectionValue";
@@ -337,59 +336,53 @@ describe("FormTracker", () => {
     ]);
   });
 
-  test("getFieldValue should return field value", () => {
-    const fields: FormField[] = [
-      { id: "test", name: "test", value: "test value", type: "checkbox" },
-    ];
-    expect(getFieldValue(fields)).toBe("test value");
-  });
-
-  test("getFieldValue should return empty value if type is text", () => {
-    const fields: FormField[] = [
-      { id: "test", name: "test", value: "test value", type: "text" },
-    ];
-    expect(getFieldValue(fields)).toBe("");
-  });
-
-  test("getFieldValue should return empty value if type is textarea", () => {
-    const fields: FormField[] = [
-      { id: "test", name: "test", value: "test value", type: "textarea" },
-    ];
-    expect(getFieldValue(fields)).toBe("");
-  });
-
   test("getFieldType should return free text field if type is text", () => {
-    const fields: FormField[] = [
-      { id: "test", name: "test", value: "test value", type: "text" },
-    ];
+    const fields: FormField = {
+      id: "test",
+      name: "test",
+      value: "test value",
+      type: "text",
+    };
     expect(FormTracker.getFieldType(fields)).toBe(FREE_TEXT_FIELD_TYPE);
   });
 
   test("getFieldType should return free text field if type is textarea", () => {
-    const fields: FormField[] = [
-      { id: "test", name: "test", value: "test value", type: "textarea" },
-    ];
+    const fields: FormField = {
+      id: "test",
+      name: "test",
+      value: "test value",
+      type: "textarea",
+    };
     expect(FormTracker.getFieldType(fields)).toBe(FREE_TEXT_FIELD_TYPE);
   });
 
   test("getFieldType should return drop-down list if type is select-one", () => {
-    const fields: FormField[] = [
-      { id: "test", name: "test", value: "test value", type: "select-one" },
-    ];
+    const fields: FormField = {
+      id: "test",
+      name: "test",
+      value: "test value",
+      type: "select-one",
+    };
     expect(FormTracker.getFieldType(fields)).toBe("drop-down list");
   });
 
   test("getFieldType should return checkbox if type is checkbox", () => {
-    const fields: FormField[] = [
-      { id: "test", name: "test", value: "test value", type: "checkbox" },
-    ];
+    const fields: FormField = {
+      id: "test",
+      name: "test",
+      value: "test value",
+      type: "checkbox",
+    };
     expect(FormTracker.getFieldType(fields)).toBe("checkbox");
   });
 
   test("getFieldType should return radio buttons if type is radio", () => {
-    const fields: FormField[] = [
-      { id: "test", name: "test", value: "test value", type: "radio" },
-    ];
+    const fields: FormField = {
+      id: "test",
+      name: "test",
+      value: "test value",
+      type: "radio",
+    };
     expect(FormTracker.getFieldType(fields)).toBe("radio buttons");
   });
 
