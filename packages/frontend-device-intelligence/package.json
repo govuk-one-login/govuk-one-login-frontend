@@ -34,7 +34,6 @@
     "url": "https://github.com/govuk-one-login/govuk-one-login-frontend/issues"
   },
   "homepage": "https://github.com/govuk-one-login/govuk-one-login-frontend#readme",
-  "devDependencies": {},
   "exports": {
     "import": "./build/esm/index.js",
     "require": "./build/cjs/index.cjs"

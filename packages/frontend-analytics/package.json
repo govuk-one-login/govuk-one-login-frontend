@@ -37,7 +37,6 @@
     "url": "https://github.com/govuk-one-login/govuk-one-login-frontend/issues"
   },
   "homepage": "https://github.com/govuk-one-login/govuk-one-login-frontend/tree/main/packages/frontend-analytics#readme",
-  "devDependencies": {},
   "dependencies": {
     "loglevel": "^1.9.2"
   },
