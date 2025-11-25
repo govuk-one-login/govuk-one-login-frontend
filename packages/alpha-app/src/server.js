@@ -18,13 +18,9 @@ app.engine("liquid", engine.express());
 app.set("views", path.resolve(__dirname, "views"));
 
 app.set("view engine", "liquid");
-// server.js
-
-// 1. Static route for stylesheets (mapped to URL root '/')
 const stylesPath = path.join(__dirname, "..", "public/stylesheets");
 app.use(express.static(stylesPath));
 
-// 2. Static route for JavaScript (mapped to URL root '/')
 const scriptsPath = path.join(__dirname, "..", "public/javascript");
 app.use(express.static(scriptsPath));
 const publicPath = path.join(__dirname, "..");
