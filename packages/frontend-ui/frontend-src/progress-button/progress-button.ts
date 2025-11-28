@@ -97,7 +97,11 @@ function handleProgressButtonClick(
   element.setAttribute('data-prevent-double-click', 'true');
   
   if (element instanceof HTMLButtonElement || element instanceof HTMLInputElement) {
-    element.disabled = true;
+    // When the button is disabled immediately it prevents the initial form submission.
+    // TODO: We should revisit this. It would be better to trigger the button actions from the form submission rather than the button click when a form is present.
+    setTimeout(() => {
+      element.disabled = true;
+    }, 0)
   } else if (element.tagName.toLowerCase() === 'a') {
     element.setAttribute('aria-disabled', 'true');
     element.style.pointerEvents = 'none';
