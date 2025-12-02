@@ -2,8 +2,8 @@ import i18next from "i18next";
 import { NextFunction, Request, Response } from "express";
 import translationCy from "../locales/cy/translation.json";
 import translationEn from "../locales/en/translation.json";
-import path from "path";
-import { existsSync, readFileSync,  } from "fs";
+import path from "node:path";
+import { existsSync, readFileSync,  } from "node:fs";
 
 
 // Define types for Express and non-Express versions
@@ -166,5 +166,5 @@ export const getTranslationObject = (
   return {}; // Return an empty object as a fallback
 };
 
-export const frontendUiTranslationEn = translationEn;
-export const frontendUiTranslationCy = translationCy;
+export { default as frontendUiTranslationEn } from "../locales/en/translation.json";
+export { default as frontendUiTranslationCy } from "../locales/cy/translation.json";
