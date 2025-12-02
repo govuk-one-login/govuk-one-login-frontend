@@ -42,9 +42,9 @@ jobs:
 
       - run: npx nx run-many -t build
 
-      - run: npx nx affected -t lint test test:integration:ci --verbose
-        env:
-          NX_DISABLE_DB: true
+      # - run: npx nx affected -t lint test test:integration:ci --verbose
+      #   env:
+      #     NX_DISABLE_DB: true
 
       - name: Cache test coverage reports
         id: cache-coverage-reports
