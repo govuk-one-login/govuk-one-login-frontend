@@ -1,3 +1,18 @@
+## 4.1.4 (2025-12-03)
+
+### 🩹 Fixes
+
+- **dfc-1063:** release workflow fix ([b8c2f7b](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/b8c2f7b))
+- **dfc-1063:** fixing npm worm issue ([28dc512](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/28dc512))
+- **DFC-1064:** fixed an issue where the progress button could block the initial form submission ([a4ffbc6](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/a4ffbc6))
+- fixing code smells ([703077a](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/703077a))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+- nickhealGDS
+- ug-gds
+
 ## 4.1.3 (2025-11-24)
 
 This was a version bump only for @govuk-one-login/frontend-ui to align it with other projects, there were no code changes.
