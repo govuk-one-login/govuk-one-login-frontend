@@ -23,6 +23,13 @@ To trigger the CD workflow manually, follow these steps:
 - Select the target package and the desired increment type.
 - Click the "Run workflow" button to start the deployment process.
 
+# Getting started
+
+To get started in this repository we recommned you:
+1. Run `npm install` to get all the neccessary dependencies.
+2. Run `npm run prepare-dependencies` to prepare any dependencies that were broken by disabling npm lifecycle scripts.
+3. Run `npm run build` to build all dependencies so that interlinked packages work.
+
 # Create A New Package
 
 To create a new package, follow these steps:
