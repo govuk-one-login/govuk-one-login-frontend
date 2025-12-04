@@ -72,6 +72,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      # After turning pre/post install scripts off canvas couldn't pull down the binaries it relies on. This pulls them down from GitHub release assets.
+      - name: Prepare dependencies
+        run: npm run prepare-dependencies
+
       # required set up steps for Github architecture
       - run: npm i @rollup/rollup-linux-x64-gnu --no-save
       - run: npm i @nx/nx-linux-x64-gnu --no-save
@@ -82,8 +86,8 @@ jobs:
       - name: Print Environment Information
         run: npx nx report
 
-      # - name: Format, lint, test, and build affected packages
-      #   run: npx nx run-many -t format,lint,test,build --projects=${{ github.event.inputs.target }}
+      - name: Format, lint, test, and build affected packages
+        run: npx nx run-many -t format,lint,test,build --projects=${{ github.event.inputs.target }}
 
       # This line is needed for nx affected to work when CI is running on a PR
       - name: Set up main branch tracking

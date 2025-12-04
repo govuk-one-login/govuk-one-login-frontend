@@ -31,6 +31,10 @@ jobs:
           cache: "npm"
       - run: npm install
 
+      # After turning pre/post install scripts off canvas couldn't pull down the binaries it relies on. This pulls them down from GitHub release assets.
+      - name: Prepare dependencies
+        run: npm run prepare-dependencies
+
       # required set up steps for Github architecture
       - run: npm i @rollup/rollup-linux-x64-gnu --no-save
       - run: npm i @nx/nx-linux-x64-gnu --no-save
@@ -42,9 +46,9 @@ jobs:
 
       - run: npx nx run-many -t build
 
-      # - run: npx nx affected -t lint test test:integration:ci --verbose
-      #   env:
-      #     NX_DISABLE_DB: true
+      - run: npx nx affected -t lint test test:integration:ci --verbose
+        env:
+          NX_DISABLE_DB: true
 
       - name: Cache test coverage reports
         id: cache-coverage-reports
