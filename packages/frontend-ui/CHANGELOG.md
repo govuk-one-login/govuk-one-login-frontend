@@ -1,3 +1,7 @@
+## 4.1.5 (2025-12-08)
+
+This was a version bump only for @govuk-one-login/frontend-ui to align it with other projects, there were no code changes.
+
 ## 4.1.4 (2025-12-03)
 
 ### 🩹 Fixes
