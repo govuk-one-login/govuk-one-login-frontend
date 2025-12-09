@@ -95,14 +95,14 @@ export class FormTracker {
    * @param {FormField[]} elements - An array of FormField objects.
    * @return {string} The field type based on the elements.
    */
-  static getFieldType(elements: FormField[]): string {
-    switch (elements[0].type) {
+  static getFieldType(element: FormField): string {
+    switch (element.type) {
       case "select-one":
         return DROPDOWN_FIELD_TYPE;
       case "radio":
         return RADIO_FIELD_TYPE;
       case "checkbox":
-        return elements[0].type;
+        return element.type;
       default:
         return FREE_TEXT_FIELD_TYPE;
     }
