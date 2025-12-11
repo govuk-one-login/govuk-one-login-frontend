@@ -7,6 +7,7 @@ export default {
   transform: {
     "^.+\\.(ts|tsx)$": "ts-jest",
   },
+  setupFiles: ["<rootDir>/test/jest.setup.ts"],
   testEnvironment: "jsdom",
   collectCoverage: true,
   collectCoverageFrom: ["src/**/*.ts"],

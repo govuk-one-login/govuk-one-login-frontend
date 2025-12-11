@@ -1,32 +1,35 @@
 <script {% if params.nonce%} nonce="{{ params.nonce }}" {% endif %}>
-  window.addEventListener('load', function () {
-      window
-          .DI
-          .analyticsGa4
-          .pageViewTracker
-          .trackOnPageLoad({
-            {% if params.statusCode is defined %}
-              statusCode: '{{params.statusCode}}',
-              {% else %}
-              statusCode: window.DI.httpStatusCode || 200,
-              {% endif %}
-              englishPageTitle: '{{params.englishPageTitle}}',
-              taxonomy_level1: '{{params.taxonomyLevel1}}', // Access taxonomy level 1
-              taxonomy_level2: '{{params.taxonomyLevel2}}', // Access taxonomy level 2
-              taxonomy_level3: '{{params.taxonomyLevel3}}', // Access taxonomy level 3
-              taxonomy_level4: '{{params.taxonomyLevel4}}', // Access taxonomy level 4
-              taxonomy_level5: '{{params.taxonomyLevel5}}', // Access taxonomy level 5
-              content_id: '{{params.contentId}}',
-              {% if params.dynamic is defined %}
-              dynamic: {{params.dynamic}},
-              {%else%}
-              dynamic: 'undefined',
-              {% endif %}
-              {% if params.loggedInStatus is defined %}
-              logged_in_status: {{params.loggedInStatus}}
-              {%else%}
-              logged_in_status: 'undefined'
-              {% endif %}
-          });
-  });
+  function trackOnPageLoad() {
+    window
+      .DI
+      .analyticsGa4
+      .pageViewTracker
+      .trackOnPageLoad({
+        {% if params.statusCode is defined %}
+          statusCode: '{{params.statusCode}}',
+          {% else %}
+          statusCode: window.DI.httpStatusCode || 200,
+          {% endif %}
+          englishPageTitle: '{{params.englishPageTitle}}',
+          taxonomy_level1: '{{params.taxonomyLevel1}}', // Access taxonomy level 1
+          taxonomy_level2: '{{params.taxonomyLevel2}}', // Access taxonomy level 2
+          taxonomy_level3: '{{params.taxonomyLevel3}}', // Access taxonomy level 3
+          taxonomy_level4: '{{params.taxonomyLevel4}}', // Access taxonomy level 4
+          taxonomy_level5: '{{params.taxonomyLevel5}}', // Access taxonomy level 5
+          content_id: '{{params.contentId}}',
+          {% if params.dynamic is defined %}
+          dynamic: {{params.dynamic}},
+          {%else%}
+          dynamic: 'undefined',
+          {% endif %}
+          {% if params.loggedInStatus is defined %}
+          logged_in_status: {{params.loggedInStatus}}
+          {%else%}
+          logged_in_status: 'undefined'
+          {% endif %}
+      });
+  }
+
+  window.addEventListener('load', trackOnPageLoad);
+  window.addEventListener('cookie-consent', trackOnPageLoad);
 </script>
