@@ -144,23 +144,21 @@
     initAll()
   </script>
   <script type="text/javascript" src="/public/scripts/application.js"></script>
-  <script type="text/javascript" src="/public/scripts/analytics.js" nonce='{{scriptNonce}}'></script>
   <script type="text/javascript" nonce='{{scriptNonce}}'>
     window.DI = window.DI || {};
     window.DI.taxonomy_level2 = '{{taxonomy_level2}}'
   </script>
+  <script src="/ga4-assets/analytics.js"></script>
   <script type="text/javascript" {% if scriptNonce %} nonce="{{ scriptNonce }}"{%  endif %}>
     window
       .DI
       .appInit({
         ga4ContainerId: "{{ga4ContainerId}}",
-        uaContainerId: "{{uaContainerId}}"
-      }, {
-        isDataSensitive: false,
-        disableGa4Tracking: {{isGa4Disabled}},
-        disableUaTracking: {{isUaDisabled}},
-        cookieDomain: "{{analyticsCookieDomain}}"
-      });
+      },
+        {
+    enableGa4Tracking:"true",
+    cookieDomain: "{{analyticsCookieDomain}}"
+    });
   </script>
   <script type="text/javascript" nonce='{{scriptNonce}}'>
     if (document.getElementById('back-button'))
