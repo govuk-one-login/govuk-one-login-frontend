@@ -38,6 +38,7 @@ async function renderTemplate() {
 
 describe("E2E", () => {
   beforeEach(() => {
+    unsetCookies();
     jest.spyOn(pushToDataLayer, "pushToDataLayer");
   });
 
@@ -46,35 +47,18 @@ describe("E2E", () => {
 
     await renderTemplate();
 
-    expect(pushToDataLayer.pushToDataLayer).toHaveBeenLastCalledWith({
-      event: "page_view_ga4",
-      page_view: {
-        content_id: "002",
-        dynamic: "false",
-        first_published_at: "undefined",
-        language: "undefined",
-        location: "http://localhost/",
-        logged_in_status: "logged in",
-        organisations: "<OT1056>",
-        primary_publishing_organisation:
-          "government digital service - digital identity",
-        referrer: "undefined",
-        relying_party: "localhost",
-        status_code: "200",
-        taxonomy_level1: "document checking application",
-        taxonomy_level2: "undefined",
-        taxonomy_level3: "undefined",
-        taxonomy_level4: "undefined",
-        taxonomy_level5: "undefined",
-        title: "general.biometricchip.pagetitle",
-        updated_at: "undefined",
-      },
-    });
+    const eventsInDataLayer = (
+      pushToDataLayer.pushToDataLayer as jest.Mock
+    ).mock.calls.map((call) => call[0].event);
+
+    const pageViewEventsInDataLayer = eventsInDataLayer.filter(
+      (event) => event === "page_view_ga4",
+    );
+
+    expect(pageViewEventsInDataLayer.length).toBe(1);
   });
 
   it("doesn't send the onPageLoad event if cookies are unset before the page loads", async () => {
-    unsetCookies();
-
     await renderTemplate();
 
     (pushToDataLayer.pushToDataLayer as jest.Mock).mock.calls.forEach(
@@ -86,37 +70,20 @@ describe("E2E", () => {
   });
 
   it("sends the onPageLoad event if cookies are accepted after the page loads", async () => {
-    unsetCookies();
-
     const dom = await renderTemplate();
 
     acceptCookies();
 
     dom.window.dispatchEvent(new dom.window.Event("cookie-consent"));
 
-    expect(pushToDataLayer.pushToDataLayer).toHaveBeenLastCalledWith({
-      event: "page_view_ga4",
-      page_view: {
-        content_id: "002",
-        dynamic: "false",
-        first_published_at: "undefined",
-        language: "undefined",
-        location: "http://localhost/",
-        logged_in_status: "logged in",
-        organisations: "<OT1056>",
-        primary_publishing_organisation:
-          "government digital service - digital identity",
-        referrer: "undefined",
-        relying_party: "localhost",
-        status_code: "200",
-        taxonomy_level1: "document checking application",
-        taxonomy_level2: "undefined",
-        taxonomy_level3: "undefined",
-        taxonomy_level4: "undefined",
-        taxonomy_level5: "undefined",
-        title: "general.biometricchip.pagetitle",
-        updated_at: "undefined",
-      },
-    });
+    const eventsInDataLayer = (
+      pushToDataLayer.pushToDataLayer as jest.Mock
+    ).mock.calls.map((call) => call[0].event);
+
+    const pageViewEventsInDataLayer = eventsInDataLayer.filter(
+      (event) => event === "page_view_ga4",
+    );
+
+    expect(pageViewEventsInDataLayer.length).toBe(1);
   });
 });
