@@ -1,3 +1,18 @@
+## 4.2.0 (2025-12-12)
+
+### 🚀 Features
+
+- **DFC-1083:** enable ga4 v4 in mobile base template ([0d2215c](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/0d2215c))
+
+### 🩹 Fixes
+
+- **1052:** updated locales to remove . from the link ([c206c0b](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/c206c0b))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+- nickhealGDS
+
 ## 4.1.5 (2025-12-08)
 
 This was a version bump only for @govuk-one-login/frontend-ui to align it with other projects, there were no code changes.
