@@ -9,9 +9,7 @@ The page_view event tracks each page a user views on their journey through digit
 
 If a user has already consented to analytics when they visit a page, the page view event will be pushed to the dataLayer.
 
-Note that if a user consents to analytics while already on a page (ie. the page has already loaded), the page view will
-still be pushed to the dataLayer when the user clicks "Accept" on the cookie banner, even though the page has not
-reloaded.
+If a user has not already consented to analytics when they visit a page, the page view event should be pushed to the dataLayer when the user clicks accept. This is handled in the ga4OnPageLoad nunjucks template.
 
 #### We want to know…
 
