@@ -150,17 +150,31 @@
     window.DI.taxonomy_level2 = '{{taxonomy_level2}}'
   </script>
   <script type="text/javascript" {% if scriptNonce %} nonce="{{ scriptNonce }}"{%  endif %}>
-    window
-      .DI
-      .appInit({
-        ga4ContainerId: "{{ga4ContainerId}}",
-        uaContainerId: "{{uaContainerId}}"
-      }, {
-        isDataSensitive: false,
-        disableGa4Tracking: {{isGa4Disabled}},
-        disableUaTracking: {{isUaDisabled}},
-        cookieDomain: "{{analyticsCookieDomain}}"
-      });
+    {% if analyticsDataSensitive is defined and isPageDataSensitive is defined %}
+      window
+        .DI
+        .appInit({
+          ga4ContainerId: "{{ga4ContainerId}}",
+        }, {
+          isDataSensitive: {{ analyticsDataSensitive | default(true) }},
+          isPageDataSensitive: {{ isPageDataSensitive | default(true) }},
+          enableGa4Tracking: {{ isGa4Enabled | default(false) }},
+          cookieDomain: "{{analyticsCookieDomain}}"
+        });
+    {% else %}
+      console.log("Using deprecated GA4 v2 config. Please add analyticsDataSensitive and isPageDataSensitive flags to your nunjucks environment to enable GA4 v4. This will be removed in a future version.");
+      window
+        .DI
+        .appInit({
+          ga4ContainerId: "{{ga4ContainerId}}",
+          uaContainerId: "{{uaContainerId}}"
+        }, {
+          isDataSensitive: false,
+          disableGa4Tracking: {{isGa4Disabled}},
+          disableUaTracking: {{isUaDisabled}},
+          cookieDomain: "{{analyticsCookieDomain}}"
+        });
+    {% endif %}
   </script>
   <script type="text/javascript" nonce='{{scriptNonce}}'>
     if (document.getElementById('back-button'))
