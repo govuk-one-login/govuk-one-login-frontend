@@ -1,3 +1,9 @@
+## 4.2.1 (2025-12-12)
+
+### 🧱 Updated Dependencies
+
+- Updated @govuk-one-login/frontend-analytics to 4.0.6
+
 ## 4.2.0 (2025-12-12)
 
 ### 🚀 Features

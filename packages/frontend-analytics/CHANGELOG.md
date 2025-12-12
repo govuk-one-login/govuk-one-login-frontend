@@ -1,3 +1,19 @@
+## 4.0.6 (2025-12-12)
+
+### 🩹 Fixes
+
+- **DFC-1078:** fixed where the onPageLoad event could be missed when cookies were first accepted ([343eb92](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/343eb92))
+- **dfc-1063:** release workflow fix ([b8c2f7b](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/b8c2f7b))
+- **dfc-1063:** fixing npm worm issue ([28dc512](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/28dc512))
+- **dfc-1025:** fix pino version ([f8f6630](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/f8f6630))
+- update git commit body line length ([e45654e](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/e45654e))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+- nickhealGDS
+- ug-gds
+
 ## 4.0.5 (2025-10-17)
 
 This was a version bump only for @govuk-one-login/frontend-analytics to align it with other projects, there were no code changes.

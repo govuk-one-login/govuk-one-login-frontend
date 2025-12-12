@@ -1,6 +1,6 @@
 {
   "name": "@govuk-one-login/alpha-app",
-  "version": "0.0.61",
+  "version": "0.0.62",
   "scripts": {
     "start": "npm-run-all build-sass --parallel dev",
     "dev": "node --watch src/app.js",
@@ -17,10 +17,10 @@
   },
   "dependencies": {
     "@axe-core/playwright": "^4.11.0",
-    "@govuk-one-login/frontend-analytics": "4.0.5",
+    "@govuk-one-login/frontend-analytics": "4.0.6",
     "@govuk-one-login/frontend-asset-loader": "0.0.5",
     "@govuk-one-login/frontend-language-toggle": "2.2.2",
-    "@govuk-one-login/frontend-ui": "^4.2.0",
+    "@govuk-one-login/frontend-ui": "^4.2.1",
     "@govuk-one-login/frontend-vital-signs": "0.1.4",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "dotenv": "^16.4.7",
