@@ -86,6 +86,10 @@ jobs:
       - name: Print Environment Information
         run: npx nx report
 
+      - name: Conditional Build for frontend-analytics
+        if: ${{ github.event.inputs.target == '@govuk-one-login/frontend-ui' }}
+        run: npx nx build @govuk-one-login/frontend-analytics
+
       - name: Format, lint, test, and build affected packages
         run: npx nx run-many -t format,lint,test,build --projects=${{ github.event.inputs.target }}
 
