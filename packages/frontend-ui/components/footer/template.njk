@@ -2,7 +2,7 @@
 
 {% from "govuk/components/footer/macro.njk" import govukFooter %}
     {{ govukFooter({
-    meta: { items: footer.footerNavItems },
+    meta: { visuallyHiddenTitle: footer.navItemHiddenHeader, items: footer.footerNavItems },
     contentLicence: { html: footer.contentLicence.html },
     copyright: { text: footer.copyright.text },
     rebrand: MAY_2025_REBRAND_ENABLED,
