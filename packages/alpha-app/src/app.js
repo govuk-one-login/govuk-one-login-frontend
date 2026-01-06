@@ -24,7 +24,7 @@ const {
 } = require("@govuk-one-login/frontend-ui");
 
 const crypto = require("crypto");
-const sessionId = crypto.randomBytes(16).toString("hex");
+const sessionId = crypto.randomBytes(32).toString("hex");
 const {
   setGa4ContainerId,
   setUaContainerId,
@@ -122,10 +122,10 @@ app.use(
 );
 app.use(
   session({
-    secret: sessionId, // Should I make this more secure?
+    secret: sessionId,
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false },
+    cookie: { secure: process.env.ENV != "dev" },
   }),
 );
 app.use((req, res, next) => {
