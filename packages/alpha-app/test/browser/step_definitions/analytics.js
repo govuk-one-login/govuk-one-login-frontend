@@ -240,14 +240,14 @@ Then("The dataLayer includes the navigation button event", async function () {
   const eventData = dataLayer.find(
     (eventItem) => eventItem.event === "event_data",
   ).event_data;
-  expect(eventData).to.contain({
+  expect(eventData).to.deep.equal({
     event_name: "navigation",
     type: "generic button",
     text: "start now",
     section: "undefined",
     action: "undefined",
     url: "http://localhost:3000/organisation-type",
-    external: "true", // true because anything not on "account.gov.uk" is considered external
+    external: "false",
     link_domain: "http://localhost:3000",
     "link_path_parts.1": "/organisation-type",
     "link_path_parts.2": "undefined",
@@ -264,14 +264,14 @@ Then(
     const eventData = dataLayer.find(
       (eventItem) => eventItem.event === "event_data",
     ).event_data;
-    expect(eventData).to.contain({
+    expect(eventData).to.deep.equal({
       event_name: "navigation",
       type: "generic link",
       text: "test inbound link",
       section: "undefined",
       action: "undefined",
       url: "http://localhost:3000/service-description",
-      external: "true", // true because anything not on "account.gov.uk" is considered external
+      external: "false",
       link_domain: "http://localhost:3000",
       "link_path_parts.1": "/service-description",
       "link_path_parts.2": "undefined",
@@ -321,7 +321,7 @@ Then(
       section: "undefined",
       action: "undefined",
       url: "http://localhost:3000/welcome",
-      external: "true", // true because anything not on "account.gov.uk" is considered external
+      external: "false",
       link_domain: "http://localhost:3000",
       "link_path_parts.1": "/welcome",
       "link_path_parts.2": "undefined",
@@ -436,7 +436,7 @@ Then(
     const eventData = dataLayer.find(
       (eventItem) => eventItem.event === "event_data",
     ).event_data;
-    expect(eventData).to.contain({
+    expect(eventData).to.deep.equal({
       event_name: "navigation",
       type: "footer",
       text: "© crown copyright",
