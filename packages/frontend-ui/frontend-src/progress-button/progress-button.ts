@@ -1,4 +1,6 @@
-export function initialiseProgressButtons(document: Document = window.document) {
+const DEFAULT_ERROR_TIMEOUT = 10000; // 10 seconds
+
+export function initialiseProgressButtons(document: Document = window.document, customErrorTimeout?: number) {
   // Create a single live region for button status announcements
   const statusRegion = document.createElement('div');
   statusRegion.setAttribute('aria-live', 'assertive');
@@ -41,8 +43,10 @@ export function initialiseProgressButtons(document: Document = window.document) 
       const waitingText = button.getAttribute('data-waiting-text');
       const longWaitingText = button.getAttribute('data-long-waiting-text');
       const errorPage = button.getAttribute('data-error-page');
+      if (button.hasAttribute('data-error-timeout')) {
+        customErrorTimeout = parseInt(button.getAttribute('data-error-timeout') as string);
+      }
       const isInput = button.tagName.toLowerCase() === 'input';
-      
       if (!waitingText || !longWaitingText || !errorPage) {
         console.error('Progress button is missing required data attributes.');
         return;
@@ -51,7 +55,7 @@ export function initialiseProgressButtons(document: Document = window.document) 
       isSubmitting = true;
       
       // Always handle the button click, regardless of form presence
-      handleProgressButtonClick(button, waitingText, longWaitingText, errorPage, isInput);
+      handleProgressButtonClick(button, waitingText, longWaitingText, errorPage, isInput, customErrorTimeout || DEFAULT_ERROR_TIMEOUT);
 
       // If no form, we're done. If there is a form, the form submit handler will take over
       if (!form) {
@@ -86,7 +90,8 @@ function handleProgressButtonClick(
   waitingText: string,
   longWaitingText: string,
   errorPage: string,
-  isInput: boolean
+  isInput: boolean,
+  errorTimeoutDuration: number = DEFAULT_ERROR_TIMEOUT
 ): () => void {
   var originalText = isInput && element instanceof HTMLInputElement ? element.value : element.innerText;
   const statusRegion = document.querySelector('.govuk-visually-hidden[role="status"]');
@@ -140,7 +145,7 @@ function handleProgressButtonClick(
 
   var errorTimeout = window.setTimeout(function() {
     window.location.href = errorPage;
-  }, 10000);
+  }, errorTimeoutDuration);
 
   function resetButton() {
     var classes = element.className.split(' ');
