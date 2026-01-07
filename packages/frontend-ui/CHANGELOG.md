@@ -1,3 +1,17 @@
+## 4.2.2 (2026-01-07)
+
+### 🚀 Features
+
+- **1084:** added dev override for progress-button timeout ([54e7b2e](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/54e7b2e))
+
+### 🩹 Fixes
+
+- **1084:** updated readme docs ([2e88d6a](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/2e88d6a))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+
 ## 4.2.1 (2025-12-12)
 
 ### 🧱 Updated Dependencies
