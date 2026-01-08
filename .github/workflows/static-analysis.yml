@@ -46,7 +46,7 @@ jobs:
 
       - run: npx nx run-many -t build
 
-      - run: npx nx affected -t lint test test:integration:ci --verbose
+      - run: sleep 300 && npx nx affected -t lint test test:integration:ci --verbose
         env:
           NX_DISABLE_DB: true
 
