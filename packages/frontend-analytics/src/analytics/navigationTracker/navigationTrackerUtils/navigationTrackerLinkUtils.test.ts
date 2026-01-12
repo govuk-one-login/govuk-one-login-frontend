@@ -9,24 +9,92 @@ import {
 
 describe("navigationTrackerLinkUtils", () => {
   describe("isExternalLink", () => {
+    const originalWindowLocation = global.location;
+
+    afterEach(() => {
+      Object.defineProperty(global, "location", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: originalWindowLocation,
+      });
+    });
+
     test("should return false for internal links", () => {
+      Object.defineProperty(global, "location", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: new URL("https://account.gov.uk"),
+      });
       const url = "http://account.gov.uk";
       expect(isExternalLink(url)).toBe(false);
     });
 
     test("should return false for signin account links", () => {
+      Object.defineProperty(global, "location", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: new URL("https://account.gov.uk"),
+      });
       const url = "http://signin.account.gov.uk/cookies";
       expect(isExternalLink(url)).toBe(false);
     });
 
     test("should return false for signin account links in staging", () => {
+      Object.defineProperty(global, "location", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: new URL("https://account.gov.uk"),
+      });
       const url = "http://signin.staging.account.gov.uk/cookies";
       expect(isExternalLink(url)).toBe(false);
     });
 
     test("should return true for external links", () => {
+      Object.defineProperty(global, "location", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: new URL("https://account.gov.uk"),
+      });
       const url = "https://google.com";
       expect(isExternalLink(url)).toBe(true);
+    });
+
+    test("should return false for localhost links", () => {
+      Object.defineProperty(global, "location", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: new URL("http://localhost:8000"),
+      });
+      const url = "http://localhost:8000";
+      expect(isExternalLink(url)).toBe(false);
+    });
+
+    test("should return true for external links with localhost in them", () => {
+      Object.defineProperty(global, "location", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: new URL("http://localhost:8000"),
+      });
+      const url = "http://localhost.com";
+      expect(isExternalLink(url)).toBe(true);
+    });
+
+    test("return false if not a valid url", () => {
+      Object.defineProperty(global, "location", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: new URL("http://localhost:8000"),
+      });
+      const url = "abc...";
+      expect(isExternalLink(url)).toBe(false);
     });
   });
 

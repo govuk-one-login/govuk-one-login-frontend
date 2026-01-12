@@ -7,25 +7,23 @@ If a user has consented to analytics cookies and the navigation tracker has been
 
 ## How it works
 
-The navigation tracker works by adding an event listener to the element which listens for the `click` event dispatched by the
-element (button/link). The event listener invokes the `trackNavigation` function with the `click` event.
+The navigation tracker works by adding an event listener to the document which listens for the `click` event dispatched by any element.
+It then filters down to Anchors or Buttons with the appropriate attributes attached.
+The event listener invokes the `trackNavigation` function with the `click` event.
 
 The data required for the `navigation` event is parsed from the element's attributes.
 
 ## We want to know…
 
-When users interact with features that navigate them from one section of the user journey to aother
+When users interact with features that navigate them from one section of the user journey to another.
 
 ## So that we can…
 
-Understand how our users navigate through our user journey, monitor issues and make recommendations on how to improve our users experiences
+Understand how our users navigate through our user journey, monitor issues and make recommendations on how to improve our users experiences.
 
-## Tracking different navigation types
+## Example navigation events
 
-The type of the `navigation` event is determined by the properties parsed in the `ga4-data-navigation` attribute, and so only the configuration needs
-to be modified per navigation type.
-
-Types of `navigation` events can be found at: https://govukverify.atlassian.net/jira/software/c/projects/DFC/boards/436?selectedIssue=DFC-149
+Example `navigation` events can be found at: [https://govukverify.atlassian.net/browse/DFC-149](https://govukverify.atlassian.net/browse/DFC-149).
 
 ## Example of event
 
