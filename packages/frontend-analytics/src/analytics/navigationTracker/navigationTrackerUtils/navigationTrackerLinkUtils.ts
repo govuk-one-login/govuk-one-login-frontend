@@ -1,4 +1,3 @@
-import logger from "loglevel";
 import { isChangeLink } from "../../../utils/dataScrapersUtils/dataScrapers";
 import { NavigationElement } from "../navigationTracker.interface";
 
@@ -9,22 +8,11 @@ import { NavigationElement } from "../navigationTracker.interface";
  * @return {boolean} Returns true if the URL is an external link, false otherwise.
  */
 export const isExternalLink = (url: string): boolean => {
-  try {
-    const isSameOrigin = new URL(url).origin === window.location.origin;
-    const isGovukOneLogin = url.includes("account.gov.uk");
-
-    if (isSameOrigin || isGovukOneLogin) {
-      return false;
-    }
-
-    return true;
-  } catch (e) {
-    logger.warn(
-      `Couldn't identify if link to ${url} is internal or external. Defaulting to internal.`,
-      e,
-    );
+  if (!url) {
     return false;
   }
+
+  return !url.includes("account.gov.uk");
 };
 
 /**
