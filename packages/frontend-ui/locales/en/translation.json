@@ -20,6 +20,7 @@
     "viewCookiesLink": "https://signin.account.gov.uk/cookies"
   },
   "footer": {
+    "navItemHiddenHeader": "Support links",
     "footerNavItems": [
       {
         "href": "https://signin.account.gov.uk/accessibility-statement",
