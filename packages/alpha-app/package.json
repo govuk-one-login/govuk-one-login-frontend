@@ -9,7 +9,7 @@
     "precommit": "npm run test && npm run format && git add .",
     "prod": "export NODE_ENV=production && node src/app.js",
     "test": "node -e \"console.log('No tests currently defined');\"",
-    "test:integration:ci": "npx playwright install --with-deps && start-server-and-test start http://localhost:3000 test:integration",
+    "test:integration:ci": "npx playwright install --with-deps chromium && start-server-and-test start http://localhost:3000 test:integration",
     "test:integration": "cucumber-js test/browser/features/v1/analytics --require test/browser/support/setup.js --require test/browser/step_definitions/**/*.js cucumber --tags 'not @skip'",
     "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,md}\"",
     "build": "rollup -c",
