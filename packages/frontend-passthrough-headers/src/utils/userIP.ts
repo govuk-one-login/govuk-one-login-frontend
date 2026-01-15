@@ -2,7 +2,7 @@
 import { type Request } from "express";
 import forwardedParse from "forwarded-parse";
 import { getLogger } from "./logger";
-import type { APIGatewayProxyEvent } from "@aws-lambda-powertools/parser/types";
+import type { APIGatewayProxyEvent } from "aws-lambda";
 import { getHeader } from "./getHeader";
 
 const HEADER_CLOUDFRONT_VIEWER = "cloudfront-viewer-address";
