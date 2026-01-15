@@ -1,7 +1,7 @@
 import { type Request } from "express";
 import { getLogger } from "./utils/logger";
 import { processUserIP } from "./utils/userIP";
-import { APIGatewayProxyEvent } from "aws-lambda";
+import type { APIGatewayProxyEvent } from "@aws-lambda-powertools/parser/types";
 import { getHeader } from "./utils/getHeader";
 export { setCustomLogger } from "./utils/logger";
 
