@@ -1,3 +1,18 @@
+## 4.0.7 (2026-01-16)
+
+### 🩹 Fixes
+
+- Remove outdated lambda library ([62f2f76](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/62f2f76))
+- **DFC-1093:** treat any same-origin link as internal to support localhost for local development ([14fefcd](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/14fefcd))
+- Reduce regex excessive backtracking risk ([effb31c](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/effb31c))
+- updated workflow to conditonally build analytics with frontend-ui ([56e5f79](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/56e5f79))
+
+### ❤️ Thank You
+
+- lissymomen @lissymomen
+- nickhealGDS
+- Sam Bunce
+
 ## 4.0.6 (2025-12-12)
 
 ### 🩹 Fixes

@@ -1,3 +1,18 @@
+## 4.2.3 (2026-01-16)
+
+### 🩹 Fixes
+
+- Remove outdated lambda library ([62f2f76](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/62f2f76))
+- Welsh translation for hidden support link header ([7d7d44c](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/7d7d44c))
+
+### 🧱 Updated Dependencies
+
+- Updated @govuk-one-login/frontend-analytics to 4.0.7
+
+### ❤️ Thank You
+
+- Sam Bunce
+
 ## 4.2.2 (2026-01-07)
 
 ### 🚀 Features
