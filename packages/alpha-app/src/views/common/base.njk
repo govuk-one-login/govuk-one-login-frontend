@@ -21,6 +21,7 @@
 {% from "frontend-ui/build/components/cookie-banner/macro.njk" import frontendUiCookieBanner %}
 {% from "frontend-ui/build/components/skip-link/macro.njk" import frontendUiSkipLink %}
 {% from "frontend-ui/build/components/progress-button/macro.njk" import frontendUiProgressButton %}
+{% from "frontend-analytics/components/ga4-opl/macro.njk" import ga4OnPageLoad %}
 
 
 
@@ -96,17 +97,19 @@
           logLevel: 'debug',
         }
       );
-
-      window.DI.analyticsGa4.pageViewTracker.trackOnPageLoad({
-        statusCode: "{{statusCode}}",
-        englishPageTitle: "{{englishPageTitle}}",
-        taxonomy_level1: "{{taxonomyLevel1}}",
-        taxonomy_level2: "{{taxonomyLevel2}}",
-        content_id: "{{contentId}}",
-        logged_in_status: false,
-        dynamic: false
-      });
     </script>
+
+    {{ 
+      ga4OnPageLoad({
+        contentId: contentId,
+        dynamic: false,
+        englishPageTitle: englishPageTitle,
+        loggedInStatus: false,
+        statusCode: statusCode,         
+        taxonomyLevel1: taxonomyLevel1,
+        taxonomyLevel2: taxonomyLevel2
+      }) 
+    }}
 
     <script type="module" src="/fingerprint/index.js"></script>
     <script type="module">
