@@ -146,6 +146,7 @@ To deprecate a specific package version from the monorepo, use the **GitHub Acti
 2. **Fill in the Required Inputs**:
    - **Target**: Choose the package you want to release from the list of options:
      - `@govuk-one-login/alpha-component`
+     - `@govuk-one-login/event-catalogue-utils`
      - `@govuk-one-login/frontend-analytics`
      - `@govuk-one-login/frontend-language-toggle`
      - `@govuk-one-login/frontend-passthrough-headers`

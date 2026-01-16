@@ -1,0 +1,30 @@
+{
+  "name": "@govuk-one-login-frontend/event-catalogue-utils",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "module": "",
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "jest --coverage src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/govuk-one-login/govuk-one-login-frontend.git"
+  },
+  "keywords": [
+    "govuk-one-login",
+    "gds",
+    "govuk-onelogin",
+    "govuk one login"
+  ],
+  "author": "DI Frontend Capability Team",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/govuk-one-login/govuk-one-login-frontend/issues"
+  },
+  "homepage": "https://github.com/govuk-one-login/govuk-one-login-frontend#readme"
+}
