@@ -1,7 +1,7 @@
 import { type Request } from "express";
 import { createPersonalDataHeaders } from "../../index";
 import { getLogger } from "../../utils/logger";
-import type { APIGatewayProxyEvent } from "@aws-lambda-powertools/parser/types";
+import type { APIGatewayProxyEvent } from "aws-lambda";
 
 const MOCK_CLOUDFRONT_VIEWER_IPV4 = "198.51.100.10:46532";
 const MOCK_CLOUDFRONT_VIEWER_IPV6 = "[2001:db8:cafe::17]:46532";
