@@ -34,7 +34,7 @@
   },
   "types": "./build/esm/index.d.ts",
   "dependencies": {
-    "@aws-lambda-powertools/parser": "^2.30.2",
+    "@types/aws-lambda": "^8.10.159",
     "forwarded-parse": "^2.1.2",
     "pino": "^10.1.0"
   }
