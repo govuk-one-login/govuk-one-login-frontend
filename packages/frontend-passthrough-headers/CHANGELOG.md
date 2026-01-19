@@ -1,3 +1,19 @@
+## 1.3.2 (2026-01-19)
+
+### 🩹 Fixes
+
+- Official AWS type for APIGatewayProxyEvent ([fec3418](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/fec3418))
+- Remove outdated lambda library ([62f2f76](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/62f2f76))
+- updated workflow to conditonally build analytics with frontend-ui ([56e5f79](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/56e5f79))
+- **dfc-1063:** release workflow fix ([b8c2f7b](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/b8c2f7b))
+- **dfc-1063:** fixing npm worm issue ([28dc512](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/28dc512))
+
+### ❤️ Thank You
+
+- lissymomen @lissymomen
+- Sam Bunce
+- ug-gds
+
 ## 1.3.1 (2025-11-17)
 
 ### 🚀 Features
