@@ -1,0 +1,26 @@
+{
+  "name": "event-catalogue-utils",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/event-catalogue-utils/src",
+   "targets": {
+      "lint": {
+        "executor": "@nx/eslint:lint",
+        "options": {
+          "lintFilePatterns": ["packages/event-catalogue-utils/src/**/*"]
+        }
+      },
+      "format": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "prettier --write packages/event-catalogue-utils/src/**/*"
+        }
+      },
+      "format:check": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "prettier --check packages/event-catalogue-utils/src/**/*"
+        }
+      }
+    }
+}
