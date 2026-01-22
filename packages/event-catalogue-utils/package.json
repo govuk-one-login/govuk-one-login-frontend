@@ -2,15 +2,21 @@
   "name": "@govuk-one-login-frontend/event-catalogue-utils",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "module": "",
+  "main": "build/cjs/index.cjs",
+  "module": "build/esm/index.js",
   "type": "module",
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
-    "test": "jest --coverage src"
+    "test": "jest --coverage src",
+    "build": "rollup -c"
   },
+    "files": [
+    "build/",
+    "package.json",
+    "README.md"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/govuk-one-login/govuk-one-login-frontend.git"
