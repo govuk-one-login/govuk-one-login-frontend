@@ -1,5 +1,5 @@
 {
-  "name": "event-catalogue-utils",
+  "name": "@govuk-one-login/event-catalogue-utils",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "packages/event-catalogue-utils/src",
