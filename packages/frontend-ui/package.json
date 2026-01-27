@@ -58,6 +58,6 @@
   "types": "./build/esm/backend/index.d.ts",
   "optionalDependencies": {
     "@govuk-one-login/frontend-analytics": "^4.0.7",
-    "hmpo-components": "^7.1.0"
+    "hmpo-components": "^8.0.0"
   }
 }
