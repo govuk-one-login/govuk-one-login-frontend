@@ -73,7 +73,14 @@
 {% block bodyEnd %}
   {% block scripts %}
     <script type="module" src="/public/javascripts/all.js"></script>
-    <script type="text/javascript" src="/public/javascripts/analytics.js"></script>
+    <script type="module" src="/public/javascripts/analytics.js"></script>
+
+    <script type="module" nonce='{{ cspNonce }}' src="/public/javascripts/govuk-frontend.min.js"></script>
+    <script type="module" nonce='{{ cspNonce }}'>
+      import { initAll } from '/public/javascripts/govuk-frontend.min.js'
+      initAll()
+    </script>
+
     <script type="text/javascript" {% if cspNonce %} nonce="{{ cspNonce }}"{%  endif %}>
       window
         .DI
