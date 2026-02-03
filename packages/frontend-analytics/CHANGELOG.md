@@ -1,3 +1,13 @@
+## 3.3.1 (2026-02-03)
+
+### 🩹 Fixes
+
+- updated ga4 to have protective value setting ([25d0917](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/25d0917))
+
+### ❤️  Thank You
+
+- DavidMcMichael-GDS
+
 ## 3.3.0 (2025-03-04)
 
 ### 🩹 Fixes
