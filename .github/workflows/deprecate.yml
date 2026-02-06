@@ -21,9 +21,6 @@ on:
         required: true
         type: string
 
-permissions:
-  id-token: write # needed for provenance data generation
-
 run-name: Deprecate ${{ github.event.inputs.target }}@${{ github.event.inputs.version }}
 
 jobs:
@@ -41,6 +38,9 @@ jobs:
         with:
           node-version: 24
           registry-url: https://registry.npmjs.org/
+          # NPM OIDC doesn't currently support deprecations.
+          # Instead we are using a short-lived token specifically for this workflow.
+          # This token should be no longer than 10 minutes, and it should be scoped to just the package that is being deprecated.
           token: ${{ secrets.NPM_ACCESS_TOKEN }}
 
       - name: Deprecate Package Version
