@@ -17,6 +17,8 @@
   },
   "dependencies": {
     "@axe-core/playwright": "^4.11.0",
+    "@govuk-one-login/event-catalogue-utils": "0.0.2",
+    "@govuk-one-login/event-catalogue": "^43.0.0",
     "@govuk-one-login/frontend-analytics": "4.0.7",
     "@govuk-one-login/frontend-asset-loader": "0.0.5",
     "@govuk-one-login/frontend-language-toggle": "2.2.2",
