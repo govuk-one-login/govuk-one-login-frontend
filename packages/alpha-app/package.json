@@ -1,5 +1,5 @@
 {
-  "name": "@govuk-one-login/alpha-app",
+  "name": "alpha-app",
   "version": "0.0.67",
   "scripts": {
     "start": "npm-run-all build-sass --parallel dev",
