@@ -35,6 +35,6 @@
   },
   "types": "./build/esm/index.d.ts",
   "dependencies": {
-    "pino": "^8.21.0"
+    "pino": "^10.1.0"
   }
 }
