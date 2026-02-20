@@ -15,11 +15,24 @@
       "conventionalCommits": true
     }
   },
+  "targets": {
+    "publish": {
+      "executor": "@nx/js:release-publish",
+      "options": {
+        "registry": "https://registry.npmjs.org"
+      }
+    }
+  },
   "targetDefaults": {
     "@nx/js:tsc": {
       "cache": true,
-      "dependsOn": ["^build"],
-      "inputs": ["default", "^default"]
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "default",
+        "^default"
+      ]
     },
     "@nx/eslint:lint": {
       "cache": true,
@@ -32,7 +45,11 @@
     },
     "@nx/jest:jest": {
       "cache": false,
-      "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"],
+      "inputs": [
+        "default",
+        "^default",
+        "{workspaceRoot}/jest.preset.js"
+      ],
       "options": {
         "passWithNoTests": true
       },

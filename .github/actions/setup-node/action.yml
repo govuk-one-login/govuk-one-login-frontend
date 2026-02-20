@@ -1,0 +1,34 @@
+name: "Setup Node with Registry"
+description: "Setup Node.js with pre-configured registry and authentication"
+
+inputs:
+  node-version:
+    description: "Node.js version"
+    required: false
+    default: "24"
+  registry-url:
+    description: "NPM registry URL"
+    required: false
+    default: "https://npm.pkg.github.com"
+  token:
+    description: "Registry authentication token"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+        registry-url: ${{ inputs.registry-url }}
+        cache: "npm"
+
+    - shell: bash
+      run: npm install
+      env:
+        NODE_AUTH_TOKEN: ${{ inputs.token }}
+
+    # After turning pre/post install scripts off canvas couldn't pull down the binaries it relies on. This pulls them down from GitHub release assets.
+    - shell: bash
+      name: Prepare dependencies
+      run: npm run prepare-dependencies
