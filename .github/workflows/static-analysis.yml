@@ -25,15 +25,9 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v4
+      - uses: ./.github/actions/setup-node
         with:
-          node-version: 24
-          cache: "npm"
-      - run: npm install
-
-      # After turning pre/post install scripts off canvas couldn't pull down the binaries it relies on. This pulls them down from GitHub release assets.
-      - name: Prepare dependencies
-        run: npm run prepare-dependencies
+          token: ${{ secrets.GH_PACKAGES_TOKEN }}
 
       # required set up steps for Github architecture
       - run: npm i @rollup/rollup-linux-x64-gnu --no-save
@@ -61,7 +55,7 @@ jobs:
         id: generate-matrix
         run: |
           OUTPUT=$(npx nx show projects --affected --json)
-          echo "::set-output name=matrix::$(echo $OUTPUT | jq -c '[.[] | select(startswith("@govuk-one-login/frontend")) | sub("^@govuk-one-login/"; "")]')"
+          echo "::set-output name=matrix::$(echo $OUTPUT | jq -c '[.[] | select(startswith("@govuk-one-login/")) | sub("^@govuk-one-login/"; "")]')"
 
   sonarcloud:
     name: SonarCloud
@@ -88,5 +82,4 @@ jobs:
         with:
           projectBaseDir: ./packages/${{ matrix.TAG }}
         env:
-          GITHUB_TOKEN: ${{ inputs.github-token }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

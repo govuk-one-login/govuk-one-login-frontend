@@ -14,12 +14,9 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v4
+      - uses: ./.github/actions/setup-node
         with:
-          node-version: 24
-          cache: "npm"
-
-      - run: npm install
+          token: ${{ secrets.GH_PACKAGES_TOKEN }}
 
       - uses: nrwl/nx-set-shas@v4
 

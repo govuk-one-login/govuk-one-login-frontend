@@ -4,6 +4,11 @@
   "description": "",
   "main": "build/cjs/index.cjs",
   "module": "build/esm/index.js",
+  "exports": {
+    "import": "./build/esm/index.js",
+    "require": "./build/cjs/index.cjs"
+  },
+  "types": "./build/esm/index.d.ts",
   "type": "module",
   "publishConfig": {
     "access": "public"
@@ -32,5 +37,11 @@
   "bugs": {
     "url": "https://github.com/govuk-one-login/govuk-one-login-frontend/issues"
   },
-  "homepage": "https://github.com/govuk-one-login/govuk-one-login-frontend#readme"
+  "homepage": "https://github.com/govuk-one-login/govuk-one-login-frontend#readme",
+  "devDependencies": {
+    "@govuk-one-login/event-catalogue": "^43.0.0"
+  },
+  "peerDependencies": {
+    "@govuk-one-login/event-catalogue": "^43.0.0"
+  }
 }

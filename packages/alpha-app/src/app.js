@@ -41,6 +41,7 @@ const { i18nextConfigurationOptions } = require("./config/i18next");
 const {
   frontendVitalSignsInit,
 } = require("@govuk-one-login/frontend-vital-signs");
+const { createEvent } = require("@govuk-one-login/event-catalogue-utils");
 
 const app = express();
 
@@ -61,6 +62,14 @@ app.get("/api", (req, res) => {
 });
 
 app.post("/api/test-submit-button", (req, res) => {
+  const newEvent = createEvent("AIS_EVENT_TRANSITION_APPLIED", {
+    component_id: "component_id",
+    event_name: "AIS_EVENT_TRANSITION_APPLIED",
+    event_timestamp_ms: Date.now(),
+    timestamp: Date.now(),
+  });
+  logger.info("New event created:", newEvent);
+
   setTimeout(() => {
     res.json({ status: "COMPLETED" });
   }, 11000);

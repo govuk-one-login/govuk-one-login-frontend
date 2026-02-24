@@ -25,6 +25,8 @@ To trigger the CD workflow manually, follow these steps:
 
 # Getting started
 
+> At present we consume one package from a private registry (@govuk-one-login/event-catalogue). To authenticate with GitHub Packages to get this package you should follow [the instructions in the team manual](https://team-manual.account.gov.uk/development-standards-processes/coding-practices-and-processes/configure-node-package-managers/#configuring-node-package-managers).
+
 To get started in this repository we recommned you:
 1. Run `npm install` to get all the neccessary dependencies.
 2. Run `npm run prepare-dependencies` to prepare any dependencies that were broken by disabling npm lifecycle scripts.
