@@ -15,14 +15,6 @@
       "conventionalCommits": true
     }
   },
-  "targets": {
-    "publish": {
-      "executor": "@nx/js:release-publish",
-      "options": {
-        "registry": "https://registry.npmjs.org"
-      }
-    }
-  },
   "targetDefaults": {
     "@nx/js:tsc": {
       "cache": true,

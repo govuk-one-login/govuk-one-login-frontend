@@ -94,6 +94,14 @@ jobs:
           git config --global user.email "226340596+govuk-one-login-frontend-publisher[bot]@users.noreply.github.com"
           git config --global user.name "govuk-one-login-frontend-publisher[bot]"
 
+      # This is a fairly nasty hack to overcome the issue that this action needs to install packages in the @govuk-one-login scope from GitHub Packages, but publish packages in the @govuk-one-login scope to npm.
+      # This will be removed when we establish our long term strategy for npm packages.
+      - name: Temporarily reconfigure .npmrc for publishing
+        run: |
+          echo "Reconfiguring .npmrc to publish to public registry"
+          # This swaps out the line that directs the scope to GitHub Packages
+          sed -i 's|@govuk-one-login:registry=https://npm.pkg.github.com|@govuk-one-login:registry=https://registry.npmjs.org|' .npmrc
+
       - name: Publish packages
         if: ${{ github.ref == 'refs/heads/main' }}
         run: npx nx release ${{ github.event.inputs.increment }} --projects=${{ github.event.inputs.target }} --yes ${{ github.event.inputs.first_release == 'true' && '--first-release' || '' }} ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
