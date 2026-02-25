@@ -1,6 +1,6 @@
 {
   "name": "alpha-app",
-  "version": "0.0.67",
+  "version": "0.0.3",
   "scripts": {
     "start": "npm-run-all build-sass --parallel dev",
     "dev": "node --watch src/app.js",
@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@axe-core/playwright": "^4.11.0",
-    "@govuk-one-login/event-catalogue-utils": "0.0.2",
+    "@govuk-one-login/event-catalogue-utils": "0.1.0",
     "@govuk-one-login/event-catalogue": "^43.0.0",
     "@govuk-one-login/frontend-analytics": "4.0.7",
     "@govuk-one-login/frontend-asset-loader": "0.0.5",
