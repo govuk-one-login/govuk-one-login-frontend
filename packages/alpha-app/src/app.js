@@ -41,7 +41,10 @@ const { i18nextConfigurationOptions } = require("./config/i18next");
 const {
   frontendVitalSignsInit,
 } = require("@govuk-one-login/frontend-vital-signs");
-const { createEvent } = require("@govuk-one-login/event-catalogue-utils");
+const {
+  createEvent,
+  validateEvent,
+} = require("@govuk-one-login/event-catalogue-utils");
 
 const app = express();
 
@@ -68,7 +71,9 @@ app.post("/api/test-submit-button", (req, res) => {
     event_timestamp_ms: Date.now(),
     timestamp: Date.now(),
   });
-  logger.info("New event created:", newEvent);
+  console.log("New event created:", newEvent);
+  const valid = validateEvent(newEvent);
+  console.log("Created event is valid?:", valid);
 
   setTimeout(() => {
     res.json({ status: "COMPLETED" });
