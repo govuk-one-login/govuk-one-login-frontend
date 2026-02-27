@@ -84,7 +84,7 @@
     "path": "^0.12.7",
     "playwright": "1.58.2",
     "prettier": "3.5.3",
-    "rollup": "4.37.0",
+    "rollup": "4.59.0",
     "rollup-plugin-copy": "^3.5.0",
     "rollup-plugin-dts": "^6.2.3",
     "rollup-plugin-scss": "4.0.1",
