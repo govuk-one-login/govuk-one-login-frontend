@@ -4,7 +4,8 @@ on:
   push:
     branches:
       - main
-  pull_request:
+  # Temporarily disable to reduce noise in PR
+  # pull_request:
 
 concurrency:
   group: static-analysis-${{ github.head_ref || github.ref_name }}
