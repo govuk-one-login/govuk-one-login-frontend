@@ -1,3 +1,13 @@
+## 0.0.35 (2026-03-06)
+
+### 🩹 Fixes
+
+- add workflow connection to github packages ([b67ad7f](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/b67ad7f))
+
+### ❤️ Thank You
+
+- nickhealGDS
+
 ## 0.0.34 (2025-10-03)
 
 ### 🩹 Fixes
