@@ -9,7 +9,7 @@ inputs:
   registry-url:
     description: "NPM registry URL"
     required: false
-    default: "https://npm.pkg.github.com"
+    default: "https://registry.npmjs.org/"
   token:
     description: "Registry authentication token"
     required: true
