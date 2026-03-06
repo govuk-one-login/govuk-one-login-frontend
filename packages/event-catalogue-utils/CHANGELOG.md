@@ -1,3 +1,13 @@
+## 0.2.0 (2026-03-06)
+
+### 🚀 Features
+
+- **DFC-1069:** validateEvent function ([76d4ed1](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/76d4ed1))
+
+### ❤️ Thank You
+
+- Sam Bunce
+
 ## 0.1.0 (2026-02-25)
 
 ### 🚀 Features
