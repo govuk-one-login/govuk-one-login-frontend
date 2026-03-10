@@ -17,11 +17,15 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/setup-node@v4
+    - uses: actions/setup-node@v6
       with:
         node-version: ${{ inputs.node-version }}
         registry-url: ${{ inputs.registry-url }}
         cache: "npm"
+
+    - shell: bash
+      name: Authenticate with GitHub Packages registry
+      run: echo "//npm.pkg.github.com/:_authToken=\${NODE_AUTH_TOKEN}" >> $GITHUB_WORKSPACE/.npmrc
 
     - shell: bash
       run: npm ci
