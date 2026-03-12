@@ -16,6 +16,7 @@
     "prepare-dependencies:canvas": "cd ./node_modules/canvas && prebuild-install -r napi || node-gyp rebuild"
   },
   "devDependencies": {
+    "@aws-sdk/client-sqs": "^3.1006.0",
     "@babel/cli": "^7.28.3",
     "@babel/core": "7.26.10",
     "@babel/preset-env": "7.26.9",
