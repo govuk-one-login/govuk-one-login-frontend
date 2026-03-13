@@ -173,6 +173,27 @@
       "content": {
         "header": "xDncNmqheVoQoeOTnVmwUnsuByWwKwwAPUZAWRYBnzgrDOCObSzFqMpwAxQRpHMUehzTfzGJjuFJOtWyQBdHQbtpEpxmopVEnghdxyz"
       }
+    },
+    "stepCard1": {
+      "steps": [
+        {
+          "title": "Download or open the app",
+          "description": "We'll walk you through how to do it."
+        },
+        {
+          "title": "Scan photo ID",
+          "description": "Must have your real photo ID with you."
+        },
+
+        {
+          "title": "Take a selfie",
+          "description": "Match your face to your photo ID."
+        },
+        {
+          "title": "Continue on GOV.UK website",
+          "bulletList": ["first item", "second item", "third item"]
+        }
+      ]
     }
   }
 }
