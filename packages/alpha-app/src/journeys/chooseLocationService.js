@@ -16,10 +16,7 @@ function validateChooseLocation(req, res) {
       }
     } else {
       // Handle validation error, render the form with an error state
-      res.render("chooseLocation.njk", {
-        showError: true,
-        // Add any other variables needed for template
-      });
+      res.render("ChooseLocation", { ...res.locals, showError: true });
     }
   } catch (error) {
     // Handle unexpected errors

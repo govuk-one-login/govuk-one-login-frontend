@@ -15,10 +15,7 @@ function validateOrganisationType(req, res) {
         res.redirect("/help-with-hint");
       }
     } else {
-      res.render("organisationType.njk", {
-        showError: true,
-        // Add any other variables needed in your template
-      });
+      res.render("OrganisationType", { ...res.locals, showError: true });
     }
   } catch (error) {
     logger.error(error);

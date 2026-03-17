@@ -23,6 +23,12 @@
       "rules": {}
     },
     {
+      "files": ["packages/alpha-app/**/*.jsx"],
+      "rules": {
+        "@typescript-eslint/no-require-imports": "off"
+      }
+    },
+    {
       "files": ["**/*.test.ts"],
       "env": {
         "jest": true

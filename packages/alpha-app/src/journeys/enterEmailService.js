@@ -10,10 +10,7 @@ function validateEnterEmail(req, res) {
       res.redirect("/summary-page");
     } else {
       // Handle validation error, render the form with an error state
-      res.render("enterEmail.njk", {
-        showError: true,
-        // Add any other variables needed for template
-      });
+      res.render("EnterEmail", { ...res.locals, showError: true });
     }
   } catch (error) {
     // Handle unexpected errors

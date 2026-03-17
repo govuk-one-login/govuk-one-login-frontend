@@ -41,7 +41,8 @@ function validateFeedback(req, res) {
       showFeedbackDescriptionError ||
       showFeedbackConsentError
     ) {
-      res.render("feedback.njk", {
+      res.render("Feedback", {
+        ...res.locals,
         showFeedbackEntityError,
         showFeedbackTypeError,
         showFeedbackDescriptionError,

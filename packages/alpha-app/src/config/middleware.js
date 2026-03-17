@@ -19,7 +19,7 @@ const checkSessionAndRedirect = (req, res, next) => {
 
   // If the user doesn't have a session and is not on the homepage, redirect to Journey Guard Page
   if (!hasSession && !isOnNoSessionPage) {
-    return res.render("journeyGuard.njk");
+    return res.render("JourneyGuard", res.locals);
   }
 
   next();

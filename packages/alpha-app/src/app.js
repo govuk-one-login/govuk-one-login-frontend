@@ -6,7 +6,7 @@ const express = require("express");
 const path = require("path");
 const session = require("express-session");
 const { logger } = require("./utils/logger");
-const { configureNunjucks } = require("./config/nunjucks");
+const { configureReact } = require("./config/react-renderer");
 const {
   validateOrganisationType,
 } = require("./journeys/organisationTypeService.js");
@@ -91,14 +91,8 @@ const port = 3000;
 const nodeModules = (modulePath) =>
   `${path.resolve(__dirname, "../../../node_modules/", modulePath)}`;
 
-const APP_VIEWS = [
-  path.join(__dirname, "views"),
-  path.join(__dirname, "components"),
-  nodeModules("govuk-frontend/"),
-  nodeModules("@govuk-one-login"),
-];
-
-app.set("view engine", configureNunjucks(app, APP_VIEWS));
+app.set("views", path.join(__dirname, "views"));
+configureReact(app);
 i18next
   .use(Backend)
   .use(i18nextMiddleware.LanguageDetector)
@@ -147,6 +141,7 @@ app.use((req, res, next) => {
     res.locals.htmlLang = req.i18n.language;
     res.locals.pageTitleLang = req.i18n.language;
     res.locals.mainLang = req.i18n.language;
+    res.locals.t = req.i18n.getFixedT(req.i18n.language);
     try {
       res.locals.currentUrl = new URL(
         req.protocol + "://" + req.get("host") + req.originalUrl,
@@ -172,49 +167,49 @@ app.use(setContentId);
 app.use(checkSessionAndRedirect);
 
 app.get("/welcome", (req, res) => {
-  res.render("home.njk");
+  res.render("Home", res.locals);
 });
 
 app.get("/enter-email", (req, res) => {
-  res.render("enterEmail.njk");
+  res.render("EnterEmail", res.locals);
 });
 
 app.get("/service-description", (req, res) => {
-  res.render("serviceDescription.njk"); // free text
+  res.render("ServiceDescription", res.locals);
 });
 
 app.get("/organisation-type", (req, res) => {
-  res.render("organisationType.njk"); // radio button
+  res.render("OrganisationType", res.locals);
 });
 
 app.get("/help-with-hint", (req, res) => {
-  res.render("helpWithHint.njk"); // checkbox
+  res.render("HelpWithHint", res.locals);
 });
 
 app.get("/choose-location", (req, res) => {
-  res.render("chooseLocation.njk"); // select
+  res.render("ChooseLocation", res.locals);
 });
 
 app.get("/summary-page", (req, res) => {
-  res.render("summaryPage.njk");
+  res.render("SummaryPage", res.locals);
 });
 
 app.get("/feedback", (req, res) => {
-  res.render("feedback.njk");
+  res.render("Feedback", res.locals);
 });
 
 app.get("/spinner", (req, res) => {
-  res.render("spinner.njk");
+  res.render("Spinner", res.locals);
 });
 
 app.get("/test-progress-button", (req, res) => {
-  res.render("test-progress-button.njk");
+  res.render("TestProgressButton", res.locals);
 });
 
 app.get(
   "/xDncNmqheVoQoeOTnVmwUnsuByWwKwwAPUZAWRYBnzgrDOCObSzFqMpwAxQRpHMUehzTfzGJjuFJOtWyQBdHQbtpEpxmopVEnghdxyz",
   (req, res) => {
-    res.render("characterExample.njk");
+    res.render("CharacterExample", res.locals);
   },
 );
 

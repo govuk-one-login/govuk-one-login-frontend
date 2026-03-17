@@ -17,10 +17,7 @@ function validateHelpWithHint(req, res) {
       }
     } else {
       // Handle validation error, render the form with an error state
-      res.render("helpWithHint.njk", {
-        showError: true,
-        // Add any other variables needed in your template
-      });
+      res.render("HelpWithHint", { ...res.locals, showError: true });
     }
   } catch (error) {
     // Handle unexpected errors

@@ -15,10 +15,7 @@ function validateServiceDescription(req, res) {
         res.redirect("/choose-location");
       }
     } else {
-      res.render("serviceDescription.njk", {
-        showError: true,
-        // Add any other variables needed in your template
-      });
+      res.render("ServiceDescription", { ...res.locals, showError: true });
     }
   } catch (error) {
     logger.error(error);
