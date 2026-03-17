@@ -14,8 +14,8 @@ jest.mock("../validateEvent", () => ({
   validateEvent: (event: object) => validateEventMock(event),
 }));
 jest.mock("../sendEventToSQS", () => ({
-  sendEventToSQS: (event: object, queueUrl: string, sqsClient?: SQSClient) =>
-    sendEventToSQSMock(event, queueUrl, sqsClient),
+  sendEventToSQS: (event: object, queueUrl: string, options: object) =>
+    sendEventToSQSMock(event, queueUrl, options),
 }));
 jest.mock("../logger", () => ({
   info: (content: string) => loggerMock(content),
@@ -46,7 +46,7 @@ describe("sendEventToSQS", () => {
       expect.objectContaining(newEvent),
     );
     expect(sendEventToSQSMock).toHaveBeenCalledWith(
-      expect.objectContaining(newEvent),
+      newEvent,
       "test.queue.url",
       undefined,
     );
@@ -56,10 +56,9 @@ describe("sendEventToSQS", () => {
   it("should send a valid event to the given SQS URL (custom client)", () => {
     const mockSQSClient = {};
 
-    const customSendFn = customSendToTXMA(
-      "alt.queue.url",
-      mockSQSClient as unknown as SQSClient,
-    );
+    const customSendFn = customSendToTXMA("alt.queue.url", {
+      sqsClient: mockSQSClient as unknown as SQSClient,
+    });
     customSendFn(newEvent.event_name, newEvent);
 
     expect(createEventMock).toHaveBeenCalledWith(
@@ -72,7 +71,7 @@ describe("sendEventToSQS", () => {
     expect(sendEventToSQSMock).toHaveBeenCalledWith(
       expect.objectContaining(newEvent),
       "alt.queue.url",
-      mockSQSClient,
+      { logParams: [], sqsClient: mockSQSClient },
     );
     expect(loggerMock).not.toHaveBeenCalled();
   });
