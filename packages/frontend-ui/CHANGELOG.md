@@ -1,3 +1,13 @@
+## 5.0.1 (2026-03-17)
+
+### 🩹 Fixes
+
+- make hmpo-components truly optional ([d79b59c](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/d79b59c))
+
+### ❤️ Thank You
+
+- nickhealGDS
+
 # 5.0.0 (2026-02-03)
 
 This was a version bump only for @govuk-one-login/frontend-ui to align it with other projects, there were no code changes.
