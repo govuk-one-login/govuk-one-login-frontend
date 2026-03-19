@@ -1,4 +1,4 @@
-import { Events, EventKey } from "./types";
+import { Events, EventKey, Options } from "./types";
 import { SendMessageCommand, SQSClient } from "@aws-sdk/client-sqs";
 import logger from "./logger";
 import _ from "lodash";
@@ -8,10 +8,11 @@ export const getDefaultSQSClient = _.memoize(
 );
 
 export async function sendEventToSQS<K extends EventKey>(
-  auditEvent: Events[K],
+  event: Events[K],
   queueUrl: string,
-  sqsClient?: SQSClient,
+  options?: Options,
 ) {
+  const { sqsClient, logParams } = options || {};
   logger.info(`Sending audit event...`);
 
   const preferredClient = sqsClient || getDefaultSQSClient();
@@ -19,11 +20,14 @@ export async function sendEventToSQS<K extends EventKey>(
   const response = await preferredClient.send(
     new SendMessageCommand({
       QueueUrl: queueUrl,
-      MessageBody: JSON.stringify(auditEvent),
+      MessageBody: JSON.stringify(event),
     }),
   );
 
-  logger.info(
-    `Successfully fired ${auditEvent.event_name} event - SQS message id: '${response.MessageId}'; response code: ${response.$metadata?.httpStatusCode}`,
-  );
+  const logMessage = `Successfully fired ${event.event_name} event - SQS message id: '${response.MessageId}'; response code: ${response.$metadata?.httpStatusCode}`;
+  if (logParams) {
+    logger.info(_.pick(event, logParams), logMessage);
+  } else {
+    logger.info(logMessage);
+  }
 }

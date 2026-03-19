@@ -1,21 +1,32 @@
-import { SQSClient } from "@aws-sdk/client-sqs";
 import { createEvent, sendEventToSQS, validateEvent } from ".";
-import { EventKey, Events } from "./types";
+import { EventKey, Events, Options } from "./types";
 import logger from "./logger";
+import _ from "lodash";
 
 export function sendToTXMA<K extends EventKey>(
   type: K,
   entity: Events[K],
   queueUrl: string,
-  sqsClient?: SQSClient,
+  options?: Options,
 ) {
   const event = createEvent(type, entity);
   const valid = validateEvent<K>(event);
   if (!valid) logger.info("Invalid event created: " + JSON.stringify(event));
-  sendEventToSQS(event, queueUrl, sqsClient);
+  sendEventToSQS(event, queueUrl, options);
 }
 
 export const customSendToTXMA =
-  (queueUrl: string, sqsClient: SQSClient) =>
-  <K extends EventKey>(type: K, entity: Events[K]) =>
-    sendToTXMA(type, entity, queueUrl, sqsClient);
+  (queueUrl: string, options: Options) =>
+  <K extends EventKey>(
+    type: K,
+    event: Events[K],
+    runtimeLogParams?: string,
+  ) => {
+    const { sqsClient, logParams: customLogParams } = options || {};
+    const logParams = _.union(customLogParams, runtimeLogParams);
+
+    sendToTXMA(type, event, queueUrl, {
+      sqsClient,
+      logParams,
+    });
+  };
