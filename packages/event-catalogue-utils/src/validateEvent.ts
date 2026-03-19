@@ -2,14 +2,9 @@ import { Events } from "@govuk-one-login/event-catalogue";
 import * as schemas from "@govuk-one-login/event-catalogue-schemas";
 import Ajv2019 from "ajv/dist/2019";
 import logger from "./logger";
+import { isEventKey, UnknownEvent } from "./types";
 
 const ajv = new Ajv2019({ strict: true });
-
-type EventKey = keyof typeof schemas;
-type UnknownEvent = { event_name: string };
-
-const isEventKey = (key: string): key is EventKey =>
-  Object.keys(schemas).includes(key);
 
 /**
  * Validates a preexisting event matches event catalogue schema.

@@ -1,4 +1,4 @@
-import { type Events } from "@govuk-one-login/event-catalogue";
+import { type EventKey, Events } from "./types";
 
 /**
  * This function provides static type-checking against the event catalogue.
@@ -6,7 +6,7 @@ import { type Events } from "@govuk-one-login/event-catalogue";
  * @param entity - The event
  * @returns - The event
  */
-export function createEvent<K extends keyof Events>(
+export function createEvent<K extends EventKey>(
   type: K,
   entity: Events[K],
 ): Events[K] {
