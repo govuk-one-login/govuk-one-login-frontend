@@ -3,9 +3,9 @@
 
 <div class="step-card govuk-!-padding-top-3 govuk-!-padding-bottom-6 govuk-!-margin-bottom-6">
   <h2 class="govuk-heading-m">{{ stepCard.header }}</h2>
-  <ol class="govuk-list">
+  <ol class="govuk-list" role="list">
     {% for step in steps %}
-      <li class="step-item">
+      <li class="step-item" role="listitem">
         <div class="step-item-container govuk-!-padding-top-6{% if not loop.last %} govuk-!-padding-bottom-6{% endif %}">
           <div class="step-item-image" aria-hidden="true">
             <img src="{{ step.image if step.image else 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2270%22 height=%2270%22 viewBox=%220 0 70 70%22%3E%3Crect width=%2270%22 height=%2270%22 fill=%22%23e8f1f8%22/%3E%3C/svg%3E' }}" alt="">
