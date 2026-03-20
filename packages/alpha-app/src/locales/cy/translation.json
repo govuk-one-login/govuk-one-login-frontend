@@ -167,6 +167,26 @@
         "header": "Gwirio atebion",
         "changeLink": "Newid"
       }
+    },
+    "stepCard1": {
+      "steps": [
+        {
+          "title": "Lawrlwythwch neu agorwch yr ap",
+          "description": "Byddwn yn eich tywys drwy sut i wneud hynny."
+        },
+        {
+          "title": "Sganiwch eich ID llun",
+          "description": "Rhaid bod gennych eich ID llun go iawn gyda chi."
+        },
+        {
+          "title": "Tynnwch hunlun",
+          "description": "Cyfatebwch eich wyneb i'ch ID llun."
+        },
+        {
+          "title": "Parhewch ar wefan GOV.UK",
+          "bulletList": ["eitem gyntaf", "eitem ail", "eitem drydydd"]
+        }
+      ]
     }
   }
 }

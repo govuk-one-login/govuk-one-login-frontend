@@ -21,6 +21,7 @@ interface ExpressRequest extends Request {
 interface ExpressResponse extends Response {
   locals: {
     translations: unknown;
+    allTranslations: { [lng: string]: unknown };
     basePath?: string;
   };
 }
@@ -32,6 +33,7 @@ interface PlainRequest {
 interface PlainResponse {
   locals: {
     translations: unknown;
+    allTranslations: { [lng: string]: unknown };
     basePath?: string;
   };
 }
@@ -56,8 +58,9 @@ export function frontendUiMiddleware(
   next: NextFunction
 ): void {
   res.locals.translations = req.i18n.store.data[req.i18n.language];
+  res.locals.allTranslations = req.i18n.store.data;
   res.locals.basePath = process.cwd();
-    next();
+  next();
 }
 
 export const setFrontendUiTranslations = (instanceI18n: typeof i18next) => {
@@ -92,6 +95,46 @@ export const frontendUiMiddlewareIdentityBypass = (
   res.locals.basePath = process.cwd();
   next();
 };
+
+export function resolvePath(obj: unknown, path: string): unknown {
+  return path.split(".").reduce((acc, key) => (
+    acc && typeof acc === "object" ? (acc as Record<string, unknown>)[key] : undefined
+  ), obj);
+}
+
+type StepData = { title?: unknown; description?: unknown; bulletList?: unknown[] };
+type StepInput = { key: string; image?: string | null };
+
+export function buildSteps(
+  allTranslations: Record<string, unknown>,
+  currentTranslations: unknown,
+  steps: StepInput[]
+): { data: StepData; allLanguageData: StepData[]; image: string | null }[] {
+  if (!allTranslations || !steps || !currentTranslations) return [];
+  return steps
+    .slice(0, 4)
+    .map(({ key, image }) => {
+      const allLanguageData = Object.keys(allTranslations).map(
+        (lng) => resolvePath(allTranslations[lng], key) as StepData
+      );
+      return {
+        data: resolvePath(currentTranslations, key) as StepData,
+        allLanguageData,
+        image: image ?? null,
+      };
+    })
+    .filter(({ allLanguageData }) =>
+      allLanguageData.every(
+        (step) => step?.title && (step?.description || (step?.bulletList?.length ?? 0) > 0)
+      )
+    );
+}
+
+export function addFrontendUiGlobals(nunjucksEnv: { addGlobal: (name: string, value: unknown) => void }) {
+  nunjucksEnv.addGlobal("addLanguageParam", addLanguageParam);
+  nunjucksEnv.addGlobal("contactUsUrl", contactUsUrl);
+  nunjucksEnv.addGlobal("buildSteps", buildSteps);
+}
 
 export function addLanguageParam(language: string, url?: URL) {
   if (!url) {

@@ -9,6 +9,8 @@ import {
   contactUsUrl,
   getTranslationObject,
   setBaseTranslations,
+  buildSteps,
+  addFrontendUiGlobals,
 } from "..";
 
 // Define types for Express and non-Express versions
@@ -349,5 +351,81 @@ describe("contactUsUrl function", () => {
 
       consoleWarnSpy.mockRestore();
     });
+  });
+});
+
+describe("buildSteps", () => {
+  const allTranslations = {
+    en: { translation: { pages: { myPage: { steps: { 0: { title: "Step one", description: "Do this" }, 1: { title: "Step two", bulletList: ["Item A"] } } } } } },
+    cy: { translation: { pages: { myPage: { steps: { 0: { title: "Cam un", description: "Gwnewch hyn" }, 1: { title: "Cam dau", bulletList: ["Eitem A"] } } } } } },
+  };
+  const currentTranslations = allTranslations.en;
+  const steps = [
+    { key: "translation.pages.myPage.steps.0", image: "/img/step1.svg" },
+    { key: "translation.pages.myPage.steps.1", image: null },
+  ];
+
+  it("returns resolved steps with data, allLanguageData, and image", () => {
+    const result = buildSteps(allTranslations, currentTranslations, steps);
+    expect(result).toHaveLength(2);
+    expect(result[0].data).toEqual({ title: "Step one", description: "Do this" });
+    expect(result[0].image).toBe("/img/step1.svg");
+    expect(result[0].allLanguageData).toHaveLength(2);
+    expect(result[1].image).toBeNull();
+  });
+
+  it("filters out steps missing title in any language", () => {
+    const incomplete = {
+      en: { translation: { pages: { myPage: { steps: { 0: { title: "Step one", description: "Do this" } } } } } },
+      cy: { translation: { pages: { myPage: { steps: { 0: { description: "No title here" } } } } } },
+    };
+    const result = buildSteps(incomplete, incomplete.en, [{ key: "translation.pages.myPage.steps.0" }]);
+    expect(result).toHaveLength(0);
+  });
+
+  it("filters out steps missing both description and bulletList in any language", () => {
+    const incomplete = {
+      en: { translation: { pages: { myPage: { steps: { 0: { title: "Step one", description: "Has desc" } } } } } },
+      cy: { translation: { pages: { myPage: { steps: { 0: { title: "Cam un" } } } } } },
+    };
+    const result = buildSteps(incomplete, incomplete.en, [{ key: "translation.pages.myPage.steps.0" }]);
+    expect(result).toHaveLength(0);
+  });
+
+  it("slices to a maximum of 4 steps", () => {
+    const manySteps = Array.from({ length: 6 }, (_, i) => ({ key: `translation.pages.myPage.steps.${i}` }));
+    const bigTranslations = {
+      en: { translation: { pages: { myPage: { steps: Object.fromEntries(Array.from({ length: 6 }, (_, i) => [i, { title: `Step ${i}`, description: "desc" }])) } } } },
+      cy: { translation: { pages: { myPage: { steps: Object.fromEntries(Array.from({ length: 6 }, (_, i) => [i, { title: `Cam ${i}`, description: "desc" }])) } } } },
+    };
+    const result = buildSteps(bigTranslations, bigTranslations.en, manySteps);
+    expect(result).toHaveLength(4);
+  });
+
+  it("returns [] when allTranslations is null", () => {
+    expect(buildSteps(null as unknown as Record<string, unknown>, currentTranslations, steps)).toEqual([]);
+  });
+
+  it("returns [] when currentTranslations is null", () => {
+    expect(buildSteps(allTranslations, null as unknown, steps)).toEqual([]);
+  });
+
+  it("returns [] when steps is null", () => {
+    expect(buildSteps(allTranslations, currentTranslations, null as unknown as { key: string }[])).toEqual([]);
+  });
+
+  it("returns [] for an empty steps array", () => {
+    expect(buildSteps(allTranslations, currentTranslations, [])).toEqual([]);
+  });
+});
+
+describe("addFrontendUiGlobals", () => {
+  it("registers addLanguageParam, contactUsUrl, and buildSteps as globals", () => {
+    const addGlobal = jest.fn();
+    addFrontendUiGlobals({ addGlobal });
+    expect(addGlobal).toHaveBeenCalledWith("addLanguageParam", expect.any(Function));
+    expect(addGlobal).toHaveBeenCalledWith("contactUsUrl", expect.any(Function));
+    expect(addGlobal).toHaveBeenCalledWith("buildSteps", expect.any(Function));
+    expect(addGlobal).toHaveBeenCalledTimes(3);
   });
 });
