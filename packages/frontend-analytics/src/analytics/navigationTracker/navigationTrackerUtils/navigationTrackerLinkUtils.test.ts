@@ -9,8 +9,8 @@ import {
 
 describe("navigationTrackerLinkUtils", () => {
   describe("isExternalLink", () => {
-    // @ts-expect-error global.window.location type fudging
-    const setMockLocation = (url: string) => (global.window.location = url);
+    const setMockLocation = (url: string) =>
+      (global.window.location = url as string & Location);
 
     test("should return false for internal links", () => {
       setMockLocation("https://account.gov.uk");

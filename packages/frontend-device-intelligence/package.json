@@ -7,7 +7,7 @@
   "module": "build/esm/index.js",
   "scripts": {
     "build": "rm -rf dist/* && rm -rf types/* && rollup -c",
-    "test": "jest -c --coverage",
+    "test": "vitest --run --coverage",
     "eslint": "eslint .",
     "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,md}\""
   },
@@ -46,5 +46,8 @@
     "type": "git",
     "url": "git+https://github.com/govuk-one-login/govuk-one-login-frontend.git",
     "directory": "packages/frontend-device-intelligence"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^4.1.1"
   }
 }

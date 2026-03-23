@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { delay, raceAll, raceAllPerformance } from "./raceAll";
 
-jest.useFakeTimers();
+vi.useFakeTimers();
 
 describe("Utils for the delay raceAll condition", () => {
   describe("delay", () => {
@@ -10,7 +10,7 @@ describe("Utils for the delay raceAll condition", () => {
       const delayTime = 1000;
       const delayedPromise = delay(delayTime, val);
 
-      jest.advanceTimersByTime(delayTime);
+      vi.advanceTimersByTime(delayTime);
 
       expect(await delayedPromise).toBe(val);
     });

@@ -2,10 +2,9 @@ import { getBrowserPermissions } from "./permissions";
 
 describe("permissions", () => {
   it("should fetch font data in the correct format", async () => {
-    Object.defineProperty(global.navigator, "permissions", {
-      writable: true,
-      value: {
-        query: jest.fn().mockImplementation(({ name }) => ({
+    vi.stubGlobal("navigator", {
+      permissions: {
+        query: vi.fn().mockImplementation(({ name }) => ({
           state: name === "push" ? "enabled" : "disabled",
         })),
       },
