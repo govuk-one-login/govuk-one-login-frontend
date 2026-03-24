@@ -7,4 +7,7 @@ export default {
         "node_modules",
         "<rootDir>/src/test"
     ],
+  moduleNameMapper: {
+    "^canvas$": "<rootDir>/src/test/__mocks__/canvas.ts",
+  },
 };

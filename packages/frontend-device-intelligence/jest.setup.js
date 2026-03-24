@@ -8,3 +8,12 @@ global.TextEncoder = class {
       return { buffer: buf };
     }
   };
+
+HTMLCanvasElement.prototype.getContext = function () {
+  return {
+    font: "",
+    measureText: () => ({ width: 0 }),
+    fillText: () => {},
+    getImageData: () => ({ data: new Uint8ClampedArray() }),
+  };
+};

@@ -11,4 +11,8 @@ export default {
   preset: "ts-jest",
   testEnvironment: "jsdom",
   setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
+  moduleNameMapper: {
+    "canvas/lib/bindings": "<rootDir>/__mocks__/canvas.js",
+    "canvas": "<rootDir>/__mocks__/canvas.js",
+  },
 };
