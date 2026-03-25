@@ -1,24 +1,26 @@
 import Joi from "joi";
 import { getHardwareInfo } from "./hardware";
 
+vi.stubGlobal("navigator", {
+  deviceMemory: 8,
+});
+
+const mockDocument = (context: Record<string, unknown>) =>
+  vi.stubGlobal("document", {
+    createElement: () => ({
+      getContext: vi.fn().mockImplementation(() => context),
+    }),
+  });
+
 describe("hardware", () => {
   it("should fetch hardware data in the correct format", async () => {
-    Object.defineProperty(global.document, "createElement", {
-      writable: true,
-      value: jest.fn().mockImplementation(() => ({
-        getContext: jest.fn().mockImplementation(() => ({
-          VENDOR: "vendor",
-          RENDERER: "renderer",
-          VERSION: "version",
-          SHADING_LANGUAGE_VERSION: "shading-language-version",
-          getParameter: jest.fn().mockImplementation((param) => param),
-        })),
-      })),
-    });
-
-    Object.defineProperty(global.navigator, "deviceMemory", {
-      writable: true,
-      value: 8,
+    mockDocument({
+      RENDERER: "renderer",
+      VENDOR: "vendor",
+      VERSION: "version",
+      SHADING_LANGUAGE_VERSION: "shading-language-version",
+      getParameter: vi.fn().mockImplementation((param) => param),
+      getExtension: () => {},
     });
 
     const hardwareInfo = await getHardwareInfo();
@@ -49,26 +51,16 @@ describe("hardware", () => {
   });
 
   it("should fall back to debug values when main videocard info is not available", async () => {
-    Object.defineProperty(global.document, "createElement", {
-      writable: true,
-      value: jest.fn().mockImplementation(() => ({
-        getContext: jest.fn().mockImplementation(() => ({
-          VENDOR: "",
-          RENDERER: "",
-          VERSION: "version",
-          SHADING_LANGUAGE_VERSION: "shading-language-version",
-          getExtension: jest.fn().mockImplementation(() => ({
-            UNMASKED_RENDERER_WEBGL: "unmasked-renderer-webgl",
-            UNMASKED_VENDOR_WEBGL: "unmasked-vendor-webgl",
-          })),
-          getParameter: jest.fn().mockImplementation((param) => param),
-        })),
+    mockDocument({
+      VENDOR: "",
+      RENDERER: "",
+      VERSION: "version",
+      SHADING_LANGUAGE_VERSION: "shading-language-version",
+      getExtension: vi.fn().mockImplementation(() => ({
+        UNMASKED_RENDERER_WEBGL: "unmasked-renderer-webgl",
+        UNMASKED_VENDOR_WEBGL: "unmasked-vendor-webgl",
       })),
-    });
-
-    Object.defineProperty(global.navigator, "deviceMemory", {
-      writable: true,
-      value: 8,
+      getParameter: vi.fn().mockImplementation((param) => param),
     });
 
     const hardwareInfo = await getHardwareInfo();

@@ -11,23 +11,38 @@ mockTextEncoder.prototype.encode = (str: string) => {
   return { buffer: buf };
 };
 
+vi.mock("../utils/hash", () => ({
+  hash: vi.fn().mockReturnValue({
+    componentA: Promise.resolve({ key: "valueA" }),
+    componentB: Promise.resolve({ key: "valueB" }),
+    fonts: Promise.resolve({ fontHash: "b582964e91622e755c423ad99c8ec9b4" }),
+    thumbmark: Promise.resolve({
+      deviceHash: "9c69a4ffa43f3bd072ddce5b4c2e424e",
+    }),
+  }),
+}));
+
+vi.mock("./components/fonts/fonts", () => ({
+  getFontMetrics: vi.fn().mockImplementation(async () => ({})),
+}));
+
 describe("index", () => {
   beforeAll(() => {
     Object.defineProperty(window, "matchMedia", {
       writable: true,
-      value: jest.fn().mockImplementation((query) => ({
+      value: vi.fn().mockImplementation((query) => ({
         matches: true,
         media: query,
         onchange: null,
-        addListener: jest.fn(), // Deprecated
-        removeListener: jest.fn(), // Deprecated
-        addEventListener: jest.fn(),
-        removeEventListener: jest.fn(),
-        dispatchEvent: jest.fn(),
+        addListener: vi.fn(), // Deprecated
+        removeListener: vi.fn(), // Deprecated
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+        dispatchEvent: vi.fn(),
       })),
     });
 
-    Object.assign(global, { TextEncoder: mockTextEncoder });
+    vi.stubGlobal("TextEncoder", mockTextEncoder);
   });
 
   it("should generate a fingerprint in the right shape", async () => {

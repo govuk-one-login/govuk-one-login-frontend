@@ -1,10 +1,10 @@
 import { getInstalledPlugins } from "./plugins";
 
 describe("getInstalledPlugins", () => {
-  const originalNavigator = global.navigator;
+  const originalNavigator = navigator;
 
   afterEach(() => {
-    global.navigator = originalNavigator;
+    navigator = originalNavigator;
   });
 
   it("returns an empty array when there are no plugins", async () => {

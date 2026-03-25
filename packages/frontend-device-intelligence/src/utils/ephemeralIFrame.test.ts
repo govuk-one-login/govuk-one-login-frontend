@@ -1,14 +1,14 @@
 import { ephemeralIFrame, wait } from "./ephemeralIFrame";
 
-jest.useFakeTimers();
+vi.useFakeTimers();
 
 describe("creating an iframe, execute the callback, and remove the iframe", () => {
   it("call and set the iframe", async () => {
-    const callback = jest.fn();
+    const callback = vi.fn();
 
     const promise = ephemeralIFrame(callback);
 
-    jest.advanceTimersByTime(5000);
+    vi.advanceTimersByTime(5000);
     await promise;
 
     expect(callback).toHaveBeenCalled();
@@ -18,11 +18,11 @@ describe("creating an iframe, execute the callback, and remove the iframe", () =
   });
 
   it("cleanup of the iframe", async () => {
-    const callback = jest.fn();
+    const callback = vi.fn();
 
     const promise = ephemeralIFrame(callback);
 
-    jest.advanceTimersByTime(0);
+    vi.advanceTimersByTime(0);
     await promise;
 
     const iframe = document.querySelector("iframe");
@@ -32,11 +32,11 @@ describe("creating an iframe, execute the callback, and remove the iframe", () =
 
 describe("wait", () => {
   it("should resolve the promises of iframe callback after the duration", async () => {
-    const mockCallback = jest.fn();
+    const mockCallback = vi.fn();
 
     const promise = wait(3000).then(mockCallback);
 
-    jest.advanceTimersByTime(3000);
+    vi.advanceTimersByTime(3000);
 
     await promise;
 

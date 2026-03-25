@@ -3,7 +3,35 @@ import Joi from "joi";
 import { getSystemDetails } from "./system";
 import logger from "../../logger";
 
+const applePayVersionMock = vi.fn();
+
+class MockApplePaySession {
+  constructor() {}
+  static supportsVersion = applePayVersionMock;
+}
+
+const windowMock = {
+  navigator: {
+    platform: "platform",
+    cookieEnabled: true,
+  },
+  location: { protocol: "https:" },
+  ApplePaySession: MockApplePaySession,
+};
+
+const navigatorMock = {
+  productSub: "productSub",
+  product: "product",
+  userAgent: "useragent",
+  hardwareConcurrency: 1,
+};
+
+vi.stubGlobal("window", windowMock);
+vi.stubGlobal("navigator", navigatorMock);
+
 describe("system", () => {
+  beforeEach(applePayVersionMock.mockClear());
+
   it("should fetch system data", async () => {
     const schema = Joi.object({
       platform: Joi.string().required().allow(""),
@@ -25,36 +53,18 @@ describe("system", () => {
   });
 
   it("should fetch apple pay data if it is present", async () => {
-    class MockApplePaySession {
-      constructor() {}
-      static supportsVersion(number: number) {
-        return number === 3;
-      }
-    }
-
-    Object.defineProperty(global, "ApplePaySession", {
-      writable: true,
-      value: MockApplePaySession,
-    });
-    Object.defineProperty(global, "location", {
-      writable: true,
-      value: { protocol: "https:" },
-    });
+    applePayVersionMock.mockImplementation((version) => version === 3);
 
     const systemDetails = await getSystemDetails();
-
     expect(systemDetails.applePayVersion).toBe(3);
   });
 
   it("logs an error if the pay version is not supported", async () => {
-    const spy = jest.spyOn(logger, "error").mockImplementation(() => {});
+    const spy = vi.spyOn(logger, "error");
 
-    (global as any).ApplePaySession = class {
-      static supportsVersion() {
-        throw new Error();
-      }
-    };
-    (global as any).location = { protocol: "https:" };
+    applePayVersionMock.mockImplementation(() => {
+      throw new Error();
+    });
 
     await getSystemDetails();
 
