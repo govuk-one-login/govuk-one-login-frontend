@@ -1,3 +1,14 @@
+## 0.3.0 (2026-03-27)
+
+### 🚀 Features
+
+- **DFC-1096:** Logging of select event params ([afba517](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/afba517))
+- **DFC-1092:** Send to SQS function & full-journey sentToTXMA function ([dff963c](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/dff963c))
+
+### ❤️ Thank You
+
+- Sam Bunce
+
 ## 0.2.1 (2026-03-11)
 
 This was a version bump only for @govuk-one-login/event-catalogue-utils to align it with other projects, there were no code changes.
