@@ -2,9 +2,10 @@
 const dotenv = require("dotenv");
 dotenv.config();
 
+const path = require("node:path");
 const express = require("express");
-const path = require("path");
 const session = require("express-session");
+const helmet = require("helmet");
 const { logger } = require("./utils/logger");
 const { configureNunjucks } = require("./config/nunjucks");
 const {
@@ -21,6 +22,7 @@ const { loadAssets } = require("@govuk-one-login/frontend-asset-loader");
 const {
   setFrontendUiTranslations,
   frontendUiMiddleware,
+  getHelmetConfig,
 } = require("@govuk-one-login/frontend-ui");
 
 const crypto = require("crypto");
@@ -45,8 +47,13 @@ const {
   createEvent,
   validateEvent,
 } = require("@govuk-one-login/event-catalogue-utils");
+const { cspNonce } = require("./config/csp.js");
 
 const app = express();
+
+app.use(cspNonce);
+
+app.use(helmet(getHelmetConfig()));
 
 let counter = 0;
 
@@ -94,7 +101,7 @@ const nodeModules = (modulePath) =>
 const APP_VIEWS = [
   path.join(__dirname, "views"),
   path.join(__dirname, "components"),
-  nodeModules("govuk-frontend/"),
+  nodeModules("govuk-frontend/dist/"),
   nodeModules("@govuk-one-login"),
 ];
 
@@ -120,7 +127,10 @@ i18next
 app.use(i18nextMiddleware.handle(i18next));
 app.use(frontendUiMiddleware);
 
-app.use("/assets", express.static(nodeModules("govuk-frontend/govuk/assets")));
+app.use(
+  "/assets",
+  express.static(nodeModules("govuk-frontend/dist/govuk/assets")),
+);
 
 /** GA4 assets */
 app.use(

@@ -21,7 +21,7 @@
   type: 'submit' }) }}
 </form>
 
-<script>
+<script nonce="{{ cspNonce }}">
   document.addEventListener("DOMContentLoaded", function () {
     const storedOrganisationType = localStorage.getItem("organisationType");
 

@@ -25,7 +25,7 @@ from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %} {% from
   "submit" }) }}
 </form>
 
-<script>
+<script nonce="{{ cspNonce }}">
   document.addEventListener("DOMContentLoaded", function () {
     const storedHelpWithHints = localStorage.getItem("helpWithHint");
     const form = document.getElementById("helpWithHintForm");
