@@ -121,6 +121,7 @@ app.use(i18nextMiddleware.handle(i18next));
 app.use(frontendUiMiddleware);
 
 app.use("/assets", express.static(nodeModules("govuk-frontend/govuk/assets")));
+app.use("/assets", express.static(path.join(__dirname, "assets")));
 
 /** GA4 assets */
 app.use(
@@ -209,6 +210,10 @@ app.get("/spinner", (req, res) => {
 
 app.get("/test-progress-button", (req, res) => {
   res.render("test-progress-button.njk");
+});
+
+app.get("/step-card", (req, res) => {
+  res.render("step-card.njk");
 });
 
 app.get(
