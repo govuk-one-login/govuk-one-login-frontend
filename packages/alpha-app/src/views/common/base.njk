@@ -5,15 +5,12 @@
 {% extends "govuk/template.njk" %}
 
 {% block head %}
-  {# <link rel="stylesheet" href="/stylesheets/{{ assets['stylesheet.css'] }}"/>
-  <link rel="stylesheet" href="/stylesheets/{{ assets['application.css'] }}"/> #}
-  <link rel="stylesheet" href="/stylesheets/govuk-frontend.css"/>
-  <link rel="stylesheet" href="/stylesheets/frontendUi.css"/>
+  <link rel="stylesheet" href="/stylesheets/styles.css"/>
 {% endblock %}
 
 
 {% from "frontend-ui/build/components/header/macro.njk" import frontendUiHeader %}
-{% from "frontend-language-toggle/src/macro.njk" import languageSelect %}
+{% from "frontend-ui/build/components/language-select/macro.njk" import frontendUiLanguageSelect %}
 {% from "frontend-ui/build/components/header/macro.njk" import frontendUiHeader %}
 {% from "frontend-ui/build/components/phase-banner/macro.njk" import frontendUiPhaseBanner %} 
 {% from "frontend-ui/build/components/language-select/macro.njk" import frontendUiLanguageSelect %}
@@ -83,7 +80,7 @@
   {% block scripts %}
     <script type="module" src="/javascript/index.js"></script>
     <script src="/ga4-assets/analytics.js"></script>
-    <script>
+    <script nonce="{{ cspNonce }}">
       window.DI.appInit(
         {
           ga4ContainerId: "{{ ga4ContainerId }}"
@@ -101,6 +98,7 @@
 
     {{ 
       ga4OnPageLoad({
+        nonce: cspNonce,
         contentId: contentId,
         dynamic: false,
         englishPageTitle: englishPageTitle,
@@ -112,7 +110,7 @@
     }}
 
     <script type="module" src="/fingerprint/index.js"></script>
-    <script type="module">
+    <script type="module" nonce="{{ cspNonce }}">
       import { setFingerprintCookie, setLogLevel } from "/fingerprint/index.js";
       setFingerprintCookie('localhost')
       setLogLevel("silent");
