@@ -1,6 +1,8 @@
-import { Request, Response } from "express";
+import _ from "lodash";
+import { type Request, type Response } from "express";
+import { type HelmetOptions } from "helmet";
 
-export default {
+const baseHelmetConfig = {
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
@@ -20,6 +22,7 @@ export default {
         "*.google-analytics.com",
         "*.analytics.google.com",
       ],
+      fontSrc: ["'self'"],
       formAction: ["*"],
       objectSrc: ["'none'"],
       connectSrc: [
@@ -45,3 +48,7 @@ export default {
   expectCt: false,
   crossOriginEmbedderPolicy: false,
 };
+
+export function getHelmetConfig(additions: HelmetOptions = {}): HelmetOptions {
+  return _.merge(baseHelmetConfig, additions);
+}

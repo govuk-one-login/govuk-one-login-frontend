@@ -1,10 +1,11 @@
-import i18next from "i18next";
+import { existsSync, readFileSync } from "node:fs";
+import path from "node:path";
 import { NextFunction, Request, Response } from "express";
+import i18next from "i18next";
 import translationCy from "../locales/cy/translation.json";
 import translationEn from "../locales/en/translation.json";
-import path from "node:path";
-import { existsSync, readFileSync,  } from "node:fs";
 
+export * from "./lib";
 
 // Define types for Express and non-Express versions
 interface I18nData {
@@ -55,7 +56,7 @@ export function frontendUiMiddleware(
 export function frontendUiMiddleware(
   req: ExpressRequest | PlainRequest,
   res: ExpressResponse | PlainResponse,
-  next: NextFunction
+  next: NextFunction,
 ): void {
   res.locals.translations = req.i18n.store.data[req.i18n.language];
   res.locals.allTranslations = req.i18n.store.data;
@@ -79,7 +80,6 @@ export const setFrontendUiTranslations = (instanceI18n: typeof i18next) => {
     false,
   );
 };
-
 
 export const frontendUiMiddlewareIdentityBypass = (
   req: ExpressRequest,
@@ -155,7 +155,7 @@ export function contactUsUrl(baseUrl: string, urlToAppend: string) {
 
   try {
     const newUrl = new URL(urlToAppend); // Create a new URL object to modify
-    newUrl.search = ''; // Remove the query parameters
+    newUrl.search = ""; // Remove the query parameters
 
     const encodedUrl = encodeURIComponent(newUrl.toString()); // Encode the entire URL
 

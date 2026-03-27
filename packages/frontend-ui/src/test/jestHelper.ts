@@ -5,7 +5,7 @@ import { addLanguageParam, contactUsUrl } from "../index";
 
 const govukComponentsPath = path.resolve(
   __dirname,
-  "../../../../node_modules/govuk-frontend",
+  "../../../../node_modules/govuk-frontend/dist",
 );
 const frontendUIComponentsPath = path.resolve(__dirname, "../../components");
 const frontendUIBuildPath = path.resolve(__dirname, "../../../");
