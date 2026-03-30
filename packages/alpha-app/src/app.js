@@ -53,7 +53,17 @@ const app = express();
 
 app.use(cspNonce);
 
-app.use(helmet(getHelmetConfig()));
+app.use(
+  helmet(
+    getHelmetConfig({
+      contentSecurityPolicy: {
+        directives: {
+          fontSrc: ["assets.account.gov.uk"],
+        },
+      },
+    }),
+  ),
+);
 
 let counter = 0;
 
