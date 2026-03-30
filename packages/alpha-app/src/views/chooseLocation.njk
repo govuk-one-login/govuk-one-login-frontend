@@ -31,7 +31,7 @@
   "submit" }) }}
 </form>
 
-<script>
+<script nonce="{{ cspNonce }}">
   document.addEventListener("DOMContentLoaded", function () {
     const storedChooseLocation = localStorage.getItem("chooseLocation");
     const dropdownToSelect = document.getElementById("choose-location");

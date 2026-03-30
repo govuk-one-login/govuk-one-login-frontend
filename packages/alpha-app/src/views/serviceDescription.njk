@@ -14,7 +14,7 @@
   showError }) }} {{ govukButton({ text: "general.buttons.continue" | translate,
   type: "submit" }) }}
 </form>
-<script>
+<script nonce="{{ cspNonce }}">
   document.addEventListener("DOMContentLoaded", function () {
     const storedServiceDescription = localStorage.getItem("serviceDescription");
     const textField = document.getElementById("service-description");
