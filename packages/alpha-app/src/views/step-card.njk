@@ -1,0 +1,16 @@
+{% extends "common/base.njk" %}
+{% from "frontend-ui/build/components/step-card/macro.njk" import frontendUiStepCard %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    {{ frontendUiStepCard({
+      translations: translations.translation.stepCard,
+      steps: buildSteps(allTranslations, translations, [
+        { key: "translation.pages.stepCard1.steps.0", image: "/assets/OneLoginLogo.svg" },
+        { key: "translation.pages.stepCard1.steps.1", image: null },
+        { key: "translation.pages.stepCard1.steps.2", image: "/assets/Continue.svg" },
+        { key: "translation.pages.stepCard1.steps.3", image: "/assets/TakeASelfie.svg" }
+      ])
+    }) }}
+  </div>
+{% endblock %}
