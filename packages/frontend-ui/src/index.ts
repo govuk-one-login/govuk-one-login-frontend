@@ -4,8 +4,11 @@ import { NextFunction, Request, Response } from "express";
 import i18next from "i18next";
 import translationCy from "../locales/cy/translation.json";
 import translationEn from "../locales/en/translation.json";
+import { getLogger } from "./utils/logger";
 
 export * from "./lib";
+
+const logger = getLogger();
 
 // Define types for Express and non-Express versions
 interface I18nData {
@@ -97,25 +100,35 @@ export const frontendUiMiddlewareIdentityBypass = (
 };
 
 export function resolvePath(obj: unknown, path: string): unknown {
-  return path.split(".").reduce((acc, key) => (
-    acc && typeof acc === "object" ? (acc as Record<string, unknown>)[key] : undefined
-  ), obj);
+  return path
+    .split(".")
+    .reduce(
+      (acc, key) =>
+        acc && typeof acc === "object"
+          ? (acc as Record<string, unknown>)[key]
+          : undefined,
+      obj,
+    );
 }
 
-type StepData = { title?: unknown; description?: unknown; bulletList?: unknown[] };
+type StepData = {
+  title?: unknown;
+  description?: unknown;
+  bulletList?: unknown[];
+};
 type StepInput = { key: string; image?: string | null };
 
 export function buildSteps(
   allTranslations: Record<string, unknown>,
   currentTranslations: unknown,
-  steps: StepInput[]
+  steps: StepInput[],
 ): { data: StepData; allLanguageData: StepData[]; image: string | null }[] {
   if (!allTranslations || !steps || !currentTranslations) return [];
   return steps
     .slice(0, 4)
     .map(({ key, image }) => {
       const allLanguageData = Object.keys(allTranslations).map(
-        (lng) => resolvePath(allTranslations[lng], key) as StepData
+        (lng) => resolvePath(allTranslations[lng], key) as StepData,
       );
       return {
         data: resolvePath(currentTranslations, key) as StepData,
@@ -125,15 +138,28 @@ export function buildSteps(
     })
     .filter(({ allLanguageData }) =>
       allLanguageData.every(
-        (step) => step?.title && (step?.description || (step?.bulletList?.length ?? 0) > 0)
-      )
+        (step) =>
+          step?.title &&
+          (step?.description || (step?.bulletList?.length ?? 0) > 0),
+      ),
     );
 }
 
-export function addFrontendUiGlobals(nunjucksEnv: { addGlobal: (name: string, value: unknown) => void }) {
+export function warnCharacterLimit(text: string, limit: number) {
+  if (text.length > limit) {
+    logger.warn(
+      `Text content exceeds character limit of ${limit} characters: "${text.slice(0, 30)}..."`,
+    );
+  }
+}
+
+export function addFrontendUiGlobals(nunjucksEnv: {
+  addGlobal: (name: string, value: unknown) => void;
+}) {
   nunjucksEnv.addGlobal("addLanguageParam", addLanguageParam);
   nunjucksEnv.addGlobal("contactUsUrl", contactUsUrl);
   nunjucksEnv.addGlobal("buildSteps", buildSteps);
+  nunjucksEnv.addGlobal("warnCharacterLimit", warnCharacterLimit);
 }
 
 export function addLanguageParam(language: string, url?: URL) {
