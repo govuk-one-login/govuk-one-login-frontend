@@ -11,6 +11,7 @@ import {
   setBaseTranslations,
   buildSteps,
   addFrontendUiGlobals,
+  warnCharacterLimit,
 } from "..";
 
 // Define types for Express and non-Express versions
@@ -42,6 +43,14 @@ interface PlainResponse {
     basePath?: string;
   };
 }
+
+const mockLogger = jest.fn();
+
+jest.mock("../utils/logger", () => ({
+  getLogger: () => ({
+    warn: () => mockLogger(),
+  }),
+}));
 
 describe("frontendUiMiddleware", () => {
   it("should attach translations and basePath to locals for ExpressRequest", () => {
@@ -512,8 +521,23 @@ describe("buildSteps", () => {
   });
 });
 
+describe("warnCharacterLimit", () => {
+  afterEach(() => {
+    mockLogger.mockClear();
+  });
+
+  it("does nothing if text length is within character limit", () => {
+    warnCharacterLimit("This is a short string", 30);
+    expect(mockLogger).not.toHaveBeenCalled();
+  });
+  it("logs an error to console if text length is over character limit", () => {
+    warnCharacterLimit("This is a longer string than the max length", 30);
+    expect(mockLogger).toHaveBeenCalled();
+  });
+});
+
 describe("addFrontendUiGlobals", () => {
-  it("registers addLanguageParam, contactUsUrl, and buildSteps as globals", () => {
+  it("registers all globals", () => {
     const addGlobal = jest.fn();
     addFrontendUiGlobals({ addGlobal });
     expect(addGlobal).toHaveBeenCalledWith(
@@ -525,6 +549,10 @@ describe("addFrontendUiGlobals", () => {
       expect.any(Function),
     );
     expect(addGlobal).toHaveBeenCalledWith("buildSteps", expect.any(Function));
-    expect(addGlobal).toHaveBeenCalledTimes(3);
+    expect(addGlobal).toHaveBeenCalledWith(
+      "warnCharacterLimit",
+      expect.any(Function),
+    );
+    expect(addGlobal).toHaveBeenCalledTimes(4);
   });
 });
