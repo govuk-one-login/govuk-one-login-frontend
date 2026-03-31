@@ -1,4 +1,3 @@
-import { describe, expect, jest, test, beforeEach } from "@jest/globals";
 import { SelectContentTracker } from "./selectContentTracker";
 import { SelectContentEventInterface } from "./selectContentTracker.interface";
 import * as pushToDataLayer from "../../utils/pushToDataLayerUtil/pushToDataLayer";
@@ -8,7 +7,7 @@ describe("selectContentTracker", () => {
   let newInstance: SelectContentTracker;
   let action: MouseEvent;
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 
     acceptCookies();
 
@@ -18,9 +17,9 @@ describe("selectContentTracker", () => {
       bubbles: true,
       cancelable: true,
     });
-    jest.spyOn(pushToDataLayer, "pushToDataLayer");
-    jest.spyOn(SelectContentTracker.prototype, "trackSelectContent");
-    jest.spyOn(SelectContentTracker.prototype, "initialiseEventListener");
+    vi.spyOn(pushToDataLayer, "pushToDataLayer");
+    vi.spyOn(SelectContentTracker.prototype, "trackSelectContent");
+    vi.spyOn(SelectContentTracker.prototype, "initialiseEventListener");
   });
 
   test("new instance should call event listener", () => {
@@ -40,7 +39,7 @@ describe("selectContentTracker", () => {
     document.body.appendChild(details2);
 
     // Spy on addEventListener for both elements
-    const addEventListenerSpy = jest.spyOn(
+    const addEventListenerSpy = vi.spyOn(
       HTMLElement.prototype,
       "addEventListener",
     );
@@ -135,7 +134,7 @@ describe("selectContentTracker", () => {
 
 describe("Cookie Management", () => {
   test("trackSelectContent should return false if not cookie consent", () => {
-    jest.spyOn(SelectContentTracker.prototype, "trackSelectContent");
+    vi.spyOn(SelectContentTracker.prototype, "trackSelectContent");
     rejectCookies();
     const enableSelectContentTracking = true;
     const instance = new SelectContentTracker(enableSelectContentTracking);

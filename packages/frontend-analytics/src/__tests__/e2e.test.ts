@@ -3,6 +3,7 @@ import { JSDOM } from "jsdom";
 import "../index";
 import * as pushToDataLayer from "../utils/pushToDataLayerUtil/pushToDataLayer";
 import { acceptCookies, unsetCookies } from "../../test/utils";
+import type { Mock } from "vitest";
 
 async function renderTemplate() {
   const nunjucksEnv = nunjucks.configure(["./src/components"], {
@@ -36,10 +37,12 @@ async function renderTemplate() {
   return dom;
 }
 
+const pushToDataLayerSpy = vi.spyOn(pushToDataLayer, "pushToDataLayer");
+
 describe("E2E", () => {
   beforeEach(() => {
     unsetCookies();
-    jest.spyOn(pushToDataLayer, "pushToDataLayer");
+    pushToDataLayerSpy.mockClear();
   });
 
   it("sends the onPageLoad event if cookies are already accepted before the page loads", async () => {
@@ -48,7 +51,7 @@ describe("E2E", () => {
     await renderTemplate();
 
     const eventsInDataLayer = (
-      pushToDataLayer.pushToDataLayer as jest.Mock
+      pushToDataLayer.pushToDataLayer as Mock
     ).mock.calls.map((call) => call[0].event);
 
     const pageViewEventsInDataLayer = eventsInDataLayer.filter(
@@ -61,12 +64,10 @@ describe("E2E", () => {
   it("doesn't send the onPageLoad event if cookies are unset before the page loads", async () => {
     await renderTemplate();
 
-    (pushToDataLayer.pushToDataLayer as jest.Mock).mock.calls.forEach(
-      (call) => {
-        // Ensure none of the calls have the property `event` set to "page_view_ga4"
-        expect(call[0]).not.toHaveProperty("event", "page_view_ga4");
-      },
-    );
+    (pushToDataLayer.pushToDataLayer as Mock).mock.calls.forEach((call) => {
+      // Ensure none of the calls have the property `event` set to "page_view_ga4"
+      expect(call[0]).not.toHaveProperty("event", "page_view_ga4");
+    });
   });
 
   it("sends the onPageLoad event if cookies are accepted after the page loads", async () => {
@@ -77,12 +78,14 @@ describe("E2E", () => {
     dom.window.dispatchEvent(new dom.window.Event("cookie-consent"));
 
     const eventsInDataLayer = (
-      pushToDataLayer.pushToDataLayer as jest.Mock
+      pushToDataLayer.pushToDataLayer as Mock
     ).mock.calls.map((call) => call[0].event);
 
     const pageViewEventsInDataLayer = eventsInDataLayer.filter(
       (event) => event === "page_view_ga4",
     );
+
+    console.log({ pageViewEventsInDataLayer, eventsInDataLayer });
 
     expect(pageViewEventsInDataLayer.length).toBe(1);
   });
