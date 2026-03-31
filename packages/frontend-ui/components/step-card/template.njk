@@ -15,6 +15,7 @@
               <span class="step-number govuk-body govuk-!-font-weight-bold">{{loop.index}}.</span>
               <p class="govuk-body govuk-!-font-weight-bold step-title">{{step.data.title}}</p>
               {% if step.data.description and not step.data.bulletList %}
+              {{ warnCharacterLimit(step.data.description, 40) }}
               <p class="govuk-body step-description">{{ step.data.description }}</p>
               {% endif %}
               {% if step.data.bulletList and step.data.bulletList.length %}

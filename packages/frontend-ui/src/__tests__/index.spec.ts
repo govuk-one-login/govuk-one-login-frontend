@@ -11,6 +11,7 @@ import {
   setBaseTranslations,
   buildSteps,
   addFrontendUiGlobals,
+  warnCharacterLimit,
 } from "..";
 
 // Define types for Express and non-Express versions
@@ -42,6 +43,14 @@ interface PlainResponse {
     basePath?: string;
   };
 }
+
+const mockLogger = jest.fn();
+
+jest.mock("../utils/logger", () => ({
+  getLogger: () => ({
+    warn: () => mockLogger(),
+  }),
+}));
 
 describe("frontendUiMiddleware", () => {
   it("should attach translations and basePath to locals for ExpressRequest", () => {
@@ -356,8 +365,30 @@ describe("contactUsUrl function", () => {
 
 describe("buildSteps", () => {
   const allTranslations = {
-    en: { translation: { pages: { myPage: { steps: { 0: { title: "Step one", description: "Do this" }, 1: { title: "Step two", bulletList: ["Item A"] } } } } } },
-    cy: { translation: { pages: { myPage: { steps: { 0: { title: "Cam un", description: "Gwnewch hyn" }, 1: { title: "Cam dau", bulletList: ["Eitem A"] } } } } } },
+    en: {
+      translation: {
+        pages: {
+          myPage: {
+            steps: {
+              0: { title: "Step one", description: "Do this" },
+              1: { title: "Step two", bulletList: ["Item A"] },
+            },
+          },
+        },
+      },
+    },
+    cy: {
+      translation: {
+        pages: {
+          myPage: {
+            steps: {
+              0: { title: "Cam un", description: "Gwnewch hyn" },
+              1: { title: "Cam dau", bulletList: ["Eitem A"] },
+            },
+          },
+        },
+      },
+    },
   };
   const currentTranslations = allTranslations.en;
   const steps = [
@@ -368,7 +399,10 @@ describe("buildSteps", () => {
   it("returns resolved steps with data, allLanguageData, and image", () => {
     const result = buildSteps(allTranslations, currentTranslations, steps);
     expect(result).toHaveLength(2);
-    expect(result[0].data).toEqual({ title: "Step one", description: "Do this" });
+    expect(result[0].data).toEqual({
+      title: "Step one",
+      description: "Do this",
+    });
     expect(result[0].image).toBe("/img/step1.svg");
     expect(result[0].allLanguageData).toHaveLength(2);
     expect(result[1].image).toBeNull();
@@ -376,34 +410,96 @@ describe("buildSteps", () => {
 
   it("filters out steps missing title in any language", () => {
     const incomplete = {
-      en: { translation: { pages: { myPage: { steps: { 0: { title: "Step one", description: "Do this" } } } } } },
-      cy: { translation: { pages: { myPage: { steps: { 0: { description: "No title here" } } } } } },
+      en: {
+        translation: {
+          pages: {
+            myPage: {
+              steps: { 0: { title: "Step one", description: "Do this" } },
+            },
+          },
+        },
+      },
+      cy: {
+        translation: {
+          pages: { myPage: { steps: { 0: { description: "No title here" } } } },
+        },
+      },
     };
-    const result = buildSteps(incomplete, incomplete.en, [{ key: "translation.pages.myPage.steps.0" }]);
+    const result = buildSteps(incomplete, incomplete.en, [
+      { key: "translation.pages.myPage.steps.0" },
+    ]);
     expect(result).toHaveLength(0);
   });
 
   it("filters out steps missing both description and bulletList in any language", () => {
     const incomplete = {
-      en: { translation: { pages: { myPage: { steps: { 0: { title: "Step one", description: "Has desc" } } } } } },
-      cy: { translation: { pages: { myPage: { steps: { 0: { title: "Cam un" } } } } } },
+      en: {
+        translation: {
+          pages: {
+            myPage: {
+              steps: { 0: { title: "Step one", description: "Has desc" } },
+            },
+          },
+        },
+      },
+      cy: {
+        translation: {
+          pages: { myPage: { steps: { 0: { title: "Cam un" } } } },
+        },
+      },
     };
-    const result = buildSteps(incomplete, incomplete.en, [{ key: "translation.pages.myPage.steps.0" }]);
+    const result = buildSteps(incomplete, incomplete.en, [
+      { key: "translation.pages.myPage.steps.0" },
+    ]);
     expect(result).toHaveLength(0);
   });
 
   it("slices to a maximum of 4 steps", () => {
-    const manySteps = Array.from({ length: 6 }, (_, i) => ({ key: `translation.pages.myPage.steps.${i}` }));
+    const manySteps = Array.from({ length: 6 }, (_, i) => ({
+      key: `translation.pages.myPage.steps.${i}`,
+    }));
     const bigTranslations = {
-      en: { translation: { pages: { myPage: { steps: Object.fromEntries(Array.from({ length: 6 }, (_, i) => [i, { title: `Step ${i}`, description: "desc" }])) } } } },
-      cy: { translation: { pages: { myPage: { steps: Object.fromEntries(Array.from({ length: 6 }, (_, i) => [i, { title: `Cam ${i}`, description: "desc" }])) } } } },
+      en: {
+        translation: {
+          pages: {
+            myPage: {
+              steps: Object.fromEntries(
+                Array.from({ length: 6 }, (_, i) => [
+                  i,
+                  { title: `Step ${i}`, description: "desc" },
+                ]),
+              ),
+            },
+          },
+        },
+      },
+      cy: {
+        translation: {
+          pages: {
+            myPage: {
+              steps: Object.fromEntries(
+                Array.from({ length: 6 }, (_, i) => [
+                  i,
+                  { title: `Cam ${i}`, description: "desc" },
+                ]),
+              ),
+            },
+          },
+        },
+      },
     };
     const result = buildSteps(bigTranslations, bigTranslations.en, manySteps);
     expect(result).toHaveLength(4);
   });
 
   it("returns [] when allTranslations is null", () => {
-    expect(buildSteps(null as unknown as Record<string, unknown>, currentTranslations, steps)).toEqual([]);
+    expect(
+      buildSteps(
+        null as unknown as Record<string, unknown>,
+        currentTranslations,
+        steps,
+      ),
+    ).toEqual([]);
   });
 
   it("returns [] when currentTranslations is null", () => {
@@ -411,7 +507,13 @@ describe("buildSteps", () => {
   });
 
   it("returns [] when steps is null", () => {
-    expect(buildSteps(allTranslations, currentTranslations, null as unknown as { key: string }[])).toEqual([]);
+    expect(
+      buildSteps(
+        allTranslations,
+        currentTranslations,
+        null as unknown as { key: string }[],
+      ),
+    ).toEqual([]);
   });
 
   it("returns [] for an empty steps array", () => {
@@ -419,13 +521,38 @@ describe("buildSteps", () => {
   });
 });
 
+describe("warnCharacterLimit", () => {
+  afterEach(() => {
+    mockLogger.mockClear();
+  });
+
+  it("does nothing if text length is within character limit", () => {
+    warnCharacterLimit("This is a short string", 30);
+    expect(mockLogger).not.toHaveBeenCalled();
+  });
+  it("logs an error to console if text length is over character limit", () => {
+    warnCharacterLimit("This is a longer string than the max length", 30);
+    expect(mockLogger).toHaveBeenCalled();
+  });
+});
+
 describe("addFrontendUiGlobals", () => {
-  it("registers addLanguageParam, contactUsUrl, and buildSteps as globals", () => {
+  it("registers all globals", () => {
     const addGlobal = jest.fn();
     addFrontendUiGlobals({ addGlobal });
-    expect(addGlobal).toHaveBeenCalledWith("addLanguageParam", expect.any(Function));
-    expect(addGlobal).toHaveBeenCalledWith("contactUsUrl", expect.any(Function));
+    expect(addGlobal).toHaveBeenCalledWith(
+      "addLanguageParam",
+      expect.any(Function),
+    );
+    expect(addGlobal).toHaveBeenCalledWith(
+      "contactUsUrl",
+      expect.any(Function),
+    );
     expect(addGlobal).toHaveBeenCalledWith("buildSteps", expect.any(Function));
-    expect(addGlobal).toHaveBeenCalledTimes(3);
+    expect(addGlobal).toHaveBeenCalledWith(
+      "warnCharacterLimit",
+      expect.any(Function),
+    );
+    expect(addGlobal).toHaveBeenCalledTimes(4);
   });
 });
