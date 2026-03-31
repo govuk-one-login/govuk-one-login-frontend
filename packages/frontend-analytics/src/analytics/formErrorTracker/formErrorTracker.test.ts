@@ -1,4 +1,3 @@
-import { describe, expect, jest, test, beforeEach } from "@jest/globals";
 import * as FormErrorTracker from "./formErrorTracker";
 import {
   FormEventInterface,
@@ -14,8 +13,8 @@ describe("FormErrorTracker", () => {
   beforeEach(() => {
     document.body.innerHTML = "";
   });
-  jest.spyOn(pushToDataLayer, "pushToDataLayer");
-  jest.spyOn(FormErrorTracker, "trackFormError");
+  vi.spyOn(pushToDataLayer, "pushToDataLayer");
+  vi.spyOn(FormErrorTracker, "trackFormError");
 
   test("trackFormError should return false if not cookie consent", () => {
     rejectCookies();
@@ -78,12 +77,12 @@ describe("FormErrorTracker", () => {
       event_data: {
         event_name: "form_error",
         type: "checkbox",
-        url: "http://localhost/test-url",
+        url: "http://localhost:3000/test-url",
         text: "error: select one checkbox",
         section: "checked section",
         action: "error",
         external: "false",
-        link_domain: "http://localhost",
+        link_domain: "http://localhost:3000",
         "link_path_parts.1": "/test-url",
         "link_path_parts.2": "undefined",
         "link_path_parts.3": "undefined",
@@ -96,12 +95,12 @@ describe("FormErrorTracker", () => {
       event_data: {
         event_name: "form_error",
         type: "drop-down list",
-        url: "http://localhost/test-url",
+        url: "http://localhost:3000/test-url",
         text: "error: select one option from dropdown",
         section: "dropdown section",
         action: "error",
         external: "false",
-        link_domain: "http://localhost",
+        link_domain: "http://localhost:3000",
         "link_path_parts.1": "/test-url",
         "link_path_parts.2": "undefined",
         "link_path_parts.3": "undefined",
@@ -114,12 +113,12 @@ describe("FormErrorTracker", () => {
       event_data: {
         event_name: "form_error",
         type: "radio buttons",
-        url: "http://localhost/test-url",
+        url: "http://localhost:3000/test-url",
         text: "error: select one radio option",
         section: "radio section",
         action: "error",
         external: "false",
-        link_domain: "http://localhost",
+        link_domain: "http://localhost:3000",
         "link_path_parts.1": "/test-url",
         "link_path_parts.2": "undefined",
         "link_path_parts.3": "undefined",
@@ -132,12 +131,12 @@ describe("FormErrorTracker", () => {
       event_data: {
         event_name: "form_error",
         type: FREE_TEXT_FIELD_TYPE,
-        url: "http://localhost/test-url",
+        url: "http://localhost:3000/test-url",
         text: "error: please give us your feedback",
         section: "textarea section",
         action: "error",
         external: "false",
-        link_domain: "http://localhost",
+        link_domain: "http://localhost:3000",
         "link_path_parts.1": "/test-url",
         "link_path_parts.2": "undefined",
         "link_path_parts.3": "undefined",
@@ -150,12 +149,12 @@ describe("FormErrorTracker", () => {
       event_data: {
         event_name: "form_error",
         type: FREE_TEXT_FIELD_TYPE,
-        url: "http://localhost/test-url",
+        url: "http://localhost:3000/test-url",
         text: "error: please give us your email",
         section: "text input section",
         action: "error",
         external: "false",
-        link_domain: "http://localhost",
+        link_domain: "http://localhost:3000",
         "link_path_parts.1": "/test-url",
         "link_path_parts.2": "undefined",
         "link_path_parts.3": "undefined",
@@ -169,12 +168,12 @@ describe("FormErrorTracker", () => {
       event_data: {
         event_name: "form_error",
         type: FREE_TEXT_FIELD_TYPE,
-        url: "http://localhost/test-url",
+        url: "http://localhost:3000/test-url",
         text: "error: please give us your password",
         section: "password input section",
         action: "error",
         external: "false",
-        link_domain: "http://localhost",
+        link_domain: "http://localhost:3000",
         "link_path_parts.1": "/test-url",
         "link_path_parts.2": "undefined",
         "link_path_parts.3": "undefined",
@@ -224,12 +223,12 @@ describe("FormErrorTracker", () => {
       event_data: {
         event_name: "form_error",
         type: "checkbox",
-        url: "http://localhost/test-url",
+        url: "http://localhost:3000/test-url",
         text: "error: select one option",
         section: "test label questions",
         action: "error",
         external: "false",
-        link_domain: "http://localhost",
+        link_domain: "http://localhost:3000",
         "link_path_parts.1": "/test-url",
         "link_path_parts.2": "undefined",
         "link_path_parts.3": "undefined",
