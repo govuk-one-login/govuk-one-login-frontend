@@ -14,7 +14,7 @@
     "access": "public"
   },
   "scripts": {
-    "test": "jest --coverage src",
+    "test": "vitest --run --coverage",
     "build": "rollup -c"
   },
   "files": [
