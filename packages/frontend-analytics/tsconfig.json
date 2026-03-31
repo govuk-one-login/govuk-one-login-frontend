@@ -10,7 +10,9 @@
     "esModuleInterop": true,
     "downlevelIteration": true,
     "target": "ES5",
-    "allowJs": true
+    "allowJs": true,
+    "lib": ["es2019", "DOM"],
+    "types": ["vitest/globals", "node"]
   },
   "include": ["./src/**/*"]
 }

@@ -1,4 +1,3 @@
-import { beforeEach, describe, expect, test } from "@jest/globals";
 import { getSubmitUrl } from "./getSubmitUrl";
 
 describe("getSubmitUrl", () => {
@@ -13,7 +12,7 @@ describe("getSubmitUrl", () => {
     form.innerHTML =
       '<input id="test" name="test" value="test value" type="text"/>';
     document.body.appendChild(form);
-    expect(getSubmitUrl(form)).toBe("http://localhost/test-url");
+    expect(getSubmitUrl(form)).toBe("http://localhost:3000/test-url");
   });
 
   test("getSubmitUrl should return submit url with the query params also", () => {
@@ -22,6 +21,6 @@ describe("getSubmitUrl", () => {
     form.innerHTML =
       '<input id="test" name="test" value="test value" type="text"/>';
     document.body.appendChild(form);
-    expect(getSubmitUrl(form)).toBe("http://localhost/test-url?edit=true");
+    expect(getSubmitUrl(form)).toBe("http://localhost:3000/test-url?edit=true");
   });
 });

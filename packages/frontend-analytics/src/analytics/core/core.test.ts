@@ -1,4 +1,3 @@
-import { describe, expect, test } from "@jest/globals";
 import { Analytics } from "./core";
 import { PageViewTracker } from "../pageViewTracker/pageViewTracker";
 import { OptionsInterface } from "./core.interface";
@@ -8,7 +7,7 @@ describe("should initialize the ga4 class", () => {
   const options: OptionsInterface = {
     enableGa4Tracking: true,
     enableUaTracking: false,
-    cookieDomain: "localhost",
+    cookieDomain: "localhost:3000",
     enableFormChangeTracking: true,
     enableFormErrorTracking: true,
     enableFormResponseTracking: true,
