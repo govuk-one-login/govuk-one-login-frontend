@@ -1,10 +1,14 @@
 import { sendEventToSQS } from "../sendEventToSQS";
 
-const mockSend = jest.fn();
+const mockSend = vi.fn();
 
-jest.mock("@aws-sdk/client-sqs", () => ({
-  ...jest.requireActual("@aws-sdk/client-sqs"),
-  SQSClient: jest.fn(() => ({ send: mockSend })),
+vi.mock("@aws-sdk/client-sqs", async () => ({
+  ...(await vi.importActual("@aws-sdk/client-sqs")),
+  SQSClient: vi.fn(
+    class {
+      send = mockSend;
+    },
+  ),
 }));
 
 describe("sendEventToSQS", () => {

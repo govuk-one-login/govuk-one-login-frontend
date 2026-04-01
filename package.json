@@ -48,6 +48,7 @@
     "@types/ua-parser-js": "^0.7.39",
     "@typescript-eslint/eslint-plugin": "^8.47.0",
     "@typescript-eslint/parser": "^8.47.0",
+    "@vitest/coverage-v8": "^4.1.2",
     "axe-core": "^4.11.0",
     "canvas": "^3.2.0",
     "chai": "^4.5.0",
@@ -95,7 +96,7 @@
     "tslib": "2.8.1",
     "tsx": "4.19.3",
     "typescript": "5.8.2",
-    "vitest": "^4.1.0"
+    "vitest": "^4.1.2"
   },
   "overrides": {
     "jest-environment-jsdom": {
