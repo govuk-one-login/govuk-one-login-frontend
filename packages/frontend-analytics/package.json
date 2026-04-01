@@ -14,8 +14,8 @@
     "build": "rollup -c",
     "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,md}\"",
     "eslint": "eslint .",
-    "test": "jest --coverage",
-    "test:coverage": "jest --coverage src"
+    "test": "vitest --coverage",
+    "test:coverage": "vitest --run --coverage src"
   },
   "files": [
     "components/",

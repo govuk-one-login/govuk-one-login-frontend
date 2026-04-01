@@ -41,7 +41,7 @@ describe("should check for changeLink", () => {
   });
   test("should return false if element is not a change link", () => {
     const href = document.createElement("a");
-    href.setAttribute("href", "http://localhost");
+    href.setAttribute("href", "http://localhost:3000");
     expect(isChangeLink(href)).toBe(false);
   });
 });

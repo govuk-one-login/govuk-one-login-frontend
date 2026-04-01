@@ -1,5 +1,4 @@
-import { beforeEach, describe, expect, jest, test } from "@jest/globals";
-import "jest-localstorage-mock";
+// import "vi-localstorage-mock";
 
 import {
   PageViewParametersInterface,
@@ -48,8 +47,8 @@ describe("pageViewTracker", () => {
 
   beforeEach(() => {
     acceptCookies();
-    jest.clearAllMocks();
-    jest.spyOn(pushToDataLayer, "pushToDataLayer");
+    vi.clearAllMocks();
+    vi.spyOn(pushToDataLayer, "pushToDataLayer");
     instance = new PageViewTracker(
       getOptions({
         enablePageViewTracking: true,
@@ -191,7 +190,7 @@ describe("pageViewTracker", () => {
 });
 
 describe("pageViewTracker test disable ga4 tracking option", () => {
-  jest.spyOn(PageViewTracker.prototype, "trackOnPageLoad");
+  vi.spyOn(PageViewTracker.prototype, "trackOnPageLoad");
 
   test("pushToDataLayer should not be called", () => {
     const instance = new PageViewTracker(
@@ -200,12 +199,12 @@ describe("pageViewTracker test disable ga4 tracking option", () => {
       }),
     );
     instance.trackOnPageLoad(getParameters());
-    expect(instance.trackOnPageLoad).toReturnWith();
+    expect(instance.trackOnPageLoad).toReturn();
   });
 });
 
 describe("Cookie Management", () => {
-  jest.spyOn(PageViewTracker.prototype, "trackOnPageLoad");
+  vi.spyOn(PageViewTracker.prototype, "trackOnPageLoad");
   beforeEach(() => {
     acceptCookies();
   });
@@ -214,12 +213,12 @@ describe("Cookie Management", () => {
     rejectCookies();
     const instance = new PageViewTracker(getOptions());
     instance.trackOnPageLoad(getParameters());
-    expect(instance.trackOnPageLoad).toReturnWith();
+    expect(instance.trackOnPageLoad).toReturn();
   });
 });
 
 describe("Form Change Tracker Trigger", () => {
-  const spy = jest.spyOn(FormChangeTracker.prototype, "trackFormChange");
+  const spy = vi.spyOn(FormChangeTracker.prototype, "trackFormChange");
 
   test("FormChange tracker is not triggered", () => {
     const instance = new PageViewTracker(
@@ -237,9 +236,9 @@ describe("Form Error Tracker Trigger", () => {
   let instance: PageViewTracker;
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     acceptCookies();
-    jest.spyOn(pushToDataLayer, "pushToDataLayer");
+    vi.spyOn(pushToDataLayer, "pushToDataLayer");
     instance = new PageViewTracker(getOptions());
   });
 
@@ -247,7 +246,7 @@ describe("Form Error Tracker Trigger", () => {
     document.body.innerHTML =
       '<p id="organisationType-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select one option</p>';
     instance.trackOnPageLoad(getParameters());
-    expect(instance.trackOnPageLoad).toReturnWith();
+    expect(instance.trackOnPageLoad).toReturn();
   });
 
   test("FormError tracker is deactivated", () => {
@@ -276,8 +275,8 @@ describe("Persisting taxonomy level values", () => {
       analyticsGa4: { cookie: { consent: true } },
     };
     document.body.innerHTML = "<p></p>";
-    jest.clearAllMocks();
-    jest.spyOn(pushToDataLayer, "pushToDataLayer");
+    vi.clearAllMocks();
+    vi.spyOn(pushToDataLayer, "pushToDataLayer");
   });
 
   test("Taxonomy levels are persisted from previous page", () => {
@@ -298,7 +297,7 @@ describe("Persisting taxonomy level values", () => {
         dynamic: "true",
         first_published_at: PageViewTracker.getFirstPublishedAt(),
         language: "undefined",
-        location: "http://localhost/",
+        location: "http://localhost:3000/",
         logged_in_status: "logged in",
         organisations: "<OT1056>",
         primary_publishing_organisation:
@@ -322,7 +321,7 @@ describe("Persisting taxonomy level values", () => {
         dynamic: "true",
         first_published_at: PageViewTracker.getFirstPublishedAt(),
         language: "undefined",
-        location: "http://localhost/",
+        location: "http://localhost:3000/",
         logged_in_status: "logged in",
         organisations: "<OT1056>",
         primary_publishing_organisation:
