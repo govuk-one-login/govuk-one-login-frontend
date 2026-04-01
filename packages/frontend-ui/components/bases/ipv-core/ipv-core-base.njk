@@ -46,7 +46,7 @@
     {%- if pageErrorState %}
         {{ 'general.govuk.errorTitlePrefix' | translate }}
     {% endif %}
-    {%- if pageTitleKey %}{{ pageTitleKey | translateWithContextOrFallback(context) }} – GOV.UK One Login{% endif %}
+    {%- if pageTitleKey %}{{ pageTitleKey | translate(context) }} – GOV.UK One Login{% endif %}
 {%- endblock %}
 
 {% block bodyStart %}
@@ -158,7 +158,7 @@
         </script>
         {{ ga4OnPageLoad({
         nonce: cspNonce,
-        statusCode: statusCode,         
+        statusCode: statusCode,
         dynamic: isPageDynamic,
         englishPageTitle: pageTitleKey | translateToEnglish,
         taxonomyLevel1: taxLevel1,
