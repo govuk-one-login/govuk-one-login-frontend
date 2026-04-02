@@ -1,8 +1,9 @@
 import { getLogger } from "../utils/logger";
 import { isValidHashName, getDuplicateHashedFileName } from "../utils/utils";
+import type { Mock } from "vitest";
 
-jest.mock("../utils/logger", () => ({
-  getLogger: jest.fn(),
+vi.mock("../utils/logger", () => ({
+  getLogger: vi.fn(),
 }));
 
 describe("isValidHashName", () => {
@@ -14,14 +15,14 @@ describe("isValidHashName", () => {
 
   describe("error handling", () => {
     beforeEach(() => {
-      (getLogger as jest.Mock).mockReturnValue({
-        trace: jest.fn(),
-        warn: jest.fn(),
+      (getLogger as Mock).mockReturnValue({
+        trace: vi.fn(),
+        warn: vi.fn(),
       });
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     it("returns false and logs warning for multiple instances of both hashStart and hashEnd", () => {
