@@ -2,19 +2,20 @@ import { Express } from "express";
 import fg from "fast-glob";
 import { PathAndFile } from "../utils/utils.types";
 import { loadAssets } from "../index";
+import type { Mock } from "vitest";
 import * as utils from "../utils/utils";
 
-jest.mock("fast-glob", () => ({
+vi.mock("fast-glob", () => ({
   __esModule: true,
-  default: { sync: jest.fn() },
+  default: { sync: vi.fn() },
 }));
 
-jest.mock("../index", () => ({
-  ...jest.requireActual("../index"),
-  parseAssets: jest.fn(),
+vi.mock("../index", async () => ({
+  ...(await vi.importActual("../index")),
+  parseAssets: vi.fn(),
 }));
 
-jest.spyOn(utils, "getDuplicateHashedFileName");
+vi.spyOn(utils, "getDuplicateHashedFileName");
 
 describe("loadAssets", () => {
   let app: Express;
@@ -24,7 +25,7 @@ describe("loadAssets", () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it("should load assets, parse them, and map them to local", () => {
@@ -36,7 +37,7 @@ describe("loadAssets", () => {
       { hashedFileName: "asset2-5678.js", fileName: "asset2.js", hash: "5678" },
     ];
 
-    (fg.sync as jest.Mock).mockReturnValue(assets);
+    (fg.sync as Mock).mockReturnValue(assets);
 
     loadAssets(app, assetPath, hashBetween);
 

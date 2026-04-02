@@ -7,7 +7,7 @@
   "module": "build/esm/index.js",
   "scripts": {
     "build": "rollup -c",
-    "test": "jest -c --coverage"
+    "test": "vitest --run --coverage"
   },
   "files": [
     "build/",

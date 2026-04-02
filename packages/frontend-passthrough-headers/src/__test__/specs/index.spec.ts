@@ -2,6 +2,7 @@ import { type Request } from "express";
 import { createPersonalDataHeaders } from "../../index";
 import { getLogger } from "../../utils/logger";
 import type { APIGatewayProxyEvent } from "aws-lambda";
+import type { Mock } from "vitest";
 
 const MOCK_CLOUDFRONT_VIEWER_IPV4 = "198.51.100.10:46532";
 const MOCK_CLOUDFRONT_VIEWER_IPV6 = "[2001:db8:cafe::17]:46532";
@@ -12,20 +13,20 @@ const MOCK_FORWARDED_IPV6 =
 const MOCK_X_FORWARDED_FOR_IPV4 = "198.51.100.13, 2004:db8:cafe::17";
 const MOCK_X_FORWARDED_FOR_IPV6 = "2005:db8:cafe::17, 198.51.100.13";
 
-jest.mock("../../utils/logger.ts", () => ({
-  getLogger: jest.fn(),
+vi.mock("../../utils/logger.ts", () => ({
+  getLogger: vi.fn(),
 }));
 
 describe("createPersonalDataHeaders", () => {
   beforeEach(() => {
-    (getLogger as jest.Mock).mockReturnValue({
-      trace: jest.fn(),
-      warn: jest.fn(),
+    (getLogger as Mock).mockReturnValue({
+      trace: vi.fn(),
+      warn: vi.fn(),
     });
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   describe("handle txma-audit-encoded header", () => {
@@ -121,7 +122,7 @@ describe("createPersonalDataHeaders", () => {
       });
 
       it("should log a warning and not return the header on an invalid 'cloudfront-viewer-address' header - lower case", () => {
-        const spyLogger = jest.spyOn(getLogger(), "warn");
+        const spyLogger = vi.spyOn(getLogger(), "warn");
         const headers = createPersonalDataHeaders("https://account.gov.uk", {
           headers: {
             "cloudfront-viewer-address": "fgfgn4t428fcxcz'][]/.",
@@ -137,7 +138,7 @@ describe("createPersonalDataHeaders", () => {
       });
 
       it("should log a warning and not return the header on an invalid 'cloudfront-viewer-address' header - upper case", () => {
-        const spyLogger = jest.spyOn(getLogger(), "warn");
+        const spyLogger = vi.spyOn(getLogger(), "warn");
         const headers = createPersonalDataHeaders("https://account.gov.uk", {
           headers: {
             "Cloudfront-Viewer-Address": "fgfgn4t428fcxcz'][]/.",
@@ -211,7 +212,7 @@ describe("createPersonalDataHeaders", () => {
       });
 
       it("should log a warning and not return a header on an invalid 'forwarded' header - lower case", () => {
-        const spyLogger = jest.spyOn(getLogger(), "warn");
+        const spyLogger = vi.spyOn(getLogger(), "warn");
         const headers = createPersonalDataHeaders("https://account.gov.uk", {
           headers: {
             forwarded: "fgfgn4t428fcxcz'][]/.",
@@ -226,7 +227,7 @@ describe("createPersonalDataHeaders", () => {
       });
 
       it("should log a warning and not return a header on an invalid 'forwarded' header - upper case", () => {
-        const spyLogger = jest.spyOn(getLogger(), "warn");
+        const spyLogger = vi.spyOn(getLogger(), "warn");
         const headers = createPersonalDataHeaders("https://account.gov.uk", {
           headers: {
             Forwarded: "fgfgn4t428fcxcz'][]/.",

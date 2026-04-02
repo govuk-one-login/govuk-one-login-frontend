@@ -13,7 +13,7 @@
   },
   "type": "module",
   "scripts": {
-    "test": "jest -c --coverage",
+    "test": "vitest --coverage",
     "dev": "rollup -c --watch",
     "build": "rollup -c",
     "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,md}\""

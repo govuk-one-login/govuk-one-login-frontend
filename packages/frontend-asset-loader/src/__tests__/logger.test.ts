@@ -1,24 +1,25 @@
 import { getLogger } from "../utils/logger";
+import type { Mock } from "vitest";
 
-jest.mock("../utils/logger", () => ({
-  getLogger: jest.fn(),
+vi.mock("../utils/logger", () => ({
+  getLogger: vi.fn(),
 }));
 
 describe("logger functionality", () => {
   const mockTraceMessage = "warning message";
-  (getLogger as jest.Mock).mockReturnValue({
-    trace: jest.fn(),
-    warn: jest.fn(),
+  (getLogger as Mock).mockReturnValue({
+    trace: vi.fn(),
+    warn: vi.fn(),
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it("should use the custom logger if provided", () => {
     const mockCustomLogger = {
-      trace: jest.fn(),
-      warn: jest.fn(),
+      trace: vi.fn(),
+      warn: vi.fn(),
     };
 
     mockCustomLogger.trace(mockTraceMessage);
