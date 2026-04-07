@@ -1,3 +1,17 @@
+## 5.1.0 (2026-04-07)
+
+### 🚀 Features
+
+- **PYIC-8718:** update IPV Core's base njk file to replace old nunjucks filter ([65a0197](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/65a0197))
+- **DFC-1138:** Migrate frontend-device-intelligence to vitest ([11f15e0](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/11f15e0))
+- **1149:** adding step card component ([d77361f](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/d77361f))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+- Sam Bunce
+- Thea Bautista
+
 ## 5.0.1 (2026-03-17)
 
 ### 🩹 Fixes
