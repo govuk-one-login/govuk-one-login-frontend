@@ -1,4 +1,4 @@
-import _ from "lodash";
+import { merge } from "lodash";
 import { type Request, type Response } from "express";
 import { type HelmetOptions } from "helmet";
 
@@ -50,5 +50,5 @@ const baseHelmetConfig = {
 };
 
 export function getHelmetConfig(additions: HelmetOptions = {}): HelmetOptions {
-  return _.merge(baseHelmetConfig, additions);
+  return merge(baseHelmetConfig, additions);
 }
