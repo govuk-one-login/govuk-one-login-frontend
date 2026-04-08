@@ -1,3 +1,13 @@
+## 5.1.1 (2026-04-08)
+
+### 🩹 Fixes
+
+- frontend-ui dependency on lodash ([54dfaab](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/54dfaab))
+
+### ❤️ Thank You
+
+- nickhealGDS
+
 ## 5.1.0 (2026-04-07)
 
 ### 🚀 Features
