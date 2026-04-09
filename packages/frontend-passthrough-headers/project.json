@@ -19,7 +19,9 @@
     "lint": {
       "executor": "@nx/eslint:lint",
       "options": {
-        "lintFilePatterns": ["packages/frontend-passthrough-headers/src/**/*"]
+        "lintFilePatterns": [
+          "packages/frontend-passthrough-headers/src/**/*"
+        ]
       }
     }
   }

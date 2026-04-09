@@ -1,6 +1,5 @@
-
+import { type Express } from "express";
 import fg from "fast-glob";
-import { Express } from "express";
 import {
   getDuplicateHashedFileName,
   mapAssetsToLocal,
@@ -13,7 +12,7 @@ export const loadAssets = (
   app: Express,
   assetPath: string,
   hashBetween = { start: "-", end: "." },
-  customLogger?: CustomLogger
+  customLogger?: CustomLogger,
 ) => {
   setLogger(customLogger);
   const assets = fg.sync(assetPath);
@@ -23,10 +22,9 @@ export const loadAssets = (
   const duplicateFileName = getDuplicateHashedFileName(pathsAndFiles);
   if (duplicateFileName) {
     logger.warn(
-      `Warning: Duplicate asset name detected. Each asset must have a unique name. Duplicate found: ${duplicateFileName}`
+      `Warning: Duplicate asset name detected. Each asset must have a unique name. Duplicate found: ${duplicateFileName}`,
     );
   }
 
   mapAssetsToLocal(app, pathsAndFiles);
 };
-

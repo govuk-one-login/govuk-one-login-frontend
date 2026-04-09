@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
-import { NextFunction, Request, Response } from "express";
-import i18next from "i18next";
+import { type NextFunction, type Request, type Response } from "express";
+import { type i18n } from "i18next";
 import translationCy from "../locales/cy/translation.json";
 import translationEn from "../locales/en/translation.json";
 
@@ -64,7 +64,7 @@ export function frontendUiMiddleware(
   next();
 }
 
-export const setFrontendUiTranslations = (instanceI18n: typeof i18next) => {
+export const setFrontendUiTranslations = (instanceI18n: i18n) => {
   instanceI18n.addResourceBundle(
     "en",
     "translation",
@@ -97,25 +97,35 @@ export const frontendUiMiddlewareIdentityBypass = (
 };
 
 export function resolvePath(obj: unknown, path: string): unknown {
-  return path.split(".").reduce((acc, key) => (
-    acc && typeof acc === "object" ? (acc as Record<string, unknown>)[key] : undefined
-  ), obj);
+  return path
+    .split(".")
+    .reduce(
+      (acc, key) =>
+        acc && typeof acc === "object"
+          ? (acc as Record<string, unknown>)[key]
+          : undefined,
+      obj,
+    );
 }
 
-type StepData = { title?: unknown; description?: unknown; bulletList?: unknown[] };
+type StepData = {
+  title?: unknown;
+  description?: unknown;
+  bulletList?: unknown[];
+};
 type StepInput = { key: string; image?: string | null };
 
 export function buildSteps(
   allTranslations: Record<string, unknown>,
   currentTranslations: unknown,
-  steps: StepInput[]
+  steps: StepInput[],
 ): { data: StepData; allLanguageData: StepData[]; image: string | null }[] {
   if (!allTranslations || !steps || !currentTranslations) return [];
   return steps
     .slice(0, 4)
     .map(({ key, image }) => {
       const allLanguageData = Object.keys(allTranslations).map(
-        (lng) => resolvePath(allTranslations[lng], key) as StepData
+        (lng) => resolvePath(allTranslations[lng], key) as StepData,
       );
       return {
         data: resolvePath(currentTranslations, key) as StepData,
@@ -125,12 +135,16 @@ export function buildSteps(
     })
     .filter(({ allLanguageData }) =>
       allLanguageData.every(
-        (step) => step?.title && (step?.description || (step?.bulletList?.length ?? 0) > 0)
-      )
+        (step) =>
+          step?.title &&
+          (step?.description || (step?.bulletList?.length ?? 0) > 0),
+      ),
     );
 }
 
-export function addFrontendUiGlobals(nunjucksEnv: { addGlobal: (name: string, value: unknown) => void }) {
+export function addFrontendUiGlobals(nunjucksEnv: {
+  addGlobal: (name: string, value: unknown) => void;
+}) {
   nunjucksEnv.addGlobal("addLanguageParam", addLanguageParam);
   nunjucksEnv.addGlobal("contactUsUrl", contactUsUrl);
   nunjucksEnv.addGlobal("buildSteps", buildSteps);
@@ -168,10 +182,7 @@ export function contactUsUrl(baseUrl: string, urlToAppend: string) {
   }
 }
 
-export const setBaseTranslations = (
-  instanceI18n: typeof i18next,
-  filePath?: string,
-) => {
+export const setBaseTranslations = (instanceI18n: i18n, filePath?: string) => {
   ["cy", "en"].forEach((locale) => {
     instanceI18n.addResourceBundle(
       locale,

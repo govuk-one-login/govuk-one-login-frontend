@@ -1,10 +1,5 @@
 import pino from "pino";
-import {
-  CustomLogger,
-  getLogger,
-  setCustomLogger,
-  resetLogger,
-} from "../utils/logger";
+import { CustomLogger, getLogger, setCustomLogger } from "../utils/logger";
 
 jest.mock("pino");
 
@@ -13,10 +8,6 @@ describe("Logger functionality", () => {
     trace: jest.fn(),
     warn: jest.fn(),
   };
-
-  beforeEach(() => {
-    resetLogger();
-  });
 
   afterEach(() => {
     jest.clearAllMocks();

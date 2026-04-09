@@ -3,7 +3,7 @@ import { SendMessageCommand, SQSClient } from "@aws-sdk/client-sqs";
 import logger from "./logger";
 import _ from "lodash";
 
-export const getDefaultSQSClient = _.memoize(
+const getDefaultSQSClient = _.memoize(
   () => new SQSClient({ region: "eu-west-2" }),
 );
 

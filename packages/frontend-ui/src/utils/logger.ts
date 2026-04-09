@@ -24,7 +24,3 @@ export const getLogger = (): Logger | CustomLogger => {
 
   return logger;
 };
-
-export const resetLogger = () => {
-  logger = undefined;
-};

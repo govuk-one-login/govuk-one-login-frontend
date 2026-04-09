@@ -32,9 +32,6 @@ export async function ephemeralIFrame(
   }, 0);
 }
 
-export function wait<T = void>(
-  durationMs: number,
-  resolveWith?: T,
-): Promise<T> {
+function wait<T = void>(durationMs: number, resolveWith?: T): Promise<T> {
   return new Promise((resolve) => setTimeout(resolve, durationMs, resolveWith));
 }

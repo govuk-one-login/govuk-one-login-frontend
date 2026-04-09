@@ -4,7 +4,7 @@ import * as schemas from "@govuk-one-login/event-catalogue-schemas";
 
 export type Events = _Events;
 export type EventKey = keyof Events;
-export type EventSchemaKey = keyof typeof schemas;
+type EventSchemaKey = keyof typeof schemas;
 export type UnknownEvent = { event_name: string };
 
 export type Options = { sqsClient?: SQSClient; logParams?: string[] };

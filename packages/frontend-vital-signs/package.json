@@ -36,5 +36,8 @@
   "types": "./build/esm/index.d.ts",
   "dependencies": {
     "pino": "^10.1.0"
+  },
+  "peerDependencies": {
+    "express": "^4.0.0 || ^5.0.0"
   }
 }

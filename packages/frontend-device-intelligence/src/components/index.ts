@@ -12,15 +12,14 @@ export interface ComponentInterface {
   [key: string]: string | string[] | number | boolean | ComponentInterface;
 }
 
-export const components: { [name: string]: () => Promise<ComponentInterface> } =
-  {
-    hardware: getHardwareInfo,
-    locales: getLocales,
-    permissions: getBrowserPermissions,
-    plugins: getInstalledPlugins,
-    screen: screenDetails,
-    system: getSystemDetails,
-  };
+const components: { [name: string]: () => Promise<ComponentInterface> } = {
+  hardware: getHardwareInfo,
+  locales: getLocales,
+  permissions: getBrowserPermissions,
+  plugins: getInstalledPlugins,
+  screen: screenDetails,
+  system: getSystemDetails,
+};
 if (getBrowser().name != "Firefox") {
   components.fonts = getFontMetrics;
 }

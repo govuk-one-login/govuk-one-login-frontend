@@ -76,6 +76,14 @@
         "{workspaceRoot}/.prettierrc",
         "{workspaceRoot}/.prettierignore"
       ]
+    },
+    "test:dependencies": {
+      "cache": true,
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "knip --production --config ../../configDefaults/knip.json",
+        "cwd": "{projectRoot}"
+      }
     }
   },
   "$schema": "./node_modules/nx/schemas/nx-schema.json"

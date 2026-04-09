@@ -1,6 +1,6 @@
+import { type Express } from "express";
 import { PathAndFile } from "./utils.types";
 import { getLogger } from "../utils/logger";
-import { Express } from "express";
 
 declare module "express" {
   interface Application {
@@ -23,7 +23,7 @@ export const getDuplicateHashedFileName = (
   return null;
 };
 
-export const isValidHashName = (
+const isValidHashName = (
   hashName: string,
   hashStart: string,
   hashEnd: string,

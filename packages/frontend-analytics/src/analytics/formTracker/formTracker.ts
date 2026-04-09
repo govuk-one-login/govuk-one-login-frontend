@@ -2,9 +2,9 @@ import { FormField } from "./formTracker.interface";
 import { getElementValue } from "./formTrackerUtils/getFieldValues/getFieldValues";
 import { isExcludedType } from "./formTrackerUtils/isExcludedType/isExcludedType";
 
-export const FREE_TEXT_FIELD_TYPE = "free text field";
-export const DROPDOWN_FIELD_TYPE = "drop-down list";
-export const RADIO_FIELD_TYPE = "radio buttons";
+const FREE_TEXT_FIELD_TYPE = "free text field";
+const DROPDOWN_FIELD_TYPE = "drop-down list";
+const RADIO_FIELD_TYPE = "radio buttons";
 
 export class FormTracker {
   private selectedFields: FormField[] = [];

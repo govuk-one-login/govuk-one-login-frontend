@@ -1,6 +1,5 @@
 import { beforeEach, describe, expect, jest, test } from "@jest/globals";
 import * as Cookie from "./cookie";
-import { setLocalCookieVarMiddleware } from "./setCookieEnvVar";
 import { acceptCookies, rejectCookies } from "../../test/utils";
 
 window.DI = {
@@ -172,20 +171,8 @@ describe("setCookie", () => {
 });
 
 describe("Dynamic Cookie Domain Assignment", () => {
-  interface MockResponse {
-    locals: {
-      [key: string]: string;
-    };
-  }
-
-  let res: MockResponse;
-
-  beforeEach(() => {
-    res = { locals: {} };
-  });
-
   test("should set the cookie domain with the value provided by target repo's env file", () => {
-    setLocalCookieVarMiddleware(res);
+    const res = { locals: { cookieDomain: "test_domain" } };
     const instance = new Cookie.Cookie(res.locals.cookieDomain);
 
     // Expect the cookieDomain to be 'test_domain'
