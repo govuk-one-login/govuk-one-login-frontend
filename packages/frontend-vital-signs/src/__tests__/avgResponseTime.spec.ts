@@ -1,5 +1,5 @@
 import request from "supertest";
-import { setup, teardown } from "../../test/testApp";
+import { setup, teardown } from "./testApp/testApp";
 import pjson from "../../package.json";
 
 describe("averageResponseTime", () => {
@@ -24,7 +24,7 @@ describe("averageResponseTime", () => {
     await request(server).get("/test/static");
     await request(server).get("/test/static");
 
-    jest.advanceTimersByTime(15000);
+    vi.advanceTimersByTime(15000);
 
     expect(logger.info).toHaveBeenLastCalledWith({
       version: pjson.version,
@@ -35,7 +35,7 @@ describe("averageResponseTime", () => {
     });
   });
   it("should return null if there are no requests made", async () => {
-    jest.advanceTimersByTime(15000);
+    vi.advanceTimersByTime(15000);
 
     expect(logger.info).toHaveBeenLastCalledWith({
       version: pjson.version,

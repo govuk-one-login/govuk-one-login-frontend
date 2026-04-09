@@ -1,5 +1,5 @@
 import request from "supertest";
-import { setup, teardown } from "../../test/testApp";
+import { setup, teardown } from "./testApp/testApp";
 
 describe("eventLoopDelay", () => {
   let logger: ReturnType<typeof setup>["logger"];
@@ -22,7 +22,7 @@ describe("eventLoopDelay", () => {
     await request(server).get("/test/static");
     await request(server).get("/test/static");
 
-    jest.advanceTimersByTime(15000);
+    vi.advanceTimersByTime(15000);
 
     expect(typeof logger.info.mock.calls[0][0].eventLoopUtilization.idle).toBe(
       "number",
