@@ -11,6 +11,12 @@
   background: #fff;
   color: #0b0c0c;
 
+  .govuk-list {
+  margin-bottom: 0 !important;
+  width: 100%;
+  }
+
+
   @media (max-width: 768px) {
     padding-left: 0.75rem;
     padding-right: 0.75rem;
@@ -104,9 +110,4 @@
   .step-description {
     width: 100%;
   }
-}
-
-.govuk-list {
-  margin-bottom: 0 !important;
-  width: 100%;
 }
