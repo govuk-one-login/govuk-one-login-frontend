@@ -1,3 +1,13 @@
+## 5.1.2 (2026-04-09)
+
+### 🩹 Fixes
+
+- moving stepcard class ([a9ad1e2](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/a9ad1e2))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+
 ## 5.1.1 (2026-04-08)
 
 ### 🩹 Fixes
