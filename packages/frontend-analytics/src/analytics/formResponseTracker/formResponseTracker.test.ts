@@ -1,4 +1,3 @@
-import { describe, expect, jest, test, beforeEach } from "@jest/globals";
 import { FormResponseTracker } from "./formResponseTracker";
 import { FormEventInterface } from "../formTracker/formTracker.interface";
 import * as pushToDataLayer from "../../utils/pushToDataLayerUtil/pushToDataLayer";
@@ -16,7 +15,7 @@ describe("form with multiple fields", () => {
     document.body.innerHTML = "";
   });
 
-  jest.spyOn(pushToDataLayer, "pushToDataLayer");
+  vi.spyOn(pushToDataLayer, "pushToDataLayer");
 
   test("trackFormResponse should return false if tracking is deactivated", () => {
     acceptCookies();
@@ -83,12 +82,12 @@ describe("form with multiple fields", () => {
       event_data: {
         event_name: "form_response",
         type: "checkbox",
-        url: "http://localhost/test-url",
+        url: "http://localhost:3000/test-url",
         text: "checked value, checked value2",
         section: "checked section",
         action: "undefined",
         external: "false",
-        link_domain: "http://localhost",
+        link_domain: "http://localhost:3000",
         "link_path_parts.1": "/test-url",
         "link_path_parts.2": "undefined",
         "link_path_parts.3": "undefined",
@@ -102,12 +101,12 @@ describe("form with multiple fields", () => {
       event_data: {
         event_name: "form_response",
         type: "drop-down list",
-        url: "http://localhost/test-url",
+        url: "http://localhost:3000/test-url",
         text: "test value2",
         section: "dropdown section",
         action: "undefined",
         external: "false",
-        link_domain: "http://localhost",
+        link_domain: "http://localhost:3000",
         "link_path_parts.1": "/test-url",
         "link_path_parts.2": "undefined",
         "link_path_parts.3": "undefined",
@@ -120,12 +119,12 @@ describe("form with multiple fields", () => {
       event_data: {
         event_name: "form_response",
         type: FREE_TEXT_FIELD_TYPE,
-        url: "http://localhost/test-url",
+        url: "http://localhost:3000/test-url",
         text: "undefined",
         section: "text input section",
         action: "undefined",
         external: "false",
-        link_domain: "http://localhost",
+        link_domain: "http://localhost:3000",
         "link_path_parts.1": "/test-url",
         "link_path_parts.2": "undefined",
         "link_path_parts.3": "undefined",
@@ -138,12 +137,12 @@ describe("form with multiple fields", () => {
       event_data: {
         event_name: "form_response",
         type: FREE_TEXT_FIELD_TYPE,
-        url: "http://localhost/test-url",
+        url: "http://localhost:3000/test-url",
         text: "undefined",
         section: "password input section",
         action: "undefined",
         external: "false",
-        link_domain: "http://localhost",
+        link_domain: "http://localhost:3000",
         "link_path_parts.1": "/test-url",
         "link_path_parts.2": "undefined",
         "link_path_parts.3": "undefined",
@@ -156,12 +155,12 @@ describe("form with multiple fields", () => {
       event_data: {
         event_name: "form_response",
         type: "radio buttons",
-        url: "http://localhost/test-url",
+        url: "http://localhost:3000/test-url",
         text: "radio value",
         section: "radio section",
         action: "undefined",
         external: "false",
-        link_domain: "http://localhost",
+        link_domain: "http://localhost:3000",
         "link_path_parts.1": "/test-url",
         "link_path_parts.2": "undefined",
         "link_path_parts.3": "undefined",
@@ -174,12 +173,12 @@ describe("form with multiple fields", () => {
       event_data: {
         event_name: "form_response",
         type: FREE_TEXT_FIELD_TYPE,
-        url: "http://localhost/test-url",
+        url: "http://localhost:3000/test-url",
         text: "undefined",
         section: "textarea section",
         action: "undefined",
         external: "false",
-        link_domain: "http://localhost",
+        link_domain: "http://localhost:3000",
         "link_path_parts.1": "/test-url",
         "link_path_parts.2": "undefined",
         "link_path_parts.3": "undefined",
@@ -210,8 +209,8 @@ describe("FormResponseTracker", () => {
     cancelable: true,
   });
 
-  jest.spyOn(pushToDataLayer, "pushToDataLayer");
-  jest.spyOn(FormResponseTracker.prototype, "initialiseEventListener");
+  vi.spyOn(pushToDataLayer, "pushToDataLayer");
+  vi.spyOn(FormResponseTracker.prototype, "initialiseEventListener");
 
   test("new instance should call initialiseEventListener", () => {
     const instance = new FormResponseTracker(true, true, true);
@@ -225,7 +224,7 @@ describe("form with radio buttons", () => {
     cancelable: true,
   });
 
-  jest.spyOn(pushToDataLayer, "pushToDataLayer");
+  vi.spyOn(pushToDataLayer, "pushToDataLayer");
 
   test("datalayer event should be defined as default", () => {
     const isDataSensitive = false;
@@ -255,12 +254,12 @@ describe("form with radio buttons", () => {
       event_data: {
         event_name: "form_response",
         type: "radio buttons",
-        url: "http://localhost/test-url",
+        url: "http://localhost:3000/test-url",
         text: "test label male",
         section: "test label questions",
         action: "undefined",
         external: "false",
-        link_domain: "http://localhost",
+        link_domain: "http://localhost:3000",
         "link_path_parts.1": "/test-url",
         "link_path_parts.2": "undefined",
         "link_path_parts.3": "undefined",
@@ -302,12 +301,12 @@ describe("form with radio buttons", () => {
       event_data: {
         event_name: "form_response",
         type: "radio buttons",
-        url: "http://localhost/test-url",
+        url: "http://localhost:3000/test-url",
         text: "undefined",
         section: "test label questions",
         action: "undefined",
         external: "false",
-        link_domain: "http://localhost",
+        link_domain: "http://localhost:3000",
         "link_path_parts.1": "/test-url",
         "link_path_parts.2": "undefined",
         "link_path_parts.3": "undefined",
@@ -325,7 +324,7 @@ describe("form with input checkbox", () => {
     cancelable: true,
   });
 
-  jest.spyOn(pushToDataLayer, "pushToDataLayer");
+  vi.spyOn(pushToDataLayer, "pushToDataLayer");
 
   test("datalayer event should be defined", () => {
     const isDataSensitive = false;
@@ -358,12 +357,12 @@ describe("form with input checkbox", () => {
       event_data: {
         event_name: "form_response",
         type: "checkbox",
-        url: "http://localhost/test-url",
+        url: "http://localhost:3000/test-url",
         text: "test value",
         section: "test label questions",
         action: "undefined",
         external: "false",
-        link_domain: "http://localhost",
+        link_domain: "http://localhost:3000",
         "link_path_parts.1": "/test-url",
         "link_path_parts.2": "undefined",
         "link_path_parts.3": "undefined",
@@ -380,7 +379,7 @@ describe("form with input text", () => {
     cancelable: true,
   });
 
-  jest.spyOn(pushToDataLayer, "pushToDataLayer");
+  vi.spyOn(pushToDataLayer, "pushToDataLayer");
 
   test("datalayer event should be defined", () => {
     const isDataSensitive = false;
@@ -405,12 +404,12 @@ describe("form with input text", () => {
       event_data: {
         event_name: "form_response",
         type: FREE_TEXT_FIELD_TYPE,
-        url: "http://localhost/test-url",
+        url: "http://localhost:3000/test-url",
         text: "undefined",
         section: "test label username",
         action: "undefined",
         external: "false",
-        link_domain: "http://localhost",
+        link_domain: "http://localhost:3000",
         "link_path_parts.1": "/test-url",
         "link_path_parts.2": "undefined",
         "link_path_parts.3": "undefined",
@@ -428,7 +427,7 @@ describe("form with input textarea", () => {
     cancelable: true,
   });
 
-  jest.spyOn(pushToDataLayer, "pushToDataLayer");
+  vi.spyOn(pushToDataLayer, "pushToDataLayer");
 
   test("datalayer event should be defined", () => {
     const isDataSensitive = false;
@@ -453,12 +452,12 @@ describe("form with input textarea", () => {
       event_data: {
         event_name: "form_response",
         type: FREE_TEXT_FIELD_TYPE,
-        url: "http://localhost/test-url",
+        url: "http://localhost:3000/test-url",
         text: "undefined",
         section: "test label username",
         action: "undefined",
         external: "false",
-        link_domain: "http://localhost",
+        link_domain: "http://localhost:3000",
         "link_path_parts.1": "/test-url",
         "link_path_parts.2": "undefined",
         "link_path_parts.3": "undefined",
@@ -476,7 +475,7 @@ describe("form with dropdown", () => {
     cancelable: true,
   });
 
-  jest.spyOn(pushToDataLayer, "pushToDataLayer");
+  vi.spyOn(pushToDataLayer, "pushToDataLayer");
 
   test("datalayer event should be defined", () => {
     const isDataSensitive = false;
@@ -501,12 +500,12 @@ describe("form with dropdown", () => {
       event_data: {
         event_name: "form_response",
         type: "drop-down list",
-        url: "http://localhost/test-url",
+        url: "http://localhost:3000/test-url",
         text: "test value2",
         section: "test label username",
         action: "undefined",
         external: "false",
-        link_domain: "http://localhost",
+        link_domain: "http://localhost:3000",
         "link_path_parts.1": "/test-url",
         "link_path_parts.2": "undefined",
         "link_path_parts.3": "undefined",
@@ -523,7 +522,7 @@ describe("Cookie Management", () => {
     bubbles: true,
     cancelable: true,
   });
-  jest.spyOn(FormResponseTracker.prototype, "trackFormResponse");
+  vi.spyOn(FormResponseTracker.prototype, "trackFormResponse");
   const instance = new FormResponseTracker(true, true, true);
 
   test("trackFormResponse should return false if not cookie consent", () => {
@@ -546,7 +545,7 @@ describe("cancel event if form is invalid", () => {
     bubbles: true,
     cancelable: true,
   });
-  jest.spyOn(FormResponseTracker.prototype, "trackFormResponse");
+  vi.spyOn(FormResponseTracker.prototype, "trackFormResponse");
   const instance = new FormResponseTracker(true, true, true);
 
   test("trackFormResponse should return false if form is invalid", () => {
