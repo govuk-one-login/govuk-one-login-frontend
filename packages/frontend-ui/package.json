@@ -38,6 +38,8 @@
   },
   "homepage": "https://github.com/govuk-one-login/govuk-one-login-frontend#readme",
   "dependencies": {
+    "helmet": "^8.1.0",
+    "i18next": "^23.16.8",
     "lodash": "^4.18.1",
     "pino": "^10.1.0"
   },

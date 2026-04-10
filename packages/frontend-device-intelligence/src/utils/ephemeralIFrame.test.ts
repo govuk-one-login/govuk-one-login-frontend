@@ -1,4 +1,4 @@
-import { ephemeralIFrame, wait } from "./ephemeralIFrame";
+import { ephemeralIFrame } from "./ephemeralIFrame";
 
 vi.useFakeTimers();
 
@@ -27,19 +27,5 @@ describe("creating an iframe, execute the callback, and remove the iframe", () =
 
     const iframe = document.querySelector("iframe");
     expect(iframe).toBeNull();
-  });
-});
-
-describe("wait", () => {
-  it("should resolve the promises of iframe callback after the duration", async () => {
-    const mockCallback = vi.fn();
-
-    const promise = wait(3000).then(mockCallback);
-
-    vi.advanceTimersByTime(3000);
-
-    await promise;
-
-    expect(mockCallback).toHaveBeenCalled();
   });
 });

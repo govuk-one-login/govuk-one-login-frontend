@@ -2,8 +2,9 @@ import { describe, expect, jest, test, beforeEach } from "@jest/globals";
 import { FormResponseTracker } from "./formResponseTracker";
 import { FormEventInterface } from "../formTracker/formTracker.interface";
 import * as pushToDataLayer from "../../utils/pushToDataLayerUtil/pushToDataLayer";
-import { FREE_TEXT_FIELD_TYPE } from "../formTracker/formTracker";
 import { acceptCookies, rejectCookies } from "../../../test/utils";
+
+const FREE_TEXT_FIELD_TYPE = "free text field";
 
 describe("form with multiple fields", () => {
   const action = new Event("submit", {

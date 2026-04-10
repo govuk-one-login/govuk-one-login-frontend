@@ -1,20 +1,5 @@
 /* eslint-disable */
-import {
-  mostFrequentValue,
-  mostFrequentValuesInArrayOfDictionaries,
-} from "./getMostFrequent";
-
-describe("mostFrequentValue", () => {
-  test("return null for an empty array", () => {
-    expect(mostFrequentValue([])).toBeNull();
-  });
-
-  test("expect to return the most frequent values in array of strings", () => {
-    expect(mostFrequentValue(["one", "two", "three", "three", "three"])).toBe(
-      "three",
-    );
-  });
-});
+import { mostFrequentValuesInArrayOfDictionaries } from "./getMostFrequent";
 
 describe("mostFrequentValuesInArrayOfDictionaries", () => {
   test("return an empty object in array is empty", () => {

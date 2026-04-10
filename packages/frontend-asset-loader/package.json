@@ -30,7 +30,11 @@
     "url": "https://github.com/govuk-one-login/govuk-one-login-frontend/issues"
   },
   "homepage": "https://github.com/govuk-one-login/govuk-one-login-frontend#readme",
-  "devDependencies": {},
+  "dependencies": {
+    "express": "^4.22.1",
+    "fast-glob": "^3.3.3",
+    "pino": "^10.1.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/govuk-one-login/govuk-one-login-frontend.git",

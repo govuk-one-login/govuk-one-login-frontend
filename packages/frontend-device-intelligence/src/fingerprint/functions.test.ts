@@ -1,11 +1,7 @@
 /* eslint-disable */
 import * as functions from "./functions";
 import * as components from "../components/index";
-import {
-  getFingerprintData,
-  filterFingerprintData,
-  setFingerprintCookie,
-} from "./functions";
+import { getFingerprintData, setFingerprintCookie } from "./functions";
 import { ComponentInterface } from "../components/index";
 import logger from "../logger";
 
@@ -109,39 +105,6 @@ describe("getFingerprintData()", () => {
       throw new Error("Test Error");
     });
     await expect(getFingerprintData()).rejects.toThrow("Test Error");
-  });
-});
-
-describe("filterFingerprintData()", () => {
-  beforeEach(() => {
-    vi.restoreAllMocks();
-  });
-
-  afterEach(() => {
-    vi.restoreAllMocks();
-  });
-
-  const sampleData: ComponentInterface = {
-    included: { path: { key: "value" } },
-    excluded: { path: { key: "excludedValue" } },
-    normal: { key: "normalValue" },
-  };
-
-  test("filters out excluded data correctly", () => {
-    const filteredData = filterFingerprintData(
-      sampleData,
-      ["excluded.path"],
-      [],
-    );
-    expect(filteredData).toEqual({
-      included: { path: { key: "value" } },
-      normal: { key: "normalValue" },
-    });
-  });
-
-  test("handles empty object gracefully", () => {
-    const filteredData = filterFingerprintData({}, [], []);
-    expect(filteredData).toEqual({});
   });
 });
 

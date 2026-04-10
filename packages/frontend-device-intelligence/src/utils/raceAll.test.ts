@@ -1,18 +1,21 @@
-/* eslint-disable */
-import { delay, raceAll, raceAllPerformance } from "./raceAll";
+import { raceAll } from "./raceAll";
 
-vi.useFakeTimers();
-
-describe("Utils for the delay raceAll condition", () => {
-  describe("delay", () => {
-    it("should resolve after the specified time", async () => {
-      const val = "test";
-      const delayTime = 1000;
-      const delayedPromise = delay(delayTime, val);
-
-      vi.advanceTimersByTime(delayTime);
-
-      expect(await delayedPromise).toBe(val);
+describe("raceAll", () => {
+  it("should resolve after the specified time", async () => {
+    const fastPromise = new Promise((resolve) => {
+      setTimeout(() => resolve("fast-promise"), 100);
     });
+
+    const slowPromise = new Promise((resolve) => {
+      setTimeout(() => resolve("slow-promise"), 500);
+    });
+
+    const result = await raceAll(
+      [fastPromise, slowPromise],
+      300,
+      "timeout-hit",
+    );
+
+    expect(result).toStrictEqual(["fast-promise", "timeout-hit"]);
   });
 });

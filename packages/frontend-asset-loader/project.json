@@ -4,23 +4,21 @@
   "projectType": "library",
   "sourceRoot": "packages/frontend-asset-loader/src",
   "targets": {
-      "lint": {
-        "executor": "@nx/eslint:lint",
-        "options": {
-          "lintFilePatterns": ["packages/frontend-asset-loader/src/**/*"]
-        }
-      },
-      "format": {
-        "executor": "nx:run-commands",
-        "options": {
-          "command": "prettier --write packages/frontend-asset-loader/src/**/*"
-        }
-      },
-      "format:check": {
-        "executor": "nx:run-commands",
-        "options": {
-          "command": "prettier --check packages/frontend-asset-loader/src/**/*"
-        }
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": [
+          "packages/frontend-asset-loader/src/**/*"
+        ]
       }
-    }
+    },
+    "format": {},
+    "format:check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "prettier --check packages/frontend-asset-loader/src/**/*"
+      }
+    },
+    "test:dependencies": {}
+  }
 }

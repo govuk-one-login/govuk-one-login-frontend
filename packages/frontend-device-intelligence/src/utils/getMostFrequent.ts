@@ -1,4 +1,4 @@
-export function mostFrequentValue<T>(arr: T[]): string | null {
+function mostFrequentValue<T>(arr: T[]): string | null {
   if (arr.length === 0) {
     return null; // Return null for an empty array
   }

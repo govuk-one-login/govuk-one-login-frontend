@@ -7,20 +7,18 @@
     "lint": {
       "executor": "@nx/eslint:lint",
       "options": {
-        "lintFilePatterns": ["packages/frontend-vital-signs/src/**/*"]
+        "lintFilePatterns": [
+          "packages/frontend-vital-signs/src/**/*"
+        ]
       }
     },
-    "format": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "prettier --write packages/frontend-vital-signs/src/**/*"
-      }
-    },
+    "format": {},
     "format:check": {
       "executor": "nx:run-commands",
       "options": {
         "command": "prettier --check packages/frontend-vital-signs/src/**/*"
       }
-    }
+    },
+    "test:dependencies": {}
   }
 }

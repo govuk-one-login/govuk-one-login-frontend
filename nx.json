@@ -71,11 +71,24 @@
     },
     "format": {
       "cache": false,
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "prettier 'src/**/*' --write --ignore-path ../../.prettierignore",
+        "cwd": "{projectRoot}"
+      },
       "inputs": [
         "default",
         "{workspaceRoot}/.prettierrc",
         "{workspaceRoot}/.prettierignore"
       ]
+    },
+    "test:dependencies": {
+      "cache": true,
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "knip --production --config ../../knip.json",
+        "cwd": "{projectRoot}"
+      }
     }
   },
   "$schema": "./node_modules/nx/schemas/nx-schema.json"

@@ -1,14 +1,15 @@
 import { beforeEach, describe, expect, test } from "@jest/globals";
-import { FormTracker, FREE_TEXT_FIELD_TYPE } from "./formTracker";
+import { FormTracker } from "./formTracker";
 import { FormField } from "./formTracker.interface";
 import {
   getElementValue,
-  getFieldLabel,
   getFieldValue,
   getFormElement,
 } from "./formTrackerUtils/getFieldValues/getFieldValues";
 import { getSectionValue } from "./formTrackerUtils/getSectionValue/getSectionValue";
 import { acceptCookies } from "../../../test/utils";
+
+const FREE_TEXT_FIELD_TYPE = "free text field";
 
 describe("FormTracker", () => {
   let instance: FormTracker;
@@ -391,13 +392,6 @@ describe("FormTracker", () => {
       { id: "test", name: "test", value: "test value", type: "radio" },
     ];
     expect(FormTracker.getFieldType(fields)).toBe("radio buttons");
-  });
-
-  test("getFieldLabel should return field label", () => {
-    const label = document.createElement("label");
-    label.textContent = "test label";
-    document.body.appendChild(label);
-    expect(getFieldLabel()).toBe("test label");
   });
 
   test("getSectionValue should return label text if field is not within a fieldset ", () => {
