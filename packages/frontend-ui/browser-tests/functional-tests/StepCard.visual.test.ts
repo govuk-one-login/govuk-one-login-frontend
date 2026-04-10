@@ -66,7 +66,7 @@ test.describe('Step Card functional', () => {
   });
 
   test('should render step titles in order', async ({ page }) => {
-    const titles = page.locator('.step-title');
+    const titles = page.locator('.step-header');
     await expect(titles).toHaveCount(4);
     await expect(titles.nth(0)).toContainText('Download or open the app');
     await expect(titles.nth(1)).toContainText('Scan photo ID');
