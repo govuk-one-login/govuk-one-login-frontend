@@ -12,12 +12,7 @@
         ]
       }
     },
-    "format": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "prettier --write packages/frontend-vital-signs/src/**/*"
-      }
-    },
+    "format": {},
     "format:check": {
       "executor": "nx:run-commands",
       "options": {

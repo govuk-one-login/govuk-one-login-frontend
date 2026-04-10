@@ -12,12 +12,7 @@
         ]
       }
     },
-    "format": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "prettier --write packages/frontend-asset-loader/src/**/*"
-      }
-    },
+    "format": {},
     "format:check": {
       "executor": "nx:run-commands",
       "options": {

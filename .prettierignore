@@ -11,3 +11,5 @@ build
 LICENSE
 *.d.ts.
 *.md
+*.njk
+*.svg

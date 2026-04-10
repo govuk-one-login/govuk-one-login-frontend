@@ -4,12 +4,7 @@
   "sourceRoot": "packages/frontend-passthrough-headers/src",
   "projectType": "library",
   "targets": {
-    "format": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "prettier --write packages/frontend-passthrough-headers/src/**/*"
-      }
-    },
+    "format": {},
     "format:check": {
       "executor": "nx:run-commands",
       "options": {

@@ -28,7 +28,7 @@ function appInit(
     enableNavigationTracking: true,
     enablePageViewTracking: true,
     enableSelectContentTracking: true,
-    logLevel: 'info',
+    logLevel: "info",
   });
 
   logger.setLevel(defaultedOptions.logLevel!);
