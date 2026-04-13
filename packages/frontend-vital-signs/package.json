@@ -11,7 +11,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c --watch",
-    "test": "jest -c"
+    "test": "vitest --run --coverage"
   },
   "files": [
     "build/",

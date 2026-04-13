@@ -1,5 +1,5 @@
 import express from "express";
-import { frontendVitalSignsInit } from "../src";
+import { frontendVitalSignsInit } from "../..";
 
 const PORT = 0;
 
