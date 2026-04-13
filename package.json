@@ -99,6 +99,7 @@
     "vitest": "^4.1.2"
   },
   "overrides": {
+    "axios": "^1.15.0",
     "jest-environment-jsdom": {
       "canvas": "$canvas"
     }
