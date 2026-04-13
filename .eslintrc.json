@@ -26,6 +26,9 @@
       "files": ["**/*.test.ts"],
       "env": {
         "jest": true
+      },
+      "rules": {
+        "@typescript-eslint/ban-ts-comment": 0 // ts-expect-error cannot detect rootDir import rule
       }
     }
   ]

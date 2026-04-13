@@ -1,6 +1,6 @@
 import nunjucks from "nunjucks";
 import { JSDOM } from "jsdom";
-import path from "path";
+import path from "node:path";
 import { addLanguageParam, contactUsUrl } from "../index";
 
 const govukComponentsPath = path.resolve(

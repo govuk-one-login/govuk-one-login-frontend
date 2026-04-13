@@ -1,5 +1,5 @@
 import { PollResult, Spinner, useSpinner } from "../spinner";
-import { describe } from "@jest/globals";
+import { vi, type Mock } from "vitest";
 
 export function wait(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -38,15 +38,17 @@ function getValidSpinnerDivHtml(
     </div>`;
 }
 
-const validSpinnerHtml = getValidSpinnerDivHtml({ariaAlertCompletionText: "Aria success text"});
+const validSpinnerHtml = getValidSpinnerDivHtml({
+  ariaAlertCompletionText: "Aria success text",
+});
 
 let container: HTMLDivElement;
-const pollingFunction: jest.Mock = jest.fn();
-const successFunction: jest.Mock = jest.fn();
-const errorFunction: jest.Mock = jest.fn();
+const pollingFunction: Mock = vi.fn();
+const successFunction: Mock = vi.fn();
+const errorFunction: Mock = vi.fn();
 
 beforeEach(() => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
   pollingFunction.mockReset();
   successFunction.mockReset();
   errorFunction.mockReset();
@@ -57,17 +59,20 @@ beforeEach(() => {
 
 afterEach(() => {
   sessionStorage.clear();
-  jest.clearAllTimers();
-  jest.useRealTimers();
+  vi.clearAllTimers();
+  vi.useRealTimers();
 });
 
 describe("Validation", () => {
-
   describe("useSpinner method", () => {
-
     test("should display Spinner constructor errors in the container", () => {
       // Act
-      useSpinner("spinner-container", null as never, successFunction, errorFunction);
+      useSpinner(
+        "spinner-container",
+        null as never,
+        successFunction,
+        errorFunction,
+      );
 
       // Assert
       expect(container.innerHTML).toMatchSnapshot();
@@ -75,7 +80,6 @@ describe("Validation", () => {
   });
 
   describe("Spinner constructor", () => {
-
     test("should throw an exception if no polling function is provided", () => {
       // Act and assert
       expect(() => {
@@ -95,7 +99,9 @@ describe("Validation", () => {
           <div id="success-content" style="display:none">Success</div>
           <div id="error-content" style="display:none">Error</div>
         </div>`;
-      container = document.getElementById("spinner-container") as HTMLDivElement;
+      container = document.getElementById(
+        "spinner-container",
+      ) as HTMLDivElement;
 
       // Act and assert
       expect(() => {
@@ -115,7 +121,9 @@ describe("Validation", () => {
           <div id="long-wait-content" style="display:none">Long wait</div>
           <div id="error-content" style="display:none">Error</div>
         </div>`;
-      container = document.getElementById("spinner-container") as HTMLDivElement;
+      container = document.getElementById(
+        "spinner-container",
+      ) as HTMLDivElement;
 
       // Act and assert
       expect(() => {
@@ -135,7 +143,9 @@ describe("Validation", () => {
           <div id="long-wait-content" style="display:none">Long wait</div>
           <div id="success-content" style="display:none">Success</div>
         </div>`;
-      container = document.getElementById("spinner-container") as HTMLDivElement;
+      container = document.getElementById(
+        "spinner-container",
+      ) as HTMLDivElement;
 
       // Act and assert
       expect(() => {
@@ -146,7 +156,6 @@ describe("Validation", () => {
 });
 
 describe("Spinner behaviour", () => {
-
   test("initial waiting", async () => {
     // Arrange
     document.body.innerHTML = getValidSpinnerDivHtml({
@@ -157,11 +166,16 @@ describe("Spinner behaviour", () => {
       ariaAlertCompletionText: "Aria success text",
     });
     container = document.getElementById("spinner-container") as HTMLDivElement;
-    const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
+    const spinner = new Spinner(
+      container,
+      pollingFunction,
+      successFunction,
+      errorFunction,
+    );
 
     // Act
     await spinner.init();
-    await jest.advanceTimersByTimeAsync(20);
+    await vi.advanceTimersByTimeAsync(20);
 
     // Assert
     expect(container.innerHTML).toMatchSnapshot();
@@ -177,11 +191,16 @@ describe("Spinner behaviour", () => {
       ariaAlertCompletionText: "Aria success text",
     });
     container = document.getElementById("spinner-container") as HTMLDivElement;
-    const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
+    const spinner = new Spinner(
+      container,
+      pollingFunction,
+      successFunction,
+      errorFunction,
+    );
 
     // Act
     await spinner.init();
-    await jest.advanceTimersByTimeAsync(20);
+    await vi.advanceTimersByTimeAsync(20);
 
     // Assert
     expect(container.innerHTML).toMatchSnapshot();
@@ -198,7 +217,12 @@ describe("Spinner behaviour", () => {
     });
     container = document.getElementById("spinner-container") as HTMLDivElement;
     pollingFunction.mockResolvedValue(PollResult.Success);
-    const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
+    const spinner = new Spinner(
+      container,
+      pollingFunction,
+      successFunction,
+      errorFunction,
+    );
 
     // Act
     await spinner.init();
@@ -224,11 +248,16 @@ describe("Spinner behaviour", () => {
       .mockResolvedValueOnce(PollResult.Pending)
       .mockResolvedValueOnce(PollResult.Pending)
       .mockResolvedValueOnce(PollResult.Success);
-    const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
+    const spinner = new Spinner(
+      container,
+      pollingFunction,
+      successFunction,
+      errorFunction,
+    );
 
     // Act
     await spinner.init();
-    await jest.runAllTimersAsync();
+    await vi.runAllTimersAsync();
 
     // Assert
     expect(container.innerHTML).toMatchSnapshot();
@@ -246,7 +275,12 @@ describe("Spinner behaviour", () => {
     });
     container = document.getElementById("spinner-container") as HTMLDivElement;
     pollingFunction.mockResolvedValue(PollResult.Success);
-    const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
+    const spinner = new Spinner(
+      container,
+      pollingFunction,
+      successFunction,
+      errorFunction,
+    );
 
     // Act
     await spinner.init();
@@ -268,7 +302,12 @@ describe("Spinner behaviour", () => {
     });
     container = document.getElementById("spinner-container") as HTMLDivElement;
     pollingFunction.mockResolvedValue(PollResult.Failure);
-    const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
+    const spinner = new Spinner(
+      container,
+      pollingFunction,
+      successFunction,
+      errorFunction,
+    );
 
     // Act
     await spinner.init();
@@ -294,11 +333,16 @@ describe("Spinner behaviour", () => {
       .mockResolvedValueOnce(PollResult.Pending)
       .mockResolvedValueOnce(PollResult.Pending)
       .mockResolvedValueOnce(PollResult.Failure);
-    const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
+    const spinner = new Spinner(
+      container,
+      pollingFunction,
+      successFunction,
+      errorFunction,
+    );
 
     // Act
     await spinner.init();
-    await jest.advanceTimersByTimeAsync(30);
+    await vi.advanceTimersByTimeAsync(30);
 
     // Assert
     expect(container.innerHTML).toMatchSnapshot();
@@ -318,7 +362,12 @@ describe("Spinner behaviour", () => {
     });
     container = document.getElementById("spinner-container") as HTMLDivElement;
     pollingFunction.mockResolvedValue(PollResult.Failure);
-    const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
+    const spinner = new Spinner(
+      container,
+      pollingFunction,
+      successFunction,
+      errorFunction,
+    );
 
     // Act
     await spinner.init();
@@ -339,11 +388,16 @@ describe("Spinner behaviour", () => {
       ariaAlertCompletionText: "Aria success text",
     });
     container = document.getElementById("spinner-container") as HTMLDivElement;
-    const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
+    const spinner = new Spinner(
+      container,
+      pollingFunction,
+      successFunction,
+      errorFunction,
+    );
 
     // Act
     await spinner.init();
-    await jest.advanceTimersByTimeAsync(200);
+    await vi.advanceTimersByTimeAsync(200);
 
     // Assert
     expect(container.innerHTML).toMatchSnapshot();
@@ -365,7 +419,12 @@ describe("Init time", () => {
 
   test("should save init time in session storage when spinner is initialised", async () => {
     // Arrange
-    const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
+    const spinner = new Spinner(
+      container,
+      pollingFunction,
+      successFunction,
+      errorFunction,
+    );
 
     // Act
     await spinner.init();
@@ -377,7 +436,12 @@ describe("Init time", () => {
   test("should clear init time on success", async () => {
     // Arrange
     pollingFunction.mockResolvedValue(PollResult.Success);
-    const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
+    const spinner = new Spinner(
+      container,
+      pollingFunction,
+      successFunction,
+      errorFunction,
+    );
 
     // Act
     await spinner.init();
@@ -389,7 +453,12 @@ describe("Init time", () => {
   test("should clear init time on error", async () => {
     // Arrange
     pollingFunction.mockResolvedValue(PollResult.Failure);
-    const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
+    const spinner = new Spinner(
+      container,
+      pollingFunction,
+      successFunction,
+      errorFunction,
+    );
 
     // Act
     await spinner.init();
@@ -400,11 +469,16 @@ describe("Init time", () => {
 
   test("should clear init time on timeout", async () => {
     // Arrange
-    const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
+    const spinner = new Spinner(
+      container,
+      pollingFunction,
+      successFunction,
+      errorFunction,
+    );
 
     // Act
     await spinner.init();
-    await jest.advanceTimersByTimeAsync(30);
+    await vi.advanceTimersByTimeAsync(30);
 
     // Assert
     expect(sessionStorage.getItem("spinnerInitTime")).toBeNull();
@@ -420,7 +494,12 @@ describe("Init time", () => {
       ariaAlertCompletionText: "Aria success text",
     });
     container = document.getElementById("spinner-container") as HTMLDivElement;
-    const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
+    const spinner = new Spinner(
+      container,
+      pollingFunction,
+      successFunction,
+      errorFunction,
+    );
     sessionStorage.setItem("spinnerInitTime", (Date.now() - 15).toString());
 
     // Act
@@ -440,7 +519,12 @@ describe("Init time", () => {
       ariaAlertCompletionText: "Aria success text",
     });
     container = document.getElementById("spinner-container") as HTMLDivElement;
-    const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
+    const spinner = new Spinner(
+      container,
+      pollingFunction,
+      successFunction,
+      errorFunction,
+    );
     sessionStorage.setItem("spinnerInitTime", (Date.now() - 30).toString());
 
     // Act
@@ -455,7 +539,6 @@ describe("Init time", () => {
 });
 
 describe("Backoff functionality", () => {
-
   test("should retry with exponential backoff on Backoff result", async () => {
     // Arrange
     document.body.innerHTML = getValidSpinnerDivHtml({
@@ -471,22 +554,27 @@ describe("Backoff functionality", () => {
       .mockResolvedValueOnce(PollResult.Backoff)
       .mockResolvedValueOnce(PollResult.Backoff)
       .mockResolvedValueOnce(PollResult.Success);
-    const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
+    const spinner = new Spinner(
+      container,
+      pollingFunction,
+      successFunction,
+      errorFunction,
+    );
 
     // Act & assert
     await spinner.init();
     // Polling function called once during initialisation
     expect(pollingFunction).toHaveBeenCalledTimes(1);
-    await jest.advanceTimersByTimeAsync(10);
+    await vi.advanceTimersByTimeAsync(10);
     // Polling function not called again after polling period
     expect(pollingFunction).toHaveBeenCalledTimes(1);
-    await jest.advanceTimersByTimeAsync(5);
+    await vi.advanceTimersByTimeAsync(5);
     // Polling function called again after polling + backoff
     expect(pollingFunction).toHaveBeenCalledTimes(2);
-    await jest.advanceTimersByTimeAsync(10);
+    await vi.advanceTimersByTimeAsync(10);
     // Polling function not called again after second polling period
     expect(pollingFunction).toHaveBeenCalledTimes(2);
-    await jest.advanceTimersByTimeAsync(10);
+    await vi.advanceTimersByTimeAsync(10);
     // Polling function called again after longer backoff
     expect(pollingFunction).toHaveBeenCalledTimes(3);
     expect(successFunction).toHaveBeenCalledTimes(1);
@@ -506,11 +594,16 @@ describe("Backoff functionality", () => {
     container = document.getElementById("spinner-container") as HTMLDivElement;
 
     pollingFunction.mockResolvedValue(PollResult.Backoff);
-    const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
+    const spinner = new Spinner(
+      container,
+      pollingFunction,
+      successFunction,
+      errorFunction,
+    );
 
     // Act
     await spinner.init();
-    await jest.runAllTimersAsync();
+    await vi.runAllTimersAsync();
 
     // Assert
     expect(container.innerHTML).toMatchSnapshot();
@@ -536,11 +629,16 @@ describe("Backoff functionality", () => {
       .mockResolvedValueOnce(PollResult.Backoff)
       .mockResolvedValueOnce(PollResult.Backoff)
       .mockResolvedValueOnce(PollResult.Success);
-    const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
+    const spinner = new Spinner(
+      container,
+      pollingFunction,
+      successFunction,
+      errorFunction,
+    );
 
     // Act
     await spinner.init();
-    await jest.runAllTimersAsync();
+    await vi.runAllTimersAsync();
 
     // Assert
     expect(container.innerHTML).toMatchSnapshot();
@@ -561,11 +659,16 @@ describe("Backoff functionality", () => {
     container = document.getElementById("spinner-container") as HTMLDivElement;
 
     pollingFunction.mockResolvedValue(PollResult.Backoff);
-    const spinner = new Spinner(container, pollingFunction, successFunction, errorFunction);
+    const spinner = new Spinner(
+      container,
+      pollingFunction,
+      successFunction,
+      errorFunction,
+    );
 
     // Act
     await spinner.init();
-    await jest.runAllTimersAsync();
+    await vi.runAllTimersAsync();
 
     // Assert
     expect(container.innerHTML).toMatchSnapshot();

@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from "node:fs";
+import fs from "node:fs";
 import path from "node:path";
 import { NextFunction, Request, Response } from "express";
 import i18next from "i18next";
@@ -218,9 +218,9 @@ export const getTranslationObject = (
   ];
 
   for (const filePath of possiblePaths) {
-    if (existsSync(filePath)) {
+    if (fs.existsSync(filePath)) {
       try {
-        const fileContent = readFileSync(filePath, "utf8");
+        const fileContent = fs.readFileSync(filePath, "utf8");
         return JSON.parse(fileContent);
       } catch (error) {
         console.error(

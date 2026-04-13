@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Backoff functionality should error after max backoff tries exceeded 1`] = `
+exports[`Backoff functionality > should error after max backoff tries exceeded 1`] = `
 "
           <div id="no-js-content" style="display: none;">JS is disabled</div>
           <div id="wait-content" style="display:none">Waiting</div>
@@ -10,7 +10,7 @@ exports[`Backoff functionality should error after max backoff tries exceeded 1`]
     <div><div id="spinner" class="spinner centre spinner__finished"></div><div style="">Error</div></div><div aria-live="assertive" class="govuk-visually-hidden"></div>"
 `;
 
-exports[`Backoff functionality should reset backoff count on successful poll 1`] = `
+exports[`Backoff functionality > should reset backoff count on successful poll 1`] = `
 "
           <div id="no-js-content" style="display: none;">JS is disabled</div>
           <div id="wait-content" style="display:none">Waiting</div>
@@ -20,7 +20,7 @@ exports[`Backoff functionality should reset backoff count on successful poll 1`]
     <div><div id="spinner" class="spinner centre spinner__finished"></div><div style="">Success</div></div><div aria-live="assertive" class="govuk-visually-hidden"></div>"
 `;
 
-exports[`Backoff functionality should retry with exponential backoff on Backoff result 1`] = `
+exports[`Backoff functionality > should retry with exponential backoff on Backoff result 1`] = `
 "
           <div id="no-js-content" style="display: none;">JS is disabled</div>
           <div id="wait-content" style="display:none">Waiting</div>
@@ -30,7 +30,7 @@ exports[`Backoff functionality should retry with exponential backoff on Backoff 
     <div><div id="spinner" class="spinner centre spinner__finished"></div><div style="">Success</div></div><div aria-live="assertive" class="govuk-visually-hidden"></div>"
 `;
 
-exports[`Backoff functionality should use custom maxBackoffTries from config 1`] = `
+exports[`Backoff functionality > should use custom maxBackoffTries from config 1`] = `
 "
           <div id="no-js-content" style="display: none;">JS is disabled</div>
           <div id="wait-content" style="display:none">Waiting</div>
@@ -40,7 +40,7 @@ exports[`Backoff functionality should use custom maxBackoffTries from config 1`]
     <div><div id="spinner" class="spinner centre spinner__finished"></div><div style="">Error</div></div><div aria-live="assertive" class="govuk-visually-hidden"></div>"
 `;
 
-exports[`Init time Spinner shows long wait on page refresh 1`] = `
+exports[`Init time > Spinner shows long wait on page refresh 1`] = `
 "
           <div id="no-js-content" style="display: none;">JS is disabled</div>
           <div id="wait-content" style="display:none">Waiting</div>
@@ -50,7 +50,7 @@ exports[`Init time Spinner shows long wait on page refresh 1`] = `
     <div><div id="spinner" class="spinner centre"></div><div style="">Long wait</div></div><div aria-live="assertive" class="govuk-visually-hidden"></div>"
 `;
 
-exports[`Init time Spinner shows timeout on page refresh 1`] = `
+exports[`Init time > Spinner shows timeout on page refresh 1`] = `
 "
           <div id="no-js-content" style="display: none;">JS is disabled</div>
           <div id="wait-content" style="display:none">Waiting</div>
@@ -60,7 +60,7 @@ exports[`Init time Spinner shows timeout on page refresh 1`] = `
     <div><div id="spinner" class="spinner centre spinner__finished"></div><div style="">Error</div></div><div aria-live="assertive" class="govuk-visually-hidden"></div>"
 `;
 
-exports[`Spinner behaviour error after polling 1`] = `
+exports[`Spinner behaviour > error after polling 1`] = `
 "
           <div id="no-js-content" style="display: none;">JS is disabled</div>
           <div id="wait-content" style="display:none">Waiting</div>
@@ -70,7 +70,7 @@ exports[`Spinner behaviour error after polling 1`] = `
     <div><div id="spinner" class="spinner centre spinner__finished"></div><div style="">Error</div></div><div aria-live="assertive" class="govuk-visually-hidden"></div>"
 `;
 
-exports[`Spinner behaviour error with hidden spinner 1`] = `
+exports[`Spinner behaviour > error with hidden spinner 1`] = `
 "
           <div id="no-js-content" style="display: none;">JS is disabled</div>
           <div id="wait-content" style="display:none">Waiting</div>
@@ -80,7 +80,7 @@ exports[`Spinner behaviour error with hidden spinner 1`] = `
     <div><div style="">Error</div></div><div aria-live="assertive" class="govuk-visually-hidden"></div>"
 `;
 
-exports[`Spinner behaviour immediate error 1`] = `
+exports[`Spinner behaviour > immediate error 1`] = `
 "
           <div id="no-js-content" style="display: none;">JS is disabled</div>
           <div id="wait-content" style="display:none">Waiting</div>
@@ -90,7 +90,7 @@ exports[`Spinner behaviour immediate error 1`] = `
     <div><div id="spinner" class="spinner centre spinner__finished"></div><div style="">Error</div></div><div aria-live="assertive" class="govuk-visually-hidden"></div>"
 `;
 
-exports[`Spinner behaviour immediate success 1`] = `
+exports[`Spinner behaviour > immediate success 1`] = `
 "
           <div id="no-js-content" style="display: none;">JS is disabled</div>
           <div id="wait-content" style="display:none">Waiting</div>
@@ -100,7 +100,7 @@ exports[`Spinner behaviour immediate success 1`] = `
     <div><div id="spinner" class="spinner centre spinner__finished"></div><div style="">Success</div></div><div aria-live="assertive" class="govuk-visually-hidden">Aria success text</div>"
 `;
 
-exports[`Spinner behaviour initial waiting 1`] = `
+exports[`Spinner behaviour > initial waiting 1`] = `
 "
           <div id="no-js-content" style="display: none;">JS is disabled</div>
           <div id="wait-content" style="display:none">Waiting</div>
@@ -110,7 +110,7 @@ exports[`Spinner behaviour initial waiting 1`] = `
     <div><div id="spinner" class="spinner centre"></div><div style="">Waiting</div></div><div aria-live="assertive" class="govuk-visually-hidden"></div>"
 `;
 
-exports[`Spinner behaviour long waiting 1`] = `
+exports[`Spinner behaviour > long waiting 1`] = `
 "
           <div id="no-js-content" style="display: none;">JS is disabled</div>
           <div id="wait-content" style="display:none">Waiting</div>
@@ -120,7 +120,7 @@ exports[`Spinner behaviour long waiting 1`] = `
     <div><div id="spinner" class="spinner centre"></div><div style="">Long wait</div></div><div aria-live="assertive" class="govuk-visually-hidden"></div>"
 `;
 
-exports[`Spinner behaviour success after polling 1`] = `
+exports[`Spinner behaviour > success after polling 1`] = `
 "
           <div id="no-js-content" style="display: none;">JS is disabled</div>
           <div id="wait-content" style="display:none">Waiting</div>
@@ -130,7 +130,7 @@ exports[`Spinner behaviour success after polling 1`] = `
     <div><div id="spinner" class="spinner centre spinner__finished"></div><div style="">Success</div></div><div aria-live="assertive" class="govuk-visually-hidden">Aria success text</div>"
 `;
 
-exports[`Spinner behaviour success with no aria text 1`] = `
+exports[`Spinner behaviour > success with no aria text 1`] = `
 "
           <div id="no-js-content" style="display: none;">JS is disabled</div>
           <div id="wait-content" style="display:none">Waiting</div>
@@ -140,7 +140,7 @@ exports[`Spinner behaviour success with no aria text 1`] = `
     <div><div id="spinner" class="spinner centre spinner__finished"></div><div style="">Success</div></div><div aria-live="assertive" class="govuk-visually-hidden"></div>"
 `;
 
-exports[`Spinner behaviour timeout 1`] = `
+exports[`Spinner behaviour > timeout 1`] = `
 "
           <div id="no-js-content" style="display: none;">JS is disabled</div>
           <div id="wait-content" style="display:none">Waiting</div>
@@ -150,4 +150,4 @@ exports[`Spinner behaviour timeout 1`] = `
     <div><div id="spinner" class="spinner centre spinner__finished"></div><div style="">Error</div></div><div aria-live="assertive" class="govuk-visually-hidden"></div>"
 `;
 
-exports[`Validation useSpinner method should display Spinner constructor errors in the container 1`] = `"<p>Error configuring spinner: Error: Polling function must be provided</p>"`;
+exports[`Validation > useSpinner method > should display Spinner constructor errors in the container 1`] = `"<p>Error configuring spinner: Error: Polling function must be provided</p>"`;
