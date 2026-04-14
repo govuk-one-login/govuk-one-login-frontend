@@ -19,7 +19,7 @@ describe("appInit", () => {
   it("should redact data by default if isPageDataSensitive is unset", () => {
     acceptCookies();
 
-    jest.spyOn(pushToDataLayer, "pushToDataLayer");
+    vi.spyOn(pushToDataLayer, "pushToDataLayer");
 
     document.body.innerHTML = `
       <div id="main-content">
@@ -45,12 +45,12 @@ describe("appInit", () => {
       event_data: {
         event_name: "form_response",
         type: "radio buttons",
-        url: "http://localhost/test-url",
+        url: "http://localhost:3000/test-url",
         text: "undefined",
         section: "test label questions",
         action: "undefined",
         external: "false",
-        link_domain: "http://localhost",
+        link_domain: "http://localhost:3000",
         "link_path_parts.1": "/test-url",
         "link_path_parts.2": "undefined",
         "link_path_parts.3": "undefined",

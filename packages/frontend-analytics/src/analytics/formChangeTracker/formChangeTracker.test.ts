@@ -1,4 +1,3 @@
-import { beforeEach, describe, expect, jest, test } from "@jest/globals";
 import { FormChangeTracker } from "./formChangeTracker";
 import * as pushToDataLayer from "../../utils/pushToDataLayerUtil/pushToDataLayer";
 import { acceptCookies, rejectCookies } from "../../../test/utils";
@@ -23,13 +22,13 @@ describe("FormChangeTracker", () => {
   let action: MouseEvent;
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 
     acceptCookies();
 
-    jest.spyOn(pushToDataLayer, "pushToDataLayer");
-    jest.spyOn(FormChangeTracker.prototype, "initialiseEventListener");
-    jest.spyOn(FormChangeTracker.prototype, "trackFormChange");
+    vi.spyOn(pushToDataLayer, "pushToDataLayer");
+    vi.spyOn(FormChangeTracker.prototype, "initialiseEventListener");
+    vi.spyOn(FormChangeTracker.prototype, "trackFormChange");
 
     const enableFormChangeTracking = true;
     newInstance = new FormChangeTracker(enableFormChangeTracking);

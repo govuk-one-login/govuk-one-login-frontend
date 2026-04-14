@@ -1,4 +1,3 @@
-import { describe, expect, test } from "@jest/globals";
 import { NavigationElement } from "../navigationTracker.interface";
 import {
   isExternalLink,
@@ -37,8 +36,8 @@ describe("navigationTrackerLinkUtils", () => {
     });
 
     test("should return false for localhost links", () => {
-      setMockLocation("http://localhost");
-      const url = "http://localhost";
+      setMockLocation("http://localhost:3000");
+      const url = "http://localhost:3000";
       expect(isExternalLink(url)).toBe(false);
     });
 

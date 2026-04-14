@@ -1,7 +1,7 @@
-import { beforeEach, describe, expect, jest, test } from "@jest/globals";
 import * as Cookie from "./cookie";
 import { setLocalCookieVarMiddleware } from "./setCookieEnvVar";
 import { acceptCookies, rejectCookies } from "../../test/utils";
+import type { Mock } from "vitest";
 
 window.DI = {
   analyticsGa4: { loadGtmScript: () => {}, cookie: { consent: true } },
@@ -12,9 +12,9 @@ const cookieDomain = "";
 describe("initialise Cookie", () => {
   const instance = new Cookie.Cookie(cookieDomain);
   test("should hide the cookie banner if a cookie preference has been set", () => {
-    jest.spyOn(Cookie.Cookie, "getCookie").mockReturnValue("true");
-    jest.spyOn(Cookie, "hasConsentForAnalytics").mockReturnValue(true);
-    jest.spyOn(instance, "hideElement").mockImplementation(() => {});
+    vi.spyOn(Cookie.Cookie, "getCookie").mockReturnValue("true");
+    vi.spyOn(Cookie, "hasConsentForAnalytics").mockReturnValue(true);
+    vi.spyOn(instance, "hideElement").mockImplementation(() => {});
     instance.initialise();
     expect(instance.hideElement).toHaveBeenCalledWith(
       instance.cookieBannerContainer[0],
@@ -27,13 +27,13 @@ describe("handleAcceptClickEvent", () => {
   const instance = new Cookie.Cookie(cookieDomain);
 
   test("should load GTM script", () => {
-    jest.spyOn(window.DI.analyticsGa4, "loadGtmScript");
+    vi.spyOn(window.DI.analyticsGa4, "loadGtmScript");
     instance.handleAcceptClickEvent(event);
     expect(window.DI.analyticsGa4.loadGtmScript).toHaveBeenCalled();
   });
 
   test("should load setBannerCookieConsent", () => {
-    jest.spyOn(instance, "setBannerCookieConsent");
+    vi.spyOn(instance, "setBannerCookieConsent");
     instance.handleAcceptClickEvent(event);
     expect(instance.setBannerCookieConsent).toHaveBeenCalled();
   });
@@ -44,7 +44,7 @@ describe("handleRejectClickEvent", () => {
   const instance = new Cookie.Cookie(cookieDomain);
 
   test("should load setBannerCookieConsent", () => {
-    jest.spyOn(instance, "setBannerCookieConsent");
+    vi.spyOn(instance, "setBannerCookieConsent");
     instance.handleRejectClickEvent(event);
     expect(instance.setBannerCookieConsent).toHaveBeenCalled();
   });
@@ -55,7 +55,7 @@ describe("handleHideButtonClickEvent", () => {
   const instance = new Cookie.Cookie(cookieDomain);
 
   test("should load hideElement", () => {
-    jest.spyOn(instance, "hideElement");
+    vi.spyOn(instance, "hideElement");
     instance.handleHideButtonClickEvent(event);
     expect(instance.hideElement).toHaveBeenCalled();
   });
@@ -66,7 +66,7 @@ describe("handleHideButtonClickEvent", () => {
   const instance = new Cookie.Cookie(cookieDomain);
 
   test("should load hideElement", () => {
-    jest.spyOn(instance, "hideElement");
+    vi.spyOn(instance, "hideElement");
     instance.handleHideButtonClickEvent(event);
     expect(instance.hideElement).toHaveBeenCalled();
   });
@@ -76,36 +76,36 @@ describe("setBannerCookieConsent", () => {
   const instance = new Cookie.Cookie(cookieDomain);
 
   test("should load setCookie", () => {
-    jest.spyOn(Cookie.Cookie, "setCookie");
-    instance.setBannerCookieConsent(true, "localhost");
+    vi.spyOn(Cookie.Cookie, "setCookie");
+    instance.setBannerCookieConsent(true, "localhost:3000");
     expect(Cookie.Cookie.setCookie).toHaveBeenCalled();
   });
 
   test("should load hideElement", () => {
-    jest.spyOn(instance, "hideElement");
+    vi.spyOn(instance, "hideElement");
     instance.cookieBanner = document.createElement("div");
-    instance.setBannerCookieConsent(true, "localhost");
+    instance.setBannerCookieConsent(true, "localhost:3000");
     expect(instance.hideElement).toHaveBeenCalled();
   });
 
   test("should load showElement with cookieAccepted if consent is true", () => {
-    jest.spyOn(instance, "showElement");
+    vi.spyOn(instance, "showElement");
     instance.cookiesAccepted = document.createElement("div");
-    instance.setBannerCookieConsent(true, "localhost");
+    instance.setBannerCookieConsent(true, "localhost:3000");
     expect(instance.showElement).toHaveBeenCalled();
   });
 
   test("should load showElement with cookiesRejected if consent is false", () => {
-    jest.spyOn(instance, "showElement");
+    vi.spyOn(instance, "showElement");
     instance.cookiesRejected = document.createElement("div");
-    instance.setBannerCookieConsent(false, "localhost");
+    instance.setBannerCookieConsent(false, "localhost:3000");
     expect(instance.showElement).toHaveBeenCalled();
   });
 });
 
 describe("getCookie", () => {
   beforeEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   test("should return the value of the cookie if found", () => {
@@ -133,7 +133,7 @@ describe("hasConsentForAnalytics", () => {
   });
 
   test("should load getCookie", () => {
-    jest.spyOn(Cookie.Cookie, "getCookie");
+    vi.spyOn(Cookie.Cookie, "getCookie");
     Cookie.hasConsentForAnalytics();
     expect(Cookie.Cookie.getCookie).toHaveBeenCalled();
   });
@@ -203,12 +203,12 @@ describe("Dynamic Cookie Domain Assignment", () => {
 describe("Dynatrace Implementation", () => {
   const cookieDomain = "";
 
-  let enableMock: jest.Mock;
-  let disableMock: jest.Mock;
+  let enableMock: Mock;
+  let disableMock: Mock;
 
   beforeEach(() => {
-    enableMock = jest.fn();
-    disableMock = jest.fn();
+    enableMock = vi.fn();
+    disableMock = vi.fn();
 
     /* eslint-disable @typescript-eslint/no-explicit-any */
     (window as unknown as { dtrum: any }).dtrum = {

@@ -1,4 +1,3 @@
-import { describe, expect, jest, test } from "@jest/globals";
 import { NavigationTracker } from "./navigationTracker";
 import * as pushToDataLayer from "../../utils/pushToDataLayerUtil/pushToDataLayer";
 import { NavigationElement } from "./navigationTracker.interface";
@@ -12,12 +11,16 @@ describe("navigationTracker", () => {
     bubbles: true,
     cancelable: true,
   });
-  jest.spyOn(pushToDataLayer, "pushToDataLayer");
-  jest.spyOn(NavigationTracker.prototype, "trackNavigation");
-  jest.spyOn(NavigationTracker.prototype, "initialiseEventListener");
+
+  const spies = [
+    vi.spyOn(pushToDataLayer, "pushToDataLayer"),
+    vi.spyOn(NavigationTracker.prototype, "trackNavigation"),
+    vi.spyOn(NavigationTracker.prototype, "initialiseEventListener"),
+  ];
 
   beforeEach(() => {
     acceptCookies();
+    spies.forEach((spy) => spy.mockClear());
   });
 
   test("new instance should call initialiseEventListener", () => {
@@ -141,7 +144,7 @@ describe("navigationTracker", () => {
 
 describe("Cookie Management", () => {
   test("trackNavigation should return false if not cookie consent", () => {
-    jest.spyOn(NavigationTracker.prototype, "trackNavigation");
+    vi.spyOn(NavigationTracker.prototype, "trackNavigation");
     rejectCookies();
     const instance = new NavigationTracker(true);
     const href = document.createElement("A");
