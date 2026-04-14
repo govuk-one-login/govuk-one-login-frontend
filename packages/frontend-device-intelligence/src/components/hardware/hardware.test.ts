@@ -1,18 +1,18 @@
 import Joi from "joi";
 import { getHardwareInfo } from "./hardware";
 
-vi.stubGlobal("navigator", {
-  deviceMemory: 8,
-});
-
 const mockDocument = (context: Record<string, unknown>) =>
-  vi.stubGlobal("document", {
-    createElement: () => ({
-      getContext: vi.fn().mockImplementation(() => context),
-    }),
-  });
+  vi.spyOn(document, "createElement").mockReturnValue({
+    getContext: vi.fn().mockReturnValue(context),
+  } as unknown as HTMLElement);
 
 describe("hardware", () => {
+  beforeEach(() => {
+    vi.stubGlobal("navigator", {
+      deviceMemory: 8,
+    });
+  });
+
   it("should fetch hardware data in the correct format", async () => {
     mockDocument({
       RENDERER: "renderer",
