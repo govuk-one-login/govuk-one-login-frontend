@@ -38,6 +38,11 @@
   </ol>
 </details>
 
+<!-- DEPRECATION NOTICE -->
+
+# This package is deprecated!
+`frontend-language-toggle` has been moved to the `frontend-ui` package. It is no longer supported here and we recommend switching as soon as possible. This package will be removed in the near future.
+
 <!-- ABOUT THE PROJECT -->
 
 ## About The Project
