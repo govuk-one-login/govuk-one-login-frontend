@@ -24,9 +24,15 @@
     padding-right: 15px;
   }
 
+
   @media (min-width: 769px) {
     padding-left: 30px;
     padding-right: 30px;
+  }
+
+  @media (max-width: 640px) {
+    margin-left: 15px;
+    margin-right: 15px;
   }
 }
 
