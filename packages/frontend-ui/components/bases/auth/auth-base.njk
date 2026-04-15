@@ -1,18 +1,11 @@
-{% if MAY_2025_REBRAND_ENABLED %}
-{% set govukRebrand = true %}
+{% extends "frontend-ui/build/components/bases/unified/base.njk" %}
+
+{# Map auth-specific variable names to base template variables #}
+{% if languageToggleEnabled %}
+  {% set showLanguageToggle = true %}
 {% endif %}
-
-{% extends "govuk/template.njk" %}
-
-{% from "frontend-ui/build/components/cookie-banner/macro.njk" import frontendUiCookieBanner %}
-{% from "frontend-ui/build/components/phase-banner/macro.njk" import frontendUiPhaseBanner %}
-{% from "frontend-ui/build/components/header/macro.njk" import frontendUiHeader %}
-{% from "frontend-ui/build/components/footer/macro.njk" import frontendUiFooter %}
-{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
-{% from "frontend-ui/build/components/language-select/macro.njk" import frontendUiLanguageSelect %}
-
-{% if strategicAppChannel == true %}
-  {% set htmlClasses = 'govuk-template__mobile' %}
+{% if hrefBack %}
+  {% set showBack = true %}
 {% endif %}
 
 {% block head %}
@@ -31,34 +24,17 @@
   {% block headMetaData %}{% endblock %}
 {% endblock %}
 
-{% block pageTitle %}
-  {% if error or errors %}
-    {{ 'general.errorTitlePrefix' | translate }} -
-  {% endif %}
-  {% if pageTitleName %}
-    {{ pageTitleName }} -
-  {% endif %}
-  {{ 'general.serviceNameTitle' | translate }}
-{% endblock %}
-
-{% block bodyStart %}
-  {% block cookieBanner %}
-    {{ frontendUiCookieBanner({
-      translations: translations.translation.cookieBanner
-    }) }}
-  {% endblock %}
+{% block header %}
+  {{ frontendUiHeader({
+    translations: translations.translation.header,
+    homepageUrl: "https://www.gov.uk",
+    classes: phaseBannerClasses
+  }) }}
 {% endblock %}
 
 {% set phaseBannerClasses = "test-banner" if showTestBanner %}
 
-{% block header %}
-    {{ frontendUiHeader({
-      translations: translations.translation.header,
-      homepageUrl: "https://www.gov.uk",
-      classes: phaseBannerClasses
-    }) }}
-{% endblock %}
-
+{% block main %}
   {% if showTestBanner %}
     {% set phaseBannerText = 'general.phaseBanner.testEnvironmentMessage' | translate %}
   {% else %}
@@ -68,33 +44,36 @@
   {% if showTestBanner %}
     {% set phaseBannerTag = 'general.phaseBanner.tag.test' | translate %}
   {% else %}
-     {% set phaseBannerTag = 'general.phaseBanner.tag.beta' | translate %}
+    {% set phaseBannerTag = 'general.phaseBanner.tag.beta' | translate %}
   {% endif %}
 
-{% block main %}
   <div class="govuk-width-container {{ containerClasses }}">
-      {{ frontendUiPhaseBanner({
-        translations: translations.translation.phaseBanner,
-        url: currentUrl,
-        contactUrl: contactUsLinkUrl,
-        tag: phaseBannerTag,
-        phaseBannerText: phaseBannerText
-      }) }}
+    {{ frontendUiPhaseBanner({
+      translations: translations.translation.phaseBanner,
+      url: currentUrl,
+      contactUrl: contactUsLinkUrl,
+      tag: phaseBannerTag,
+      phaseBannerText: phaseBannerText
+    }) }}
+
     {% block beforeContent %}{% endblock %}
-    {% if languageToggleEnabled %}
+
+    {% if showLanguageToggle %}
       {{ frontendUiLanguageSelect({
         translations: translations.translation.languageSelect,
         url: currentUrl,
         activeLanguage: htmlLang
       }) }}
     {% endif %}
+
     {% if showBack %}
       {{ govukBackLink({
         text: "general.back" | translate,
         href: hrefBack
       }) }}
     {% endif %}
-    <main class="govuk-main-wrapper {{ mainClasses }}" id="main-content" role="main" {% if mainLang %} lang="{{ mainLang }}"{% endif %}>
+
+    <main class="govuk-main-wrapper {{ mainClasses }}" id="main-content" role="main"{% if mainLang %} lang="{{ mainLang }}"{% endif %}>
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds {{ rowClasses }}">
           {% block content %}{% endblock %}
@@ -105,8 +84,7 @@
 {% endblock %}
 
 {% block footer %}
-  {% if strategicAppChannel === true %}
-  {% else %}
+  {% if strategicAppChannel !== true %}
     {{ frontendUiFooter({
       translations: translations.translation.footer
     }) }}
@@ -119,12 +97,12 @@
   <script type="text/javascript" src="/public/scripts/application.js"></script>
   <script type="text/javascript" src="/public/scripts/all.js"></script>
   <script type="text/javascript" src="/public/scripts/analytics.js"></script>
-  <script type="text/javascript" {% if scriptNonce %} nonce="{{ scriptNonce }}"{% endif %}>
+  <script type="text/javascript"{% if scriptNonce %} nonce="{{ scriptNonce }}"{% endif %}>
     if (window.DI) {
       if (window.DI.appInit) {
         window.DI.appInit({
           ga4ContainerId: "{{ga4ContainerId}}",
-          uaContainerId: "not used" // We don't use UA anymore, but it's a required param
+          uaContainerId: "not used"
         }, {
           isDataSensitive: false,
           enableGa4Tracking: {{isGa4Enabled}},

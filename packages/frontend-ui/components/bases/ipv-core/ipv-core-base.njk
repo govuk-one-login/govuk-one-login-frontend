@@ -1,172 +1,145 @@
-{% if MAY_2025_REBRAND_ENABLED %}
-    {% set govukRebrand = true %}
-{% endif %}
+{% extends "frontend-ui/build/components/bases/unified/base.njk" %}
 
-{% if isPageDataSensitive is not defined %}
-    {% set isPageDataSensitive = true %}
-{% endif %}
-{% set taxLevel1 = 'web cri' %}
-{% set taxLevel2 = 'pre cri' %}
-
-
-{% extends "govuk/template.njk" %}
-{% from "frontend-ui/build/components/cookie-banner/macro.njk" import frontendUiCookieBanner %}
-{% from "frontend-ui/build/components/phase-banner/macro.njk" import frontendUiPhaseBanner %}
-{% from "frontend-ui/build/components/header/macro.njk" import frontendUiHeader %}
-{% from "frontend-ui/build/components/footer/macro.njk" import frontendUiFooter %}
-{% from "frontend-ui/build/components/language-select/macro.njk" import frontendUiLanguageSelect %}
 {% from "frontend-analytics/components/ga4-opl/macro.njk" import ga4OnPageLoad %}
-{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 
-{# Set language values for govuk/template.njk #}
+{# Map ipv-core variable names to base template variables #}
+{% set mainLang = currentLanguage %}
 {% set htmlLang = currentLanguage %}
 {% set pageTitleLang = currentLanguage %}
-{% set mainLang = currentLanguage %}
+
+{% if makeFullWidth %}
+  {% set columnWidth = "full" %}
+{% else %}
+  {% set columnWidth = "two-thirds" %}
+{% endif %}
 
 {% block head %}
-    {# Dynatrace RUM snippet #}
-    {% if dynatraceRumUrl %}
-        <script src='{{ dynatraceRumUrl }}' crossorigin="anonymous" nonce='{{ cspNonce }}'></script>
-    {% endif %}
+  {# Dynatrace RUM snippet #}
+  {% if dynatraceRumUrl %}
+    <script src='{{ dynatraceRumUrl }}' crossorigin="anonymous" nonce='{{ cspNonce }}'></script>
+  {% endif %}
 
-    <link href="/public/stylesheets/application.css" rel="stylesheet">
+  <link href="/public/stylesheets/application.css" rel="stylesheet">
 
-    {# For older browsers to allow them to recognise HTML5 elements such as `<header>` #}
-    <!--[if lt IE 9]>
-    <script nonce='{{ cspNonce }}' src="/html5-shiv/html5shiv.js"></script>
-    <![endif]-->
+  <!--[if lt IE 9]>
+  <script nonce='{{ cspNonce }}' src="/html5-shiv/html5shiv.js"></script>
+  <![endif]-->
 
-    {% block headMetaData %}{% endblock %}
-
+  {% block headMetaData %}{% endblock %}
 {% endblock %}
 
-{% block pageTitle-%}
-    {%- if pageErrorState %}
-        {{ 'general.govuk.errorTitlePrefix' | translate }}
-    {% endif %}
-    {%- if pageTitleKey %}{{ pageTitleKey | translate(context) }} – GOV.UK One Login{% endif %}
+{% block pageTitle -%}
+  {%- if pageErrorState %}
+    {{ 'general.govuk.errorTitlePrefix' | translate }}
+  {% endif %}
+  {%- if pageTitleKey %}{{ pageTitleKey | translate(context) }} – GOV.UK One Login{% endif %}
 {%- endblock %}
 
-{% block bodyStart %}
-    {% block cookieBanner %}
-        {{ frontendUiCookieBanner({
-    translations: translations.translation.cookieBanner
-  }
-  )}}
+{% block header %}
+  {{ frontendUiHeader({
+    translations: translations.translation.header,
+    homepageUrl: "https://www.gov.uk",
+    signOutLink: logoutUrl
+  }) }}
+{% endblock %}
 
-        {%endblock%}
-    {% endblock %}
-
-    {% block header %}
-        {{ frontendUiHeader({
-      translations: translations.translation.header,
-      homepageUrl: "https://www.gov.uk",
-      signOutLink: logoutUrl
-    }) }}
-    {% endblock %}
-
-    {% block main %}
-        <div class="govuk-width-container {{ containerClasses }}">
-            {{ frontendUiPhaseBanner({
+{% block main %}
+  <div class="govuk-width-container {{ containerClasses }}">
+    {{ frontendUiPhaseBanner({
       translations: translations.translation.phaseBanner,
       url: currentUrl,
       contactUrl: contactUsUrl
     }) }}
 
-            {% block beforeContent %}{% endblock %}
-            {% if showLanguageToggle %}
-                {{ frontendUiLanguageSelect({
-      translations: translations.translation.languageSelect,
-      url: currentUrl,
-      activeLanguage: htmlLang
-    }) }}
-            {% endif %}
-            {% if showBack %}
-                {{ govukBackLink({
-                text: "general.govuk.backLink" | translate,
-                href: hrefBack
+    {% block beforeContent %}{% endblock %}
+
+    {% if showLanguageToggle %}
+      {{ frontendUiLanguageSelect({
+        translations: translations.translation.languageSelect,
+        url: currentUrl,
+        activeLanguage: htmlLang
+      }) }}
+    {% endif %}
+
+    {% if showBack %}
+      {{ govukBackLink({
+        text: "general.govuk.backLink" | translate,
+        href: hrefBack
+      }) }}
+    {% endif %}
+
+    <main class="govuk-main-wrapper {{ mainClasses }}" id="main-content"{% if currentLanguage %} lang="{{ currentLanguage }}"{% endif %}>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds {{ rowClasses }}">
+          {% if displayBanner %}
+            {{ govukNotificationBanner({
+              html: bannerMessage,
+              type: bannerType,
+              titleText: bannerTitleText
             }) }}
-            {% endif %}
-            <main class="govuk-main-wrapper {{ mainClasses }}" id="main-content"{% if currentLanguage %} lang="{{ currentLanguage }}"{% endif %}>
-                <div class="govuk-grid-row">
-                    <div class="govuk-grid-column-two-thirds {{ rowClasses }}">
-                        {% if (displayBanner) %}
-                            {{ govukNotificationBanner({
-                        html: bannerMessage,
-                        type: bannerType,
-                        titleText: bannerTitleText
-                    }) }}
-                        {% endif %}
+          {% endif %}
 
-                        {% if errorState %}
-                            {{ govukErrorSummary({
-                            titleText: errorTitle | default('Error Summary'),
-                            errorList: [
-                                {
-                                    text: errorText | translate,
-                                    href: errorHref | default("#")
-                                }
-                            ]
-                        }) }}
-                        {% endif %}
-                        {% block content %}{% endblock %}
-                    </div>
-                </div>
-            </main>
+          {% if errorState %}
+            {{ govukErrorSummary({
+              titleText: errorTitle | default('Error Summary'),
+              errorList: [
+                {
+                  text: errorText | translate,
+                  href: errorHref | default("#")
+                }
+              ]
+            }) }}
+          {% endif %}
+
+          {% block content %}{% endblock %}
         </div>
-    {% endblock %}
+      </div>
+    </main>
+  </div>
+{% endblock %}
 
-    {% block footer %}
-        {{ frontendUiFooter({
-    translations: translations.translation.footer
+{% block bodyEnd %}
+  {% block scripts %}{% endblock %}
+  <script nonce='{{ cspNonce }}' src="/public/javascripts/application.js"></script>
+  <script type="module" nonce='{{ cspNonce }}' src="/public/javascripts/govuk-frontend.min.js"></script>
+  <script type="module" nonce='{{ cspNonce }}'>
+    import {initAll} from '/public/javascripts/govuk-frontend.min.js'
+    initAll()
+  </script>
+  {% if useDeviceIntelligence %}
+    <script type="module" nonce='{{ cspNonce }}' src="/public/javascripts/fingerprint.js"></script>
+    <script type="module" nonce='{{ cspNonce }}'>
+      import {setFingerprintCookie} from "/public/javascripts/fingerprint.js";
+      setFingerprintCookie('{{ serviceDomain }}')
+    </script>
+  {% endif %}
+  <script nonce='{{ cspNonce }}'>
+    window.DI = window.DI || {};
+    window.DI.httpStatusCode = {{ statusCode | d(200) }};
+    window.DI.journeyState = "{{ googleTagManagerPageId }}";
+    window.DI.appInit({
+      ga4ContainerId: "{{ ga4ContainerId }}",
+      uaContainerId: "{{ uaContainerId }}"
+    }, {
+      isDataSensitive: {{analyticsDataSensitive}},
+      isPageDataSensitive: {{isPageDataSensitive}},
+      enableGa4Tracking: {{isGa4Enabled}},
+      enableUaTracking: {{isUaEnabled}},
+      cookieDomain: "{{analyticsCookieDomain}}"
+    });
+  </script>
+  {{ ga4OnPageLoad({
+    nonce: cspNonce,
+    statusCode: statusCode,
+    dynamic: isPageDynamic,
+    englishPageTitle: pageTitleKey | translateToEnglish,
+    taxonomyLevel1: taxLevel1,
+    taxonomyLevel2: taxLevel2,
+    taxonomyLevel3: taxLevel3,
+    taxonomyLevel4: taxLevel4,
+    taxonomyLevel5: taxLevel5,
+    contentId: contentID
   }) }}
-    {% endblock %}
-
-    {% block bodyEnd %}
-        {% block scripts %}{% endblock %}
-        <script nonce='{{ cspNonce }}' src="/public/javascripts/application.js"></script>
-        <script type="module" nonce='{{ cspNonce }}' src="/public/javascripts/govuk-frontend.min.js"></script>
-        <script type="module" nonce='{{ cspNonce }}'>
-            import {initAll} from '/public/javascripts/govuk-frontend.min.js'
-            initAll()
-        </script>
-        {% if useDeviceIntelligence %}
-            <script type="module" nonce='{{ cspNonce }}' src="/public/javascripts/fingerprint.js"></script>
-            <script type="module" nonce='{{ cspNonce }}'>
-                import {setFingerprintCookie} from "/public/javascripts/fingerprint.js";
-                setFingerprintCookie('{{ serviceDomain }}')
-            </script>
-        {% endif %}
-        <script nonce='{{ cspNonce }}'>
-            window.DI = window.DI || {};
-            window.DI.httpStatusCode = {{ statusCode | d(200) }};
-            window.DI.journeyState = "{{ googleTagManagerPageId }}";
-            window
-                .DI
-                .appInit({
-                    ga4ContainerId: "{{ ga4ContainerId }}",
-                    uaContainerId: "{{ uaContainerId }}"
-                }, {
-                    isDataSensitive: {{analyticsDataSensitive}},
-                    isPageDataSensitive: {{isPageDataSensitive}},
-                    enableGa4Tracking: {{isGa4Enabled}},
-                    enableUaTracking: {{isUaEnabled}},
-                    cookieDomain: "{{analyticsCookieDomain}}"
-                });
-        </script>
-        {{ ga4OnPageLoad({
-        nonce: cspNonce,
-        statusCode: statusCode,
-        dynamic: isPageDynamic,
-        englishPageTitle: pageTitleKey | translateToEnglish,
-        taxonomyLevel1: taxLevel1,
-        taxonomyLevel2: taxLevel2,
-        taxonomyLevel3: taxLevel3,
-        taxonomyLevel4: taxLevel4,
-        taxonomyLevel5: taxLevel5,
-        contentId: contentID
-    }) }}
-
-    {% endblock %}
+{% endblock %}

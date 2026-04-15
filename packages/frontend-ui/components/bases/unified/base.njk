@@ -1,0 +1,79 @@
+{% if MAY_2025_REBRAND_ENABLED %}
+  {% set govukRebrand = true %}
+{% endif %}
+
+{% extends "govuk/template.njk" %}
+
+{% from "frontend-ui/build/components/cookie-banner/macro.njk" import frontendUiCookieBanner %}
+{% from "frontend-ui/build/components/phase-banner/macro.njk" import frontendUiPhaseBanner %}
+{% from "frontend-ui/build/components/header/macro.njk" import frontendUiHeader %}
+{% from "frontend-ui/build/components/footer/macro.njk" import frontendUiFooter %}
+{% from "frontend-ui/build/components/language-select/macro.njk" import frontendUiLanguageSelect %}
+
+{% block head %}
+  {% block headMetaData %}{% endblock %}
+{% endblock %}
+
+{% block pageTitle %}
+  {% if error or errors %}
+    {{ 'general.errorTitlePrefix' | translate }} -
+  {% endif %}
+  {% if pageTitleName %}
+    {{ pageTitleName }} -
+  {% endif %}
+  {{ 'general.serviceNameTitle' | translate }}
+{% endblock %}
+
+{% block bodyStart %}
+  {% block cookieBanner %}
+    {{ frontendUiCookieBanner({
+      translations: translations.translation.cookieBanner
+    }) }}
+  {% endblock %}
+{% endblock %}
+
+{% block header %}
+  {{ frontendUiHeader({
+    translations: translations.translation.header,
+    homepageUrl: "https://www.gov.uk"
+  }) }}
+{% endblock %}
+
+{% block main %}
+  <div class="govuk-width-container {{ containerClasses }}">
+    {{ frontendUiPhaseBanner({
+      translations: translations.translation.phaseBanner,
+      url: currentUrl
+    }) }}
+
+    {% block beforeContent %}{% endblock %}
+
+    {% if showLanguageToggle %}
+      {{ frontendUiLanguageSelect({
+        translations: translations.translation.languageSelect,
+        url: currentUrl,
+        activeLanguage: htmlLang
+      }) }}
+    {% endif %}
+
+    {% block backLinkBlock %}{% endblock %}
+
+    <main class="govuk-main-wrapper {{ mainClasses }}" id="main-content" role="main"{% if mainLang %} lang="{{ mainLang }}"{% endif %}>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds {{ rowClasses }}">
+          {% block content %}{% endblock %}
+        </div>
+      </div>
+    </main>
+  </div>
+{% endblock %}
+
+{% block footer %}
+  {{ frontendUiFooter({
+    translations: translations.translation.footer
+  }) }}
+{% endblock %}
+
+{% block bodyEnd %}
+  {% block scripts %}{% endblock %}
+{% endblock %}
