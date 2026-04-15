@@ -26,6 +26,7 @@ interface ExpressResponse extends Response {
   locals: {
     translations: unknown;
     allTranslations: { [lng: string]: unknown };
+    currentLanguage: string;
     basePath?: string;
   };
 }
@@ -38,6 +39,7 @@ interface PlainResponse {
   locals: {
     translations: unknown;
     allTranslations: { [lng: string]: unknown };
+    currentLanguage: string;
     basePath?: string;
   };
 }
@@ -63,6 +65,7 @@ export function frontendUiMiddleware(
 ): void {
   res.locals.translations = req.i18n.store.data[req.i18n.language];
   res.locals.allTranslations = req.i18n.store.data;
+  res.locals.currentLanguage = req.i18n.language;
   res.locals.basePath = process.cwd();
   next();
 }
@@ -120,10 +123,10 @@ type StepInput = { key: string; image?: string | null };
 
 export function buildSteps(
   allTranslations: Record<string, unknown>,
-  currentTranslations: unknown,
+  currentLanguage: string,
   steps: StepInput[],
 ): { data: StepData; allLanguageData: StepData[]; image: string | null }[] {
-  if (!allTranslations || !steps || !currentTranslations) return [];
+  if (!allTranslations || !steps || !currentLanguage) return [];
   return steps
     .slice(0, 4)
     .map(({ key, image }) => {
@@ -131,7 +134,7 @@ export function buildSteps(
         (lng) => resolvePath(allTranslations[lng], key) as StepData,
       );
       return {
-        data: resolvePath(currentTranslations, key) as StepData,
+        data: resolvePath(allTranslations[currentLanguage], key) as StepData,
         allLanguageData,
         image: image ?? null,
       };

@@ -13,7 +13,7 @@ Step content lives entirely in your translation files. The component uses `build
 
 `buildSteps` is called in the outer template scope (where Nunjucks globals are available), inline within the macro call. The macro itself just renders the pre-resolved steps.
 
-`allTranslations` and `translations` are set automatically on `res.locals` by `frontendUiMiddleware` and are available in all templates without any extra setup.
+`allTranslations` and `currentLanguage` are set automatically on `res.locals` by `frontendUiMiddleware` and are available in all templates without any extra setup.
 
 ## Setup
 
@@ -70,7 +70,7 @@ This structure must exist in **every** language's translation file. Any step mis
 
 {{ frontendUiStepCard({
   translations: translations.translation.stepCard,
-  steps: buildSteps(allTranslations, translations, [
+  steps: buildSteps(allTranslations, currentLanguage, [
     { key: "translation.pages.myPage.steps.0", image: "/assets/images/step1.svg" },
     { key: "translation.pages.myPage.steps.1", image: "/assets/images/step2.svg" },
     { key: "translation.pages.myPage.steps.2", image: null }
@@ -87,12 +87,12 @@ This structure must exist in **every** language's translation file. Any step mis
 | `translations` | object | Yes | Translations object for the component (e.g. `translations.translation.stepCard`). The template uses `translations.header` for the section heading. |
 | `steps` | array | Yes | Array of resolved step objects returned by `buildSteps`. |
 
-### `buildSteps(allTranslations, translations, steps)`
+### `buildSteps(allTranslations, currentLanguage, steps)`
 
 | Argument | Type | Description |
 |----------|------|-------------|
 | `allTranslations` | object | All language translation data, available in templates as `allTranslations` via `frontendUiMiddleware`. |
-| `translations` | object | Current language translation data, available in templates as `translations` via `frontendUiMiddleware`. |
+| `currentLanguage` | string | The active language key (e.g. `"en"`), available in templates as `currentLanguage` via `frontendUiMiddleware`. |
 | `steps` | array | Array of step definitions, each with a `key` and optional `image`. |
 
 ### Step definition

@@ -16,7 +16,3 @@ params:
         type: string
         required: false
         description: path to the image for this step, or null for the default placeholder
-  - name: stepsPath
-    type: string
-    required: false
-    description: dot-notation path to the steps array within each language's translation data (e.g. "translation.pages.stepCard1.steps"). Requires configureFrontendUiNunjucks to be called in your nunjucks setup. When provided, a step is only rendered if it is valid in all languages.

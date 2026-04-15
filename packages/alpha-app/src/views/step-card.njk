@@ -5,7 +5,7 @@
   <div class="govuk-grid-row">
     {{ frontendUiStepCard({
       translations: translations.translation.stepCard,
-      steps: buildSteps(allTranslations, translations, [
+      steps: buildSteps(allTranslations, currentLanguage, [
         { key: "translation.pages.stepCard1.steps.0", image: "/assets/OneLoginLogo.svg" },
         { key: "translation.pages.stepCard1.steps.1", image: null },
         { key: "translation.pages.stepCard1.steps.2", image: "/assets/Continue.svg" },

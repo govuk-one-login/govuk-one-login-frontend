@@ -390,14 +390,14 @@ describe("buildSteps", () => {
       },
     },
   };
-  const currentTranslations = allTranslations.en;
+  const currentLanguage = "en";
   const steps = [
     { key: "translation.pages.myPage.steps.0", image: "/img/step1.svg" },
     { key: "translation.pages.myPage.steps.1", image: null },
   ];
 
   it("returns resolved steps with data, allLanguageData, and image", () => {
-    const result = buildSteps(allTranslations, currentTranslations, steps);
+    const result = buildSteps(allTranslations, currentLanguage, steps);
     expect(result).toHaveLength(2);
     expect(result[0].data).toEqual({
       title: "Step one",
@@ -425,7 +425,7 @@ describe("buildSteps", () => {
         },
       },
     };
-    const result = buildSteps(incomplete, incomplete.en, [
+    const result = buildSteps(incomplete, "en", [
       { key: "translation.pages.myPage.steps.0" },
     ]);
     expect(result).toHaveLength(0);
@@ -448,7 +448,7 @@ describe("buildSteps", () => {
         },
       },
     };
-    const result = buildSteps(incomplete, incomplete.en, [
+    const result = buildSteps(incomplete, "en", [
       { key: "translation.pages.myPage.steps.0" },
     ]);
     expect(result).toHaveLength(0);
@@ -488,7 +488,7 @@ describe("buildSteps", () => {
         },
       },
     };
-    const result = buildSteps(bigTranslations, bigTranslations.en, manySteps);
+    const result = buildSteps(bigTranslations, "en", manySteps);
     expect(result).toHaveLength(4);
   });
 
@@ -496,28 +496,28 @@ describe("buildSteps", () => {
     expect(
       buildSteps(
         null as unknown as Record<string, unknown>,
-        currentTranslations,
+        currentLanguage,
         steps,
       ),
     ).toEqual([]);
   });
 
-  it("returns [] when currentTranslations is null", () => {
-    expect(buildSteps(allTranslations, null as unknown, steps)).toEqual([]);
+  it("returns [] when currentLanguage is null", () => {
+    expect(buildSteps(allTranslations, null as unknown as string, steps)).toEqual([]);
   });
 
   it("returns [] when steps is null", () => {
     expect(
       buildSteps(
         allTranslations,
-        currentTranslations,
+        currentLanguage,
         null as unknown as { key: string }[],
       ),
     ).toEqual([]);
   });
 
   it("returns [] for an empty steps array", () => {
-    expect(buildSteps(allTranslations, currentTranslations, [])).toEqual([]);
+    expect(buildSteps(allTranslations, currentLanguage, [])).toEqual([]);
   });
 });
 
