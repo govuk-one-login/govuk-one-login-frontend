@@ -1,7 +1,7 @@
 {% set stepCard = params.translations %}
 {% set steps = params.steps if params.steps else [] %}
 
-<div class="step-card govuk-!-padding-top-3 govuk-!-padding-bottom-6 govuk-!-margin-bottom-6">
+<div class="step-card govuk-!-padding-top-6 govuk-!-padding-bottom-6 govuk-!-margin-bottom-6">
   <h2 class="govuk-heading-m">{{ stepCard.header }}</h2>
   <ol class="govuk-list" role="list">
     {% for step in steps %}
