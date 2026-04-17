@@ -5,6 +5,7 @@
   "main": "build/cjs/index.cjs",
   "module": "build/esm/index.js",
   "exports": {
+    "types": "./build/esm/index.d.ts",
     "import": "./build/esm/index.js",
     "require": "./build/cjs/index.cjs"
   },
@@ -43,8 +44,13 @@
     "@govuk-one-login/event-catalogue-schemas": "^43.2.0"
   },
   "peerDependencies": {
-    "@govuk-one-login/event-catalogue": "^43.0.0",
-    "@govuk-one-login/event-catalogue-schemas": "^43.0.0"
+    "@govuk-one-login/event-catalogue": "^43.0.0 || ^44.0.0",
+    "@govuk-one-login/event-catalogue-schemas": "^43.0.0 || ^44.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@govuk-one-login/event-catalogue-schemas": {
+      "optional": true
+    }
   },
   "dependencies": {
     "ajv": "^8.18.0"
