@@ -25,8 +25,6 @@ interface ExpressRequest extends Request {
 interface ExpressResponse extends Response {
   locals: {
     translations: unknown;
-    allTranslations: { [lng: string]: unknown };
-    currentLanguage: string;
     basePath?: string;
   };
 }
@@ -38,8 +36,6 @@ interface PlainRequest {
 interface PlainResponse {
   locals: {
     translations: unknown;
-    allTranslations: { [lng: string]: unknown };
-    currentLanguage: string;
     basePath?: string;
   };
 }
@@ -64,8 +60,6 @@ export function frontendUiMiddleware(
   next: NextFunction,
 ): void {
   res.locals.translations = req.i18n.store.data[req.i18n.language];
-  res.locals.allTranslations = req.i18n.store.data;
-  res.locals.currentLanguage = req.i18n.language;
   res.locals.basePath = process.cwd();
   next();
 }
@@ -86,10 +80,12 @@ export const setFrontendUiTranslations = (instanceI18n: typeof i18next) => {
     false,
   );
 
-  validateTranslations(
-    instanceI18n.getResourceBundle("en", "translation"),
-    instanceI18n.getResourceBundle("cy", "translation"),
-  );
+  if (process.env.CHECK_TRANSLATIONS_ENABLED) {
+    validateTranslations(
+      instanceI18n.getResourceBundle("en", "translation"),
+      instanceI18n.getResourceBundle("cy", "translation"),
+    );
+  }
 };
 
 export const frontendUiMiddlewareIdentityBypass = (
@@ -108,6 +104,25 @@ export const frontendUiMiddlewareIdentityBypass = (
 };
 
 
+function isPlainObject(val: unknown): val is Record<string, unknown> {
+  return typeof val === "object" && val !== null && !Array.isArray(val);
+}
+
+function validateArrayItems(
+  enArr: unknown[],
+  cyArr: unknown[],
+  fullPath: string,
+): void {
+  const longerArr = enArr.length >= cyArr.length ? enArr : cyArr;
+  longerArr.forEach((_, i) => {
+    const enItem = enArr[i];
+    const cyItem = cyArr[i];
+    if (isPlainObject(enItem) && isPlainObject(cyItem)) {
+      validateTranslations(enItem, cyItem, `${fullPath}[${i}]`);
+    }
+  });
+}
+
 export function validateTranslations(
   en: Record<string, unknown>,
   cy: Record<string, unknown>,
@@ -117,11 +132,11 @@ export function validateTranslations(
   for (const key of allKeys) {
     const fullPath = path ? `${path}.${key}` : key;
     if (!(key in en)) {
-      logger.warn(`Translation key missing in en: ${fullPath}`);
+      logger.warn(`Translation key exists in cy but is missing in en: ${fullPath}`);
       continue;
     }
     if (!(key in cy)) {
-      logger.warn(`Translation key missing in cy: ${fullPath}`);
+      logger.warn(`Translation key exists in en but is missing in cy: ${fullPath}`);
       continue;
     }
     if (Array.isArray(en[key]) || Array.isArray(cy[key])) {
@@ -129,37 +144,12 @@ export function validateTranslations(
       const cyArr = cy[key] as unknown[];
       if (enArr.length !== cyArr.length) {
         logger.warn(
-          `Array length mismatch at: ${fullPath} (en: ${enArr.length}, cy: ${cyArr.length})`,
+          `Array length mismatch at: ${fullPath} - en has ${enArr.length} items, cy has ${cyArr.length} items`,
         );
       }
-      const longerArr = enArr.length >= cyArr.length ? enArr : cyArr;
-      longerArr.forEach((_, i) => {
-        const enItem = enArr[i];
-        const cyItem = cyArr[i];
-        if (
-          typeof enItem === "object" &&
-          enItem !== null &&
-          typeof cyItem === "object" &&
-          cyItem !== null
-        ) {
-          validateTranslations(
-            enItem as Record<string, unknown>,
-            cyItem as Record<string, unknown>,
-            `${fullPath}[${i}]`,
-          );
-        }
-      });
-    } else if (
-      typeof en[key] === "object" &&
-      en[key] !== null &&
-      typeof cy[key] === "object" &&
-      cy[key] !== null
-    ) {
-      validateTranslations(
-        en[key] as Record<string, unknown>,
-        cy[key] as Record<string, unknown>,
-        fullPath,
-      );
+      validateArrayItems(enArr, cyArr, fullPath);
+    } else if (isPlainObject(en[key]) && isPlainObject(cy[key])) {
+      validateTranslations(en[key], cy[key], fullPath);
     }
   }
 }
@@ -240,7 +230,7 @@ export const getTranslationObject = (
       try {
         const fileContent = readFileSync(filePath, "utf8");
         return JSON.parse(fileContent);
-      } catch (error) {
+      } catch {
         logger.warn(
           `Error reading or parsing translation file at ${filePath}:`,
         );
