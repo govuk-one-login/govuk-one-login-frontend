@@ -78,20 +78,16 @@ export function trackFormError(enabled: boolean = false) {
    * If no error message is found, it returns the string "undefined
   */
 export function getErrorMessage(field: FormField) {
+  // Try standard GOV.UK ID convention first
   const error = document.getElementById(`${field.id}-error`);
   if (error) {
-    return error?.textContent?.trim();
-  }
-  // If no error message is found, try to find an error message using the "parent" id of the form field
-  const fieldNameInput = field.id.split("-");
-  if (fieldNameInput.length > 1) {
-    const inputError = document.getElementById(`${fieldNameInput[0]}-error`);
-    if (inputError) {
-      return inputError?.textContent?.trim();
-    }
+    return error.textContent?.trim();
   }
 
-  return "undefined";
+  // Fall back to traversing the DOM for custom IDs
+  const formGroup = document.getElementById(field.id)?.closest(".govuk-form-group--error");
+  const groupError = formGroup?.querySelector(".govuk-error-message");
+  return groupError?.textContent?.trim() ?? "undefined";
 }
 
 /**

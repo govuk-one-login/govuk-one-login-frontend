@@ -285,6 +285,47 @@ describe("FormErrorTracker", () => {
     );
   });
 
+  test("getErrorMessage should return error message when field has a custom id", () => {
+    const formField: FormField = {
+      id: "my-custom-id",
+      name: "fieldName",
+      value: "fieldValue",
+      type: "text",
+    };
+
+    const formGroup = document.createElement("div");
+    formGroup.className = "govuk-form-group govuk-form-group--error";
+    formGroup.innerHTML =
+      '<p class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a valid value</p>' +
+      '<input type="text" id="my-custom-id" name="fieldName" />';
+    document.body.appendChild(formGroup);
+
+    expect(FormErrorTracker.getErrorMessage(formField)).toBe(
+      "Error: Enter a valid value",
+    );
+  });
+
+  test("getErrorMessage should return error message when radio button has a custom id", () => {
+    const formField: FormField = {
+      id: "my-custom-radio",
+      name: "radioGroup",
+      value: "option1",
+      type: "radio",
+    };
+
+    const formGroup = document.createElement("div");
+    formGroup.className = "govuk-form-group govuk-form-group--error";
+    formGroup.innerHTML =
+      '<p class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select an option</p>' +
+      '<input type="radio" id="my-custom-radio" name="radioGroup" value="option1" />' +
+      '<input type="radio" id="my-custom-radio-2" name="radioGroup" value="option2" />';
+    document.body.appendChild(formGroup);
+
+    expect(FormErrorTracker.getErrorMessage(formField)).toBe(
+      "Error: Select an option",
+    );
+  });
+
   test("getErrorMessage should return undefined , when there is no error message", () => {
     const formField: FormField = {
       id: "fieldId",
