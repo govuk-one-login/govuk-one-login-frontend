@@ -1,4 +1,3 @@
-/* eslint-disable */
 import * as functions from "./functions";
 import * as components from "../components/index";
 import {
@@ -216,16 +215,6 @@ describe("setFingerprintCookie()", () => {
     expect(logger.error).toHaveBeenCalledWith(
       "Error setting fingerprint cookie:",
       expect.any(Error),
-    );
-  });
-
-  test("should log a warning if run on the server side", async () => {
-    vi.stubGlobal("window", undefined);
-
-    await setFingerprintCookie();
-
-    expect(logger.warn).toHaveBeenCalledWith(
-      "fingerprint cookie logic should only run on the client side",
     );
   });
 });

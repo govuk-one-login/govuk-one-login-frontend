@@ -11,15 +11,8 @@ mockTextEncoder.prototype.encode = (str: string) => {
   return { buffer: buf };
 };
 
-vi.mock("../utils/hash", () => ({
-  hash: vi.fn().mockReturnValue({
-    componentA: Promise.resolve({ key: "valueA" }),
-    componentB: Promise.resolve({ key: "valueB" }),
-    fonts: Promise.resolve({ fontHash: "b582964e91622e755c423ad99c8ec9b4" }),
-    thumbmark: Promise.resolve({
-      deviceHash: "9c69a4ffa43f3bd072ddce5b4c2e424e",
-    }),
-  }),
+vi.mock("./utils/hash", () => ({
+  hash: vi.fn().mockReturnValue("9c69a4ffa43f3bd072ddce5b4c2e424e"),
 }));
 
 vi.mock("./components/fonts/fonts", () => ({
