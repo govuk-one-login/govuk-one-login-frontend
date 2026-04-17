@@ -3,10 +3,14 @@ params:
     type: object
     required: true
     description: translations object from middleware (translations.translation.stepCard)
+  - name: unlimitedSteps
+    type: boolean
+    required: false
+    description: if true, skips the default 4 step limit and renders all steps provided.
   - name: steps
     type: array
     required: true
-    description: array of step objects combining translation data and image. Maximum of 4 steps will be rendered.
+    description: array of step objects, each with a data object and image. Steps are passed directly by the caller.
     params:
       - name: data
         type: object
