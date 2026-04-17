@@ -15,7 +15,7 @@ export const setCustomLogger = (customLogger: CustomLogger) => {
 export const getLogger = (): Logger | CustomLogger => {
   if (!logger) {
     logger = pino({
-      name: "@govuk-one-login/frontend-passthrough-headers",
+      name: "@govuk-one-login/frontend-ui",
       level: process.env.LOG_LEVEL ?? process.env.LOGS_LEVEL ?? "warn",
     });
 

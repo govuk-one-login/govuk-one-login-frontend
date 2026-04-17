@@ -85,6 +85,11 @@ export const setFrontendUiTranslations = (instanceI18n: typeof i18next) => {
     true,
     false,
   );
+
+  validateTranslations(
+    instanceI18n.getResourceBundle("en", "translation"),
+    instanceI18n.getResourceBundle("cy", "translation"),
+  );
 };
 
 export const frontendUiMiddlewareIdentityBypass = (
@@ -102,50 +107,61 @@ export const frontendUiMiddlewareIdentityBypass = (
   next();
 };
 
-export function resolvePath(obj: unknown, path: string): unknown {
-  return path
-    .split(".")
-    .reduce(
-      (acc, key) =>
-        acc && typeof acc === "object"
-          ? (acc as Record<string, unknown>)[key]
-          : undefined,
-      obj,
-    );
-}
 
-type StepData = {
-  title?: unknown;
-  description?: unknown;
-  bulletList?: unknown[];
-};
-type StepInput = { key: string; image?: string | null };
-
-export function buildSteps(
-  allTranslations: Record<string, unknown>,
-  currentLanguage: string,
-  steps: StepInput[],
-): { data: StepData; allLanguageData: StepData[]; image: string | null }[] {
-  if (!allTranslations || !steps || !currentLanguage) return [];
-  return steps
-    .slice(0, 4)
-    .map(({ key, image }) => {
-      const allLanguageData = Object.keys(allTranslations).map(
-        (lng) => resolvePath(allTranslations[lng], key) as StepData,
+export function validateTranslations(
+  en: Record<string, unknown>,
+  cy: Record<string, unknown>,
+  path = "",
+): void {
+  const allKeys = new Set([...Object.keys(en), ...Object.keys(cy)]);
+  for (const key of allKeys) {
+    const fullPath = path ? `${path}.${key}` : key;
+    if (!(key in en)) {
+      logger.warn(`Translation key missing in en: ${fullPath}`);
+      continue;
+    }
+    if (!(key in cy)) {
+      logger.warn(`Translation key missing in cy: ${fullPath}`);
+      continue;
+    }
+    if (Array.isArray(en[key]) || Array.isArray(cy[key])) {
+      const enArr = en[key] as unknown[];
+      const cyArr = cy[key] as unknown[];
+      if (enArr.length !== cyArr.length) {
+        logger.warn(
+          `Array length mismatch at: ${fullPath} (en: ${enArr.length}, cy: ${cyArr.length})`,
+        );
+      }
+      const longerArr = enArr.length >= cyArr.length ? enArr : cyArr;
+      longerArr.forEach((_, i) => {
+        const enItem = enArr[i];
+        const cyItem = cyArr[i];
+        if (
+          typeof enItem === "object" &&
+          enItem !== null &&
+          typeof cyItem === "object" &&
+          cyItem !== null
+        ) {
+          validateTranslations(
+            enItem as Record<string, unknown>,
+            cyItem as Record<string, unknown>,
+            `${fullPath}[${i}]`,
+          );
+        }
+      });
+    } else if (
+      typeof en[key] === "object" &&
+      en[key] !== null &&
+      typeof cy[key] === "object" &&
+      cy[key] !== null
+    ) {
+      validateTranslations(
+        en[key] as Record<string, unknown>,
+        cy[key] as Record<string, unknown>,
+        fullPath,
       );
-      return {
-        data: resolvePath(allTranslations[currentLanguage], key) as StepData,
-        allLanguageData,
-        image: image ?? null,
-      };
-    })
-    .filter(({ allLanguageData }) =>
-      allLanguageData.every(
-        (step) =>
-          step?.title &&
-          (step?.description || (step?.bulletList?.length ?? 0) > 0),
-      ),
-    );
+    }
+  }
 }
 
 export function warnCharacterLimit(text: string, limit: number) {
@@ -161,13 +177,12 @@ export function addFrontendUiGlobals(nunjucksEnv: {
 }) {
   nunjucksEnv.addGlobal("addLanguageParam", addLanguageParam);
   nunjucksEnv.addGlobal("contactUsUrl", contactUsUrl);
-  nunjucksEnv.addGlobal("buildSteps", buildSteps);
   nunjucksEnv.addGlobal("warnCharacterLimit", warnCharacterLimit);
 }
 
 export function addLanguageParam(language: string, url?: URL) {
   if (!url) {
-    console.warn(
+    logger.warn(
       "URL is undefined. The parameter cannot be added, and the toggle will not work.",
     );
     return "#invalid-url-lang-toggle";
@@ -226,15 +241,14 @@ export const getTranslationObject = (
         const fileContent = readFileSync(filePath, "utf8");
         return JSON.parse(fileContent);
       } catch (error) {
-        console.error(
+        logger.warn(
           `Error reading or parsing translation file at ${filePath}:`,
-          error,
         );
       }
     }
   }
 
-  console.warn(`No translation file found for locale: ${locale}`);
+  logger.warn(`No translation file found for locale: ${locale}`);
   return {}; // Return an empty object as a fallback
 };
 
