@@ -11,7 +11,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c --watch",
-    "test": "jest --coverage src",
+    "test": "vitest --coverage src",
     "test:visual": "playwright test browser-tests/functional-tests",
     "test:visual:update": "playwright test browser-tests/functional-tests --update-snapshots"
   },

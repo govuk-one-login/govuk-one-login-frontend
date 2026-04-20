@@ -5,13 +5,14 @@ import {
   setCustomLogger,
   resetLogger,
 } from "../utils/logger";
+import type { Mock } from "vitest";
 
-jest.mock("pino");
+vi.mock("pino");
 
 describe("Logger functionality", () => {
   const customLogger: CustomLogger = {
-    trace: jest.fn(),
-    warn: jest.fn(),
+    trace: vi.fn(),
+    warn: vi.fn(),
   };
 
   beforeEach(() => {
@@ -19,7 +20,7 @@ describe("Logger functionality", () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe("getLogger", () => {
@@ -43,11 +44,11 @@ describe("Logger functionality", () => {
   describe("setCustomLogger", () => {
     it("sets the logger as custom logger if provided", () => {
       const mockPinoLogger = {
-        trace: jest.fn(),
-        warn: jest.fn(),
+        trace: vi.fn(),
+        warn: vi.fn(),
       };
 
-      (pino as unknown as jest.Mock).mockReturnValue(mockPinoLogger);
+      (pino as unknown as Mock).mockReturnValue(mockPinoLogger);
 
       setCustomLogger(mockPinoLogger);
 
