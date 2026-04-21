@@ -25,7 +25,6 @@ interface ExpressRequest extends Request {
 interface ExpressResponse extends Response {
   locals: {
     translations: unknown;
-    allTranslations: { [lng: string]: unknown };
     basePath?: string;
   };
 }
@@ -37,7 +36,6 @@ interface PlainRequest {
 interface PlainResponse {
   locals: {
     translations: unknown;
-    allTranslations: { [lng: string]: unknown };
     basePath?: string;
   };
 }
@@ -62,7 +60,6 @@ export function frontendUiMiddleware(
   next: NextFunction,
 ): void {
   res.locals.translations = req.i18n.store.data[req.i18n.language];
-  res.locals.allTranslations = req.i18n.store.data;
   res.locals.basePath = process.cwd();
   next();
 }
@@ -82,6 +79,13 @@ export const setFrontendUiTranslations = (instanceI18n: typeof i18next) => {
     true,
     false,
   );
+
+  if (process.env.CHECK_TRANSLATIONS_ENABLED) {
+    validateTranslations(
+      instanceI18n.getResourceBundle("en", "translation"),
+      instanceI18n.getResourceBundle("cy", "translation"),
+    );
+  }
 };
 
 export const frontendUiMiddlewareIdentityBypass = (
@@ -99,50 +103,55 @@ export const frontendUiMiddlewareIdentityBypass = (
   next();
 };
 
-export function resolvePath(obj: unknown, path: string): unknown {
-  return path
-    .split(".")
-    .reduce(
-      (acc, key) =>
-        acc && typeof acc === "object"
-          ? (acc as Record<string, unknown>)[key]
-          : undefined,
-      obj,
-    );
+
+function isPlainObject(val: unknown): val is Record<string, unknown> {
+  return typeof val === "object" && val !== null && !Array.isArray(val);
 }
 
-type StepData = {
-  title?: unknown;
-  description?: unknown;
-  bulletList?: unknown[];
-};
-type StepInput = { key: string; image?: string | null };
+function validateArrayItems(
+  enArr: unknown[],
+  cyArr: unknown[],
+  fullPath: string,
+): void {
+  const longerArr = enArr.length >= cyArr.length ? enArr : cyArr;
+  longerArr.forEach((_, i) => {
+    const enItem = enArr[i];
+    const cyItem = cyArr[i];
+    if (isPlainObject(enItem) && isPlainObject(cyItem)) {
+      validateTranslations(enItem, cyItem, `${fullPath}[${i}]`);
+    }
+  });
+}
 
-export function buildSteps(
-  allTranslations: Record<string, unknown>,
-  currentTranslations: unknown,
-  steps: StepInput[],
-): { data: StepData; allLanguageData: StepData[]; image: string | null }[] {
-  if (!allTranslations || !steps || !currentTranslations) return [];
-  return steps
-    .slice(0, 4)
-    .map(({ key, image }) => {
-      const allLanguageData = Object.keys(allTranslations).map(
-        (lng) => resolvePath(allTranslations[lng], key) as StepData,
-      );
-      return {
-        data: resolvePath(currentTranslations, key) as StepData,
-        allLanguageData,
-        image: image ?? null,
-      };
-    })
-    .filter(({ allLanguageData }) =>
-      allLanguageData.every(
-        (step) =>
-          step?.title &&
-          (step?.description || (step?.bulletList?.length ?? 0) > 0),
-      ),
-    );
+export function validateTranslations(
+  en: Record<string, unknown>,
+  cy: Record<string, unknown>,
+  path = "",
+): void {
+  const allKeys = new Set([...Object.keys(en), ...Object.keys(cy)]);
+  for (const key of allKeys) {
+    const fullPath = path ? `${path}.${key}` : key;
+    if (!(key in en)) {
+      logger.warn(`Translation key exists in cy but is missing in en: ${fullPath}`);
+      continue;
+    }
+    if (!(key in cy)) {
+      logger.warn(`Translation key exists in en but is missing in cy: ${fullPath}`);
+      continue;
+    }
+    if (Array.isArray(en[key]) || Array.isArray(cy[key])) {
+      const enArr = en[key] as unknown[];
+      const cyArr = cy[key] as unknown[];
+      if (enArr.length !== cyArr.length) {
+        logger.warn(
+          `Array length mismatch at: ${fullPath} - en has ${enArr.length} items, cy has ${cyArr.length} items`,
+        );
+      }
+      validateArrayItems(enArr, cyArr, fullPath);
+    } else if (isPlainObject(en[key]) && isPlainObject(cy[key])) {
+      validateTranslations(en[key], cy[key], fullPath);
+    }
+  }
 }
 
 export function warnCharacterLimit(text: string, limit: number) {
@@ -158,13 +167,12 @@ export function addFrontendUiGlobals(nunjucksEnv: {
 }) {
   nunjucksEnv.addGlobal("addLanguageParam", addLanguageParam);
   nunjucksEnv.addGlobal("contactUsUrl", contactUsUrl);
-  nunjucksEnv.addGlobal("buildSteps", buildSteps);
   nunjucksEnv.addGlobal("warnCharacterLimit", warnCharacterLimit);
 }
 
 export function addLanguageParam(language: string, url?: URL) {
   if (!url) {
-    console.warn(
+    logger.warn(
       "URL is undefined. The parameter cannot be added, and the toggle will not work.",
     );
     return "#invalid-url-lang-toggle";
@@ -222,16 +230,15 @@ export const getTranslationObject = (
       try {
         const fileContent = fs.readFileSync(filePath, "utf8");
         return JSON.parse(fileContent);
-      } catch (error) {
-        console.error(
+      } catch {
+        logger.warn(
           `Error reading or parsing translation file at ${filePath}:`,
-          error,
         );
       }
     }
   }
 
-  console.warn(`No translation file found for locale: ${locale}`);
+  logger.warn(`No translation file found for locale: ${locale}`);
   return {}; // Return an empty object as a fallback
 };
 

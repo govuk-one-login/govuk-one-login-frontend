@@ -9,9 +9,9 @@ import {
   contactUsUrl,
   getTranslationObject,
   setBaseTranslations,
-  buildSteps,
   addFrontendUiGlobals,
   warnCharacterLimit,
+  validateTranslations,
 } from "..";
 
 // Define types for Express and non-Express versions
@@ -88,7 +88,8 @@ describe("frontendUiMiddleware", () => {
     } as unknown as PlainRequest;
 
     const mockResponse = {
-      locals: {},
+      locals: {
+      },
     } as unknown as PlainResponse;
 
     const next = vi.fn();
@@ -194,6 +195,7 @@ describe("contactUsUrl function", () => {
     const result = contactUsUrl("", urlToAppend);
     expect(result).toBeNull();
   });
+});
 
   describe("setBaseTranslations", () => {
     beforeEach(() => {
@@ -259,9 +261,9 @@ describe("contactUsUrl function", () => {
         {},
       );
     });
-  });
+});
 
-  describe("getTranslationObject", () => {
+describe("getTranslationObject", () => {
     const mockFileContent = JSON.stringify({ key: "value" });
 
     beforeEach(() => {
@@ -340,7 +342,6 @@ describe("contactUsUrl function", () => {
     });
 
     it("should log an error if reading or parsing the file fails", () => {
-      const consoleErrorSpy = vi.spyOn(console, "error");
       existsSyncMock.mockReturnValue(true);
       readFileSyncMock.mockImplementation(() => {
         throw new Error("File read error");
@@ -349,188 +350,72 @@ describe("contactUsUrl function", () => {
       const result = getTranslationObject("en");
 
       expect(result).toEqual({});
-      expect(consoleErrorSpy).toHaveBeenCalledWith(
-        expect.stringContaining("Error reading or parsing translation file"),
-        expect.any(Error),
-      );
-
-      consoleErrorSpy.mockRestore();
+      expect(mockLogger).toHaveBeenCalled();
     });
 
     it("should log a warning if no translation file is found", () => {
-      const consoleWarnSpy = vi.spyOn(console, "warn");
       existsSyncMock.mockReturnValue(false);
 
       getTranslationObject("en");
 
-      expect(consoleWarnSpy).toHaveBeenCalledWith(
-        "No translation file found for locale: en",
-      );
-
-      consoleWarnSpy.mockRestore();
+      expect(mockLogger).toHaveBeenCalled();
     });
-  });
 });
 
-describe("buildSteps", () => {
-  const allTranslations = {
-    en: {
-      translation: {
-        pages: {
-          myPage: {
-            steps: {
-              0: { title: "Step one", description: "Do this" },
-              1: { title: "Step two", bulletList: ["Item A"] },
-            },
-          },
-        },
-      },
-    },
-    cy: {
-      translation: {
-        pages: {
-          myPage: {
-            steps: {
-              0: { title: "Cam un", description: "Gwnewch hyn" },
-              1: { title: "Cam dau", bulletList: ["Eitem A"] },
-            },
-          },
-        },
-      },
-    },
-  };
-  const currentTranslations = allTranslations.en;
-  const steps = [
-    { key: "translation.pages.myPage.steps.0", image: "/img/step1.svg" },
-    { key: "translation.pages.myPage.steps.1", image: null },
-  ];
-
-  it("returns resolved steps with data, allLanguageData, and image", () => {
-    const result = buildSteps(allTranslations, currentTranslations, steps);
-    expect(result).toHaveLength(2);
-    expect(result[0].data).toEqual({
-      title: "Step one",
-      description: "Do this",
-    });
-    expect(result[0].image).toBe("/img/step1.svg");
-    expect(result[0].allLanguageData).toHaveLength(2);
-    expect(result[1].image).toBeNull();
+describe("validateTranslations", () => {
+  beforeEach(() => {
+    mockLogger.mockClear();
   });
 
-  it("filters out steps missing title in any language", () => {
-    const incomplete = {
-      en: {
-        translation: {
-          pages: {
-            myPage: {
-              steps: { 0: { title: "Step one", description: "Do this" } },
-            },
-          },
-        },
-      },
-      cy: {
-        translation: {
-          pages: { myPage: { steps: { 0: { description: "No title here" } } } },
-        },
-      },
-    };
-    const result = buildSteps(incomplete, incomplete.en, [
-      { key: "translation.pages.myPage.steps.0" },
-    ]);
-    expect(result).toHaveLength(0);
+  afterEach(() => {
+    vi.resetAllMocks();
+    mockLogger.mockClear();
   });
 
-  it("filters out steps missing both description and bulletList in any language", () => {
-    const incomplete = {
-      en: {
-        translation: {
-          pages: {
-            myPage: {
-              steps: { 0: { title: "Step one", description: "Has desc" } },
-            },
-          },
-        },
-      },
-      cy: {
-        translation: {
-          pages: { myPage: { steps: { 0: { title: "Cam un" } } } },
-        },
-      },
-    };
-    const result = buildSteps(incomplete, incomplete.en, [
-      { key: "translation.pages.myPage.steps.0" },
-    ]);
-    expect(result).toHaveLength(0);
+  it("does not warn when cy matches en", () => {
+    validateTranslations({ a: "1", b: { c: "2" } }, { a: "1", b: { c: "2" } });
+    expect(mockLogger).not.toHaveBeenCalled();
   });
 
-  it("slices to a maximum of 4 steps", () => {
-    const manySteps = Array.from({ length: 6 }, (_, i) => ({
-      key: `translation.pages.myPage.steps.${i}`,
-    }));
-    const bigTranslations = {
-      en: {
-        translation: {
-          pages: {
-            myPage: {
-              steps: Object.fromEntries(
-                Array.from({ length: 6 }, (_, i) => [
-                  i,
-                  { title: `Step ${i}`, description: "desc" },
-                ]),
-              ),
-            },
-          },
-        },
-      },
-      cy: {
-        translation: {
-          pages: {
-            myPage: {
-              steps: Object.fromEntries(
-                Array.from({ length: 6 }, (_, i) => [
-                  i,
-                  { title: `Cam ${i}`, description: "desc" },
-                ]),
-              ),
-            },
-          },
-        },
-      },
-    };
-    const result = buildSteps(bigTranslations, bigTranslations.en, manySteps);
-    expect(result).toHaveLength(4);
+  it("warns when a key is missing in cy", () => {
+    validateTranslations({ a: "1", b: "2" }, { a: "1" });
+    expect(mockLogger).toHaveBeenCalledTimes(1);
   });
 
-  it("returns [] when allTranslations is null", () => {
-    expect(
-      buildSteps(
-        null as unknown as Record<string, unknown>,
-        currentTranslations,
-        steps,
-      ),
-    ).toEqual([]);
+  it("warns when a key is missing in en", () => {
+    validateTranslations({ a: "1" }, { a: "1", b: "2" });
+    expect(mockLogger).toHaveBeenCalledTimes(1);
   });
 
-  it("returns [] when currentTranslations is null", () => {
-    expect(buildSteps(allTranslations, null as unknown, steps)).toEqual([]);
+  it("warns for a missing nested key in cy", () => {
+    validateTranslations({ a: { b: { c: "1" } } }, { a: { b: {} } });
+    expect(mockLogger).toHaveBeenCalledTimes(1);
   });
 
-  it("returns [] when steps is null", () => {
-    expect(
-      buildSteps(
-        allTranslations,
-        currentTranslations,
-        null as unknown as { key: string }[],
-      ),
-    ).toEqual([]);
+  it("warns when array lengths differ", () => {
+    validateTranslations({ a: ["1", "2"] }, { a: ["1"] });
+    expect(mockLogger).toHaveBeenCalledTimes(1);
   });
 
-  it("returns [] for an empty steps array", () => {
-    expect(buildSteps(allTranslations, currentTranslations, [])).toEqual([]);
+  it("warns for a missing key inside an array item", () => {
+    validateTranslations(
+      { steps: [{ title: "Step 1", description: "Desc" }] },
+      { steps: [{ title: "Step 1" }] },
+    );
+    expect(mockLogger).toHaveBeenCalledTimes(1);
+  });
+
+  it("warns when cy array is longer than en array", () => {
+    validateTranslations({ a: ["1"] }, { a: ["1", "2"] });
+    expect(mockLogger).toHaveBeenCalledTimes(1);
   });
 });
 
 describe("warnCharacterLimit", () => {
+  beforeEach(() => {
+    mockLogger.mockClear();
+  });
+
   afterEach(() => {
     mockLogger.mockClear();
   });
@@ -539,7 +424,7 @@ describe("warnCharacterLimit", () => {
     warnCharacterLimit("This is a short string", 30);
     expect(mockLogger).not.toHaveBeenCalled();
   });
-  it("logs an error to console if text length is over character limit", () => {
+  it("warns when text exceeds character limit", () => {
     warnCharacterLimit("This is a longer string than the max length", 30);
     expect(mockLogger).toHaveBeenCalled();
   });
@@ -557,11 +442,7 @@ describe("addFrontendUiGlobals", () => {
       "contactUsUrl",
       expect.any(Function),
     );
-    expect(addGlobal).toHaveBeenCalledWith("buildSteps", expect.any(Function));
-    expect(addGlobal).toHaveBeenCalledWith(
-      "warnCharacterLimit",
-      expect.any(Function),
-    );
-    expect(addGlobal).toHaveBeenCalledTimes(4);
+    expect(addGlobal).toHaveBeenCalledWith("warnCharacterLimit", expect.any(Function));
+    expect(addGlobal).toHaveBeenCalledTimes(3);
   });
 });
