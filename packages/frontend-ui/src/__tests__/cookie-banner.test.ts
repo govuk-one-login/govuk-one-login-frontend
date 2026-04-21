@@ -1,10 +1,5 @@
-/**
- * @jest-environment jsdom
- */
-
 import { axe, toHaveNoViolations } from "jest-axe";
 import { render } from "../test/jestHelper";
-
 expect.extend(toHaveNoViolations);
 
 describe("cookieBanner Component", () => {

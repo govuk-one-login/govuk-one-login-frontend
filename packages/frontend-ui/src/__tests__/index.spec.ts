@@ -1,7 +1,7 @@
 import i18next from "i18next";
-import fs, { readFileSync } from "fs";
+import fs from "node:fs";
 import { Request, Response } from "express";
-import path from "path";
+import path from "node:path";
 import {
   frontendUiMiddleware,
   setFrontendUiTranslations,
@@ -30,6 +30,7 @@ interface ExpressResponse extends Response {
   locals: {
     translations: unknown;
     basePath?: string;
+    allTranslations: { [key: string]: unknown };
   };
 }
 
@@ -41,16 +42,20 @@ interface PlainResponse {
   locals: {
     translations: unknown;
     basePath?: string;
+    allTranslations: { [key: string]: unknown };
   };
 }
 
-const mockLogger = jest.fn();
+const mockLogger = vi.fn();
 
-jest.mock("../utils/logger", () => ({
+vi.mock("../utils/logger", () => ({
   getLogger: () => ({
     warn: () => mockLogger(),
   }),
 }));
+
+const existsSyncMock = vi.spyOn(fs, "existsSync");
+const readFileSyncMock = vi.spyOn(fs, "readFileSync");
 
 describe("frontendUiMiddleware", () => {
   it("should attach translations and basePath to locals for ExpressRequest", () => {
@@ -65,7 +70,7 @@ describe("frontendUiMiddleware", () => {
       locals: {},
     } as unknown as ExpressResponse;
 
-    const next = jest.fn();
+    const next = vi.fn();
 
     frontendUiMiddleware(mockRequest, mockResponse, next);
 
@@ -87,7 +92,7 @@ describe("frontendUiMiddleware", () => {
       },
     } as unknown as PlainResponse;
 
-    const next = jest.fn();
+    const next = vi.fn();
 
     frontendUiMiddleware(mockRequest, mockResponse, next);
 
@@ -108,7 +113,7 @@ describe("frontendUiMiddleware", () => {
       locals: {},
     } as unknown as ExpressResponse;
 
-    const next = jest.fn();
+    const next = vi.fn();
 
     frontendUiMiddleware(mockRequest, mockResponse, next);
 
@@ -120,21 +125,23 @@ describe("frontendUiMiddleware", () => {
 
 describe("setFrontendUiTranslations", () => {
   describe("when setFrontendUiTranslations is called", () => {
-    it("should add default translations to the i18n resource bundle", (done) => {
+    it("should add default translations to the i18n resource bundle", () => {
       i18next.init({ fallbackLng: "en" }, () => {
         setFrontendUiTranslations(i18next);
 
         expect(i18next.t("cookieBanner.headingText")).toBe(
           "Cookies on GOV.UK One Login",
         );
-
-        done();
       });
     });
   });
 });
 
 describe("addLanguageParam function", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
   it("should add language parameter to URL", () => {
     const language = "en";
     const url = new URL("http://example.com");
@@ -190,10 +197,14 @@ describe("contactUsUrl function", () => {
   });
 });
 
-describe("setBaseTranslations", () => {
+  describe("setBaseTranslations", () => {
+    beforeEach(() => {
+      vi.clearAllMocks();
+    });
+
     it('should add resource bundles for "cy" and "en" locales', () => {
       const mockI18n = {
-        addResourceBundle: jest.fn(),
+        addResourceBundle: vi.fn(),
       } as unknown as typeof i18next;
 
       setBaseTranslations(mockI18n);
@@ -213,31 +224,29 @@ describe("setBaseTranslations", () => {
 
     it("should handle missing translation files gracefully", () => {
       const mockI18n = {
-        addResourceBundle: jest.fn(),
+        addResourceBundle: vi.fn(),
       } as unknown as typeof i18next;
 
-      jest.spyOn(fs, "readFileSync").mockImplementation(() => {
+      readFileSyncMock.mockImplementationOnce(() => {
         throw new Error("File not found");
       });
 
       expect(() => setBaseTranslations(mockI18n)).not.toThrow();
       expect(mockI18n.addResourceBundle).toHaveBeenCalledTimes(2);
-
-      (readFileSync as jest.MockedFunction<typeof readFileSync>).mockRestore();
     });
 
     it("should use a custom file path if provided", () => {
       const mockI18n = {
-        addResourceBundle: jest.fn(),
+        addResourceBundle: vi.fn(),
       } as unknown as typeof i18next;
 
       const customPath = "custom/path";
-      jest.spyOn(fs, "existsSync").mockImplementation((filePath) => {
+      existsSyncMock.mockImplementation((filePath) => {
         return filePath === path.resolve(customPath, "cy", "translation.json");
       });
-      jest
-        .spyOn(fs, "readFileSync")
-        .mockImplementation(() => JSON.stringify({ key: "value" }));
+      readFileSyncMock.mockImplementation(() =>
+        JSON.stringify({ key: "value" }),
+      );
 
       setBaseTranslations(mockI18n, customPath);
 
@@ -251,8 +260,6 @@ describe("setBaseTranslations", () => {
         "translation",
         {},
       );
-
-      jest.restoreAllMocks();
     });
 });
 
@@ -260,19 +267,19 @@ describe("getTranslationObject", () => {
     const mockFileContent = JSON.stringify({ key: "value" });
 
     beforeEach(() => {
-      jest.resetAllMocks();
+      vi.clearAllMocks();
     });
 
     it("should return the parsed content of the first existing translation file", () => {
-      jest.spyOn(fs, "existsSync").mockImplementation((filePath) => {
+      existsSyncMock.mockImplementationOnce((filePath) => {
         return filePath === path.resolve("locales", "en", "translation.json");
       });
-      jest.spyOn(fs, "readFileSync").mockImplementation(() => mockFileContent);
+      readFileSyncMock.mockImplementation(() => mockFileContent);
 
       const result = getTranslationObject("en");
 
       expect(result).toEqual({ key: "value" });
-      expect(fs.existsSync).toHaveBeenCalledWith(
+      expect(existsSyncMock).toHaveBeenCalledWith(
         path.resolve("locales", "en", "translation.json"),
       );
       expect(fs.readFileSync).toHaveBeenCalledWith(
@@ -282,20 +289,22 @@ describe("getTranslationObject", () => {
     });
 
     it("should try multiple paths and return the parsed content of the first valid file", () => {
-      jest.spyOn(fs, "existsSync").mockImplementation((filePath) => {
+      existsSyncMock.mockImplementation((filePath) => {
         return (
           filePath === path.resolve("src/locales", "en", "translation.json")
         );
       });
-      jest.spyOn(fs, "readFileSync").mockImplementation(() => mockFileContent);
+      readFileSyncMock.mockImplementation(() => {
+        return mockFileContent;
+      });
 
       const result = getTranslationObject("en");
 
       expect(result).toEqual({ key: "value" });
-      expect(fs.existsSync).toHaveBeenCalledWith(
+      expect(existsSyncMock).toHaveBeenCalledWith(
         path.resolve("locales", "en", "translation.json"),
       );
-      expect(fs.existsSync).toHaveBeenCalledWith(
+      expect(existsSyncMock).toHaveBeenCalledWith(
         path.resolve("src/locales", "en", "translation.json"),
       );
       expect(fs.readFileSync).toHaveBeenCalledWith(
@@ -306,15 +315,15 @@ describe("getTranslationObject", () => {
 
     it("should handle a custom file path if provided", () => {
       const customPath = "custom/path";
-      jest.spyOn(fs, "existsSync").mockImplementation((filePath) => {
+      existsSyncMock.mockImplementation((filePath) => {
         return filePath === path.resolve(customPath, "en", "translation.json");
       });
-      jest.spyOn(fs, "readFileSync").mockImplementation(() => mockFileContent);
+      readFileSyncMock.mockImplementation(() => mockFileContent);
 
       const result = getTranslationObject("en", customPath);
 
       expect(result).toEqual({ key: "value" });
-      expect(fs.existsSync).toHaveBeenCalledWith(
+      expect(existsSyncMock).toHaveBeenCalledWith(
         path.resolve(customPath, "en", "translation.json"),
       );
       expect(fs.readFileSync).toHaveBeenCalledWith(
@@ -324,17 +333,17 @@ describe("getTranslationObject", () => {
     });
 
     it("should return an empty object if no translation file is found", () => {
-      jest.spyOn(fs, "existsSync").mockReturnValue(false);
+      existsSyncMock.mockReturnValue(false);
 
       const result = getTranslationObject("en");
 
       expect(result).toEqual({});
-      expect(fs.existsSync).toHaveBeenCalledTimes(3);
+      expect(existsSyncMock).toHaveBeenCalledTimes(3);
     });
 
     it("should log an error if reading or parsing the file fails", () => {
-      jest.spyOn(fs, "existsSync").mockReturnValue(true);
-      jest.spyOn(fs, "readFileSync").mockImplementation(() => {
+      existsSyncMock.mockReturnValue(true);
+      readFileSyncMock.mockImplementation(() => {
         throw new Error("File read error");
       });
 
@@ -345,7 +354,7 @@ describe("getTranslationObject", () => {
     });
 
     it("should log a warning if no translation file is found", () => {
-      jest.spyOn(fs, "existsSync").mockReturnValue(false);
+      existsSyncMock.mockReturnValue(false);
 
       getTranslationObject("en");
 
@@ -359,7 +368,7 @@ describe("validateTranslations", () => {
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
     mockLogger.mockClear();
   });
 
@@ -403,6 +412,10 @@ describe("validateTranslations", () => {
 });
 
 describe("warnCharacterLimit", () => {
+  beforeEach(() => {
+    mockLogger.mockClear();
+  });
+
   afterEach(() => {
     mockLogger.mockClear();
   });
@@ -419,7 +432,7 @@ describe("warnCharacterLimit", () => {
 
 describe("addFrontendUiGlobals", () => {
   it("registers all globals", () => {
-    const addGlobal = jest.fn();
+    const addGlobal = vi.fn();
     addFrontendUiGlobals({ addGlobal });
     expect(addGlobal).toHaveBeenCalledWith(
       "addLanguageParam",

@@ -1,16 +1,11 @@
 import logger from "../../logger";
+import {
+  hasApplePay,
+  hasSupportForApplePayVersion,
+  isHTTPS,
+} from "../../utils/windowTools";
 import { ComponentInterface } from "../index";
 import { getBrowser } from "./browser";
-
-// eslint-disable-next-line
-declare class ApplePaySession {
-  constructor();
-  static supportsVersion(version: number): boolean;
-}
-
-type ExtendedWindow = Window & {
-  ApplePaySession?: typeof ApplePaySession;
-};
 
 export function getSystemDetails(): Promise<ComponentInterface> {
   return new Promise((resolve) => {
@@ -32,15 +27,10 @@ export function getSystemDetails(): Promise<ComponentInterface> {
  * @returns applePayCanMakePayments: boolean, applePayMaxSupportedVersion: number
  */
 function getApplePayVersion(): number {
-  const extendedWindow: ExtendedWindow = window;
-  if (
-    window.location.protocol === "https:" &&
-    typeof extendedWindow.ApplePaySession === "function"
-  ) {
+  if (isHTTPS() && hasApplePay()) {
     try {
-      const versionCheck = extendedWindow.ApplePaySession.supportsVersion;
-      for (let i = 15; i > 0; i--) {
-        if (versionCheck(i)) {
+      for (let i = 20; i > 0; i--) {
+        if (hasSupportForApplePayVersion(i)) {
           return i;
         }
       }

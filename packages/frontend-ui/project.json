@@ -4,23 +4,26 @@
   "projectType": "library",
   "sourceRoot": "packages/frontend-ui/src",
   "targets": {
-      "lint": {
-        "executor": "@nx/eslint:lint",
-        "options": {
-          "lintFilePatterns": ["packages/frontend-ui/src/**/*"]
-        }
-      },
-      "format": {
-        "executor": "nx:run-commands",
-        "options": {
-          "command": "prettier --write packages/frontend-ui/src/**/*"
-        }
-      },
-      "format:check": {
-        "executor": "nx:run-commands",
-        "options": {
-          "command": "prettier --check packages/frontend-ui/src/**/*"
-        }
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": [
+          "packages/frontend-ui/src/**/*"
+        ],
+        "jestConfig": "packages/automation/jest.config.ts"
+      }
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "prettier --write packages/frontend-ui/src/**/*"
+      }
+    },
+    "format:check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "prettier --check packages/frontend-ui/src/**/*"
       }
     }
+  }
 }

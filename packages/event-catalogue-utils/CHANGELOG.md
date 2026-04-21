@@ -1,3 +1,18 @@
+## 0.3.1 (2026-04-17)
+
+### 🚀 Features
+
+- **DFC-1138:** Migrate frontend-device-intelligence to vitest ([11f15e0](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/11f15e0))
+
+### 🩹 Fixes
+
+- make event catalogue schemas an optional peer dependency ([c652a6a](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/c652a6a))
+
+### ❤️ Thank You
+
+- nickhealGDS
+- Sam Bunce
+
 ## 0.3.0 (2026-03-27)
 
 ### 🚀 Features

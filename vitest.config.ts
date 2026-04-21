@@ -5,6 +5,7 @@ export default defineConfig({
   test: {
     pool: "vmThreads",
     include: ["**/*.test.ts", "**/*.spec.ts"],
+    exclude: ["**/*.visual.test.ts"],
     globals: true,
     environment: "jsdom",
     coverage: {
