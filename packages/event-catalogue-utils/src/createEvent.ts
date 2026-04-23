@@ -1,4 +1,4 @@
-import { type EventKey, Events } from "./types";
+import { type EventKey, Events } from "./types.js";
 
 /**
  * This function provides static type-checking against the event catalogue.
