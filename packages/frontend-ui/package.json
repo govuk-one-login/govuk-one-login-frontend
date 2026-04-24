@@ -50,6 +50,9 @@
   "peerDependenciesMeta": {
     "hmpo-components": {
       "optional": true
+    },
+    "@govuk-one-login/frontend-analytics": {
+      "optional": true
     }
   },
   "exports": {
@@ -62,8 +65,5 @@
       "require": "./build/cjs/frontend/index.cjs"
     }
   },
-  "types": "./build/esm/backend/index.d.ts",
-  "optionalDependencies": {
-    "@govuk-one-login/frontend-analytics": "^4.0.7"
-  }
+  "types": "./build/esm/backend/index.d.ts"
 }
