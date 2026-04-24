@@ -1,6 +1,6 @@
-import { createEvent, sendEventToSQS, validateEvent } from ".";
-import { EventKey, Events, Options } from "./types";
-import logger from "./logger";
+import { createEvent, sendEventToSQS, validateEvent } from "./index.js";
+import { EventKey, Events, Options } from "./types.js";
+import logger from "./logger.js";
 import _ from "lodash";
 
 export function sendToTXMA<K extends EventKey>(

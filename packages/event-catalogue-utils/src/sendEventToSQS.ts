@@ -1,6 +1,6 @@
-import { Events, EventKey, Options } from "./types";
+import { Events, EventKey, Options } from "./types.js";
 import { SendMessageCommand, SQSClient } from "@aws-sdk/client-sqs";
-import logger from "./logger";
+import logger from "./logger.js";
 import _ from "lodash";
 
 export const getDefaultSQSClient = _.memoize(
