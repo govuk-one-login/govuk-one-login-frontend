@@ -1,3 +1,13 @@
+## 0.3.2 (2026-04-24)
+
+### 🩹 Fixes
+
+- add file extensions to imports to satisfy strict esm resolution ([6594167](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/6594167))
+
+### ❤️ Thank You
+
+- nickhealGDS
+
 ## 0.3.1 (2026-04-17)
 
 ### 🚀 Features
