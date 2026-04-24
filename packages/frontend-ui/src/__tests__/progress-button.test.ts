@@ -17,7 +17,7 @@ describe("Progress Button", () => {
   test("Prevent double submission on button click", async () => {
     const output = nunjucksEnv.renderString(
       `
-    {% from "frontend-ui/build/components/progress-button/macro.njk" import frontendUiProgressButton %}
+    {% from "progress-button/macro.njk" import frontendUiProgressButton %}
     <div class="govuk-grid-row">
             <div class="govuk-grid-column-two-thirds">
                 <h1 class="govuk-heading-l">Test Progress Button</h1>
