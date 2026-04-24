@@ -1,3 +1,13 @@
+## 5.2.0 (2026-04-24)
+
+### 🩹 Fixes
+
+- updating progress button test ([02fad73](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/02fad73))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+
 ## 5.1.3 (2026-04-24)
 
 ### 🚀 Features
