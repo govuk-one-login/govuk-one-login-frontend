@@ -1,3 +1,28 @@
+## 5.1.3 (2026-04-24)
+
+### 🚀 Features
+
+- **DFC-1143:** Migrate frontend-ui to vitest ([75ecf49](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/75ecf49))
+- add unlimited steps param ([786f889](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/786f889))
+- add validateTranslations into setFrontendUiTranslations and updated logging in tests ([7c0d629](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/7c0d629))
+- **DFC-1148:** Warning when text is over character limit ([d2b714b](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/d2b714b))
+
+### 🩹 Fixes
+
+- updating meta dependency ([015bd98](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/015bd98))
+- restructure test file and remove buildSteps tests ([5b78828](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/5b78828))
+- **1147:** step card second review changes ([873fcdd](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/873fcdd))
+- **1197:** updated step card styling as per UCD requests ([ef115af](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/ef115af))
+
+### 🧱 Updated Dependencies
+
+- Updated @govuk-one-login/frontend-analytics to 4.0.8
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+- Sam Bunce
+
 ## 5.1.2 (2026-04-09)
 
 ### 🩹 Fixes

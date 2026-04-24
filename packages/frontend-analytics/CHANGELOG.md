@@ -1,3 +1,19 @@
+## 4.0.8 (2026-04-24)
+
+### 🚀 Features
+
+- **DFC-1139:** Migrate frontend-analytics to vitest ([c4d4af8](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/c4d4af8))
+
+### 🩹 Fixes
+
+- **1086:** added additional form error finding for specifically named form id elements ([383de5a](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/383de5a))
+- Migrate frontend-device-intelligence to vitest ([15cdabc](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/15cdabc))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+- Sam Bunce
+
 ## 4.0.7 (2026-01-16)
 
 ### 🩹 Fixes
