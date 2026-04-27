@@ -33,7 +33,7 @@
     "helmet": "^8.1.0",
     "i18next": "^23.16.8",
     "i18next-fs-backend": "^2.6.4",
-    "i18next-http-middleware": "^3.8.2",
+    "i18next-http-middleware": "^3.9.3",
     "nunjucks": "^3.2.4",
     "overload-protection": "^1.2.3",
     "pino": "^10.1.0"
