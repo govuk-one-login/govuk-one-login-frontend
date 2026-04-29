@@ -16,6 +16,7 @@ on:
           - "@govuk-one-login/frontend-ui"
           - "@govuk-one-login/frontend-asset-loader"
           - "@govuk-one-login/frontend-device-intelligence"
+          - "@govuk-one-login/frontend-logger"
       version:
         description: "Package Version"
         required: true
