@@ -4,7 +4,7 @@ import { type EventLoopUtilization } from "perf_hooks";
 import { type Express } from "express";
 // Importing package.json with the declared type
 import pjson from "../package.json";
-import { createLogger, TLogLevel } from "./utils/logger";
+import { createLogger, TLogLevel } from "@govuk-one-login/frontend-logger";
 import {
   calculateAvgResponseTime,
   getAvgDynamicResponseTime,
@@ -54,7 +54,7 @@ export const frontendVitalSignsInit = (
     return new RegExp(`^${path}`);
   });
 
-  const logger = createLogger(logLevel);
+  const logger = createLogger({ level: logLevel });
 
   const eventLoopDelay = metrics.includes("eventLoopDelay")
     ? trackEventLoopDelay()

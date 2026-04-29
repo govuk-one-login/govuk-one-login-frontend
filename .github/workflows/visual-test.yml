@@ -24,7 +24,7 @@ jobs:
 
       - name: Get required Playwright version
         id: playwright-version
-        run: echo "PLAYWRIGHT_VERSION=$(node -e "console.log(require('./package-lock.json').packages[''].devDependencies['@playwright/test'])")" >> $GITHUB_ENV
+        run: echo "PLAYWRIGHT_VERSION=$(node -e "console.log(require('./package-lock.json').packages[''].devDependencies['playwright'])")" >> $GITHUB_ENV
 
       - name: Cache playwright binaries
         uses: actions/cache@v5
@@ -34,7 +34,7 @@ jobs:
             ~/.cache/ms-playwright
           key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
 
-      - name: Install Playwright browsers in frontend-ui
+      - name: Install Playwright browsers
         run: npx playwright install --with-deps --only-shell chromium
         if: steps.playwright-cache.outputs.cache-hit != 'true'
 

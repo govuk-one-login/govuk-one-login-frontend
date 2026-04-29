@@ -13,7 +13,7 @@
   },
   "type": "module",
   "scripts": {
-    "test": "vitest --coverage",
+    "test": "vitest --run --coverage",
     "dev": "rollup -c --watch",
     "build": "rollup -c",
     "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,md}\""
@@ -30,10 +30,15 @@
     "url": "https://github.com/govuk-one-login/govuk-one-login-frontend/issues"
   },
   "homepage": "https://github.com/govuk-one-login/govuk-one-login-frontend#readme",
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/govuk-one-login/govuk-one-login-frontend.git",
     "directory": "packages/frontend-asset-loader"
+  },
+  "dependencies": {
+    "@govuk-one-login/frontend-logger": "^0.0.2"
+  },
+  "peerDependencies": {
+    "@govuk-one-login/frontend-logger": "^0.0.2"
   }
 }
