@@ -1,5 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { CustomLogger, getLogger, setCustomLogger } from "../utils/logger";
+import {
+  CustomLogger,
+  getLogger,
+  setCustomLogger,
+} from "@govuk-one-login/frontend-logger";
 
 const getGTM = (req: Request, res: Response, next: NextFunction): void => {
   res.locals.ga4ContainerId = req.app.get("APP.GTM.GA4_CONTAINER_ID");

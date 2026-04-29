@@ -23,6 +23,7 @@
     "@govuk-one-login/frontend-analytics": "4.0.8",
     "@govuk-one-login/frontend-asset-loader": "0.0.5",
     "@govuk-one-login/frontend-language-toggle": "2.2.2",
+    "@govuk-one-login/frontend-logger": "^0.0.2",
     "@govuk-one-login/frontend-ui": "^5.0.0",
     "@govuk-one-login/frontend-vital-signs": "0.1.4",
     "@rollup/plugin-node-resolve": "^16.0.3",
@@ -37,6 +38,9 @@
     "nunjucks": "^3.2.4",
     "overload-protection": "^1.2.3",
     "pino": "^10.1.0"
+  },
+  "peerDependencies": {
+    "@govuk-one-login/frontend-logger": "^0.0.2"
   },
   "engines": {
     "node": "24.x"

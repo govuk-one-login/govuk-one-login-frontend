@@ -1,9 +1,8 @@
 import { type Request } from "express";
-import { getLogger } from "./utils/logger";
 import { processUserIP } from "./utils/userIP";
 import type { APIGatewayProxyEvent } from "aws-lambda";
 import { getHeader } from "./utils/getHeader";
-export { setCustomLogger } from "./utils/logger";
+import { logger } from "./utils/logger";
 
 const HEADERS = {
   HEADER_TXMA: "txma-audit-encoded",
@@ -32,7 +31,6 @@ export function createPersonalDataHeaders(
   const personalDataHeaders: PersonalDataHeaders = {};
 
   const txmaAuditEncodedHeader = getHeader(req, HEADERS.HEADER_TXMA) as string;
-  const logger = getLogger();
 
   if (txmaAuditEncodedHeader) {
     personalDataHeaders[HEADERS.HEADER_TXMA] = txmaAuditEncodedHeader;

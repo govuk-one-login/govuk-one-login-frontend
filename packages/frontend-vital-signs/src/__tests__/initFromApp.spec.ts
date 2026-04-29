@@ -1,13 +1,15 @@
 import express from "express";
-import pino, { type Logger } from "pino";
 import pjson from "../../package.json";
 import { frontendVitalSignsInitFromApp } from "..";
-import { type Mock } from "vitest";
 
-vi.mock("pino", async () => ({
-  ...(await vi.importActual("pino")),
-  __esModule: true,
-  default: vi.fn(),
+const logger = {
+  info: vi.fn(),
+  warn: vi.fn(),
+};
+
+vi.mock("@govuk-one-login/frontend-logger", async () => ({
+  getLogger: () => logger,
+  createLogger: () => logger,
 }));
 
 const PORT = 0;
@@ -23,13 +25,6 @@ describe("initFromApp", () => {
   });
 
   it("should log metrics when provided with an express app", () => {
-    const logger = {
-      info: vi.fn(),
-      warn: vi.fn(),
-    } as unknown as Logger<never>;
-
-    (pino as unknown as Mock).mockReturnValue(logger);
-
     const app = express();
 
     frontendVitalSignsInitFromApp(app, {

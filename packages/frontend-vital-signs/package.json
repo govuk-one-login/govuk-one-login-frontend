@@ -11,7 +11,8 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c --watch",
-    "test": "vitest --run --coverage"
+    "test": "vitest --run --coverage",
+    "test:watch": "vitest --coverage"
   },
   "files": [
     "build/",
@@ -35,6 +36,10 @@
   },
   "types": "./build/esm/index.d.ts",
   "dependencies": {
+    "@govuk-one-login/frontend-logger": "^0.0.2",
     "pino": "^10.1.0"
+  },
+  "peerDependencies": {
+    "@govuk-one-login/frontend-logger": "^0.0.2"
   }
 }

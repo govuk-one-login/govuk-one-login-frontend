@@ -38,11 +38,13 @@
   },
   "homepage": "https://github.com/govuk-one-login/govuk-one-login-frontend#readme",
   "dependencies": {
+    "@govuk-one-login/frontend-logger": "^0.0.2",
     "lodash-es": "^4.18.1",
     "pino": "^10.1.0"
   },
   "peerDependencies": {
     "@govuk-one-login/frontend-analytics": " ^3.0.1 || ^4.0.3",
+    "@govuk-one-login/frontend-logger": "^0.0.2",
     "express": "^5.1.0 || >= 4.21.2",
     "govuk-frontend": "^4.10.1 || ^5.0.0",
     "hmpo-components": "^7.1.0"
