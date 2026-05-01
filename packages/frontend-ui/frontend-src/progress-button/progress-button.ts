@@ -35,6 +35,12 @@ export function initialiseProgressButtons(document: Document = window.document, 
     }
 
     button.addEventListener('click', function(event) {
+      if (event.metaKey || event.ctrlKey) {
+        event.preventDefault();
+        button.click();
+        return;
+      }
+
       if (isSubmitting) {
         event.preventDefault();
         return;
