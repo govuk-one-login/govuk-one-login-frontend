@@ -7,8 +7,10 @@
     {% set isPageDataSensitive = true %}
 {% endif %}
 {% set taxLevel1 = 'web cri' %}
+{% set pageTitle = pageTitle or translate(pageTitleKey) %}
+{% set govukServiceName = translate(govukServiceNameKey or "govuk.serviceName") %}
 
-{% extends "form-template.njk" %}
+{% extends "govuk/template.njk" %}
 
 {% from "frontend-analytics/components/ga4-opl/macro.njk" import ga4OnPageLoad %}
 {% from "frontend-ui/build/components/cookie-banner/macro.njk" import frontendUiCookieBanner %}
@@ -21,8 +23,9 @@
   <link rel="stylesheet" href="/public/stylesheets/application.css"/>
 {% endblock %}
 
+
 {%- block pageTitle %}
-  {{- (translate("govuk.error", { default: "Error" }) + ": ") if errorlist.length }}{{ hmpoTitle | safe }}{{ " – " + govukServiceName | safe if govukServiceName !== " " }} – GOV.UK One Login
+  {{- (translate("govuk.error", { default: "Error" }) + ": ") if errorlist.length }}{{ pageTitle | safe }}{{ " – " + govukServiceName | safe if govukServiceName !== " " }} – GOV.UK One Login
 {%- endblock %}
 
 {% block header %}
@@ -62,6 +65,22 @@
     {% endif %}
 
   {% endblock %}
+{% endblock %}
+
+{% block content %}
+  {% if errorlist.length %}
+    {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+    {{ govukErrorSummary({
+      classes: "error-summary",
+      titleText: translate("govuk.errorSummaryTitle"),
+      errorList: hmpoGetErrorSummary(ctx)
+    }) }}
+  {% endif %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {% block mainContent %}{% endblock %}
+    </div>
+  </div>
 {% endblock %}
 
 {% block footer %}
