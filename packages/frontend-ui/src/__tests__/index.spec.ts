@@ -88,8 +88,7 @@ describe("frontendUiMiddleware", () => {
     } as unknown as PlainRequest;
 
     const mockResponse = {
-      locals: {
-      },
+      locals: {},
     } as unknown as PlainResponse;
 
     const next = vi.fn();
@@ -197,169 +196,165 @@ describe("contactUsUrl function", () => {
   });
 });
 
-  describe("setBaseTranslations", () => {
-    beforeEach(() => {
-      vi.clearAllMocks();
+describe("setBaseTranslations", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('should add resource bundles for "cy" and "en" locales', () => {
+    const mockI18n = {
+      addResourceBundle: vi.fn(),
+    } as unknown as typeof i18next;
+
+    setBaseTranslations(mockI18n);
+
+    expect(mockI18n.addResourceBundle).toHaveBeenCalledTimes(2);
+    expect(mockI18n.addResourceBundle).toHaveBeenCalledWith(
+      "cy",
+      "translation",
+      getTranslationObject("cy"),
+    );
+    expect(mockI18n.addResourceBundle).toHaveBeenCalledWith(
+      "en",
+      "translation",
+      getTranslationObject("en"),
+    );
+  });
+
+  it("should handle missing translation files gracefully", () => {
+    const mockI18n = {
+      addResourceBundle: vi.fn(),
+    } as unknown as typeof i18next;
+
+    readFileSyncMock.mockImplementationOnce(() => {
+      throw new Error("File not found");
     });
 
-    it('should add resource bundles for "cy" and "en" locales', () => {
-      const mockI18n = {
-        addResourceBundle: vi.fn(),
-      } as unknown as typeof i18next;
+    expect(() => setBaseTranslations(mockI18n)).not.toThrow();
+    expect(mockI18n.addResourceBundle).toHaveBeenCalledTimes(2);
+  });
 
-      setBaseTranslations(mockI18n);
+  it("should use a custom file path if provided", () => {
+    const mockI18n = {
+      addResourceBundle: vi.fn(),
+    } as unknown as typeof i18next;
 
-      expect(mockI18n.addResourceBundle).toHaveBeenCalledTimes(2);
-      expect(mockI18n.addResourceBundle).toHaveBeenCalledWith(
-        "cy",
-        "translation",
-        getTranslationObject("cy"),
-      );
-      expect(mockI18n.addResourceBundle).toHaveBeenCalledWith(
-        "en",
-        "translation",
-        getTranslationObject("en"),
-      );
+    const customPath = "custom/path";
+    existsSyncMock.mockImplementation((filePath) => {
+      return filePath === path.resolve(customPath, "cy", "translation.json");
     });
+    readFileSyncMock.mockImplementation(() => JSON.stringify({ key: "value" }));
 
-    it("should handle missing translation files gracefully", () => {
-      const mockI18n = {
-        addResourceBundle: vi.fn(),
-      } as unknown as typeof i18next;
+    setBaseTranslations(mockI18n, customPath);
 
-      readFileSyncMock.mockImplementationOnce(() => {
-        throw new Error("File not found");
-      });
-
-      expect(() => setBaseTranslations(mockI18n)).not.toThrow();
-      expect(mockI18n.addResourceBundle).toHaveBeenCalledTimes(2);
-    });
-
-    it("should use a custom file path if provided", () => {
-      const mockI18n = {
-        addResourceBundle: vi.fn(),
-      } as unknown as typeof i18next;
-
-      const customPath = "custom/path";
-      existsSyncMock.mockImplementation((filePath) => {
-        return filePath === path.resolve(customPath, "cy", "translation.json");
-      });
-      readFileSyncMock.mockImplementation(() =>
-        JSON.stringify({ key: "value" }),
-      );
-
-      setBaseTranslations(mockI18n, customPath);
-
-      expect(mockI18n.addResourceBundle).toHaveBeenCalledWith(
-        "cy",
-        "translation",
-        { key: "value" },
-      );
-      expect(mockI18n.addResourceBundle).toHaveBeenCalledWith(
-        "en",
-        "translation",
-        {},
-      );
-    });
+    expect(mockI18n.addResourceBundle).toHaveBeenCalledWith(
+      "cy",
+      "translation",
+      { key: "value" },
+    );
+    expect(mockI18n.addResourceBundle).toHaveBeenCalledWith(
+      "en",
+      "translation",
+      {},
+    );
+  });
 });
 
 describe("getTranslationObject", () => {
-    const mockFileContent = JSON.stringify({ key: "value" });
+  const mockFileContent = JSON.stringify({ key: "value" });
 
-    beforeEach(() => {
-      vi.clearAllMocks();
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it("should return the parsed content of the first existing translation file", () => {
+    existsSyncMock.mockImplementationOnce((filePath) => {
+      return filePath === path.resolve("locales", "en", "translation.json");
+    });
+    readFileSyncMock.mockImplementation(() => mockFileContent);
+
+    const result = getTranslationObject("en");
+
+    expect(result).toEqual({ key: "value" });
+    expect(existsSyncMock).toHaveBeenCalledWith(
+      path.resolve("locales", "en", "translation.json"),
+    );
+    expect(fs.readFileSync).toHaveBeenCalledWith(
+      path.resolve("locales", "en", "translation.json"),
+      "utf8",
+    );
+  });
+
+  it("should try multiple paths and return the parsed content of the first valid file", () => {
+    existsSyncMock.mockImplementation((filePath) => {
+      return filePath === path.resolve("src/locales", "en", "translation.json");
+    });
+    readFileSyncMock.mockImplementation(() => {
+      return mockFileContent;
     });
 
-    it("should return the parsed content of the first existing translation file", () => {
-      existsSyncMock.mockImplementationOnce((filePath) => {
-        return filePath === path.resolve("locales", "en", "translation.json");
-      });
-      readFileSyncMock.mockImplementation(() => mockFileContent);
+    const result = getTranslationObject("en");
 
-      const result = getTranslationObject("en");
+    expect(result).toEqual({ key: "value" });
+    expect(existsSyncMock).toHaveBeenCalledWith(
+      path.resolve("locales", "en", "translation.json"),
+    );
+    expect(existsSyncMock).toHaveBeenCalledWith(
+      path.resolve("src/locales", "en", "translation.json"),
+    );
+    expect(fs.readFileSync).toHaveBeenCalledWith(
+      path.resolve("src/locales", "en", "translation.json"),
+      "utf8",
+    );
+  });
 
-      expect(result).toEqual({ key: "value" });
-      expect(existsSyncMock).toHaveBeenCalledWith(
-        path.resolve("locales", "en", "translation.json"),
-      );
-      expect(fs.readFileSync).toHaveBeenCalledWith(
-        path.resolve("locales", "en", "translation.json"),
-        "utf8",
-      );
+  it("should handle a custom file path if provided", () => {
+    const customPath = "custom/path";
+    existsSyncMock.mockImplementation((filePath) => {
+      return filePath === path.resolve(customPath, "en", "translation.json");
+    });
+    readFileSyncMock.mockImplementation(() => mockFileContent);
+
+    const result = getTranslationObject("en", customPath);
+
+    expect(result).toEqual({ key: "value" });
+    expect(existsSyncMock).toHaveBeenCalledWith(
+      path.resolve(customPath, "en", "translation.json"),
+    );
+    expect(fs.readFileSync).toHaveBeenCalledWith(
+      path.resolve(customPath, "en", "translation.json"),
+      "utf8",
+    );
+  });
+
+  it("should return an empty object if no translation file is found", () => {
+    existsSyncMock.mockReturnValue(false);
+
+    const result = getTranslationObject("en");
+
+    expect(result).toEqual({});
+    expect(existsSyncMock).toHaveBeenCalledTimes(3);
+  });
+
+  it("should log an error if reading or parsing the file fails", () => {
+    existsSyncMock.mockReturnValue(true);
+    readFileSyncMock.mockImplementation(() => {
+      throw new Error("File read error");
     });
 
-    it("should try multiple paths and return the parsed content of the first valid file", () => {
-      existsSyncMock.mockImplementation((filePath) => {
-        return (
-          filePath === path.resolve("src/locales", "en", "translation.json")
-        );
-      });
-      readFileSyncMock.mockImplementation(() => {
-        return mockFileContent;
-      });
+    const result = getTranslationObject("en");
 
-      const result = getTranslationObject("en");
+    expect(result).toEqual({});
+    expect(mockLogger).toHaveBeenCalled();
+  });
 
-      expect(result).toEqual({ key: "value" });
-      expect(existsSyncMock).toHaveBeenCalledWith(
-        path.resolve("locales", "en", "translation.json"),
-      );
-      expect(existsSyncMock).toHaveBeenCalledWith(
-        path.resolve("src/locales", "en", "translation.json"),
-      );
-      expect(fs.readFileSync).toHaveBeenCalledWith(
-        path.resolve("src/locales", "en", "translation.json"),
-        "utf8",
-      );
-    });
+  it("should log a warning if no translation file is found", () => {
+    existsSyncMock.mockReturnValue(false);
 
-    it("should handle a custom file path if provided", () => {
-      const customPath = "custom/path";
-      existsSyncMock.mockImplementation((filePath) => {
-        return filePath === path.resolve(customPath, "en", "translation.json");
-      });
-      readFileSyncMock.mockImplementation(() => mockFileContent);
+    getTranslationObject("en");
 
-      const result = getTranslationObject("en", customPath);
-
-      expect(result).toEqual({ key: "value" });
-      expect(existsSyncMock).toHaveBeenCalledWith(
-        path.resolve(customPath, "en", "translation.json"),
-      );
-      expect(fs.readFileSync).toHaveBeenCalledWith(
-        path.resolve(customPath, "en", "translation.json"),
-        "utf8",
-      );
-    });
-
-    it("should return an empty object if no translation file is found", () => {
-      existsSyncMock.mockReturnValue(false);
-
-      const result = getTranslationObject("en");
-
-      expect(result).toEqual({});
-      expect(existsSyncMock).toHaveBeenCalledTimes(3);
-    });
-
-    it("should log an error if reading or parsing the file fails", () => {
-      existsSyncMock.mockReturnValue(true);
-      readFileSyncMock.mockImplementation(() => {
-        throw new Error("File read error");
-      });
-
-      const result = getTranslationObject("en");
-
-      expect(result).toEqual({});
-      expect(mockLogger).toHaveBeenCalled();
-    });
-
-    it("should log a warning if no translation file is found", () => {
-      existsSyncMock.mockReturnValue(false);
-
-      getTranslationObject("en");
-
-      expect(mockLogger).toHaveBeenCalled();
-    });
+    expect(mockLogger).toHaveBeenCalled();
+  });
 });
 
 describe("validateTranslations", () => {
@@ -442,7 +437,10 @@ describe("addFrontendUiGlobals", () => {
       "contactUsUrl",
       expect.any(Function),
     );
-    expect(addGlobal).toHaveBeenCalledWith("warnCharacterLimit", expect.any(Function));
+    expect(addGlobal).toHaveBeenCalledWith(
+      "warnCharacterLimit",
+      expect.any(Function),
+    );
     expect(addGlobal).toHaveBeenCalledTimes(3);
   });
 });

@@ -156,6 +156,7 @@ To deprecate a specific package version from the monorepo, use the **GitHub Acti
      - `@govuk-one-login/frontend-asset-loader`
      - `@govuk-one-login/frontend-ui`
      - `@govuk-one-login/frontend-device-intelligence`
+     - `@govuk-one-login/frontend-logger`
    - **Version**: Enter the version you want to deprecate (eg `0.0.1`, `0.1.1`, `1.0.1`)
 
 3. **Deprecation Process**

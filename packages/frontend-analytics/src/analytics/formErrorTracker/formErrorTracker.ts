@@ -85,7 +85,9 @@ export function getErrorMessage(field: FormField) {
   }
 
   // Fall back to traversing the DOM for custom IDs
-  const formGroup = document.getElementById(field.id)?.closest(".govuk-form-group--error");
+  const formGroup = document
+    .getElementById(field.id)
+    ?.closest(".govuk-form-group--error");
   const groupError = formGroup?.querySelector(".govuk-error-message");
   return groupError?.textContent?.trim() ?? "undefined";
 }
