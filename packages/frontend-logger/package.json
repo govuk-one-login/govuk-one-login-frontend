@@ -1,6 +1,6 @@
 {
   "name": "@govuk-one-login/frontend-logger",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Shared logger for one-login-frontend packages",
   "main": "index.js",
   "module": "",
