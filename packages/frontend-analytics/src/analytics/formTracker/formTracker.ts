@@ -1,6 +1,7 @@
 import { FormField } from "./formTracker.interface";
 import { getElementValue } from "./formTrackerUtils/getFieldValues/getFieldValues";
 import { isExcludedType } from "./formTrackerUtils/isExcludedType/isExcludedType";
+import { isOptionalField } from "./formTrackerUtils/isOptionalField/isOptionalField";
 
 export const FREE_TEXT_FIELD_TYPE = "free text field";
 export const DROPDOWN_FIELD_TYPE = "drop-down list";
@@ -26,6 +27,7 @@ export class FormTracker {
         name: element.name,
         value: getElementValue(element),
         type: element.type,
+        optional: isOptionalField(element),
       });
     }
   }
@@ -40,6 +42,7 @@ export class FormTracker {
       name: element.name,
       value: getElementValue(element),
       type: element.type,
+      optional: isOptionalField(element),
     });
   }
 
@@ -49,6 +52,7 @@ export class FormTracker {
       name: element.name,
       value: element.value,
       type: element.type,
+      optional: isOptionalField(element),
     });
   }
 
@@ -58,6 +62,7 @@ export class FormTracker {
       name: element.name,
       value: element.options[element.selectedIndex].text,
       type: element.type,
+      optional: isOptionalField(element),
     });
   }
 

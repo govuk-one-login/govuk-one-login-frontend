@@ -57,18 +57,21 @@ describe("FormTracker", () => {
         name: "text",
         value: "text value",
         type: "text",
+        optional: false,
       },
       {
         id: "checkbox",
         name: "checkbox",
         value: "checkbox value",
         type: "checkbox",
+        optional: false,
       },
       {
         id: "selectField",
         name: "selectField",
         value: "Option 2",
         type: "select-one",
+        optional: false,
       },
     ]);
   });
@@ -87,6 +90,7 @@ describe("FormTracker", () => {
         name: "test",
         value: "test value, test value2",
         type: "checkbox",
+        optional: false,
       },
     ]);
   });
@@ -146,6 +150,7 @@ describe("FormTracker", () => {
         name: "checkboxName",
         value: "checkbox label",
         type: "checkbox",
+        optional: false,
       },
     ]);
   });
@@ -185,6 +190,7 @@ describe("FormTracker", () => {
         name: "checkboxName",
         value: "checkbox label",
         type: "checkbox",
+        optional: false,
       },
     ]);
   });
@@ -226,6 +232,7 @@ describe("FormTracker", () => {
         name: "checkboxName",
         value: "checkbox1 label, checkbox2 label",
         type: "checkbox",
+        optional: false,
       },
     ]);
   });
@@ -255,6 +262,7 @@ describe("FormTracker", () => {
         name: "radioName",
         value: "radio label",
         type: "radio",
+        optional: false,
       },
     ]);
   });
@@ -278,6 +286,7 @@ describe("FormTracker", () => {
         name: "textName",
         value: "text value",
         type: "text",
+        optional: false,
       },
     ]);
   });
@@ -298,6 +307,7 @@ describe("FormTracker", () => {
         name: "textareaName",
         value: "textarea value",
         type: "textarea",
+        optional: false,
       },
     ]);
   });
@@ -332,6 +342,7 @@ describe("FormTracker", () => {
         name: "selectName",
         value: "Option 2",
         type: "select-one",
+        optional: false,
       },
     ]);
   });
@@ -624,6 +635,48 @@ describe("FormTracker", () => {
     document.body.appendChild(h2);
     expect(getSectionValue(formField)).toBe("Hello, World!");
   });
+  // optional field detection tests
+
+  test("getFormFields sets optional: true for text field with aria-required=false", () => {
+    const form = document.createElement("form");
+    form.innerHTML =
+      '<input id="text" name="text" value="text value" type="text" aria-required="false"/>';
+    document.body.appendChild(form);
+    const result = instance.getFormFields(form);
+    expect(result[0].optional).toBe(true);
+  });
+
+  test("getFormFields sets optional: false for text field without aria-required", () => {
+    const form = document.createElement("form");
+    form.innerHTML =
+      '<input id="text" name="text" value="text value" type="text"/>';
+    document.body.appendChild(form);
+    const result = instance.getFormFields(form);
+    expect(result[0].optional).toBe(false);
+  });
+
+  test("getFormFields sets optional: true for radio in fieldset with aria-required=false", () => {
+    const form = document.createElement("form");
+    form.innerHTML =
+      '<fieldset aria-required="false">' +
+      '  <input type="radio" id="opt-radio" name="opt-radio" value="yes" checked/>' +
+      "</fieldset>";
+    document.body.appendChild(form);
+    const result = instance.getFormFields(form);
+    expect(result[0].optional).toBe(true);
+  });
+
+  test("getFormFields sets optional: false for radio in fieldset without aria-required", () => {
+    const form = document.createElement("form");
+    form.innerHTML =
+      "<fieldset>" +
+      '  <input type="radio" id="req-radio" name="req-radio" value="yes" checked/>' +
+      "</fieldset>";
+    document.body.appendChild(form);
+    const result = instance.getFormFields(form);
+    expect(result[0].optional).toBe(false);
+  });
+
   test("getSectionValue should return label when there is a dropdown with a label", () => {
     const formField: FormField = {
       id: "fieldId",

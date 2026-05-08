@@ -22,6 +22,33 @@ Inputs of the following type will be included in the `form_response` event pushe
 - Dropdown selects
 - Checkboxes
 
+### Optional fields
+
+By default, the `form_response` event is suppressed when any field is submitted with an empty value. This prevents analytics being recorded when a user hits the submit button without filling in required fields.
+
+However, forms often contain optional fields (e.g. a "comments" textarea). To prevent these optional fields from blocking analytics, the package reads `aria-required="false"` from the field element or its closest `<fieldset>` ancestor.
+
+**For teams using hmpo-components:** No changes needed. Fields configured without `validate: ['required']` already have `aria-required="false"` rendered automatically.
+
+**For teams not using hmpo-components:** Add `aria-required="false"` to any optional form element:
+
+```html
+<label for="comments">Additional comments (optional)</label>
+<textarea id="comments" name="comments" aria-required="false"></textarea>
+```
+
+For radio button or checkbox groups, the attribute should be on the `<fieldset>`:
+
+```html
+<fieldset aria-required="false">
+  <legend>Preferred contact method (optional)</legend>
+  <input type="radio" id="email" name="contact" value="email"/>
+  <label for="email">Email</label>
+</fieldset>
+```
+
+**Validation behaviour:** The `form_response` event fires if all required fields have values, even when optional fields are empty. It is suppressed if any required field is empty.
+
 ### Example of event
 
 {

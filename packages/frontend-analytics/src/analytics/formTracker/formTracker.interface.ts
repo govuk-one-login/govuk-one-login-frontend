@@ -22,4 +22,5 @@ export interface FormField {
   name: string;
   value: string | undefined;
   type: string;
+  optional?: boolean;
 }
