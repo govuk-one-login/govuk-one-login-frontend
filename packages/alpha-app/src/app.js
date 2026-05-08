@@ -17,6 +17,7 @@ const {
 } = require("./journeys/serviceDescriptionService");
 const { validateChooseLocation } = require("./journeys/chooseLocationService");
 const { validateEnterEmail } = require("./journeys/enterEmailService");
+const { validateEnterName } = require("./journeys/enterNameService");
 const { validateFeedback } = require("./journeys/feedbackService");
 const { loadAssets } = require("@govuk-one-login/frontend-asset-loader");
 const {
@@ -226,6 +227,10 @@ app.get("/step-card", (req, res) => {
   res.render("step-card.njk");
 });
 
+app.get("/enter-name", (req, res) => {
+  res.render("enterName.njk");
+});
+
 app.get(
   "/xDncNmqheVoQoeOTnVmwUnsuByWwKwwAPUZAWRYBnzgrDOCObSzFqMpwAxQRpHMUehzTfzGJjuFJOtWyQBdHQbtpEpxmopVEnghdxyz",
   (req, res) => {
@@ -253,3 +258,5 @@ app.post("/validate-choose-location", validateChooseLocation);
 app.post("/validate-enter-email", validateEnterEmail);
 
 app.post("/validate-feedback", validateFeedback);
+
+app.post("/validate-enter-name", validateEnterName);

@@ -1,0 +1,56 @@
+{% extends 'common/base.njk' %}
+
+{% set title = 'pages.enterName.title' %}
+
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{% block backLink %}
+  {{ govukBackLink({
+    text: "general.govuk.backLink" | translate,
+    href: "/welcome"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <form method="post" id="enterNameForm">
+    {{ govukInput({ label: { text: "pages.enterName.content.firstName.label" | translate, classes: "govuk-label--l", isPageHeading: true }, id: "first-name", name: "firstName", errorMessage: { text: "pages.enterName.content.errors.firstNameError" | translate } if showFirstNameError }) }}
+
+    {{ govukInput({ label: { text: "pages.enterName.content.middleName.label" | translate }, id: "middle-name", name: "middleName" }) }}
+
+    {{ govukInput({ label: { text: "pages.enterName.content.lastName.label" | translate }, id: "last-name", name: "lastName", errorMessage: { text: "pages.enterName.content.errors.lastNameError" | translate } if showLastNameError }) }}
+
+    {{ govukButton({ text: "general.buttons.continue" | translate, type: "submit" }) }}
+  </form>
+
+  <script nonce="{{ cspNonce }}">
+    document.addEventListener("DOMContentLoaded", function () {
+      const firstNameField = document.getElementById("first-name");
+      const middleNameField = document.getElementById("middle-name");
+      const lastNameField = document.getElementById("last-name");
+
+      firstNameField.value = localStorage.getItem("firstName") ?? "";
+      middleNameField.value = localStorage.getItem("middleName") ?? "";
+      lastNameField.value = localStorage.getItem("lastName") ?? "";
+    });
+
+    document
+      .getElementById("enterNameForm")
+      .addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const firstName = document.getElementById("first-name").value;
+        const middleName = document.getElementById("middle-name").value;
+        const lastName = document.getElementById("last-name").value;
+
+        if (firstName) localStorage.setItem("firstName", firstName);
+        if (middleName) localStorage.setItem("middleName", middleName);
+        if (lastName) localStorage.setItem("lastName", lastName);
+
+        document.getElementById("enterNameForm").action = "/validate-enter-name";
+
+        this.submit();
+      });
+  </script>
+{% endblock %}
