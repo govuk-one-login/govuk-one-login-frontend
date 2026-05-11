@@ -101,7 +101,8 @@
   "overrides": {
     "jest-environment-jsdom": {
       "canvas": "$canvas"
-    }
+    },
+    "axios": "1.15.2"
   },
   "workspaces": [
     "packages/*"
