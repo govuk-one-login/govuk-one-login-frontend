@@ -152,6 +152,25 @@
         }
       }
     },
+    "enterName": {
+      "title": "Enter Name",
+      "content": {
+        "header": "Enter your full name",
+        "firstName": {
+          "label": "First name"
+        },
+        "middleName": {
+          "label": "Middle name (optional)"
+        },
+        "lastName": {
+          "label": "Last name"
+        },
+        "errors": {
+          "firstNameError": "Enter your first name",
+          "lastNameError": "Enter your last name"
+        }
+      }
+    },
     "enterEmail": {
       "title": "Enter Email",
       "content": {

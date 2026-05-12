@@ -152,6 +152,25 @@
         }
       }
     },
+    "enterName": {
+      "title": "Rhowch eich Enw",
+      "content": {
+        "header": "Rhowch eich enw llawn",
+        "firstName": {
+          "label": "Enw cyntaf"
+        },
+        "middleName": {
+          "label": "Enw canol (dewisol)"
+        },
+        "lastName": {
+          "label": "Cyfenw"
+        },
+        "errors": {
+          "firstNameError": "Rhowch eich enw cyntaf",
+          "lastNameError": "Rhowch eich cyfenw"
+        }
+      }
+    },
     "enterEmail": {
       "title": "Rhowch eich Cyfeiriad E-bost",
       "content": {

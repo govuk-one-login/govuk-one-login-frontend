@@ -116,6 +116,7 @@ describe("dateUtils", () => {
         name: "fieldId",
         value: "01-01-2000",
         type: "date",
+        optional: undefined,
       },
     ];
     expect(combineDateFields(formFields)).toStrictEqual(result);
@@ -166,12 +167,14 @@ describe("dateUtils", () => {
         name: "fieldId",
         value: "01-01-2000",
         type: "date",
+        optional: undefined,
       },
       {
         id: "fieldId2-day",
         name: "fieldId2",
         value: "02-02-2002",
         type: "date",
+        optional: undefined,
       },
     ];
     expect(combineDateFields(formFields)).toStrictEqual(result);

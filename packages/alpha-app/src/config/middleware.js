@@ -3,6 +3,7 @@ const noSessionPages = [
   "/spinner",
   "/test-progress-button",
   "/step-card",
+  "/enter-name",
 ];
 
 const checkSessionAndRedirect = (req, res, next) => {

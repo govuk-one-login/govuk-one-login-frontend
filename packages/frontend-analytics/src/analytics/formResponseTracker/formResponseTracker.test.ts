@@ -540,6 +540,53 @@ describe("Cookie Management", () => {
   });
 });
 
+describe("form with optional fields", () => {
+  const action = new Event("submit", {
+    bubbles: true,
+    cancelable: true,
+  });
+
+  vi.spyOn(pushToDataLayer, "pushToDataLayer");
+
+  test("trackFormResponse should fire when an optional text field is blank", () => {
+    acceptCookies();
+    new FormResponseTracker(false, false, true);
+    document.body.innerHTML =
+      '<div id="main-content">' +
+      '<form action="/test-url" method="post">' +
+      "<fieldset>" +
+      "  <legend>radio section</legend>" +
+      '  <label for="question">radio value</label>' +
+      '  <input type="radio" id="question" name="question" value="yes" checked/>' +
+      "</fieldset>" +
+      '  <label for="comments">comments section</label>' +
+      '  <textarea id="comments" name="comments" aria-required="false"></textarea>' +
+      '  <button id="button" type="submit">submit</button>' +
+      "</form></div>";
+    document.dispatchEvent(action);
+    expect(pushToDataLayer.pushToDataLayer).toHaveBeenCalled();
+  });
+
+  test("trackFormResponse should fire when an optional select field has the default option", () => {
+    acceptCookies();
+    new FormResponseTracker(false, false, true);
+    document.body.innerHTML =
+      '<div id="main-content">' +
+      '<form action="/test-url" method="post">' +
+      "<fieldset>" +
+      "  <legend>radio section</legend>" +
+      '  <label for="question">radio value</label>' +
+      '  <input type="radio" id="question" name="question" value="yes" checked/>' +
+      "</fieldset>" +
+      '  <label for="region">region section</label>' +
+      '  <select id="region" name="region" aria-required="false"><option value="" selected>Select</option><option value="north">North</option></select>' +
+      '  <button id="button" type="submit">submit</button>' +
+      "</form></div>";
+    document.dispatchEvent(action);
+    expect(pushToDataLayer.pushToDataLayer).toHaveBeenCalled();
+  });
+});
+
 describe("cancel event if form is invalid", () => {
   const action = new Event("submit", {
     bubbles: true,

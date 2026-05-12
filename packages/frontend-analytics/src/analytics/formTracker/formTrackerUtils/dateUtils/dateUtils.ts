@@ -63,6 +63,7 @@ export const combineDateFields = (fields: FormField[]): FormField[] => {
             name: fieldName,
             value: `${dayField.value}-${monthField.value}-${yearField.value}`,
             type: "date",
+            optional: dayField.optional,
           };
           newArrayFields.push(combinedDateField);
         }

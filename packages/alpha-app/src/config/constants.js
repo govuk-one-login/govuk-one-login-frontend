@@ -114,5 +114,21 @@ const ROUTE_INFO = [
     taxonomyLevel2: "ErrorFeedback2",
     contentId: "<e4a3603d-2d3c-4ff1-9b80-d72c1e6b7b88>",
   },
+  {
+    id: 15,
+    path: "/enter-name",
+    pageTitle: "Enter Name",
+    taxonomyLevel1: "EnterNameTax1",
+    taxonomyLevel2: "EnterNameTax2",
+    contentId: "<e4a3603d-2d3c-4ff1-9b80-d72c1e6b7c01>",
+  },
+  {
+    id: 16,
+    path: "/validate-enter-name",
+    pageTitle: "Enter Name",
+    taxonomyLevel1: "ErrorEnterName1",
+    taxonomyLevel2: "ErrorEnterName2",
+    contentId: "<e4a3603d-2d3c-4ff1-9b80-d72c1e6b7c02>",
+  },
 ];
 module.exports = { GA4_CONTAINER_ID, UA_CONTAINER_ID, ROUTE_INFO };
