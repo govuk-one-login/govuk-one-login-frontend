@@ -1,4 +1,4 @@
-import { merge } from "lodash";
+import { merge } from "lodash-es";
 import { type Request, type Response } from "express";
 import { type HelmetOptions } from "helmet";
 

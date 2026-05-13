@@ -47,7 +47,13 @@ describe("isFormValid", () => {
   test("isFormValid should return true when required fields have values and optional fields are empty", () => {
     const fields: FormField[] = [
       { id: "test", name: "test", value: "answer", type: "radio" },
-      { id: "test2", name: "test2", value: "", type: "textarea", optional: true },
+      {
+        id: "test2",
+        name: "test2",
+        value: "",
+        type: "textarea",
+        optional: true,
+      },
     ];
     expect(isFormValid(fields)).toBe(true);
   });
@@ -55,7 +61,13 @@ describe("isFormValid", () => {
   test("isFormValid should return false when a required field is empty alongside an optional field", () => {
     const fields: FormField[] = [
       { id: "test", name: "test", value: "", type: "text" },
-      { id: "test2", name: "test2", value: "", type: "textarea", optional: true },
+      {
+        id: "test2",
+        name: "test2",
+        value: "",
+        type: "textarea",
+        optional: true,
+      },
     ];
     expect(isFormValid(fields)).toBe(false);
   });
@@ -63,7 +75,13 @@ describe("isFormValid", () => {
   test("isFormValid should return true when all optional fields are empty", () => {
     const fields: FormField[] = [
       { id: "test", name: "test", value: "", type: "text", optional: true },
-      { id: "test2", name: "test2", value: "", type: "textarea", optional: true },
+      {
+        id: "test2",
+        name: "test2",
+        value: "",
+        type: "textarea",
+        optional: true,
+      },
     ];
     expect(isFormValid(fields)).toBe(true);
   });

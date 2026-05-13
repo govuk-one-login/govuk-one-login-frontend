@@ -3,16 +3,16 @@ import { join, parse } from "path";
 import { readdirSync, lstatSync } from "fs";
 import i18next from "i18next";
 import Backend from "i18next-fs-backend";
-import path from 'path';
-import { fileURLToPath } from 'url';
+import path from "path";
+import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
 const __dirname = path.dirname(__filename); // get the name of the directory
 
-import _ from "lodash";
+import { differenceWith } from "lodash-es";
 
 type languageFile = {
-  [key: string]: { [key: string]: string; } | string;
+  [key: string]: { [key: string]: string } | string;
 };
 
 type missingLanguage = {
@@ -33,7 +33,7 @@ const foundLanguages = readdirSync(join(__dirname, fileLoc)).filter(
 );
 
 const foundNamespaces = readdirSync(join(__dirname, `${fileLoc}/en`)).reduce(
-  (collection:string[], fileName:string) => {
+  (collection: string[], fileName: string) => {
     const joinedPath = join(join(__dirname, `${fileLoc}/en`), fileName);
     const isFile = lstatSync(joinedPath).isFile();
     if (isFile) {
@@ -61,14 +61,18 @@ i18next.use(Backend).init({
 
 // --------.-----------
 
-function compareContent(set1: languageFile, set2: languageFile, parent?:string) {
-  const issues:string[] = [];
-  const warnings:string[] = [];
+function compareContent(
+  set1: languageFile,
+  set2: languageFile,
+  parent?: string,
+) {
+  const issues: string[] = [];
+  const warnings: string[] = [];
 
-  const differences = _.differenceWith(
+  const differences = differenceWith(
     Object.keys(set1),
     Object.keys(set2),
-    (arrVal:string, othVal:string) => {
+    (arrVal: string, othVal: string) => {
       return arrVal.split("_")[0] === othVal.split("_")[0];
     },
   );
@@ -102,7 +106,12 @@ function compareContent(set1: languageFile, set2: languageFile, parent?:string) 
       }
     }
 
-    if ((typeof set1Field === "object" && !Array.isArray(set1Field)) && (typeof set2Field === "object" && !Array.isArray(set2Field))) {
+    if (
+      typeof set1Field === "object" &&
+      !Array.isArray(set1Field) &&
+      typeof set2Field === "object" &&
+      !Array.isArray(set2Field)
+    ) {
       const parentKey = parent ? `${parent}.${key}` : key; // handle if we're nested more than one level down
       const nestedResults = compareContent(set1Field, set2Field, parentKey);
       issues.push(...nestedResults.issues);
@@ -121,22 +130,18 @@ function compareContent(set1: languageFile, set2: languageFile, parent?:string) 
   let missingEnglish: missingLanguage;
   let missingWelsh: missingLanguage;
 
-  if ((welshContent !== undefined) && (englishContent !== undefined))
-  {
+  if (welshContent !== undefined && englishContent !== undefined) {
     missingEnglish = compareContent(welshContent, englishContent);
-  }
-  else{
-    missingEnglish ={
+  } else {
+    missingEnglish = {
       issues: [],
       warnings: [],
     };
   }
-  if ((welshContent !== undefined) && (englishContent !== undefined))
-  {
+  if (welshContent !== undefined && englishContent !== undefined) {
     missingWelsh = compareContent(englishContent, welshContent);
-  }
-  else{
-    missingWelsh ={
+  } else {
+    missingWelsh = {
       issues: [],
       warnings: [],
     };

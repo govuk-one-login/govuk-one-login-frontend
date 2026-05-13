@@ -33,7 +33,10 @@ export default [
       },
     ],
     plugins: [
-      typescript(),
+      typescript({
+        tsconfig: "tsconfig.json",
+        useTsconfigDeclarationDir: true
+      }),
       copy({
         targets: [
           {
