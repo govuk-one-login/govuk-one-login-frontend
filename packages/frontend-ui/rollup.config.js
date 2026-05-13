@@ -35,7 +35,6 @@ export default [
     plugins: [
       typescript({
         tsconfig: "tsconfig.json",
-        useTsconfigDeclarationDir: true
       }),
       copy({
         targets: [
