@@ -1,7 +1,7 @@
-import { getLogger } from "../utils/logger";
+import { getLogger } from "@govuk-one-login/frontend-logger";
 import type { Mock } from "vitest";
 
-vi.mock("../utils/logger", () => ({
+vi.mock("@govuk-one-login/frontend-logger", () => ({
   getLogger: vi.fn(),
 }));
 

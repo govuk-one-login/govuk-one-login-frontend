@@ -45,7 +45,8 @@
   },
   "peerDependencies": {
     "@govuk-one-login/event-catalogue": "^43.0.0 || ^44.0.0",
-    "@govuk-one-login/event-catalogue-schemas": "^43.0.0 || ^44.0.0"
+    "@govuk-one-login/event-catalogue-schemas": "^43.0.0 || ^44.0.0",
+    "@govuk-one-login/frontend-logger": "^0.0.2"
   },
   "peerDependenciesMeta": {
     "@govuk-one-login/event-catalogue-schemas": {
@@ -53,6 +54,7 @@
     }
   },
   "dependencies": {
+    "@govuk-one-login/frontend-logger": "^0.0.2",
     "ajv": "^8.18.0"
   }
 }

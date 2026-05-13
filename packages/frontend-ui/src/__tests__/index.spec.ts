@@ -48,8 +48,8 @@ interface PlainResponse {
 
 const mockLogger = vi.fn();
 
-vi.mock("../utils/logger", () => ({
-  getLogger: () => ({
+vi.mock("@govuk-one-login/frontend-logger", () => ({
+  createLogger: () => ({
     warn: () => mockLogger(),
   }),
 }));

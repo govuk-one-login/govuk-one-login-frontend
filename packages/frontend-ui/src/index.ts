@@ -4,11 +4,11 @@ import { NextFunction, Request, Response } from "express";
 import i18next from "i18next";
 import translationCy from "../locales/cy/translation.json";
 import translationEn from "../locales/en/translation.json";
-import { getLogger } from "./utils/logger";
+import { createLogger } from "@govuk-one-login/frontend-logger";
 
 export * from "./lib";
 
-const logger = getLogger();
+const logger = createLogger({ name: "@govuk-one-login/frontend-ui" });
 
 // Define types for Express and non-Express versions
 interface I18nData {
@@ -103,7 +103,6 @@ export const frontendUiMiddlewareIdentityBypass = (
   next();
 };
 
-
 function isPlainObject(val: unknown): val is Record<string, unknown> {
   return typeof val === "object" && val !== null && !Array.isArray(val);
 }
@@ -132,11 +131,15 @@ export function validateTranslations(
   for (const key of allKeys) {
     const fullPath = path ? `${path}.${key}` : key;
     if (!(key in en)) {
-      logger.warn(`Translation key exists in cy but is missing in en: ${fullPath}`);
+      logger.warn(
+        `Translation key exists in cy but is missing in en: ${fullPath}`,
+      );
       continue;
     }
     if (!(key in cy)) {
-      logger.warn(`Translation key exists in en but is missing in cy: ${fullPath}`);
+      logger.warn(
+        `Translation key exists in en but is missing in cy: ${fullPath}`,
+      );
       continue;
     }
     if (Array.isArray(en[key]) || Array.isArray(cy[key])) {

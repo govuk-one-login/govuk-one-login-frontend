@@ -1,5 +1,5 @@
 import { PathAndFile } from "./utils.types";
-import { getLogger } from "../utils/logger";
+import { getLogger } from "@govuk-one-login/frontend-logger";
 import { Express } from "express";
 
 declare module "express" {
