@@ -1,3 +1,20 @@
+## 5.2.1 (2026-05-13)
+
+### 🚀 Features
+
+- **DFC-806:** Logger package ([6b0b5d3](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/6b0b5d3))
+
+### 🩹 Fixes
+
+- frontend-ui where strict esm was broken by named lodash imports ([b54e1bf](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/b54e1bf))
+- **1216:** added listener for meta events to prevent double form submission ([4a014e0](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/4a014e0))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+- nickhealGDS
+- Sam Bunce
+
 ## 5.2.0 (2026-04-24)
 
 ### 🩹 Fixes

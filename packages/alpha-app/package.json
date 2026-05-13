@@ -1,6 +1,6 @@
 {
   "name": "alpha-app",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "scripts": {
     "start": "npm-run-all build-sass --parallel dev",
     "dev": "node --watch src/app.js",
