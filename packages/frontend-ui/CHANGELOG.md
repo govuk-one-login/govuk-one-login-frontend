@@ -1,3 +1,13 @@
+## 5.2.2 (2026-05-13)
+
+### 🩹 Fixes
+
+- restore types to frontend-ui backend builds ([d6f61c6](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/d6f61c6))
+
+### ❤️ Thank You
+
+- Nathaniel Steers
+
 ## 5.2.1 (2026-05-13)
 
 ### 🚀 Features
