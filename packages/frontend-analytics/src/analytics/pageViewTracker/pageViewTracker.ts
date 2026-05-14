@@ -1,16 +1,17 @@
-import {
-  PageViewParametersInterface,
-  PageViewEventInterface,
-} from "./pageViewTracker.interface";
-import { validateParameter } from "../../utils/validateParameterUtils/validateParameter";
-import { OptionsInterface } from "../core/core.interface";
+import { hasConsentForAnalytics } from "../../cookie/cookie";
+import { isFormErrorPage } from "../../utils/dataScrapersUtils/dataScrapers";
+import { stripPIIFromString } from "../../utils/piiRemoverUtil/piiRemover";
+import { pushToDataLayer } from "../../utils/pushToDataLayerUtil/pushToDataLayer";
 import {
   getTaxonomy,
   setTaxonomies,
 } from "../../utils/taxonomyUtils/taxonomyUtils";
-import { pushToDataLayer } from "../../utils/pushToDataLayerUtil/pushToDataLayer";
-import { isFormErrorPage } from "../../utils/dataScrapersUtils/dataScrapers";
-import { hasConsentForAnalytics } from "../../cookie/cookie";
+import { validateParameter } from "../../utils/validateParameterUtils/validateParameter";
+import { OptionsInterface } from "../core/core.interface";
+import {
+  PageViewEventInterface,
+  PageViewParametersInterface,
+} from "./pageViewTracker.interface";
 
 export class PageViewTracker {
   eventName: string = "page_view_ga4";
@@ -134,12 +135,14 @@ export class PageViewTracker {
   }
 
   /**
-   * Returns the current location URL as a lowercase string.
+   * Returns the current location URL as a lowercase string with personal data removed.
    *
    * @return {string} The current location URL as a lowercase string, or "undefined" if not available.
    */
   static getLocation(): string {
-    return document.location.href?.toLowerCase() ?? "undefined";
+    return (
+      stripPIIFromString(document.location.href?.toLowerCase()) ?? "undefined"
+    );
   }
 
   /**
