@@ -49,4 +49,17 @@ const setLanguageToggle = ({
   app.set("APP.LANGUAGE_TOGGLE_ENABLED", showLanguageToggle);
 };
 
-export { setGTM, setLanguageToggle };
+const setDeviceIntelligence = ({
+  app,
+  deviceIntelligenceEnabled,
+  deviceIntelligenceDomain,
+}: {
+  app: Express;
+  deviceIntelligenceEnabled: boolean;
+  deviceIntelligenceDomain: string;
+}) => {
+  app.set("APP.DEVICE_INTELLIGENCE_ENABLED", deviceIntelligenceEnabled);
+  app.set("APP.DEVICE_INTELLIGENCE_DOMAIN", deviceIntelligenceDomain);
+};
+
+export { setGTM, setLanguageToggle, setDeviceIntelligence };
