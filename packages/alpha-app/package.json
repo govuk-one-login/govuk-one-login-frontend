@@ -11,6 +11,9 @@
     "test": "node -e \"console.log('No tests currently defined');\"",
     "test:integration:ci": "npx playwright install --with-deps --only-shell chromium && start-server-and-test start http://localhost:3000 test:integration",
     "test:integration": "cucumber-js test/browser/features/v1/analytics --require test/browser/support/setup.js --require test/browser/step_definitions/**/*.js cucumber --tags 'not @skip'",
+    "test:dev": "K6_BROWSER_HEADLESS=false k6 run testBrowser.js",
+    "test:browser": "k6 run testBrowser.js",
+    "test:server": "k6 run testServer.js",
     "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,md}\"",
     "build": "rollup -c",
     "dev-js": "rollup -c --watch"
