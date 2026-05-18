@@ -4,6 +4,9 @@ import {
   FormField,
 } from "../formTracker/formTracker.interface";
 import * as pushToDataLayer from "../../utils/pushToDataLayerUtil/pushToDataLayer";
+import * as dataScrapers from "../../utils/dataScrapersUtils/dataScrapers";
+import * as getSubmitUrlModule from "../formTracker/formTrackerUtils/getSubmitUrl/getSubmitUrl";
+import * as piiRemover from "../../utils/piiRemoverUtil/piiRemover";
 import { FREE_TEXT_FIELD_TYPE } from "../formTracker/formTracker";
 import { acceptCookies, rejectCookies } from "../../../test/utils";
 
@@ -12,9 +15,42 @@ window.DI = { analyticsGa4: { cookie: { consent: true } } };
 describe("FormErrorTracker", () => {
   beforeEach(() => {
     document.body.innerHTML = "";
+    vi.clearAllMocks();
+
+    // Set up spies
+    vi.spyOn(pushToDataLayer, "pushToDataLayer");
+
+    // Mock stripPIIFromString to return text as-is
+    vi.spyOn(piiRemover, "stripPIIFromString").mockImplementation(
+      (text: string) => text,
+    );
+
+    // Mock getSubmitUrl to return consistent URL
+    vi.spyOn(getSubmitUrlModule, "getSubmitUrl").mockReturnValue(
+      "http://localhost:3000/test-url",
+    );
+
+    // Mock URL construction functions to return consistent values
+    vi.spyOn(dataScrapers, "getDomain").mockImplementation((url: string) => {
+      if (url === "http://localhost:3000/test-url") {
+        return "http://localhost:3000";
+      }
+      return url === "undefined" ? "undefined" : "http://localhost:3000";
+    });
+
+    vi.spyOn(dataScrapers, "getDomainPath").mockImplementation(
+      (url: string, part: number) => {
+        if (url === "http://localhost:3000/test-url" && part === 0) {
+          return "/test-url";
+        }
+        return "undefined";
+      },
+    );
   });
-  vi.spyOn(pushToDataLayer, "pushToDataLayer");
-  vi.spyOn(FormErrorTracker, "trackFormError");
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
 
   test("trackFormError should return false if not cookie consent", () => {
     rejectCookies();

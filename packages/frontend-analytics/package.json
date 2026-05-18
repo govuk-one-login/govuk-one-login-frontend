@@ -44,5 +44,10 @@
     "type": "git",
     "url": "git+https://github.com/govuk-one-login/govuk-one-login-frontend.git",
     "directory": "packages/frontend-analytics"
+  },
+  "devDependencies": {
+    "@vitest/ui": "^4.1.2",
+    "vitest": "^4.1.2",
+    "jsdom": "^26.0.0"
   }
 }
