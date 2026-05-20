@@ -14,7 +14,7 @@
     "test:dev": "K6_BROWSER_HEADLESS=false k6 run testBrowser.js",
     "test:browser": "k6 run testBrowser.js",
     "test:server": "k6 run testServer.js",
-    "test:validateEvent": "k6 run testEventValidation.js",
+    "test:validateEvent": "cd ../event-catalogue-utils && npm run build && cd ../alpha-app && rollup -c rollup.k6.config.mjs && k6 run dist/testEventValidation.bundle.js",
     "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,md}\"",
     "build": "rollup -c",
     "dev-js": "rollup -c --watch"

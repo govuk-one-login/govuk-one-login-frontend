@@ -1,45 +1,18 @@
-const VALID_EVENT_NAMES = [
-  "AIS_EVENT_TRANSITION_APPLIED",
-  "AUTH_ACCOUNT_CREATION_REQUEST_SENT",
-  "AUTH_ACCOUNT_CREATION_REQUEST_RECEIVED",
-  "AUTH_ACCOUNT_USER_LOGIN_START",
-  "AUTH_ACCOUNT_USER_LOGIN_END",
-];
+// Import the validateEvent function from the event-catalogue-utils package
+import { validateEvent } from "@govuk-one-login/event-catalogue-utils";
 
-function validateEventStructure(event) {
-  const requiredFields = [
-    "component_id",
-    "event_name",
-    "event_timestamp_ms",
-    "timestamp",
-  ];
-
-  for (const field of requiredFields) {
-    if (!event.hasOwnProperty(field)) {
-      console.error(`Missing required field: ${field}`);
-      return false;
-    }
-  }
-
-  if (!VALID_EVENT_NAMES.includes(event.event_name)) {
-    console.error(`Invalid event_name: ${event.event_name}`);
+/**
+ * Validates event structure using the official event catalogue validation
+ * @param {Object} event - The event object to validate
+ * @returns {boolean} - True if valid, false otherwise
+ */
+function validateEventWrapper(event) {
+  try {
+    return validateEvent(event);
+  } catch (error) {
+    console.error(`Event validation error: ${error.message}`);
     return false;
   }
-
-  if (
-    typeof event.event_timestamp_ms !== "number" ||
-    event.event_timestamp_ms <= 0
-  ) {
-    console.error("Invalid event_timestamp_ms");
-    return false;
-  }
-
-  if (typeof event.timestamp !== "number" || event.timestamp <= 0) {
-    console.error("Invalid timestamp");
-    return false;
-  }
-
-  return true;
 }
 
-export { validateEventStructure };
+export { validateEventWrapper as validateEvent };
