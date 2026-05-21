@@ -13,7 +13,7 @@ export default [
     ],
   },
   {
-    input: "k6-event-validator.js",
+    input: "testValidateEvent.js",
     plugins: [
       nodeResolve({
         preferBuiltins: false,
@@ -25,6 +25,6 @@ export default [
       file: "dist/k6-event-validator.bundle.js",
       format: "es",
     },
-    external: [],
+    external: ["k6", "k6/http"],
   },
 ];
