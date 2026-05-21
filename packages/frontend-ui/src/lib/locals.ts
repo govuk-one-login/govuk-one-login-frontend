@@ -42,14 +42,14 @@ const getLanguageToggle = (
   req: Request & { i18n: { language: string } },
   res: Response,
   next: NextFunction,
-  customLogger?: CustomLogger,
+  customLogger: CustomLogger | undefined = undefined,
 ): void => {
   if (customLogger) {
     setCustomLogger(customLogger);
   }
   const logger = getLogger();
   const toggleValue = req.app.get("APP.LANGUAGE_TOGGLE_ENABLED");
-  res.locals.showLanguageToggle = toggleValue && toggleValue === "1";
+  res.locals.showLanguageToggle = toggleValue && toggleValue === true;
   res.locals.htmlLang = req.i18n.language;
   try {
     res.locals.currentUrl = new URL(
@@ -66,4 +66,17 @@ const getLanguageToggle = (
   next();
 };
 
-export { getAssetPath, getGTM, getLanguageToggle };
+const getDeviceIntelligence = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): void => {
+  const toggleValue = req.app.get("APP.DEVICE_INTELLIGENCE_ENABLED");
+  res.locals.deviceIntelligenceEnabled = toggleValue && toggleValue === true;
+  res.locals.deviceIntelligenceDomain = req.app.get(
+    "APP.DEVICE_INTELLIGENCE_DOMAIN",
+  );
+  next();
+};
+
+export { getAssetPath, getGTM, getLanguageToggle, getDeviceIntelligence };
