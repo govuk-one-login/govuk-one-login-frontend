@@ -1,3 +1,18 @@
+## 5.3.0 (2026-05-21)
+
+### 🚀 Features
+
+- identity base v2 ([#424](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/424))
+
+### 🩹 Fixes
+
+- updated privacy link to maintain welsh ([#428](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/428))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+- Nathaniel Steers @nlsteers
+
 ## 5.2.2 (2026-05-13)
 
 ### 🩹 Fixes
