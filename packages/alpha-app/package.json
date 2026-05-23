@@ -27,7 +27,7 @@
     "@govuk-one-login/frontend-vital-signs": "0.1.4",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "dotenv": "^16.4.7",
-    "express": "^4.22.1",
+    "express": "^4.22.2",
     "express-session": "^1.18.2",
     "govuk-frontend": "^5.14.0",
     "helmet": "^8.1.0",
