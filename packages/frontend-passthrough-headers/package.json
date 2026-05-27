@@ -7,6 +7,7 @@
   "module": "build/esm/index.js",
   "scripts": {
     "build": "rollup -c",
+    "dev": "rollup -c --watch",
     "test": "vitest --run --coverage"
   },
   "files": [
@@ -34,8 +35,12 @@
   },
   "types": "./build/esm/index.d.ts",
   "dependencies": {
+    "@govuk-one-login/frontend-logger": "^0.0.2",
     "@types/aws-lambda": "^8.10.159",
     "forwarded-parse": "^2.1.2",
     "pino": "^10.1.0"
+  },
+  "peerDependencies": {
+    "@govuk-one-login/frontend-logger": "^0.0.2"
   }
 }

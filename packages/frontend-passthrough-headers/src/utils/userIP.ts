@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { type Request } from "express";
 import forwardedParse from "forwarded-parse";
-import { getLogger } from "./logger";
+import { logger } from "../utils/logger";
 import type { APIGatewayProxyEvent } from "aws-lambda";
 import { getHeader } from "./getHeader";
 
@@ -39,8 +39,6 @@ function getUserIPSource(req: Request | APIGatewayProxyEvent): IPSources {
 }
 
 function handleCloudfrontIP(req: Request | APIGatewayProxyEvent) {
-  const logger = getLogger();
-
   try {
     logger.trace(`Sourcing User IP from "${HEADER_CLOUDFRONT_VIEWER}" header.`);
     const header = getHeader(req, HEADER_CLOUDFRONT_VIEWER);
@@ -56,8 +54,6 @@ function handleCloudfrontIP(req: Request | APIGatewayProxyEvent) {
 }
 
 function handleForwardedIP(req: Request | APIGatewayProxyEvent) {
-  const logger = getLogger();
-
   try {
     logger.trace(`Sourcing User IP from "${HEADER_FORWARDED}" header.`);
     const header = getHeader(req, HEADER_FORWARDED);
@@ -74,7 +70,6 @@ function handleForwardedIP(req: Request | APIGatewayProxyEvent) {
 }
 
 function handleXForwardedForIP(req: Request | APIGatewayProxyEvent) {
-  const logger = getLogger();
   try {
     logger.trace(`Sourcing User IP from "${HEADER_X_FORWARDED}" header.`);
     if (isAPIGatewayProxyEvent(req)) {

@@ -36,6 +36,8 @@ Use the setCustomLogger function to configure a custom logger. The custom logger
 export type CustomLogger = {
   trace: (message: string) => void;
   warn: (message: string) => void;
+  error: (message: string) => void;
+  info: (message: string) => void;
 };
 
 ```
@@ -49,6 +51,8 @@ import { setCustomLogger } from "@govuk-one-login/frontend-passthrough-headers";
 const customLogger = {
   trace: (message: string) => console.log(`TRACE: ${message}`),
   warn: (message: string) => console.warn(`WARN: ${message}`),
+  error: (message: string) => console.warn(`WARN: ${message}`),
+  info: (message: string) => console.warn(`WARN: ${message}`),
 };
 
 setCustomLogger(customLogger);
