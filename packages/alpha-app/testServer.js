@@ -1,6 +1,6 @@
 import { check, group } from "k6";
 import http from "k6/http";
-import { validateEventStructure } from "./k6-event-validator.js";
+import { validateEvent } from "./k6-event-validator.js";
 
 function testEventValidation(eventName, eventData) {
   const testEvent = {
@@ -11,7 +11,7 @@ function testEventValidation(eventName, eventData) {
     ...eventData
   };
   
-  const isValid = validateEventStructure(testEvent);
+  const isValid = validateEvent(testEvent);
   check(isValid, {
     [`Event ${eventName} validation passed`]: (valid) => valid === true,
   });
