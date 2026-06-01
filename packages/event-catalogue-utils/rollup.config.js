@@ -15,7 +15,9 @@ export default {
     },
   ],
   plugins: [
-    typescript(),
+    typescript({
+      tsconfig: "tsconfig.build.json"
+    }),
     copy({
       targets: [
         {

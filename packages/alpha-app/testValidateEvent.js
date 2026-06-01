@@ -1,6 +1,6 @@
 import { check, group } from "k6";
-// Import the validateEvent function from the local wrapper
-import { validateEvent } from "./k6-event-validator.js";
+// Import the k6-compatible validateEvent function
+import { validateEvent } from "./validateEvent-k6.js";
 
 // k6 run testValidateEvent.js
 export const options = {
