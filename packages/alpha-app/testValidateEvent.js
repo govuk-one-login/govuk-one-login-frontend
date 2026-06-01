@@ -1,6 +1,6 @@
 import { check, group } from "k6";
-// Import the k6-compatible validateEvent function
-import { validateEvent } from "./validateEvent-k6.js";
+// Import the real validateEvent function from event-catalogue-utils
+import { validateEvent } from "@govuk-one-login/event-catalogue-utils";
 
 // k6 run testValidateEvent.js
 export const options = {
