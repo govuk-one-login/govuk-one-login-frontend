@@ -1,3 +1,14 @@
+## 1.3.3 (2026-06-04)
+
+### 🚀 Features
+
+- **DFC-806:** Use logger package in other packages ([#411](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/411))
+- **DFC-1140:** Migrate frontend-asset-loader to vitest ([705bcd0](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/705bcd0))
+
+### ❤️ Thank You
+
+- Sam Bunce
+
 ## 1.3.2 (2026-01-19)
 
 ### 🩹 Fixes

@@ -1,3 +1,13 @@
+## 2.2.3 (2026-06-04)
+
+### 🩹 Fixes
+
+- updated all package.jsons for OIPC ([c793b32](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/c793b32))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+
 ## 2.2.2 (2025-07-31)
 
 ### 🚀 Features

@@ -1,3 +1,14 @@
+## 0.1.5 (2026-06-04)
+
+### 🚀 Features
+
+- **DFC-806:** Use logger package in other packages ([#411](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/411))
+- **DFC-1144:** Migrate frontend-vital-signs to vitest ([a0ae868](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/a0ae868))
+
+### ❤️ Thank You
+
+- Sam Bunce
+
 ## 0.1.4 (2025-11-17)
 
 ### 🚀 Features

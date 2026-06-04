@@ -1,6 +1,6 @@
 {
   "name": "@govuk-one-login/frontend-vital-signs",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "",
   "type": "module",
   "main": "build/cjs/index.cjs",

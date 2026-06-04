@@ -1,3 +1,17 @@
+## 5.3.1 (2026-06-04)
+
+### 🚀 Features
+
+- **DFC-806:** Use logger package in other packages ([#411](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/411))
+
+### 🧱 Updated Dependencies
+
+- Updated @govuk-one-login/frontend-analytics to 4.0.9
+
+### ❤️ Thank You
+
+- Sam Bunce
+
 ## 5.3.0 (2026-05-21)
 
 ### 🚀 Features

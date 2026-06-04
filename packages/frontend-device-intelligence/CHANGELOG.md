@@ -1,3 +1,20 @@
+## 1.2.1 (2026-06-04)
+
+### 🚀 Features
+
+- **DFC-1138:** Migrate frontend-device-intelligence to vitest ([11f15e0](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/11f15e0))
+
+### 🩹 Fixes
+
+- Migrate frontend-device-intelligence to vitest ([15cdabc](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/15cdabc))
+- Reduce regex excessive backtracking risk ([effb31c](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/effb31c))
+- updated all package.jsons for OIPC ([c793b32](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/c793b32))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+- Sam Bunce
+
 ## 1.2.0 (2025-04-25)
 
 ### 🚀 Features
