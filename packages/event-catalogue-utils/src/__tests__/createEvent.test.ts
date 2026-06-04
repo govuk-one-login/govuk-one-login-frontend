@@ -1,4 +1,4 @@
-import { createEvent } from "../createEvent";
+import { createEvent } from "../createEvent.js";
 
 describe("createEvent", () => {
   it("should return an un-modified version of the provided event", () => {

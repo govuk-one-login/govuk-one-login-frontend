@@ -1,8 +1,5 @@
-import { nodeResolve } from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
-import json from "@rollup/plugin-json";
-import typescript from "rollup-plugin-typescript2";
-import copy from "rollup-plugin-copy";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
 
 export default [
   {
@@ -53,5 +50,20 @@ export default [
         inlineDynamicImports: true,
       },
     ],
+  },
+  {
+    input: "testValidateEvent.js",
+    plugins: [
+      nodeResolve({
+        preferBuiltins: false,
+        browser: true,
+      }),
+      commonjs(),
+    ],
+    output: {
+      file: "dist/k6-event-validator.bundle.js",
+      format: "es",
+    },
+    external: ["k6", "k6/http"],
   },
 ];
