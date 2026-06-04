@@ -5,6 +5,17 @@
     "libsDir": "packages"
   },
   "release": {
+    "projects": [
+      "alpha-app",
+      "event-catalogue-utils",
+      "frontend-analytics",
+      "frontend-asset-loader",
+      "frontend-device-intelligence",
+      "frontend-language-toggle",
+      "frontend-passthrough-headers",
+      "frontend-ui",
+      "frontend-vital-signs"
+    ],
     "changelog": {
       "projectChangelogs": {
         "createRelease": "github"
@@ -26,8 +37,13 @@
   "targetDefaults": {
     "@nx/js:tsc": {
       "cache": true,
-      "dependsOn": ["^build"],
-      "inputs": ["default", "^default"]
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "default",
+        "^default"
+      ]
     },
     "@nx/eslint:lint": {
       "cache": true,
@@ -40,7 +56,11 @@
     },
     "@nx/jest:jest": {
       "cache": false,
-      "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"],
+      "inputs": [
+        "default",
+        "^default",
+        "{workspaceRoot}/jest.preset.js"
+      ],
       "options": {
         "passWithNoTests": true
       },

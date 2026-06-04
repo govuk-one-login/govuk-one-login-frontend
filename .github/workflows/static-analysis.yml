@@ -95,3 +95,30 @@ jobs:
           projectBaseDir: ./packages/${{ matrix.TAG }}
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  release:
+    name: Dry run release
+    runs-on: ubuntu-latest
+    needs: [coverage, sonarcloud]
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: ./.github/actions/setup-node
+        with:
+          token: ${{ secrets.GH_PACKAGES_TOKEN }}
+
+      # required set up steps for Github architecture
+      - run: npm i @rollup/rollup-linux-x64-gnu --no-save
+      - run: npm i @nx/nx-linux-x64-gnu --no-save
+
+      - uses: nrwl/nx-set-shas@v4
+
+      - run: git branch --track main origin/main
+        if: ${{ github.event_name == 'pull_request' }}
+
+      - run: npx nx run-many -t build
+
+      - run: npx nx release --yes --dry-run
