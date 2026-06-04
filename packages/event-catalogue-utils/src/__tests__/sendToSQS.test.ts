@@ -1,4 +1,4 @@
-import { sendEventToSQS } from "../sendEventToSQS";
+import { sendEventToSQS } from "../sendEventToSQS.js";
 
 const mockSend = vi.fn();
 

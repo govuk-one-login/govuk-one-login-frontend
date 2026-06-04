@@ -1,4 +1,4 @@
-import { validateEvent } from "../validateEvent";
+import { validateEvent } from "../validateEvent.js";
 
 describe("validateEvent", () => {
   it("should approve a valid event", () => {
