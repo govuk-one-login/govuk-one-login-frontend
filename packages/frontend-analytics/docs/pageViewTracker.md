@@ -116,6 +116,11 @@ Taxonomy level 2 is used to identify subsections of the user journey within the 
 This is the value of the document.title property. (Note that this value should be in english, even if the user has changed their preferred language to Welsh and the value of document.title has been translated into Welsh as a result)
 300 characters or fewer, lowercase, Alphanumeric, English
 
+#### reason
+
+Optional. The reason a user landed on this page, for example an error reason on an error page. If not provided, this field is omitted from the event entirely.
+100 characters or fewer, lowercase, Alphanumeric
+
 ## Example of event
 
 {
@@ -134,6 +139,7 @@ This is the value of the document.title property. (Note that this value should b
 'content_id': 'e4a3603d-2d3c-4ff1-9b80-d72c1e6b7a58',
 'first_published_at': '2022-06-23',
 'updated_at': '2023-10-02',
-'dynamic': "true"
+'dynamic': "true",
+'reason': 'session_expired' // optional - only present when a reason is provided
 }
 }

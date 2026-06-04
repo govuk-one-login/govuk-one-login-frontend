@@ -23,9 +23,12 @@
           dynamic: 'undefined',
           {% endif %}
           {% if params.loggedInStatus is defined %}
-          logged_in_status: {{params.loggedInStatus}}
+          logged_in_status: {{params.loggedInStatus}},
           {%else%}
-          logged_in_status: 'undefined'
+          logged_in_status: 'undefined',
+          {% endif %}
+          {% if params.reason is defined and params.reason %}
+          reason: '{{params.reason}}'
           {% endif %}
       });
   }
