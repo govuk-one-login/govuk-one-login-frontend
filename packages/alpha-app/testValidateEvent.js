@@ -1,4 +1,4 @@
-import { validateEvent } from "./validateEvent-k6.js";
+import { validateEvent } from "@govuk-one-login/event-catalogue-utils";
 import { check, group } from "k6";
 
 // k6 run testValidateEvent.js
