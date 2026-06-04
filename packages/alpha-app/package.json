@@ -16,13 +16,14 @@
     "test:dev": "K6_BROWSER_HEADLESS=false k6 run testBrowser.js",
     "test:browser": "k6 run testBrowser.js",
     "test:server": "k6 run testServer.js",
+    "test:validateEvent": "cd ../event-catalogue-utils && npm run build && cd ../alpha-app && rollup -c rollup.k6.config.mjs -i testValidateEvent.js -o dist/testValidateEvent.bundle.js && k6 run dist/testValidateEvent.bundle.js",
     "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,md}\"",
     "build": "rollup -c",
     "dev-js": "rollup -c --watch"
   },
   "dependencies": {
     "@axe-core/playwright": "^4.11.0",
-    "@govuk-one-login/event-catalogue": "^43.2.0",
+    "@govuk-one-login/event-catalogue": "^43.2.4",
     "@govuk-one-login/event-catalogue-schemas": "^43.2.0",
     "@govuk-one-login/event-catalogue-utils": "0.x",
     "@govuk-one-login/frontend-analytics": "4.0.8",
