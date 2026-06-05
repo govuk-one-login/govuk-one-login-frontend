@@ -72,6 +72,10 @@ app.get("/api", (req, res) => {
   }
 });
 
+app.get("/test-val", (req, res) => {
+  return res.json();
+});
+
 app.post("/api/test-submit-button", (req, res) => {
   const newEvent = createEvent("AIS_EVENT_TRANSITION_APPLIED", {
     component_id: "component_id",
