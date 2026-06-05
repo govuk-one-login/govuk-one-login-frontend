@@ -8,14 +8,14 @@ function testEventValidation(eventName, eventData) {
     event_name: eventName,
     event_timestamp_ms: Date.now(),
     timestamp: Date.now(),
-    ...eventData
+    ...eventData,
   };
-  
+
   const isValid = validateEvent(testEvent);
   check(isValid, {
     [`Event ${eventName} validation passed`]: (valid) => valid === true,
   });
-  
+
   return isValid;
 }
 
@@ -40,12 +40,14 @@ export const options = {
 };
 
 export default function pocApp() {
-  const response = http.get("http://localhost:3000");
-  
+  const response = http.get("http://localhost:3000/test-val");
+
   check(response, {
     "status is 200": (r) => r.status === 200,
-    "page contains expected content": (r) => r.body && r.body.includes("Using your GOV.UK One Login"),
-  }) || console.log(`Request failed: ${response.error || 'Connection refused'}`);
+    "page contains expected content": (r) =>
+      r.body && r.body.includes("Using your GOV.UK One Login"),
+  }) ||
+    console.log(`Request failed: ${response.error || "Connection refused"}`);
 
   group("Event Validation Tests", () => {
     testEventValidation("AIS_EVENT_TRANSITION_APPLIED", {});
