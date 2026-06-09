@@ -55,6 +55,8 @@ app.use(helmet(getHelmetConfig()));
 
 let counter = 0;
 
+// to do: add endpoints with and without validate event
+
 app.get("/api", (req, res) => {
   counter++;
   const processingTime =
@@ -76,6 +78,7 @@ app.get("/test-val", (req, res) => {
   return res.json();
 });
 
+//with validate events
 app.post("/api/test-submit-button", (req, res) => {
   const newEvent = createEvent("AIS_EVENT_TRANSITION_APPLIED", {
     component_id: "component_id",
