@@ -40,12 +40,12 @@ export const options = {
 };
 
 export default function pocApp() {
-  const response = http.get("http://localhost:3000/test-val");
+  const response = http.get("http://localhost:3000/spinner");
 
   check(response, {
     "status is 200": (r) => r.status === 200,
     "page contains expected content": (r) =>
-      r.body && r.body.includes("Using your GOV.UK One Login"),
+      r.body && r.body.includes("GOV.UK One Login"),
   }) ||
     console.log(`Request failed: ${response.error || "Connection refused"}`);
 
