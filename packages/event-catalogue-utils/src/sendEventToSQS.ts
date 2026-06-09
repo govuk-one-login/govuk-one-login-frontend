@@ -1,9 +1,9 @@
 import { Events, EventKey, Options } from "./types.js";
 import { SendMessageCommand, SQSClient } from "@aws-sdk/client-sqs";
 import logger from "./logger.js";
-import _ from "lodash";
+import { memoize, pick } from "lodash";
 
-export const getDefaultSQSClient = _.memoize(
+export const getDefaultSQSClient = memoize(
   () => new SQSClient({ region: "eu-west-2" }),
 );
 
@@ -26,7 +26,7 @@ export async function sendEventToSQS<K extends EventKey>(
 
   const logMessage = `Successfully fired ${event.event_name} event - SQS message id: '${response.MessageId}'; response code: ${response.$metadata?.httpStatusCode}`;
   if (logParams) {
-    logger.info(_.pick(event, logParams), logMessage);
+    logger.info(pick(event, logParams), logMessage);
   } else {
     logger.info(logMessage);
   }
