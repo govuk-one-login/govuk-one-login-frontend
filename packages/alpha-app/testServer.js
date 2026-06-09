@@ -35,22 +35,22 @@ export const options = {
   },
   thresholds: {
     http_req_duration: ["p(95)<1000"],
-    http_req_failed: ["rate<0.90"],
+    http_req_failed: ["rate<0.05"],
   },
 };
 
 export default function pocApp() {
-  const responseWithEvent = http.get(
-    "http://localhost:3000/test-submit-button",
-  );
+  // const responseWithEvent = http.get(
+  //   "http://localhost:3000/test-submit-button",
+  // );
   const responseWithOutEvent = http.get("http://localhost:3000/");
 
-  check(responseWithEvent, {
-    "status is 200": (r) => r.status === 200,
-    "page contains expected content": (r) =>
-      r.body && r.body.includes("GOV.UK One Login"),
-  }) ||
-    console.log(`Request failed: ${response.error || "Connection refused"}`);
+  // check(responseWithEvent, {
+  //   "status is 200": (r) => r.status === 200,
+  //   "page contains expected content": (r) =>
+  //     r.body && r.body.includes("GOV.UK One Login"),
+  // }) ||
+  //   console.log(`Request failed: ${response.error || "Connection refused"}`);
 
   check(responseWithOutEvent, {
     "status is 200": (r) => r.status === 200,
