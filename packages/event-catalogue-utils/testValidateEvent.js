@@ -1,5 +1,5 @@
-import { validateEvent } from "@govuk-one-login/event-catalogue-utils";
 import { check, group } from "k6";
+import { validateEvent } from "../src/validateEvent.js";
 
 //k6 run testValidateEvent.js
 export const options = {
