@@ -1,23 +1,5 @@
 import { check } from "k6";
 import http from "k6/http";
-import { validateEvent } from "./k6-event-validator.js";
-
-function testEventValidation(eventName, eventData) {
-  const testEvent = {
-    component_id: "alpha-app",
-    event_name: eventName,
-    event_timestamp_ms: Date.now(),
-    timestamp: Date.now(),
-    ...eventData,
-  };
-
-  const isValid = validateEvent(testEvent);
-  check(isValid, {
-    [`Event ${eventName} validation passed`]: (valid) => valid === true,
-  });
-
-  return isValid;
-}
 
 export const options = {
   scenarios: {
@@ -40,27 +22,23 @@ export const options = {
 };
 
 export default function pocApp() {
-  // const responseWithEvent = http.get(
-  //   "http://localhost:3000/test-submit-button",
-  // );
+  const responseWithEvent = http.get(
+    "http://localhost:3000/test-submit-button",
+  );
 
-  const responseWithOutEvent = http.get("http://localhost:3000/welcome");
+  // const responseWithOutEvent = http.get("http://localhost:3000/api");
 
-  // check(responseWithEvent, {
-  //   "status is 200": (r) => r.status === 200,
-  //   "page contains expected content": (r) =>
-  //     r.body && r.body.includes("GOV.UK One Login"),
-  // }) ||
-  console.log(`Request failed: ${response.error || "Connection refused"}`);
-
-  check(responseWithOutEvent, {
+  check(responseWithEvent, {
     "status is 200": (r) => r.status === 200,
     "page contains expected content": (r) =>
       r.body && r.body.includes("GOV.UK One Login"),
   }) ||
     console.log(`Request failed: ${response.error || "Connection refused"}`);
 
-  // group("Event Validation Tests", () => {
-  //   testEventValidation("AIS_EVENT_TRANSITION_APPLIED", {});
-  // });
+  // check(responseWithOutEvent, {
+  //   "status is 200": (r) => r.status === 200,
+  //   "page contains expected content": (r) =>
+  //     r.body && r.body.includes("GOV.UK One Login"),
+  // }) ||
+  //   console.log(`Request failed: ${response.error || "Connection refused"}`);
 }
