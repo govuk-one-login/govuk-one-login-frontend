@@ -43,14 +43,15 @@ export default function pocApp() {
   // const responseWithEvent = http.get(
   //   "http://localhost:3000/test-submit-button",
   // );
-  const responseWithOutEvent = http.get("http://localhost:3000/");
+
+  const responseWithOutEvent = http.get("http://localhost:3000/welcome");
 
   // check(responseWithEvent, {
   //   "status is 200": (r) => r.status === 200,
   //   "page contains expected content": (r) =>
   //     r.body && r.body.includes("GOV.UK One Login"),
   // }) ||
-  //   console.log(`Request failed: ${response.error || "Connection refused"}`);
+  console.log(`Request failed: ${response.error || "Connection refused"}`);
 
   check(responseWithOutEvent, {
     "status is 200": (r) => r.status === 200,

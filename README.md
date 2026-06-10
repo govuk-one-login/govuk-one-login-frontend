@@ -57,9 +57,13 @@ To create a new package, follow these steps:
 
 - After answering the questions, the command will generate the package with the necessary files.
 
+## How to Run Performance Tests 
 
+To run performance tests using k6, follow these steps:
 
--
+- Head over to the alpha app 
+- Change the end-point in the alpha app to `test-submit-button`
+- Run the command `k6 run testServer.js`
 
 ## Lint the code with eslint+prettier:
 
