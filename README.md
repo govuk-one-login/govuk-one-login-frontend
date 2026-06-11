@@ -165,7 +165,7 @@ To deprecate a specific package version from the monorepo, use the **GitHub Acti
 
 To run performance tests using k6, follow these steps:
 
-- Head over to the alpha app 
+- Head over to the alpha app and run it in product mode
 - Change the end-point in the alpha app to `test-submit-button`
 - Run the command `k6 run testServer.js` if you have K6 installed otherwise run `npm run test:server`
 
