@@ -16,7 +16,8 @@
   },
   "scripts": {
     "test": "vitest --run --coverage",
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "test:dev": "K6_BROWSER_HEADLESS=false k6 run testBrowser.js"
   },
   "files": [
     "build/",
