@@ -69,6 +69,7 @@ export class PageViewTracker {
           getTaxonomy(parameters.taxonomy_level5, "Level5"),
           100,
         ),
+        ...(parameters.reason ? { reason: validateParameter(parameters.reason, 100) } : {}),
       },
     };
 

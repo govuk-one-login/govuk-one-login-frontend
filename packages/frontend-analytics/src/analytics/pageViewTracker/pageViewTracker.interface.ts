@@ -19,6 +19,7 @@ export interface PageViewEventInterface {
     first_published_at?: string;
     updated_at?: string;
     relying_party?: string;
+    reason?: string;
   };
 }
 
@@ -33,6 +34,7 @@ export interface PageViewParametersInterface {
   taxonomy_level3?: string;
   taxonomy_level4?: string;
   taxonomy_level5?: string;
+  reason?: string;
 }
 
 export interface GTMInitInterface {

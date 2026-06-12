@@ -223,6 +223,7 @@ It takes as a unique parameter an object define by :
 - content_id (string): Content ID is a unique ID for each front end display on a given page.
 - logged_in_status (boolean): Whether a user is logged in or logged out.
 - dynamic (boolean): This parameter indicates whether the page has multiple versions and uses the same URL.
+- reason (string): Optional. The reason a user landed on this page (e.g. an error reason). If not provided, the field is omitted from the event entirely.
 
 Example:
 
@@ -238,6 +239,7 @@ window.DI.analyticsGa4.pageViewTracker.trackOnPageLoad({
   content_id: "<e4a3603d-2d3c-4ff1-9b80-d72c1e6b7a58>",
   logged_in_status: true,
   dynamic: true,
+  reason: "session_expired", // optional - omit if not applicable
 });
 ```
 
@@ -265,6 +267,7 @@ Example:
       contentId: "e08d04e6-b24f-4bad-9955-1eb860771747",
       loggedInStatus: false,
       dynamic: false,
+      reason: "passkey_not_supported",
     });
   }
 }

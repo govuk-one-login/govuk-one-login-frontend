@@ -430,6 +430,40 @@ describe("Persisting taxonomy level values", () => {
   });
 });
 
+describe("reason field", () => {
+  let instance: PageViewTracker;
+
+  beforeEach(() => {
+    acceptCookies();
+    vi.clearAllMocks();
+    vi.spyOn(pushToDataLayer, "pushToDataLayer");
+    instance = new PageViewTracker(getOptions());
+  });
+
+  test("includes reason in page_view when provided", () => {
+    instance.trackOnPageLoad(getParameters({ reason: "session_expired" }));
+    expect(pushToDataLayer.pushToDataLayer).toHaveBeenCalledWith(
+      expect.objectContaining({
+        page_view: expect.objectContaining({
+          reason: "session_expired",
+        }),
+      }),
+    );
+  });
+
+  test("does not include reason in page_view when not provided", () => {
+    instance.trackOnPageLoad(getParameters());
+    const call = (pushToDataLayer.pushToDataLayer as ReturnType<typeof vi.fn>).mock.calls[0][0];
+    expect(call.page_view).not.toHaveProperty("reason");
+  });
+
+  test("does not include reason in page_view when empty string", () => {
+    instance.trackOnPageLoad(getParameters({ reason: "" }));
+    const call = (pushToDataLayer.pushToDataLayer as ReturnType<typeof vi.fn>).mock.calls[0][0];
+    expect(call.page_view).not.toHaveProperty("reason");
+  });
+});
+
 describe("Parameter variations", () => {
   let instance: PageViewTracker;
 
