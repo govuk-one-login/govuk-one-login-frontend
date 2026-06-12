@@ -52,9 +52,6 @@
   "peerDependenciesMeta": {
     "hmpo-components": {
       "optional": true
-    },
-    "@govuk-one-login/frontend-analytics": {
-      "optional": true
     }
   },
   "exports": {
