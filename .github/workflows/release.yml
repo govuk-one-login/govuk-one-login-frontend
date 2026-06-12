@@ -79,11 +79,10 @@ jobs:
         run: npx nx report
 
       - name: Conditional Build for frontend-analytics
-        if: ${{ github.event.inputs.target == '@govuk-one-login/frontend-ui' }}
-        run: npx nx build @govuk-one-login/frontend-analytics
+        run: npx nx build
 
       - name: Format, lint, test, and build affected packages
-        run: npx nx run-many -t format,lint,test,build --projects=${{ github.event.inputs.target }}
+        run: npx nx run-many -t format,lint,test --projects=${{ github.event.inputs.target }}
 
       # This line is needed for nx affected to work when CI is running on a PR
       - name: Set up main branch tracking
