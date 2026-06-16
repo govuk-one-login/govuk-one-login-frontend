@@ -23,7 +23,8 @@
     },
     "projectsRelationship": "independent",
     "version": {
-      "conventionalCommits": true
+      "conventionalCommits": true,
+      "updateDependents": "never"
     }
   },
   "targets": {
