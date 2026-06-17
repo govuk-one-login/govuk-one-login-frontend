@@ -78,8 +78,8 @@ jobs:
       - name: Print Environment Information
         run: npx nx report
 
-      - name: Conditional Build for frontend-analytics
-        run: npx nx build
+      - name: Build all projects
+        run: npx nx run-many -t build
 
       - name: Format, lint, test, and build affected packages
         run: npx nx run-many -t format,lint,test --projects=${{ github.event.inputs.target }}
