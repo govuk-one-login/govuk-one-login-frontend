@@ -24,6 +24,10 @@ runs:
         cache: "npm"
 
     - shell: bash
+      name: Skip changes to .npmrc so they don't get committed back during release
+      run: git update-index --skip-worktree .npmrc
+
+    - shell: bash
       name: Authenticate with GitHub Packages registry
       run: echo "//npm.pkg.github.com/:_authToken=\${NODE_AUTH_TOKEN}" >> $GITHUB_WORKSPACE/.npmrc
 
@@ -36,3 +40,7 @@ runs:
     - shell: bash
       name: Prepare dependencies
       run: npm run prepare-dependencies
+
+    - shell: bash
+      name: Switch registry back to public for publishing
+      run: sed -i 's#@govuk-one-login:registry=https://npm.pkg.github.com#@govuk-one-login:registry=https://registry.npmjs.org/#g' .npmrc
