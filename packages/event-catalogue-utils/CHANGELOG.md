@@ -1,3 +1,15 @@
+## 0.4.0 (2026-06-18)
+
+### 🚀 Features
+
+- support event-catalogue versions 45 and 46 ([#439](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/439))
+- **DFC-806:** Use logger package in other packages ([#411](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/411))
+
+### ❤️ Thank You
+
+- Nick Heal @nickhealGDS
+- Sam Bunce
+
 ## 0.3.2 (2026-04-24)
 
 ### 🩹 Fixes
