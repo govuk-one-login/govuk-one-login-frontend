@@ -453,13 +453,15 @@ describe("reason field", () => {
 
   test("does not include reason in page_view when not provided", () => {
     instance.trackOnPageLoad(getParameters());
-    const call = (pushToDataLayer.pushToDataLayer as ReturnType<typeof vi.fn>).mock.calls[0][0];
+    const call = (pushToDataLayer.pushToDataLayer as ReturnType<typeof vi.fn>)
+      .mock.calls[0][0];
     expect(call.page_view).not.toHaveProperty("reason");
   });
 
   test("does not include reason in page_view when empty string", () => {
     instance.trackOnPageLoad(getParameters({ reason: "" }));
-    const call = (pushToDataLayer.pushToDataLayer as ReturnType<typeof vi.fn>).mock.calls[0][0];
+    const call = (pushToDataLayer.pushToDataLayer as ReturnType<typeof vi.fn>)
+      .mock.calls[0][0];
     expect(call.page_view).not.toHaveProperty("reason");
   });
 });
