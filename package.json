@@ -19,7 +19,7 @@
     "@aws-sdk/client-sqs": "^3.1006.0",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
-    "@cucumber/cucumber": "10.0.1",
+    "@cucumber/cucumber": "^13.0.0",
     "@jest/environment-jsdom-abstract": "^30.3.0",
     "@jest/globals": "^29.7.0",
     "@nx/eslint": "22.7.5",
