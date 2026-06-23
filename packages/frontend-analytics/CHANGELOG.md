@@ -1,3 +1,23 @@
+## 4.1.0 (2026-06-23)
+
+### 🚀 Features
+
+- **1254:** added optional reason field to the on_page_view event ([#438](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/438))
+- **dfc-1134:** remove PII from URL and tests ([d77fce7](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/d77fce7))
+- **1071:** adding tracking for optional form response fields ([6d28f15](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/6d28f15))
+- **DFC-806:** Logger package ([6b0b5d3](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/6b0b5d3))
+
+### 🩹 Fixes
+
+- frontend-ui where strict esm was broken by named lodash imports ([b54e1bf](https://github.com/govuk-one-login/govuk-one-login-frontend/commit/b54e1bf))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+- nickhealGDS
+- Sam Bunce
+- ug-gds
+
 ## 4.0.8 (2026-04-24)
 
 ### 🚀 Features
