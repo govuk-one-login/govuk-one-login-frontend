@@ -1,4 +1,4 @@
-import preset from "@nx/jest/preset.js";
+import preset from "@nx/jest/preset";
 
 const nxPreset = preset.default;
 
