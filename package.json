@@ -22,12 +22,12 @@
     "@cucumber/cucumber": "^13.0.0",
     "@jest/environment-jsdom-abstract": "^30.3.0",
     "@jest/globals": "^29.7.0",
-    "@nx/eslint": "22.7.5",
-    "@nx/eslint-plugin": "22.7.5",
-    "@nx/jest": "22.7.5",
-    "@nx/js": "22.7.5",
-    "@nx/node": "22.7.5",
-    "@nx/workspace": "22.7.5",
+    "@nx/eslint": "23.0.0",
+    "@nx/eslint-plugin": "23.0.0",
+    "@nx/jest": "23.0.0",
+    "@nx/js": "23.0.0",
+    "@nx/node": "23.0.0",
+    "@nx/workspace": "23.0.0",
     "@playwright/test": "^1.60.0",
     "@rollup/plugin-commonjs": "^29.0.2",
     "@rollup/plugin-json": "^6.1.0",
@@ -77,7 +77,7 @@
     "nock": "^13.5.6",
     "npm-run-all": "^4.1.5",
     "nunjucks": "^3.2.4",
-    "nx": "22.7.5",
+    "nx": "23.0.0",
     "path": "^0.12.7",
     "playwright": "^1.60.0",
     "prettier": "3.5.3",
@@ -102,8 +102,7 @@
   "overrides": {
     "jest-environment-jsdom": {
       "canvas": "$canvas"
-    },
-    "axios": "1.15.2"
+    }
   },
   "workspaces": [
     "packages/*"
