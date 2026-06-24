@@ -26,7 +26,7 @@ export async function sendEventToSQS<K extends EventKey>(
 
   const logMessage = `Successfully fired ${event.event_name} event - SQS message id: '${response.MessageId}'; response code: ${response.$metadata?.httpStatusCode}`;
   if (logParams) {
-    logger.info(pick(event, logParams), logMessage);
+    logger.info(_.pick(event, logParams), logMessage);
   } else {
     logger.info(logMessage);
   }
