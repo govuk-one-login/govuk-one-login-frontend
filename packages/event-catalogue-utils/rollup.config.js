@@ -1,8 +1,17 @@
+import json from "@rollup/plugin-json";
 import typescript from "rollup-plugin-typescript2";
 import copy from "rollup-plugin-copy";
 
 export default {
-  external: ["pino"],
+  external: [
+    "@govuk-one-login/event-catalogue",
+    "@govuk-one-login/event-catalogue-schemas", 
+    "@govuk-one-login/frontend-logger",
+    "@aws-sdk/client-sqs",
+    "ajv",
+    "ajv/dist/2019",
+    "lodash"
+  ],
   input: "src/index.ts",
   output: [
     {
@@ -15,7 +24,10 @@ export default {
     },
   ],
   plugins: [
-    typescript(),
+    typescript({
+      tsconfig: "tsconfig.build.json",
+    }),
+    json(),
     copy({
       targets: [
         {

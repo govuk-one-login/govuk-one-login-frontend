@@ -17,11 +17,10 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/setup-node@v6
+    - uses: actions/setup-node@v4
       with:
         node-version: ${{ inputs.node-version }}
         registry-url: ${{ inputs.registry-url }}
-        cache: "npm"
 
     - shell: bash
       name: Skip changes to .npmrc so they don't get committed back during release
@@ -30,6 +29,10 @@ runs:
     - shell: bash
       name: Authenticate with GitHub Packages registry
       run: echo "//npm.pkg.github.com/:_authToken=\${NODE_AUTH_TOKEN}" >> $GITHUB_WORKSPACE/.npmrc
+
+    - shell: bash
+      name: Verify lockfile exists
+      run: ls -la package-lock.json && head -5 package-lock.json
 
     - shell: bash
       run: npm ci
