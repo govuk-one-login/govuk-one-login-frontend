@@ -1,4 +1,6 @@
-import { createEvent, sendEventToSQS, validateEvent } from "./index.js";
+import { createEvent } from "./createEvent.js";
+import { sendEventToSQS } from "./sendEventToSQS.js";
+import { validateEvent } from "./validateEvent.js";
 import { EventKey, Events, Options } from "./types.js";
 import logger from "./logger.js";
 import _ from "lodash";
