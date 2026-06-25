@@ -4,21 +4,29 @@
     e.g. getting a valid sessionId cookie by calling /authorize.
 */
 
-async function setCookie(context, name, value) {
+interface Context {
+  addCookies: (
+    cookies: {
+      name: string;
+      value: string;
+      path: string;
+      domain?: string;
+    }[],
+  ) => {};
+}
+
+async function setCookie(context: Context, name: string, value: string) {
   await context.addCookies([
     { name, value, path: "/", domain: process.env.SERVICE_COOKIE_DOMAIN },
   ]);
 }
 
-async function setLngCookieToEnglish(context) {
+async function setLngCookieToEnglish(context: Context) {
   await setCookie(context, "lng", "en");
 }
 
-async function setLngCookieToWelsh(context) {
+async function setLngCookieToWelsh(context: Context) {
   await setCookie(context, "lng", "cy");
 }
 
-module.exports = {
-  setLngCookieToEnglish,
-  setLngCookieToWelsh,
-};
+export { setLngCookieToEnglish, setLngCookieToWelsh };

@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
-const { logger } = require("../utils/logger");
+import { logger } from "../utils/logger";
+import type { Request, Response } from "express";
 
-function validateChooseLocation(req, res) {
+function validateChooseLocation(req: Request, res: Response) {
   try {
     const { chooseLocation } = req.body;
     const queryParams = req.query;
@@ -28,4 +28,4 @@ function validateChooseLocation(req, res) {
   }
 }
 
-module.exports = { validateChooseLocation };
+export { validateChooseLocation };

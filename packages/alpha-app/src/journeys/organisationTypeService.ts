@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
-const { logger } = require("../utils/logger");
+import { logger } from "../utils/logger";
+import type { Request, Response } from "express";
 
-function validateOrganisationType(req, res) {
+function validateOrganisationType(req: Request, res: Response) {
   try {
     const { organisationType } = req.body;
     const queryParams = req.query;
@@ -26,4 +26,4 @@ function validateOrganisationType(req, res) {
   }
 }
 
-module.exports = { validateOrganisationType };
+export { validateOrganisationType };

@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "noEmit": true,
+    "rootDir": ".",
+    "outDir": "build",
+    "module": "ESNext",
+    "target": "ES2018",
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "strict": true,
+    "lib": ["dom"],
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "types": [""],
+    "noImplicitThis": false
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/frontend-assets/**"]
+}

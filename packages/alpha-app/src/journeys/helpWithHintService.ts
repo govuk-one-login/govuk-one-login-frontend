@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
-const { logger } = require("../utils/logger");
+import { logger } from "../utils/logger";
+import type { Request, Response } from "express";
 
-function validateHelpWithHint(req, res) {
+function validateHelpWithHint(req: Request, res: Response) {
   try {
     const { helpWithHint } = req.body;
     const queryParams = req.query;
@@ -29,4 +29,4 @@ function validateHelpWithHint(req, res) {
   }
 }
 
-module.exports = { validateHelpWithHint };
+export { validateHelpWithHint };

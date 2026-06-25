@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
-const { logger } = require("../utils/logger");
+import { logger } from "../utils/logger";
+import type { Request, Response } from "express";
 
-function validateServiceDescription(req, res) {
+function validateServiceDescription(req: Request, res: Response) {
   try {
     const { serviceDescription } = req.body;
     const queryParams = req.query;
@@ -26,4 +26,4 @@ function validateServiceDescription(req, res) {
   }
 }
 
-module.exports = { validateServiceDescription };
+export { validateServiceDescription };

@@ -1,0 +1,22 @@
+{
+  // "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "rootDir": ".",
+    "outDir": "build",
+    "module": "ESNext",
+    "target": "ES2018",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "strict": true,
+    "lib": ["es2019"],
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "types": ["node"],
+    "noImplicitThis": false
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/frontend-assets/**"]
+}

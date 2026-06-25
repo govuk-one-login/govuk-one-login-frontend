@@ -1,4 +1,4 @@
-const { Given } = require("@cucumber/cucumber");
+import { Given } from "@cucumber/cucumber";
 
 Given("I have the {word} cookie set", async function (cookieName) {
   await this.context.addCookies([

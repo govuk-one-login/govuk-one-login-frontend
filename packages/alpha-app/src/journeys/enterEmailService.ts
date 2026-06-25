@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
-const { logger } = require("../utils/logger");
+import { logger } from "../utils/logger";
+import type { Request, Response } from "express";
 
-function validateEnterEmail(req, res) {
+function validateEnterEmail(req: Request, res: Response) {
   try {
     const { enterEmail } = req.body;
 
@@ -22,4 +22,4 @@ function validateEnterEmail(req, res) {
   }
 }
 
-module.exports = { validateEnterEmail };
+export { validateEnterEmail };
