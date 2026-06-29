@@ -10,8 +10,8 @@
     "resolveJsonModule": true,
     "strict": true,
     "lib": ["dom"],
-    "declaration": true,
-    "declarationMap": true,
+    "declaration": false,
+    "declarationMap": false,
     "sourceMap": true,
     "types": [""],
     "noImplicitThis": false

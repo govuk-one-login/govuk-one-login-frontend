@@ -1,48 +1,40 @@
-import console from "console";
-
 const DEFAULT_ERROR_TIMEOUT = 10000; // 10 seconds
 
-export function initialiseProgressButtons(
-  document: Document = window.document,
-  customErrorTimeout?: number,
-) {
-  alert("bbbbbb");
-
+export function initialiseProgressButtons(document: Document = window.document, customErrorTimeout?: number) {
   // Create a single live region for button status announcements
-  const statusRegion = document.createElement("div");
-  statusRegion.setAttribute("aria-live", "assertive");
-  statusRegion.setAttribute("role", "status");
-  statusRegion.className = "govuk-visually-hidden";
+  const statusRegion = document.createElement('div');
+  statusRegion.setAttribute('aria-live', 'assertive');
+  statusRegion.setAttribute('role', 'status');
+  statusRegion.className = 'govuk-visually-hidden';
   document.body.appendChild(statusRegion);
 
   const progressButtons = Array.prototype.slice.call(
-    document.querySelectorAll('[data-frontendui="di-progress-button"]'),
+    document.querySelectorAll('[data-frontendui="di-progress-button"]')
   );
 
   function findClosestForm(element: HTMLElement): HTMLFormElement | null {
     let el: HTMLElement | null = element;
-    while (el && el.nodeName !== "FORM") {
+    while (el && el.nodeName !== 'FORM') {
       el = el.parentElement;
     }
     return el as HTMLFormElement;
   }
 
-  progressButtons.forEach(function (button: HTMLElement) {
+  progressButtons.forEach(function(button: HTMLElement) {
     const form = findClosestForm(button);
     let isSubmitting = false;
 
     // Handle spacebar press for anchor tags
-    if (button.tagName.toLowerCase() === "a") {
-      button.addEventListener("keydown", function (event) {
-        if (event.code === "Space") {
+    if (button.tagName.toLowerCase() === 'a') {
+      button.addEventListener('keydown', function(event) {
+        if (event.code === 'Space') {
           event.preventDefault();
           button.click();
         }
       });
     }
 
-    button.addEventListener("click", function (event) {
-      console.log({ event });
+    button.addEventListener('click', function(event) {
       if (event.metaKey || event.ctrlKey) {
         event.preventDefault();
         button.click();
@@ -54,51 +46,40 @@ export function initialiseProgressButtons(
         return;
       }
 
-      const waitingText = button.getAttribute("data-waiting-text");
-      const longWaitingText = button.getAttribute("data-long-waiting-text");
-      const errorPage = button.getAttribute("data-error-page");
-      if (button.hasAttribute("data-error-timeout")) {
-        customErrorTimeout = parseInt(
-          button.getAttribute("data-error-timeout") as string,
-        );
+      const waitingText = button.getAttribute('data-waiting-text');
+      const longWaitingText = button.getAttribute('data-long-waiting-text');
+      const errorPage = button.getAttribute('data-error-page');
+      if (button.hasAttribute('data-error-timeout')) {
+        customErrorTimeout = parseInt(button.getAttribute('data-error-timeout') as string);
       }
-      const isInput = button.tagName.toLowerCase() === "input";
+      const isInput = button.tagName.toLowerCase() === 'input';
       if (!waitingText || !longWaitingText || !errorPage) {
-        console.error("Progress button is missing required data attributes.");
+        console.error('Progress button is missing required data attributes.');
         return;
       }
 
       isSubmitting = true;
-
+      
       // Always handle the button click, regardless of form presence
-      handleProgressButtonClick(
-        button,
-        waitingText,
-        longWaitingText,
-        errorPage,
-        isInput,
-        customErrorTimeout || DEFAULT_ERROR_TIMEOUT,
-      );
+      handleProgressButtonClick(button, waitingText, longWaitingText, errorPage, isInput, customErrorTimeout || DEFAULT_ERROR_TIMEOUT);
 
       // If no form, we're done. If there is a form, the form submit handler will take over
       if (!form) {
         return;
       }
-
+      
       // For form buttons, let the click propagate to trigger form submission
     });
 
     if (form) {
-      form.addEventListener("submit", function (event) {
+      form.addEventListener('submit', function(event) {
         // The button click handler has already set isSubmitting and handled the button state
         if (isSubmitting) {
           // Allow the first submission, prevent subsequent ones
           if (event.target === form && event.submitter === button) {
             return; // Allow the first submission to proceed
           }
-          event.preventDefault
-            ? event.preventDefault()
-            : (event.returnValue = false);
+          event.preventDefault ? event.preventDefault() : (event.returnValue = false);
           return;
         }
 
@@ -116,47 +97,34 @@ function handleProgressButtonClick(
   longWaitingText: string,
   errorPage: string,
   isInput: boolean,
-  errorTimeoutDuration: number = DEFAULT_ERROR_TIMEOUT,
+  errorTimeoutDuration: number = DEFAULT_ERROR_TIMEOUT
 ): () => void {
-  console.log("aaaaaa");
-
-  element.innerText = "12341234";
-  console.log("12341234");
-
-  var originalText =
-    isInput && element instanceof HTMLInputElement
-      ? element.value
-      : element.innerText;
-  const statusRegion = document.querySelector(
-    '.govuk-visually-hidden[role="status"]',
-  );
-
-  if (typeof element.blur === "function") {
+  var originalText = isInput && element instanceof HTMLInputElement ? element.value : element.innerText;
+  const statusRegion = document.querySelector('.govuk-visually-hidden[role="status"]');
+  
+  if (typeof element.blur === 'function') {
     element.blur();
   }
-  element.setAttribute("data-prevent-double-click", "true");
-
-  if (
-    element instanceof HTMLButtonElement ||
-    element instanceof HTMLInputElement
-  ) {
+  element.setAttribute('data-prevent-double-click', 'true');
+  
+  if (element instanceof HTMLButtonElement || element instanceof HTMLInputElement) {
     // When the button is disabled immediately it prevents the initial form submission.
     // TODO: We should revisit this. It would be better to trigger the button actions from the form submission rather than the button click when a form is present.
     setTimeout(() => {
       element.disabled = true;
-    }, 0);
-  } else if (element.tagName.toLowerCase() === "a") {
-    element.setAttribute("aria-disabled", "true");
-    element.style.pointerEvents = "none";
+    }, 0)
+  } else if (element.tagName.toLowerCase() === 'a') {
+    element.setAttribute('aria-disabled', 'true');
+    element.style.pointerEvents = 'none';
   }
-  element.classList.add("govuk-progress-button--disabled");
-
-  var classes = element.className.split(" ");
-  if (classes.indexOf("govuk-button--progress-loading") === -1) {
-    classes.push("govuk-button--progress-loading");
-    element.className = classes.join(" ");
+  element.classList.add('govuk-progress-button--disabled');
+  
+  var classes = element.className.split(' ');
+  if (classes.indexOf('govuk-button--progress-loading') === -1) {
+    classes.push('govuk-button--progress-loading');
+    element.className = classes.join(' ');
   }
-
+  
   if (isInput && element instanceof HTMLInputElement) {
     element.value = waitingText;
   } else {
@@ -168,58 +136,53 @@ function handleProgressButtonClick(
     statusRegion.textContent = waitingText;
   }
 
-  var longWaitTimeout = window.setTimeout(function () {
+  var longWaitTimeout = window.setTimeout(function() {
     if (isInput && element instanceof HTMLInputElement) {
       element.value = longWaitingText;
     } else {
       element.innerText = longWaitingText;
     }
-
+    
     // Announce the long wait state
     if (statusRegion) {
       statusRegion.textContent = longWaitingText;
     }
   }, 5000);
 
-  var errorTimeout = window.setTimeout(function () {
+  var errorTimeout = window.setTimeout(function() {
     window.location.href = errorPage;
   }, errorTimeoutDuration);
 
   function resetButton() {
-    var classes = element.className.split(" ");
-    var loadingIndex = classes.indexOf("govuk-button--progress-loading");
+    var classes = element.className.split(' ');
+    var loadingIndex = classes.indexOf('govuk-button--progress-loading');
     if (loadingIndex !== -1) {
       classes.splice(loadingIndex, 1);
-      element.className = classes.join(" ");
+      element.className = classes.join(' ');
     }
-
-    if (
-      element instanceof HTMLButtonElement ||
-      element instanceof HTMLInputElement
-    ) {
+    
+    if (element instanceof HTMLButtonElement || element instanceof HTMLInputElement) {
       element.disabled = false;
-    } else if (element.tagName.toLowerCase() === "a") {
-      element.removeAttribute("aria-disabled");
-      element.style.pointerEvents = "";
+    } else if (element.tagName.toLowerCase() === 'a') {
+      element.removeAttribute('aria-disabled');
+      element.style.pointerEvents = '';
     }
-    element.classList.remove("govuk-progress-button--disabled");
-
-    element.setAttribute("data-prevent-double-click", "false");
-
+    element.classList.remove('govuk-progress-button--disabled');
+    
+    element.setAttribute('data-prevent-double-click', 'false');
+    
     if (isInput && element instanceof HTMLInputElement) {
       element.value = originalText;
     } else {
       element.innerText = originalText;
     }
-
+    
     // Clear status region without announcement
-    const statusRegion = document.querySelector(
-      '.govuk-visually-hidden[role="status"]',
-    );
+    const statusRegion = document.querySelector('.govuk-visually-hidden[role="status"]');
     if (statusRegion) {
-      statusRegion.textContent = "";
+      statusRegion.textContent = '';
     }
-
+    
     window.clearTimeout(errorTimeout);
     window.clearTimeout(longWaitTimeout);
   }

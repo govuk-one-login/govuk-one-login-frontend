@@ -15,11 +15,15 @@ export default [
       copy({
         targets: [
           {
-            src: "./src/views",
+            src: "./src/assets",
             dest: "./build",
           },
           {
             src: "./src/locales",
+            dest: "./build",
+          },
+          {
+            src: "./src/views",
             dest: "./build",
           },
         ],

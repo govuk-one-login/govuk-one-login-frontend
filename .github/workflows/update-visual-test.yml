@@ -1,9 +1,7 @@
 name: Update Visual Regression Tests
+
 on:
   workflow_dispatch:
-    inputs:
-      target:
-        description: "Update Visual Snapshots"
 
 permissions:
   contents: write
@@ -40,7 +38,7 @@ jobs:
         working-directory: packages/frontend-ui
 
       - name: Upload screenshots on failure
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: failure()
         with:
           name: playwright-screenshots
