@@ -1,54 +1,51 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
-const dotenv = require("dotenv");
+import dotenv from "dotenv";
 dotenv.config();
 
-const path = require("node:path");
-const express = require("express");
-const session = require("express-session");
-const helmet = require("helmet");
-const { logger } = require("./utils/logger");
-const { configureNunjucks } = require("./config/nunjucks");
-const {
-  validateOrganisationType,
-} = require("./journeys/organisationTypeService.js");
-const { validateHelpWithHint } = require("./journeys/helpWithHintService");
-const {
-  validateServiceDescription,
-} = require("./journeys/serviceDescriptionService");
-const { validateChooseLocation } = require("./journeys/chooseLocationService");
-const { validateEnterEmail } = require("./journeys/enterEmailService");
-const { validateEnterName } = require("./journeys/enterNameService");
-const { validateFeedback } = require("./journeys/feedbackService");
-const { loadAssets } = require("@govuk-one-login/frontend-asset-loader");
-const {
+import path from "node:path";
+import express from "express";
+import session from "express-session";
+import helmet from "helmet";
+import { logger } from "./utils/logger";
+import { configureNunjucks } from "./config/nunjucks";
+import { validateOrganisationType } from "./journeys/organisationTypeService";
+import { validateHelpWithHint } from "./journeys/helpWithHintService";
+import { validateServiceDescription } from "./journeys/serviceDescriptionService";
+import { validateChooseLocation } from "./journeys/chooseLocationService";
+import { validateEnterEmail } from "./journeys/enterEmailService";
+import { validateEnterName } from "./journeys/enterNameService";
+import { validateFeedback } from "./journeys/feedbackService";
+import { loadAssets } from "@govuk-one-login/frontend-asset-loader";
+import {
   setFrontendUiTranslations,
   frontendUiMiddleware,
   getHelmetConfig,
-} = require("@govuk-one-login/frontend-ui");
+} from "@govuk-one-login/frontend-ui";
 
-const crypto = require("crypto");
+import crypto from "crypto";
 const sessionId = crypto.randomBytes(32).toString("hex");
-const {
+import {
   setGa4ContainerId,
   setUaContainerId,
   setStatusCode,
   setTaxonomyValues,
   setPageTitle,
   setContentId,
-} = require("./config/gtmMiddleware.js");
-const { checkSessionAndRedirect } = require("./config/middleware");
-const i18next = require("i18next");
-const i18nextMiddleware = require("i18next-http-middleware");
-const Backend = require("i18next-fs-backend");
-const { i18nextConfigurationOptions } = require("./config/i18next");
-const {
-  frontendVitalSignsInit,
-} = require("@govuk-one-login/frontend-vital-signs");
-const {
+} from "./config/gtmMiddleware";
+import { checkSessionAndRedirect } from "./config/middleware";
+import i18next from "i18next";
+import * as i18nextMiddleware from "i18next-http-middleware";
+import Backend from "i18next-fs-backend";
+import { i18nextConfigurationOptions } from "./config/i18next";
+import { frontendVitalSignsInit } from "@govuk-one-login/frontend-vital-signs";
+import {
   createEvent,
   validateEvent,
-} = require("@govuk-one-login/event-catalogue-utils");
-const { cspNonce } = require("./config/csp.js");
+} from "@govuk-one-login/event-catalogue-utils";
+import { cspNonce } from "./config/csp";
+import overloadProtection from "overload-protection";
+import { TLogLevel } from "@govuk-one-login/frontend-logger";
+
+const __dirname = import.meta.dirname;
 
 const app = express();
 
@@ -60,7 +57,10 @@ let counter = 0;
 
 app.get("/api", (req, res) => {
   counter++;
-  const processingTime = req.query.processingTime || 1;
+  const processingTime =
+    req.query.processingTime && typeof req.query.processingTime === "string"
+      ? parseInt(req.query.processingTime)
+      : 1;
   logger.info(
     `Elapsed processing seconds: ${counter}. Processing time limit is: ${processingTime}`,
   );
@@ -88,7 +88,7 @@ app.post("/api/test-submit-button", (req, res) => {
   }, 11000);
 });
 
-const protect = require("overload-protection")("express", {
+const protect = overloadProtection("express", {
   production: process.env.NODE_ENV === "production",
   maxEventLoopDelay: 400,
   logging: logger.warn,
@@ -96,7 +96,7 @@ const protect = require("overload-protection")("express", {
 app.use(protect);
 const port = 3000;
 
-const nodeModules = (modulePath) =>
+const nodeModules = (modulePath: string) =>
   `${path.resolve(__dirname, "../../../node_modules/", modulePath)}`;
 
 const APP_VIEWS = [
@@ -164,7 +164,9 @@ app.use((req, res, next) => {
         req.protocol + "://" + req.get("host") + req.originalUrl,
       );
     } catch (error) {
-      logger.error("Failed to set currentUrl:", error.message);
+      logger.error(
+        `Failed to set currentUrl: ${error instanceof Error && error.message}`,
+      );
     }
     next();
   }
@@ -243,7 +245,7 @@ const server = app.listen(port, () => {
 });
 
 frontendVitalSignsInit(server, {
-  logLevel: process.env.LOG_LEVEL,
+  logLevel: process.env.LOG_LEVEL as TLogLevel,
   staticPaths: ["/assets", "/ga4-assets", "/javascript", "/stylesheets"],
 });
 

@@ -3,18 +3,18 @@
   "version": "0.0.9",
   "scripts": {
     "start": "npm-run-all build-sass --parallel dev",
-    "dev": "node --watch src/app.js",
+    "dev": "node --watch build/app.js",
     "build-sass": "rm -rf public/stylesheets/*.css && sass --no-source-map src/frontend-assets/css/index.scss public/stylesheets/styles.css --style compressed",
     "serve": "nodemon serve",
     "precommit": "npm run test && npm run format && git add .",
-    "prod": "export NODE_ENV=production && node src/app.js",
+    "prod": "export NODE_ENV=production && node src/app.ts",
     "test": "node -e \"console.log('No tests currently defined');\"",
     "test:integration:ci": "npm run test:integration:ci:install && npm run test:integration:ci:run",
     "test:integration:ci:install": "npx playwright install --with-deps --only-shell chromium",
     "test:integration:ci:run": "start-server-and-test start http://localhost:3000 test:integration",
-    "test:integration": "cucumber-js test/browser/features/v1/analytics --require test/browser/support/setup.js --require test/browser/step_definitions/**/*.js cucumber --tags 'not @skip'",
+    "test:integration": "cucumber-js test/browser/features/v1/analytics --require test/browser/support/setup.ts --require test/browser/step_definitions/**/*.ts cucumber --tags 'not @skip'",
     "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,md}\"",
-    "build": "rollup -c",
+    "build": "rm -rf build/ public/ && npm run build-sass && rollup -c",
     "dev-js": "rollup -c --watch"
   },
   "dependencies": {
@@ -56,5 +56,8 @@
     "type": "git",
     "url": "git+https://github.com/govuk-one-login/govuk-one-login-frontend.git",
     "directory": "packages/alpha-app"
+  },
+  "devDependencies": {
+    "@types/chai-subset": "^1.3.6"
   }
 }

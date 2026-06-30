@@ -1,5 +1,5 @@
-const { Before, BeforeAll, AfterAll, After } = require("@cucumber/cucumber");
-const { chromium } = require("playwright");
+import { Before, BeforeAll, AfterAll, After } from "@cucumber/cucumber";
+import { chromium } from "playwright";
 
 BeforeAll(async function () {
   global.browser = await chromium.launch({

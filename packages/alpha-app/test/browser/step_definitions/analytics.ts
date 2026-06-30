@@ -1,8 +1,21 @@
-const { Given, Then } = require("@cucumber/cucumber");
-const { expect } = require("chai");
-const chai = require("chai");
-const chaiSubset = require("chai-subset");
+import { Given, Then } from "@cucumber/cucumber";
+import { expect } from "chai";
+import chai from "chai";
+import chaiSubset from "chai-subset";
+
 chai.use(chaiSubset);
+
+declare global {
+  interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    dataLayer: any;
+  }
+  // @ts-ignore redefining browser
+  var browser: { newContext: (...args: any[]) => any; close: () => void };
+}
+
+const findEventHelper = (eventName: string) => (eventItem: { event: string }) =>
+  eventItem.event === eventName;
 
 const DATA_LAYER_PUSH_PREFIX = "window.dataLayer.push";
 
@@ -15,7 +28,6 @@ Given("I accept analytics cookies", async function () {
   const acceptButton = await this.page.locator("[name=cookiesAccept]");
   await acceptButton.click();
 });
-
 Given("I refresh the page", async function () {
   await this.page.reload();
 });
@@ -42,7 +54,7 @@ Then("The dataLayer includes the welcome page view event", async function () {
   const dataLayer = await this.page.evaluate("window.dataLayer");
   const url = new URL(this.page.url());
   const pageViewEvent = dataLayer.find(
-    (eventItem) => eventItem.event === "page_view_ga4",
+    findEventHelper("page_view_ga4"),
   ).page_view;
   expect(pageViewEvent).to.contain({
     language: "en",
@@ -70,7 +82,7 @@ Then(
     const dataLayer = await this.page.evaluate("window.dataLayer");
     const url = new URL(this.page.url());
     const pageViewEvent = dataLayer.find(
-      (eventItem) => eventItem.event === "page_view_ga4",
+      findEventHelper("page_view_ga4"),
     ).page_view;
     expect(pageViewEvent).to.contain({
       language: "en",
@@ -99,7 +111,7 @@ Then(
     const dataLayer = await this.page.evaluate("window.dataLayer");
     const url = new URL(this.page.url());
     const pageViewEvent = dataLayer.find(
-      (eventItem) => eventItem.event === "page_view_ga4",
+      findEventHelper("page_view_ga4"),
     ).page_view;
     expect(pageViewEvent).to.contain({
       language: "en",
@@ -128,7 +140,7 @@ Then(
     const dataLayer = await this.page.evaluate("window.dataLayer");
     const url = new URL(this.page.url());
     const pageViewEvent = dataLayer.find(
-      (eventItem) => eventItem.event === "page_view_ga4",
+      findEventHelper("page_view_ga4"),
     ).page_view;
     expect(pageViewEvent).to.contain({
       language: "en",
@@ -157,7 +169,7 @@ Then(
     const dataLayer = await this.page.evaluate("window.dataLayer");
     const url = new URL(this.page.url());
     const pageViewEvent = dataLayer.find(
-      (eventItem) => eventItem.event === "page_view_ga4",
+      findEventHelper("page_view_ga4"),
     ).page_view;
     expect(pageViewEvent).to.contain({
       language: "en",
@@ -186,7 +198,7 @@ Then(
     const dataLayer = await this.page.evaluate("window.dataLayer");
     const url = new URL(this.page.url());
     const pageViewEvent = dataLayer.find(
-      (eventItem) => eventItem.event === "page_view_ga4",
+      findEventHelper("page_view_ga4"),
     ).page_view;
     expect(pageViewEvent).to.contain({
       language: "en",
@@ -213,7 +225,7 @@ Then("The dataLayer includes the summary page view event", async function () {
   const dataLayer = await this.page.evaluate("window.dataLayer");
   const url = new URL(this.page.url());
   const pageViewEvent = dataLayer.find(
-    (eventItem) => eventItem.event === "page_view_ga4",
+    findEventHelper("page_view_ga4"),
   ).page_view;
   expect(pageViewEvent).to.contain({
     language: "en",
@@ -237,9 +249,7 @@ Then("The dataLayer includes the summary page view event", async function () {
 
 Then("The dataLayer includes the navigation button event", async function () {
   const dataLayer = this.context.dataLayer;
-  const eventData = dataLayer.find(
-    (eventItem) => eventItem.event === "event_data",
-  ).event_data;
+  const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
   expect(eventData).to.deep.equal({
     event_name: "navigation",
     type: "generic button",
@@ -261,9 +271,7 @@ Then(
   "The dataLayer includes the navigation inbound link event",
   async function () {
     const dataLayer = this.context.dataLayer;
-    const eventData = dataLayer.find(
-      (eventItem) => eventItem.event === "event_data",
-    ).event_data;
+    const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
     expect(eventData).to.deep.equal({
       event_name: "navigation",
       type: "generic link",
@@ -286,9 +294,7 @@ Then(
   "The dataLayer includes the navigation outbound link event",
   async function () {
     const dataLayer = this.context.dataLayer;
-    const eventData = dataLayer.find(
-      (eventItem) => eventItem.event === "event_data",
-    ).event_data;
+    const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
     expect(eventData).to.contain({
       event_name: "navigation",
       type: "generic link",
@@ -311,9 +317,7 @@ Then(
   "The dataLayer includes the navigation back link event",
   async function () {
     const dataLayer = this.context.dataLayer;
-    const eventData = dataLayer.find(
-      (eventItem) => eventItem.event === "event_data",
-    ).event_data;
+    const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
     expect(eventData).to.contain({
       event_name: "navigation",
       type: "back button",
@@ -334,9 +338,7 @@ Then(
 
 Then("The dataLayer includes the navigation logo event", async function () {
   const dataLayer = this.context.dataLayer;
-  const eventData = dataLayer.find(
-    (eventItem) => eventItem.event === "event_data",
-  ).event_data;
+  const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
   expect(eventData).to.contain({
     event_name: "navigation",
     type: "header menu bar",
@@ -358,9 +360,7 @@ Then(
   "The dataLayer includes the navigation banner link event",
   async function () {
     const dataLayer = this.context.dataLayer;
-    const eventData = dataLayer.find(
-      (eventItem) => eventItem.event === "event_data",
-    ).event_data;
+    const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
     expect(eventData).to.contain({
       event_name: "navigation",
       type: "header menu bar",
@@ -383,9 +383,7 @@ Then(
   "The dataLayer includes the navigation footer link event",
   async function () {
     const dataLayer = this.context.dataLayer;
-    const eventData = dataLayer.find(
-      (eventItem) => eventItem.event === "event_data",
-    ).event_data;
+    const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
     expect(eventData).to.contain({
       event_name: "navigation",
       type: "footer",
@@ -408,9 +406,7 @@ Then(
   "The dataLayer includes the navigation footer licence link event",
   async function () {
     const dataLayer = this.context.dataLayer;
-    const eventData = dataLayer.find(
-      (eventItem) => eventItem.event === "event_data",
-    ).event_data;
+    const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
     expect(eventData).to.contain({
       event_name: "navigation",
       type: "footer",
@@ -433,9 +429,7 @@ Then(
   "The dataLayer includes the navigation footer copyright link event",
   async function () {
     const dataLayer = this.context.dataLayer;
-    const eventData = dataLayer.find(
-      (eventItem) => eventItem.event === "event_data",
-    ).event_data;
+    const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
     expect(eventData).to.deep.equal({
       event_name: "navigation",
       type: "footer",
@@ -459,9 +453,7 @@ Then(
   "The dataLayer includes the navigation menu link event",
   async function () {
     const dataLayer = this.context.dataLayer;
-    const eventData = dataLayer.find(
-      (eventItem) => eventItem.event === "event_data",
-    ).event_data;
+    const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
     expect(eventData).to.contain({
       event_name: "navigation",
       type: "header menu bar",
@@ -484,9 +476,7 @@ Then(
   "The dataLayer includes the very long navigation menu link event",
   async function () {
     const dataLayer = this.context.dataLayer;
-    const eventData = dataLayer.find(
-      (eventItem) => eventItem.event === "event_data",
-    ).event_data;
+    const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
     expect(eventData).to.contain({
       event_name: "navigation",
       type: "header menu bar",
@@ -508,9 +498,7 @@ Then(
 
 Then("The dataLayer includes the form change event", async function () {
   const dataLayer = this.context.dataLayer;
-  const eventData = dataLayer.find(
-    (eventItem) => eventItem.event === "event_data",
-  ).event_data;
+  const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
   expect(eventData).to.contain({
     event_name: "form_change_response",
     type: "undefined",
@@ -532,9 +520,7 @@ Then(
   "The dataLayer includes the form error event into organisation type error page",
   async function () {
     const dataLayer = await this.page.evaluate("window.dataLayer");
-    const eventData = dataLayer.find(
-      (eventItem) => eventItem.event === "event_data",
-    ).event_data;
+    const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
     expect(eventData).to.contain({
       event_name: "form_error",
       type: "radio buttons",
@@ -557,9 +543,7 @@ Then(
   "The dataLayer includes the form error event into help with hint error page",
   async function () {
     const dataLayer = await this.page.evaluate("window.dataLayer");
-    const eventData = dataLayer.find(
-      (eventItem) => eventItem.event === "event_data",
-    ).event_data;
+    const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
     expect(eventData).to.contain({
       event_name: "form_error",
       type: "checkbox",
@@ -582,9 +566,7 @@ Then(
   "The dataLayer includes the form error event into service description error page",
   async function () {
     const dataLayer = await this.page.evaluate("window.dataLayer");
-    const eventData = dataLayer.find(
-      (eventItem) => eventItem.event === "event_data",
-    ).event_data;
+    const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
     expect(eventData).to.contain({
       event_name: "form_error",
       type: "free text field",
@@ -607,9 +589,7 @@ Then(
   "The dataLayer includes the form error event into choose location error page",
   async function () {
     const dataLayer = await this.page.evaluate("window.dataLayer");
-    const eventData = dataLayer.find(
-      (eventItem) => eventItem.event === "event_data",
-    ).event_data;
+    const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
     expect(eventData).to.contain({
       event_name: "form_error",
       type: "drop-down list",
@@ -632,9 +612,7 @@ Then(
   "The dataLayer includes the form error event into enter email error page",
   async function () {
     const dataLayer = await this.page.evaluate("window.dataLayer");
-    const eventData = dataLayer.find(
-      (eventItem) => eventItem.event === "event_data",
-    ).event_data;
+    const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
     expect(eventData).to.contain({
       event_name: "form_error",
       type: "free text field",
@@ -657,9 +635,7 @@ Then(
   "The dataLayer includes the organisation type form response event",
   async function () {
     const dataLayer = this.context.dataLayer;
-    const eventData = dataLayer.find(
-      (eventItem) => eventItem.event === "event_data",
-    ).event_data;
+    const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
     expect(eventData).to.contain({
       event_name: "form_response",
       type: "radio buttons",
@@ -682,9 +658,7 @@ Then(
   "The dataLayer includes the help with hint form response event",
   async function () {
     const dataLayer = this.context.dataLayer;
-    const eventData = dataLayer.find(
-      (eventItem) => eventItem.event === "event_data",
-    ).event_data;
+    const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
     expect(eventData).to.contain({
       event_name: "form_response",
       type: "checkbox",
@@ -707,9 +681,7 @@ Then(
   "The dataLayer includes the service description form response event",
   async function () {
     const dataLayer = this.context.dataLayer;
-    const eventData = dataLayer.find(
-      (eventItem) => eventItem.event === "event_data",
-    ).event_data;
+    const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
     expect(eventData).to.contain({
       event_name: "form_response",
       type: "free text field",
@@ -732,9 +704,7 @@ Then(
   "The dataLayer includes the enter email form response event",
   async function () {
     const dataLayer = this.context.dataLayer;
-    const eventData = dataLayer.find(
-      (eventItem) => eventItem.event === "event_data",
-    ).event_data;
+    const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
     expect(eventData).to.contain({
       event_name: "form_response",
       type: "free text field",
@@ -757,9 +727,7 @@ Then(
   "The dataLayer includes the choose location form response event",
   async function () {
     const dataLayer = this.context.dataLayer;
-    const eventData = dataLayer.find(
-      (eventItem) => eventItem.event === "event_data",
-    ).event_data;
+    const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
     expect(eventData).to.contain({
       event_name: "form_response",
       type: "drop-down list",
@@ -779,14 +747,14 @@ Then(
 );
 
 Given("I set up a listener for the data layer push", async function () {
-  this.page.on("console", (message) => {
+  this.page.on("console", (message: { text: () => string }) => {
     // Given a stringified GA4 event, return the original event before it was stringified, by parsing the
     //  object and adding keys in the undefinedValues array to the event_data object, each with a value of
     //  undefined
-    const rebuildOriginalEvent = (stringifiedEvent) => {
+    const rebuildOriginalEvent = (stringifiedEvent: string) => {
       // Given an array of strings, create an object whose properties are exactly these strings and each with
       //  a value of undefined
-      function createObjectWithKeys(keys) {
+      function createObjectWithKeys(keys: string[]) {
         return keys.reduce((accumulator, value) => {
           return { ...accumulator, [value]: undefined };
         }, {});
@@ -821,14 +789,14 @@ Given("I set up a listener for the data layer push", async function () {
 
   // Extend the push function on window.dataLayer so that we can track events sent to window.dataLayer, even
   //  when the current page changes
-  await this.page.evaluate((dataLayerPushPrefix) => {
+  await this.page.evaluate((dataLayerPushPrefix: string) => {
     window.dataLayer = window.dataLayer || [];
     const originalPush = window.dataLayer.push;
-    window.dataLayer.push = (...args) => {
+    window.dataLayer.push = (...args: any[]) => {
       originalPush.apply(window.dataLayer, args);
 
       // Given an object, returns the keys of that object which have a value of undefined
-      const getUndefinedValues = (obj) => {
+      const getUndefinedValues = (obj: Object) => {
         if (typeof obj !== "object") return [];
         return Object.entries(obj)
           .filter(([, v]) => v === undefined)
@@ -837,10 +805,10 @@ Given("I set up a listener for the data layer push", async function () {
 
       // For every item pushed to the dataLayer, log this to the browser console which is being listened for
       args.forEach((arg) => {
-        const deconstructedEvent = {
+        const deconstructedEvent: Object = {
           parsedObject: JSON.parse(JSON.stringify(arg)),
+          undefinedValues: getUndefinedValues(arg.event_data),
         };
-        deconstructedEvent.undefinedValues = getUndefinedValues(arg.event_data);
         /* eslint-disable-next-line no-console */
         console.log(dataLayerPushPrefix, JSON.stringify(deconstructedEvent));
       });
