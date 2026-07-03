@@ -26,7 +26,7 @@ export function getBrowser(): BrowserResult {
     // Internet Explorer, IE Mobile, etc.
     /(?<name>MSIE|Trident|IEMobile)[^\d.]+(?<version>\d+(?:\.\d+)?)/,
     // Other browsers that use the format "BrowserName/version"
-    /(?<name>[A-Za-z]+)\/(?<version>\d+(?:\.\d+)?)/,
+    /\b(?<name>[A-Za-z][A-Za-z0-9]*)\/(?<version>\d+(?:\.\d+)?)/,
     // Samsung internet browser
     /(?<name>SamsungBrowser)\/(?<version>\d+(?:\.\d+)?)/,
   ];
