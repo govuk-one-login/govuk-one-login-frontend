@@ -7,14 +7,21 @@ import {
 import { ComponentInterface } from "../index";
 import { getBrowser } from "./browser";
 
+interface LegacyNavigator {
+  platform: string;
+  productSub: string;
+  product: string;
+}
+
 export function getSystemDetails(): Promise<ComponentInterface> {
   return new Promise((resolve) => {
     const browser = getBrowser();
+    const nav = navigator as unknown as LegacyNavigator;
     resolve({
-      platform: window.navigator.platform,
+      platform: nav.platform,
       cookieEnabled: window.navigator.cookieEnabled,
-      productSub: navigator.productSub,
-      product: navigator.product,
+      productSub: nav.productSub,
+      product: nav.product,
       useragent: navigator.userAgent,
       hardwareConcurrency: navigator.hardwareConcurrency,
       browser: { name: browser.name, version: browser.version },
