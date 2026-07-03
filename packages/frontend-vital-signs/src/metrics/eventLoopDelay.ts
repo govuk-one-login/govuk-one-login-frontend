@@ -1,4 +1,4 @@
-import { monitorEventLoopDelay } from "perf_hooks";
+import { monitorEventLoopDelay } from "node:perf_hooks";
 
 export const trackEventLoopDelay = () => {
   let eventLoopDelayMonitor = monitorEventLoopDelay({ resolution: 10 });
