@@ -7,13 +7,15 @@
     "lint": {
       "executor": "@nx/eslint:lint",
       "options": {
-        "lintFilePatterns": ["packages/alpha-app/src/**/*.{js,ts,json}"]
+        "lintFilePatterns": [
+          "packages/alpha-app/src/**/*.{js,ts,json}"
+        ]
       }
     },
     "format": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "prettier --write \"packages/alpha-app/src/**/!(*.nunjucks).js\""
+        "command": "prettier --write \"packages/alpha-app/src/**/!(*.nunjucks).ts\""
       }
     },
     "format:check": {

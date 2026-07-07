@@ -1,12 +1,18 @@
-/* eslint-disable no-undef */
 import {
   useSpinner,
   PollResult,
   initialiseProgressButtons,
 } from "@govuk-one-login/frontend-ui/frontend"; // Maps to node_modules/@govuk-one-login/frontend-ui/build/esm/frontend
 
-async function callTestApi(abortSignal) {
-  await fetch("/api?processingTime=3", { signal: abortSignal })
+declare global {
+  interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    DI: any;
+  }
+}
+
+async function callTestApi(abortSignal?: AbortSignal) {
+  return await fetch("/api?processingTime=3", { signal: abortSignal })
     .then((response) => response.json())
     .then((data) => {
       if (data.status === "COMPLETED") {
@@ -18,7 +24,12 @@ async function callTestApi(abortSignal) {
 }
 
 initialiseProgressButtons();
-useSpinner("spinner-container", callTestApi);
+useSpinner(
+  "spinner-container",
+  callTestApi,
+  () => {},
+  () => {},
+);
 
 window.DI = window.DI || {};
 window.DI.analyticsUa = window.DI.analyticsUa || {};
@@ -47,14 +58,16 @@ window.DI.analyticsUa = window.DI.analyticsUa || {};
     }
 
     const languageCode = document.querySelector("html")?.getAttribute("lang");
-    const languageNames = {
-      en: "english",
-      cy: "welsh",
-    };
+    const language =
+      languageCode === "en"
+        ? "english"
+        : languageCode === "cy"
+          ? "welsh"
+          : undefined;
 
     sendData({
       event: "langEvent",
-      language: languageNames[languageCode],
+      language,
       languagecode: languageCode,
     });
 

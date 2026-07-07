@@ -1,3 +1,5 @@
+import type { Request, Response, NextFunction } from "express";
+
 const noSessionPages = [
   "/welcome",
   "/spinner",
@@ -6,7 +8,11 @@ const noSessionPages = [
   "/enter-name",
 ];
 
-const checkSessionAndRedirect = (req, res, next) => {
+const checkSessionAndRedirect = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   // Check if the user has an active session
   const hasSession =
     req.session &&
@@ -30,4 +36,4 @@ const checkSessionAndRedirect = (req, res, next) => {
 
   next();
 };
-module.exports = { checkSessionAndRedirect };
+export { checkSessionAndRedirect };

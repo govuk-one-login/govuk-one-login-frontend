@@ -1,9 +1,11 @@
-const { Given, When, Then } = require("@cucumber/cucumber");
-const { expect } = require("chai");
-const AxeBuilder = require('@axe-core/playwright')
+import { Given, When, Then } from "@cucumber/cucumber";
+import { expect } from "chai";
+import AxeBuilder from "@axe-core/playwright";
 
-const getSessionIdCookieValue = (cookies) => {
-  return cookies.find((cookie) => cookie.name === "sessionId").value;
+const getSessionIdCookieValue = (
+  cookies: { name: string; value: string }[],
+) => {
+  return cookies.find((cookie) => cookie.name === "sessionId")?.value;
 };
 
 Given(
@@ -66,10 +68,15 @@ When("I click Back", async function () {
   await this.page.waitForLoadState("networkidle"); // Wait for network calls to finish
 });
 
-When("I click the Change link to return to the organisation page", async function () {
-  await this.page.getByRole('link', { name: 'Change organisationType' }).click();
-  await this.page.waitForLoadState("networkidle"); // Wait for network calls to finish
-});
+When(
+  "I click the Change link to return to the organisation page",
+  async function () {
+    await this.page
+      .getByRole("link", { name: "Change organisationType" })
+      .click();
+    await this.page.waitForLoadState("networkidle"); // Wait for network calls to finish
+  },
+);
 
 When("I click {word} {word}", async function (text, element) {
   if (element === "link") element = "a";
@@ -125,7 +132,9 @@ Then(
   "The {word} cookie is set to {word}",
   async function (cookieName, cookieValue) {
     const cookies = await this.context.cookies();
-    const cookie = cookies.find((cookie) => cookie.name === cookieName);
+    const cookie = cookies.find(
+      (cookie: { name: string }) => cookie.name === cookieName,
+    );
     if (cookieName === "cookies_preferences_set") {
       expect(cookie.value).to.equal(`%7B%22analytics%22%3A${cookieValue}%7D`);
     } else {
@@ -137,12 +146,11 @@ Then(
 Then(
   "I should not have any automatically detectable accessibility issues",
   async function () {
-
-    const accessibilityScanResults = await new AxeBuilder({ page: this.page }).analyze();
+    const accessibilityScanResults = await new AxeBuilder({
+      page: this.page,
+    }).analyze();
     expect(accessibilityScanResults.violations).to.deep.equal([]);
-  }
+  },
 );
 
-module.exports = {
-  getSessionIdCookieValue,
-};
+export { getSessionIdCookieValue };

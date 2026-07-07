@@ -1,5 +1,5 @@
-const { When, Then } = require("@cucumber/cucumber");
-const { expect } = require("chai");
+import { When, Then } from "@cucumber/cucumber";
+import { expect } from "chai";
 
 When("I clear the browser context", async function () {
   this.context = await global.browser.newContext({});
@@ -12,7 +12,7 @@ Then("I do not see the cookie banner", async function () {
 });
 
 Then("The {word} cookie is not set", async function (cookieName) {
-  const cookies = await this.context.cookies();
+  const cookies: { name: string }[] = await this.context.cookies();
   const cookieExists = cookies.some((cookie) => cookie.name === cookieName);
   expect(cookieExists).to.equal(false);
 });

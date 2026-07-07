@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
-const { logger } = require("../utils/logger");
+import { logger } from "../utils/logger";
+import type { Request, Response } from "express";
 
-function validateFeedback(req, res) {
+function validateFeedback(req: Request, res: Response) {
   try {
     const {
       feedbackEntity,
@@ -57,4 +57,4 @@ function validateFeedback(req, res) {
   }
 }
 
-module.exports = { validateFeedback };
+export { validateFeedback };
