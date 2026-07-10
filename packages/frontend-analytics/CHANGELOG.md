@@ -1,3 +1,13 @@
+## 4.1.1 (2026-07-10)
+
+### 🩹 Fixes
+
+- **DFC-1312:** handle tracking relative urls in form submissions ([#456](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/456))
+
+### ❤️ Thank You
+
+- Nick Heal @nickhealGDS
+
 ## 4.1.0 (2026-06-23)
 
 ### 🚀 Features
