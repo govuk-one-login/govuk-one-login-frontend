@@ -62,8 +62,8 @@ The Progress Button component allows you to configure a custom error timeout in 
    }) }}
    ```
 
-2. **Via JavaScript Initialization**:
-   You can also set the custom error timeout globally during the initialization of the Progress Button component in your JavaScript setup file:
+2. **Via JavaScript Initialisation**:
+   You can also set the custom error timeout globally during the initialisation of the Progress Button component in your JavaScript setup file:
 
    ```javascript
    initialiseProgressButtons({
@@ -73,11 +73,11 @@ The Progress Button component allows you to configure a custom error timeout in 
 
 ### Precedence of Custom Error Timeout
 
-If both methods are used to set the `customDevErrorTimeout`, the value specified in the **macro configuration** takes precedence over the value set during JavaScript initialization. This allows you to override the global setting for specific buttons as needed.
+If both methods are used to set the `customDevErrorTimeout`, the value specified in the **macro configuration** takes precedence over the value set during JavaScript initialisation. This allows you to override the global setting for specific buttons as needed.
 
-### Adding the Initialization Script
+### Adding the Initialisation Script
 
-To ensure the Progress Button component works correctly, you need to include the initialization script in your application. This script sets up the event listeners and manages the button's behavior.
+To ensure the Progress Button component works correctly, you need to include the initialisation script in your application. This script sets up the event listeners and manages the button's behavior.
 
 1. **Import the Script**:
    Include the `initialiseProgressButtons` function in your application's setup file.
@@ -86,7 +86,7 @@ To ensure the Progress Button component works correctly, you need to include the
    import { initialiseProgressButtons } from "@govuk-one-login/frontend-ui/frontend";
    ```
 
-2. **Call the Initialization Function**:
+2. **Call the Initialisation Function**:
    Call the `initialiseProgressButtons` function to set up all progress buttons on the page:
 
    ```javascript
@@ -94,7 +94,7 @@ To ensure the Progress Button component works correctly, you need to include the
    ```
 
 3. **Ensure Proper Attribute Usage**:
-   Make sure all buttons you want to enhance with this functionality have the `data-frontendui="di-progress-button"` attribute. This attribute is used by the initialization script to identify and configure the buttons.
+   Make sure all buttons you want to enhance with this functionality have the `data-frontendui="di-progress-button"` attribute. This attribute is used by the initialisation script to identify and configure the buttons.
 
 By following these steps, you can ensure that the Progress Button component is fully functional in your application.
 
@@ -114,7 +114,7 @@ Refer to this file for additional implementation details.
 
 ### `initialiseProgressButtons()`
 
-The main initialization function that sets up all progress buttons on the page. It:
+The main initialisation function that sets up all progress buttons on the page. It:
 
 1. Finds all elements with the `data-frontendui="di-progress-button"` attribute
 2. Sets up click and form submission handlers for each button

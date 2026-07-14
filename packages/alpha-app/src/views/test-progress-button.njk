@@ -2,24 +2,48 @@
 {% from "frontend-ui/build/components/progress-button/macro.njk" import frontendUiProgressButton %}
 
 {% block content %}
-    <div class="govuk-grid-row">
-            <h1 class="govuk-heading-l">Test Progress Button</h1>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l">Test Progress Button</h1>
 
-            <form method="post" id="myForm" action="/api/test-submit-button" novalidate>
-            <input type="text" style="margin-bottom: 10px;">
-                {{ frontendUiProgressButton({
-                translations: translations.translation.progressButton,
-                errorPage: "/error",
-                customDevErrorTimeout: 10000
-            }) }}
-            </form>
+      <form method="post" id="myForm" action="/api/test-submit-button" novalidate>
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="example-input">
+          Example input
+        </label>
+        <input class="govuk-input govuk-input--width-10" id="example-input" name="exampleInput" type="text">
+      </div>
 
-            <h1 class="govuk-heading-l">Non Form Button </h1>
-            {{ frontendUiProgressButton({
-                translations: translations.translation.progressButton,
-                href: "#",
-                errorPage: "/error"
-            }) }}
+      {{
+        frontendUiProgressButton({
+          translations: translations.translation.progressButton,
+          errorPage: "/error",
+          customDevErrorTimeout: 10000
+        })
+      }}
+      </form>
 
+      <h1 class="govuk-heading-l">In a button group</h1>
+
+      <div class="govuk-button-group">
+        {{
+          frontendUiProgressButton({
+            translations: translations.translation.progressButton,
+            href: "#"
+          })
+        }}
+
+        <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+            Do something else
+        </button>
+      </div>
+
+      <h1 class="govuk-heading-l">Non Form Button</h1>
+      {{ frontendUiProgressButton({
+          translations: translations.translation.progressButton,
+          href: "#",
+          errorPage: "/error"
+      }) }}
     </div>
+  </div>
 {% endblock %}
