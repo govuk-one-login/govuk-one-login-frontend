@@ -1,51 +1,46 @@
-.govuk-button--progress{
+.govuk-button--progress {
   position: relative;
 }
 
-.govuk-button--progress-loading{
-   background-color: #505A5F !important;
-   color: #fff !important;
-   pointer-events: none !important;
-   padding-left: 40px !important;
+.govuk-button--progress-loading {
+  background-color: #505A5F !important;
+  color: #fff !important;
+  pointer-events: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  align-self: center;
+  gap: 8px;
+  padding-left: 10px !important;
 }
 
 @keyframes rotate {
   from {
     transform: rotate(0);
   }
-
   to {
     transform: rotate(360deg);
   }
 }
 
-
-.govuk-button--progress-loading::before {
+.govuk-button.govuk-button--progress-loading::before {
   content: "";
+  box-sizing: border-box;
   border: 3px solid rgba(255, 255, 255, 0.35);
   border-top: 3px solid #fff;
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   animation: rotate 1s infinite linear;
-  position: absolute;
-  top: 12% !important;
-  left: 8px;
+  position: static;
 }
 
-.govuk-progress-button--disabled{
+.govuk-progress-button--disabled {
   opacity: 1 !important;
 }
-  
-@media (prefers-reduced-motion: reduce) {
-  .govuk-button--progress-loading {
-    padding-left: 10px !important; 
 
-    &::before {
-      display: none; 
-    }
+@media (prefers-reduced-motion: reduce) {
+  .govuk-button.govuk-button--progress-loading::before {
+    display: none;
   }
 }
-
-
-

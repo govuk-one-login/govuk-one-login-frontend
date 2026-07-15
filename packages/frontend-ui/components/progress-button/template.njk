@@ -11,7 +11,6 @@
   </style>
 </noscript>
 
-{# Set classes for this component #}
 {%- set classNames = "govuk-button govuk-button--progress" -%}
 
 {%- if params.classes %}
@@ -58,55 +57,49 @@ treat it as an interactive element - without this it will be
 {% if params.preventDoubleClick !== undefined %} data-prevent-double-click="{{params.preventDoubleClick}}"{% endif %}{% endset %}
 
 {%- if element == 'a' %}
-  <div class="noscript">
-    <noscript>
-      <div class="govuk-body" >
-        {{ progressButton.noJavascriptMessage }}
-      </div>
-    </noscript>
+  <noscript>
+    <div class="noscript govuk-body">
+      {{ progressButton.noJavascriptMessage }}
+    </div>
+  </noscript>
 
-    <a href="{{ params.href if params.href else '#' }}" role="button" draggable="false" {{- commonAttributes | safe }} class = "{{ classNames }}" data-frontendui="di-progress-button" data-waiting-text="{{ progressButton.waitingText }}" data-long-waiting-text="{{ progressButton.longWaitingText }}" data-error-page="{{ params.errorPage | default('#') }}" {%- if params.customDevErrorTimeout %} data-error-timeout={{ params.customDevErrorTimeout }} {% endif %} >
-      {% if params.html %}
-        {{ params.html | safe }}
-      {% elseif params.text %}
-        {{ params.text | safe }}
-      {% else %}
-        {{ progressButton.text }}
-      {% endif %}
-      {{- iconHtml | safe | trim | indent(2, true) if iconHtml -}}
-    </a>
-  </div>
+  <a href="{{ params.href if params.href else '#' }}" role="button" draggable="false" {{- commonAttributes | safe }} class = "{{ classNames }}" data-frontendui="di-progress-button" data-waiting-text="{{ progressButton.waitingText }}" data-long-waiting-text="{{ progressButton.longWaitingText }}" data-error-page="{{ params.errorPage | default('#') }}" {%- if params.customDevErrorTimeout %} data-error-timeout={{ params.customDevErrorTimeout }} {% endif %} >
+    {% if params.html %}
+      {{ params.html | safe }}
+    {% elseif params.text %}
+      {{ params.text | safe }}
+    {% else %}
+      {{ progressButton.text }}
+    {% endif %}
+    {{- iconHtml | safe | trim | indent(2, true) if iconHtml -}}
+  </a>
 
 {%- elseif element == 'button' %}
-  <div class="noscript">
-    <noscript>
-      <div class="govuk-body" >
-        {{ progressButton.noJavascriptMessage }}
-      </div>
-    </noscript>
+  <noscript>
+    <div class="noscript govuk-body">
+      {{ progressButton.noJavascriptMessage }}
+    </div>
+  </noscript>
 
-    <button {%- if params.value %} value="{{ params.value }}"{% endif %}{%- if params.type %} type="{{ params.type }}"{% endif %} {{- buttonAttributes | safe }} {{- commonAttributes | safe }} class = "{{ classNames }}" data-frontendui="di-progress-button" data-waiting-text="{{ progressButton.waitingText }}" data-long-waiting-text="{{ progressButton.longWaitingText }}" data-error-page="{{ params.errorPage | default('#') }}" {%- if params.customDevErrorTimeout %} data-error-timeout={{ params.customDevErrorTimeout }} {% endif %} >
-      {% if params.html %}
-        {{ params.html | safe }}
-      {% elseif params.text %}
-        {{ params.text | safe }}
-      {% else %}
-        {{ progressButton.text }}
-      {% endif %}
-      {{- iconHtml | safe | trim | indent(2, true) if iconHtml -}}
-
-    </button>
-  </div>
+  <button {%- if params.value %} value="{{ params.value }}"{% endif %}{%- if params.type %} type="{{ params.type }}"{% endif %} {{- buttonAttributes | safe }} {{- commonAttributes | safe }} class = "{{ classNames }}" data-frontendui="di-progress-button" data-waiting-text="{{ progressButton.waitingText }}" data-long-waiting-text="{{ progressButton.longWaitingText }}" data-error-page="{{ params.errorPage | default('#') }}" {%- if params.customDevErrorTimeout %} data-error-timeout={{ params.customDevErrorTimeout }} {% endif %} >
+    {% if params.html %}
+      {{ params.html | safe }}
+    {% elseif params.text %}
+      {{ params.text | safe }}
+    {% else %}
+      {{ progressButton.text }}
+    {% endif %}
+    {{- iconHtml | safe | trim | indent(2, true) if iconHtml -}}
+  </button>
 
 {%- elseif element == 'input' %}
-  <div class="noscript">
-    <noscript>
-      <div class="govuk-body" >
-        {{ progressButton.noJavascriptMessage }}
-      </div>
-    </noscript>
-    <input value="{{ params.value }}" type="{{ params.type if params.type else 'submit'}}"{{- buttonAttributes | safe }} {{- commonAttributes | safe }} class = "{{ classNames }}" data-frontendui="di-progress-button" data-waiting-text="{{ progressButton.waitingText }}" data-long-waiting-text="{{ progressButton.longWaitingText }}" data-error-page="{{ params.errorPage | default('#') }}" {%- if params.customDevErrorTimeout %} data-error-timeout={{ params.customDevErrorTimeout }} {% endif %} >
-    {{- iconHtml | safe | trim | indent(2, true) if iconHtml -}}
-  </div>
+  <noscript>
+    <div class="noscript govuk-body">
+      {{ progressButton.noJavascriptMessage }}
+    </div>
+  </noscript>
+
+  <input value="{{ params.value }}" type="{{ params.type if params.type else 'submit'}}"{{- buttonAttributes | safe }} {{- commonAttributes | safe }} class = "{{ classNames }}" data-frontendui="di-progress-button" data-waiting-text="{{ progressButton.waitingText }}" data-long-waiting-text="{{ progressButton.longWaitingText }}" data-error-page="{{ params.errorPage | default('#') }}" {%- if params.customDevErrorTimeout %} data-error-timeout={{ params.customDevErrorTimeout }} {% endif %} >
+  {{- iconHtml | safe | trim | indent(2, true) if iconHtml -}}
 
 {% endif %}
