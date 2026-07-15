@@ -96,6 +96,6 @@ export class NavigationTracker {
     if (!this.enableNavigationTracking) {
       return false;
     }
-    return true;
+    return false;
   }
 }
