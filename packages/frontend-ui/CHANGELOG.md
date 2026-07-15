@@ -1,3 +1,20 @@
+## 5.3.1 (2026-07-15)
+
+### 🚀 Features
+
+- **DFC-806:** Use logger package in other packages ([#411](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/411))
+
+### 🩹 Fixes
+
+- **DFC-1343:** spinner alignment on progress button ([#458](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/458))
+- removed the optional tag from analytics in frontend-ui ([#440](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/440))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+- Nathaniel Steers @nlsteers
+- Sam Bunce
+
 ## 5.3.0 (2026-05-21)
 
 ### 🚀 Features
