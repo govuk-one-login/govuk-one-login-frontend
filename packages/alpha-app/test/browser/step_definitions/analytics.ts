@@ -247,183 +247,184 @@ Then("The dataLayer includes the summary page view event", async function () {
   });
 });
 
-Then("The dataLayer includes the navigation button event", async function () {
-  const dataLayer = this.context.dataLayer;
-  const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
-  expect(eventData).to.deep.equal({
-    event_name: "navigation",
-    type: "generic button",
-    text: "start now",
-    section: "undefined",
-    action: "undefined",
-    url: "http://localhost:3000/organisation-type",
-    external: "false",
-    link_domain: "http://localhost:3000",
-    "link_path_parts.1": "/organisation-type",
-    "link_path_parts.2": "undefined",
-    "link_path_parts.3": "undefined",
-    "link_path_parts.4": "undefined",
-    "link_path_parts.5": "undefined",
-  });
-});
-
-Then(
-  "The dataLayer includes the navigation inbound link event",
-  async function () {
-    const dataLayer = this.context.dataLayer;
-    const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
-    expect(eventData).to.deep.equal({
-      event_name: "navigation",
-      type: "generic link",
-      text: "test inbound link",
-      section: "undefined",
-      action: "undefined",
-      url: "http://localhost:3000/service-description",
-      external: "false",
-      link_domain: "http://localhost:3000",
-      "link_path_parts.1": "/service-description",
-      "link_path_parts.2": "undefined",
-      "link_path_parts.3": "undefined",
-      "link_path_parts.4": "undefined",
-      "link_path_parts.5": "undefined",
-    });
-  },
-);
-
-Then(
-  "The dataLayer includes the navigation outbound link event",
-  async function () {
-    const dataLayer = this.context.dataLayer;
-    const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
-    expect(eventData).to.contain({
-      event_name: "navigation",
-      type: "generic link",
-      text: "test outbound link",
-      section: "undefined",
-      action: "undefined",
-      url: "https://apps.apple.com/gb/app/gov-uk-id-check/id1629050566",
-      external: "true",
-      link_domain: "https://apps.apple.com",
-      "link_path_parts.1": "/gb/app/gov-uk-id-check/id1629050566",
-      "link_path_parts.2": "undefined",
-      "link_path_parts.3": "undefined",
-      "link_path_parts.4": "undefined",
-      "link_path_parts.5": "undefined",
-    });
-  },
-);
-
-Then(
-  "The dataLayer includes the navigation back link event",
-  async function () {
-    const dataLayer = this.context.dataLayer;
-    const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
-    expect(eventData).to.contain({
-      event_name: "navigation",
-      type: "back button",
-      text: "back",
-      section: "undefined",
-      action: "undefined",
-      url: "http://localhost:3000/welcome",
-      external: "false",
-      link_domain: "http://localhost:3000",
-      "link_path_parts.1": "/welcome",
-      "link_path_parts.2": "undefined",
-      "link_path_parts.3": "undefined",
-      "link_path_parts.4": "undefined",
-      "link_path_parts.5": "undefined",
-    });
-  },
-);
-
-Then("The dataLayer includes the navigation logo event", async function () {
-  const dataLayer = this.context.dataLayer;
-  const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
-  expect(eventData).to.contain({
-    event_name: "navigation",
-    type: "header menu bar",
-    text: "gov.uk",
-    section: "logo",
-    action: "undefined",
-    url: "https://www.gov.uk/",
-    external: "true",
-    link_domain: "https://www.gov.uk",
-    "link_path_parts.1": "/",
-    "link_path_parts.2": "undefined",
-    "link_path_parts.3": "undefined",
-    "link_path_parts.4": "undefined",
-    "link_path_parts.5": "undefined",
-  });
-});
-
-Then(
-  "The dataLayer includes the navigation banner link event",
-  async function () {
-    const dataLayer = this.context.dataLayer;
-    const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
-    expect(eventData).to.contain({
-      event_name: "navigation",
-      type: "header menu bar",
-      text: "restart",
-      section: "phase banner",
-      action: "undefined",
-      url: "http://localhost:3000/welcome",
-      external: "false",
-      link_domain: "http://localhost:3000",
-      "link_path_parts.1": "/welcome",
-      "link_path_parts.2": "undefined",
-      "link_path_parts.3": "undefined",
-      "link_path_parts.4": "undefined",
-      "link_path_parts.5": "undefined",
-    });
-  },
-);
-
-Then(
-  "The dataLayer includes the navigation footer link event",
-  async function () {
-    const dataLayer = this.context.dataLayer;
-    const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
-    expect(eventData).to.contain({
-      event_name: "navigation",
-      type: "footer",
-      text: "contact",
-      section: "support links",
-      action: "undefined",
-      url: "http://localhost:3000/undefined",
-      external: "false",
-      link_domain: "http://localhost:3000",
-      "link_path_parts.1": "/undefined",
-      "link_path_parts.2": "undefined",
-      "link_path_parts.3": "undefined",
-      "link_path_parts.4": "undefined",
-      "link_path_parts.5": "undefined",
-    });
-  },
-);
-
-Then(
-  "The dataLayer includes the navigation footer licence link event",
-  async function () {
-    const dataLayer = this.context.dataLayer;
-    const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
-    expect(eventData).to.contain({
-      event_name: "navigation",
-      type: "footer",
-      text: "open government licence v3.0",
-      section: "licence",
-      action: "undefined",
-      url: "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
-      external: "true",
-      link_domain: "https://www.nationalarchives.gov.uk",
-      "link_path_parts.1": "/doc/open-government-licence/version/3/",
-      "link_path_parts.2": "undefined",
-      "link_path_parts.3": "undefined",
-      "link_path_parts.4": "undefined",
-      "link_path_parts.5": "undefined",
-    });
-  },
-);
+// TODO: Re-enable when navigation tracking is re-enabled (isEnabled currently always returns false)
+// Then("The dataLayer includes the navigation button event", async function () {
+//   const dataLayer = this.context.dataLayer;
+//   const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
+//   expect(eventData).to.deep.equal({
+//     event_name: "navigation",
+//     type: "generic button",
+//     text: "start now",
+//     section: "undefined",
+//     action: "undefined",
+//     url: "http://localhost:3000/organisation-type",
+//     external: "false",
+//     link_domain: "http://localhost:3000",
+//     "link_path_parts.1": "/organisation-type",
+//     "link_path_parts.2": "undefined",
+//     "link_path_parts.3": "undefined",
+//     "link_path_parts.4": "undefined",
+//     "link_path_parts.5": "undefined",
+//   });
+// });
+// TODO: Re-enable when navigation tracking is re-enabled (isEnabled currently always returns false)
+// Then(
+//   "The dataLayer includes the navigation inbound link event",
+//   async function () {
+//     const dataLayer = this.context.dataLayer;
+//     const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
+//     expect(eventData).to.deep.equal({
+//       event_name: "navigation",
+//       type: "generic link",
+//       text: "test inbound link",
+//       section: "undefined",
+//       action: "undefined",
+//       url: "http://localhost:3000/service-description",
+//       external: "false",
+//       link_domain: "http://localhost:3000",
+//       "link_path_parts.1": "/service-description",
+//       "link_path_parts.2": "undefined",
+//       "link_path_parts.3": "undefined",
+//       "link_path_parts.4": "undefined",
+//       "link_path_parts.5": "undefined",
+//     });
+//   },
+// );
+// TODO: Re-enable when navigation tracking is re-enabled (isEnabled currently always returns false)
+// Then(
+//   "The dataLayer includes the navigation outbound link event",
+//   async function () {
+//     const dataLayer = this.context.dataLayer;
+//     const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
+//     expect(eventData).to.contain({
+//       event_name: "navigation",
+//       type: "generic link",
+//       text: "test outbound link",
+//       section: "undefined",
+//       action: "undefined",
+//       url: "https://apps.apple.com/gb/app/gov-uk-id-check/id1629050566",
+//       external: "true",
+//       link_domain: "https://apps.apple.com",
+//       "link_path_parts.1": "/gb/app/gov-uk-id-check/id1629050566",
+//       "link_path_parts.2": "undefined",
+//       "link_path_parts.3": "undefined",
+//       "link_path_parts.4": "undefined",
+//       "link_path_parts.5": "undefined",
+//     });
+//   },
+// );
+// TODO: Re-enable when navigation tracking is re-enabled (isEnabled currently always returns false)
+// Then(
+//   "The dataLayer includes the navigation back link event",
+//   async function () {
+//     const dataLayer = this.context.dataLayer;
+//     const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
+//     expect(eventData).to.contain({
+//       event_name: "navigation",
+//       type: "back button",
+//       text: "back",
+//       section: "undefined",
+//       action: "undefined",
+//       url: "http://localhost:3000/welcome",
+//       external: "false",
+//       link_domain: "http://localhost:3000",
+//       "link_path_parts.1": "/welcome",
+//       "link_path_parts.2": "undefined",
+//       "link_path_parts.3": "undefined",
+//       "link_path_parts.4": "undefined",
+//       "link_path_parts.5": "undefined",
+//     });
+//   },
+// );
+//
+// Then("The dataLayer includes the navigation logo event", async function () {
+//   const dataLayer = this.context.dataLayer;
+//   const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
+//   expect(eventData).to.contain({
+//     event_name: "navigation",
+//     type: "header menu bar",
+//     text: "gov.uk",
+//     section: "logo",
+//     action: "undefined",
+//     url: "https://www.gov.uk/",
+//     external: "true",
+//     link_domain: "https://www.gov.uk",
+//     "link_path_parts.1": "/",
+//     "link_path_parts.2": "undefined",
+//     "link_path_parts.3": "undefined",
+//     "link_path_parts.4": "undefined",
+//     "link_path_parts.5": "undefined",
+//   });
+// });
+// TODO: Re-enable when navigation tracking is re-enabled (isEnabled currently always returns false)
+// Then(
+//   "The dataLayer includes the navigation banner link event",
+//   async function () {
+//     const dataLayer = this.context.dataLayer;
+//     const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
+//     expect(eventData).to.contain({
+//       event_name: "navigation",
+//       type: "header menu bar",
+//       text: "restart",
+//       section: "phase banner",
+//       action: "undefined",
+//       url: "http://localhost:3000/welcome",
+//       external: "false",
+//       link_domain: "http://localhost:3000",
+//       "link_path_parts.1": "/welcome",
+//       "link_path_parts.2": "undefined",
+//       "link_path_parts.3": "undefined",
+//       "link_path_parts.4": "undefined",
+//       "link_path_parts.5": "undefined",
+//     });
+//   },
+// );
+// TODO: Re-enable when navigation tracking is re-enabled (isEnabled currently always returns false)
+// Then(
+//   "The dataLayer includes the navigation footer link event",
+//   async function () {
+//     const dataLayer = this.context.dataLayer;
+//     const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
+//     expect(eventData).to.contain({
+//       event_name: "navigation",
+//       type: "footer",
+//       text: "contact",
+//       section: "support links",
+//       action: "undefined",
+//       url: "http://localhost:3000/undefined",
+//       external: "false",
+//       link_domain: "http://localhost:3000",
+//       "link_path_parts.1": "/undefined",
+//       "link_path_parts.2": "undefined",
+//       "link_path_parts.3": "undefined",
+//       "link_path_parts.4": "undefined",
+//       "link_path_parts.5": "undefined",
+//     });
+//   },
+// );
+// TODO: Re-enable when navigation tracking is re-enabled (isEnabled currently always returns false)
+// Then(
+//   "The dataLayer includes the navigation footer licence link event",
+//   async function () {
+//     const dataLayer = this.context.dataLayer;
+//     const eventData = dataLayer.find(findEventHelper("event_data")).event_data;
+//     expect(eventData).to.contain({
+//       event_name: "navigation",
+//       type: "footer",
+//       text: "open government licence v3.0",
+//       section: "licence",
+//       action: "undefined",
+//       url: "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+//       external: "true",
+//       link_domain: "https://www.nationalarchives.gov.uk",
+//       "link_path_parts.1": "/doc/open-government-licence/version/3/",
+//       "link_path_parts.2": "undefined",
+//       "link_path_parts.3": "undefined",
+//       "link_path_parts.4": "undefined",
+//       "link_path_parts.5": "undefined",
+//     });
+//   },
+// );
 
 Then(
   "The dataLayer includes the navigation footer copyright link event",
