@@ -1,3 +1,13 @@
+## 4.2.0 (2026-07-15)
+
+### 🩹 Fixes
+
+- Disable nav analytics ([#460](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/460))
+
+### ❤️ Thank You
+
+- SarahHillGDS
+
 ## 4.1.1 (2026-07-10)
 
 ### 🩹 Fixes
