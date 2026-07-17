@@ -158,9 +158,14 @@ export class PageViewTracker {
    * @return {string} The current location URL as a lowercase string, or "undefined" if not available.
    */
   static getLocation(): string {
-    return (
-      stripPIIFromString(document.location.href?.toLowerCase()) ?? "undefined"
-    );
+    const href = document.location.href?.toLowerCase();
+    if (!href) return "undefined";
+    try {
+      const decoded = PageViewTracker.fullyDecode(href);
+      return stripPIIFromString(decoded) ?? "undefined";
+    } catch {
+      return stripPIIFromString(href) ?? "undefined";
+    }
   }
 
   /**
@@ -169,8 +174,29 @@ export class PageViewTracker {
    * @return {string} The referrer as a lowercase string, or "undefined" if it is empty.
    */
   static getReferrer(): string {
-    return document.referrer.length
-      ? document.referrer?.toLowerCase()
-      : "undefined";
+    if (!document.referrer.length) return "undefined";
+    const referrer = document.referrer.toLowerCase();
+    try {
+      const decoded = PageViewTracker.fullyDecode(referrer);
+      return stripPIIFromString(decoded) ?? "undefined";
+    } catch {
+      return stripPIIFromString(referrer) ?? "undefined";
+    }
+  }
+
+  /**
+   * Fully decodes a URL string, handling + as space and repeated encoding.
+   * Decodes iteratively until the string stops changing.
+   */
+  private static fullyDecode(value: string): string {
+    // Replace + with space first (query string convention), then decode
+    let decoded = decodeURIComponent(value.replace(/\+/g, " "));
+    let prev = value;
+    // Continue decoding if there are still encoded sequences (from double-encoding)
+    while (decoded !== prev && decoded.includes("%")) {
+      prev = decoded;
+      decoded = decodeURIComponent(decoded);
+    }
+    return decoded;
   }
 }

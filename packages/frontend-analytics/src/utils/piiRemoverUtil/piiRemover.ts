@@ -1,4 +1,4 @@
-const EMAIL_PATTERN = /[^\s=@/?&#+]+(?:@|%40)[^\s=@/?&+]+/g;
+const EMAIL_PATTERN = /[^\s=@/?&#+]+\s?(?:@|%40)\s?[^\s=@/?&+]+/g;
 const POSTCODE_PATTERN =
   /\b[A-PR-UWYZ][A-HJ-Z]?\d[0-9A-HJKMNPR-Y]?(?:[\s+]|%20)*\d(?!refund)[ABD-HJLNPQ-Z]{2,3}\b/gi;
 
