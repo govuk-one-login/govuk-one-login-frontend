@@ -49,7 +49,7 @@ export class PageViewTracker {
           getTaxonomy(parameters.taxonomy_level2, "Level2"),
           100,
         ),
-        content_id: validateParameter(parameters.content_id, 100),
+        content_id: PageViewTracker.getContentId(parameters.content_id),
         logged_in_status: PageViewTracker.getLoggedInStatus(
           parameters.logged_in_status,
         ),
@@ -76,6 +76,21 @@ export class PageViewTracker {
     };
 
     pushToDataLayer(pageViewTrackerEvent);
+  }
+
+  /**
+   * Validates the content_id parameter without applying PII redaction.
+   * Content IDs are static taxonomy identifiers (UUIDs) that should not be stripped.
+   *
+   * @param {string} contentId - The content ID value.
+   * @return {string} The validated content ID in lowercase, or "undefined" if invalid.
+   */
+  static getContentId(contentId: string | undefined): string {
+    if (!contentId || typeof contentId !== "string") {
+      return "undefined";
+    }
+    const value = contentId.substring(0, 100);
+    return value.toLowerCase();
   }
 
   /**
