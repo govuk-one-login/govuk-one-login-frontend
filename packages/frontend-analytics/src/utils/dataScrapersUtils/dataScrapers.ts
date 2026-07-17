@@ -1,9 +1,11 @@
+import { stripPIIFromString } from "../piiRemoverUtil/piiRemover";
+
 export const getDomain = (url: string): string => {
   if (url === "undefined") {
     return "undefined";
   }
   const newUrl = new URL(url, window.location.origin);
-  return `${newUrl.protocol}//${newUrl.host}`;
+  return stripPIIFromString(`${newUrl.protocol}//${newUrl.host}`);
 };
 
 export const getDomainPath = (url: string, part: number): string => {
@@ -16,7 +18,18 @@ export const getDomainPath = (url: string, part: number): string => {
   const end = start + 500;
   const newUrl = new URL(url, window.location.origin);
   const domainPath = newUrl.pathname.substring(start, end);
-  return domainPath.length ? domainPath : "undefined";
+  if (!domainPath.length) return "undefined";
+  try {
+    let decoded = decodeURIComponent(domainPath.replace(/\+/g, " "));
+    let prev = domainPath;
+    while (decoded !== prev && decoded.includes("%")) {
+      prev = decoded;
+      decoded = decodeURIComponent(decoded);
+    }
+    return stripPIIFromString(decoded);
+  } catch {
+    return stripPIIFromString(domainPath);
+  }
 };
 
 // check for change links used by both navigationTracker and formChangeTracker

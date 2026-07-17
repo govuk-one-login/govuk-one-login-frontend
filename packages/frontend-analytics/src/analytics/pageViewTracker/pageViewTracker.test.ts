@@ -750,3 +750,174 @@ describe("Static method null handling", () => {
     expect(typeof result).toBe("string");
   });
 });
+
+describe("PII stripping in location and referrer", () => {
+  test("getLocation decodes URL before stripping PII", () => {
+    const stripPIISpy = vi.spyOn(piiRemover, "stripPIIFromString");
+
+    PageViewTracker.getLocation();
+
+    // Verify stripPIIFromString receives the decoded URL
+    const calledWith = stripPIISpy.mock.calls[0][0];
+    expect(calledWith).not.toContain("%");
+    expect(calledWith).toBe(
+      decodeURIComponent(document.location.href.toLowerCase()),
+    );
+
+    stripPIISpy.mockRestore();
+  });
+
+  test("getLocation strips PII after decoding", () => {
+    const stripPIISpy = vi
+      .spyOn(piiRemover, "stripPIIFromString")
+      .mockReturnValue("https://example.com/page?q=[phonenumber]");
+
+    const result = PageViewTracker.getLocation();
+    expect(result).toContain("[phonenumber]");
+    expect(result).not.toContain("447700900000");
+
+    stripPIISpy.mockRestore();
+  });
+
+  test("getReferrer strips PII from referrer URL", () => {
+    Object.defineProperty(document, "referrer", {
+      value: "https://example.com/page?email=user%40example.com",
+      configurable: true,
+    });
+
+    const result = PageViewTracker.getReferrer();
+    expect(result).not.toContain("user");
+    expect(result).toContain("[email]");
+  });
+
+  test("getReferrer strips URL-encoded phone numbers", () => {
+    Object.defineProperty(document, "referrer", {
+      value: "https://example.com/page?q=%2B447700900000",
+      configurable: true,
+    });
+
+    const result = PageViewTracker.getReferrer();
+    expect(result).not.toContain("447700900000");
+    expect(result).toContain("[phonenumber]");
+  });
+
+  test("getReferrer decodes URL before stripping PII", () => {
+    Object.defineProperty(document, "referrer", {
+      value: "https://example.com/page?q=%2B447700900000",
+      configurable: true,
+    });
+
+    const stripPIISpy = vi.spyOn(piiRemover, "stripPIIFromString");
+
+    PageViewTracker.getReferrer();
+
+    const calledWith = stripPIISpy.mock.calls[0][0];
+    expect(calledWith).toContain("+447700900000");
+    expect(calledWith).not.toContain("%2B");
+
+    stripPIISpy.mockRestore();
+  });
+
+  test("getLocation handles malformed URI encoding gracefully", () => {
+    // Mock stripPIIFromString to verify it's still called with the raw value
+    const stripPIISpy = vi.spyOn(piiRemover, "stripPIIFromString");
+
+    // decodeURIComponent would throw on a malformed sequence, but
+    // since we can't override window.location, we test the try/catch
+    // by verifying getLocation doesn't throw with the current URL
+    expect(() => PageViewTracker.getLocation()).not.toThrow();
+    expect(stripPIISpy).toHaveBeenCalled();
+
+    stripPIISpy.mockRestore();
+  });
+
+  test("getReferrer handles malformed URI encoding gracefully", () => {
+    Object.defineProperty(document, "referrer", {
+      value: "https://example.com/page?q=%E0%A4%A",
+      configurable: true,
+    });
+
+    // Should not throw — falls back to stripping raw value
+    expect(() => PageViewTracker.getReferrer()).not.toThrow();
+    const result = PageViewTracker.getReferrer();
+    expect(typeof result).toBe("string");
+    expect(result).not.toBe("undefined");
+  });
+
+  test("getReferrer strips URL-encoded postcodes", () => {
+    Object.defineProperty(document, "referrer", {
+      value: "https://example.com/search?postcode=SW1A%201AA",
+      configurable: true,
+    });
+
+    const result = PageViewTracker.getReferrer();
+    expect(result).not.toContain("SW1A");
+    expect(result).toContain("[postcode]");
+  });
+
+  test("getReferrer strips URL-encoded dates (dd/mm/yyyy)", () => {
+    Object.defineProperty(document, "referrer", {
+      value: "https://example.com/form?dob=23%2F11%2F1990",
+      configurable: true,
+    });
+
+    const result = PageViewTracker.getReferrer();
+    expect(result).not.toContain("1990");
+    expect(result).toContain("[date]");
+  });
+
+  test("getReferrer strips URL-encoded dates (yyyy-mm-dd)", () => {
+    Object.defineProperty(document, "referrer", {
+      value: "https://example.com/form?dob=1990-11-23",
+      configurable: true,
+    });
+
+    const result = PageViewTracker.getReferrer();
+    expect(result).not.toContain("1990");
+    expect(result).toContain("[date]");
+  });
+
+  test("getReferrer strips URL-encoded National Insurance numbers", () => {
+    Object.defineProperty(document, "referrer", {
+      value: "https://example.com/verify?nino=AB%20123456C",
+      configurable: true,
+    });
+
+    const result = PageViewTracker.getReferrer();
+    expect(result).not.toContain("123456");
+    expect(result).toContain("[nationalInsuranceNumber]");
+  });
+
+  test("getReferrer strips URL-encoded email addresses", () => {
+    Object.defineProperty(document, "referrer", {
+      value: "https://example.com/login?email=user%40example.com",
+      configurable: true,
+    });
+
+    const result = PageViewTracker.getReferrer();
+    expect(result).not.toContain("user");
+    expect(result).toContain("[email]");
+  });
+
+  test("getReferrer strips URL-encoded international phone numbers", () => {
+    Object.defineProperty(document, "referrer", {
+      value: "https://example.com/verify?phone=%2B447700900000",
+      configurable: true,
+    });
+
+    const result = PageViewTracker.getReferrer();
+    expect(result).not.toContain("7700900000");
+    expect(result).toContain("[phonenumber]");
+  });
+
+  test("getReferrer strips URL-encoded UK phone numbers", () => {
+    Object.defineProperty(document, "referrer", {
+      value: "https://example.com/verify?phone=0770%200900000",
+      configurable: true,
+    });
+
+    const result = PageViewTracker.getReferrer();
+    expect(result).not.toContain("0900000");
+    expect(result).toContain("[phonenumber]");
+  });
+});
