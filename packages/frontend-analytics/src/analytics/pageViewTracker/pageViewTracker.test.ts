@@ -107,7 +107,7 @@ describe("pageViewTracker", () => {
           getTaxonomy(parameters.taxonomy_level5, "Level5"),
           100,
         ),
-        content_id: validateParameter(parameters.content_id, 100),
+        content_id: PageViewTracker.getContentId(parameters.content_id),
         logged_in_status: PageViewTracker.getLoggedInStatus(
           parameters.logged_in_status,
         ),
@@ -151,7 +151,7 @@ describe("pageViewTracker", () => {
           getTaxonomy(parameters.taxonomy_level5, "Level5"),
           100,
         ),
-        content_id: validateParameter(parameters.content_id, 100),
+        content_id: PageViewTracker.getContentId(parameters.content_id),
         logged_in_status: PageViewTracker.getLoggedInStatus(
           parameters.logged_in_status,
         ),
@@ -557,14 +557,9 @@ describe("Edge cases and error handling", () => {
   });
 
   test("handles null document properties gracefully", () => {
-    // Mock stripPIIFromString to return "undefined" when href is null
-    const mockStripPII = vi.fn().mockReturnValue("undefined");
-    vi.doMock("../../utils/piiRemoverUtil/piiRemover", () => ({
-      stripPIIFromString: mockStripPII,
-    }));
-
+    // getLocation should process the current location without throwing
     const location = PageViewTracker.getLocation();
-    expect(location).toContain("localhost"); // Should contain localhost from current location
+    expect(location).toContain("localhost");
   });
 
   test("multiple calls to trackOnPageLoad work correctly", () => {
