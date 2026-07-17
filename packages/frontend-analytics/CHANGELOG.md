@@ -1,3 +1,13 @@
+## 4.2.2 (2026-07-17)
+
+### 🩹 Fixes
+
+- **1345:** Adding safety net to dataLayer push ([#463](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/463))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+
 ## 4.2.1 (2026-07-17)
 
 ### 🩹 Fixes
