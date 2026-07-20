@@ -1,23 +1,23 @@
 import { SQSClient } from "@aws-sdk/client-sqs";
-import { sendToTXMA, customSendToTXMA } from "../index.js";
-import { EventKey } from "../types.js";
+import { sendToTXMA, customSendToTXMA } from "../";
+import { EventKey } from "../types";
 
 const createEventMock = vi.fn((_: string, entity: object) => entity);
 const validateEventMock = vi.fn().mockReturnValue(true);
 const sendEventToSQSMock = vi.fn();
 const loggerMock = vi.fn();
 
-vi.mock("../createEvent.js", () => ({
+vi.mock("../createEvent", () => ({
   createEvent: (type: string, entity: object) => createEventMock(type, entity),
 }));
-vi.mock("../validateEvent.js", () => ({
+vi.mock("../validateEvent", () => ({
   validateEvent: (event: object) => validateEventMock(event),
 }));
-vi.mock("../sendEventToSQS.js", () => ({
+vi.mock("../sendEventToSQS", () => ({
   sendEventToSQS: (event: object, queueUrl: string, options: object) =>
     sendEventToSQSMock(event, queueUrl, options),
 }));
-vi.mock("../logger.js", () => ({
+vi.mock("../logger", () => ({
   default: {
     info: (content: string) => loggerMock(content),
   },
