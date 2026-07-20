@@ -21,6 +21,7 @@ runs:
       with:
         node-version: ${{ inputs.node-version }}
         registry-url: ${{ inputs.registry-url }}
+        cache: "npm"
 
     - shell: bash
       name: Skip changes to .npmrc so they don't get committed back during release
