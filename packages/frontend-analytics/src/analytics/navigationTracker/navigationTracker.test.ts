@@ -126,6 +126,34 @@ describe("navigationTracker", () => {
     expect(pushToDataLayer.pushToDataLayer).toBeCalled();
   });
 
+  test("trackNavigation should return false for auto-linked telephone numbers", () => {
+    document.body.innerHTML = `<a id="telLink" href="tel:07123456789">07123 456 789</a>`;
+    const element = document.getElementById("telLink") as NavigationElement;
+    element.dispatchEvent(action);
+    expect(pushToDataLayer.pushToDataLayer).not.toBeCalled();
+  });
+
+  test("trackNavigation should return false for auto-linked email addresses", () => {
+    document.body.innerHTML = `<a id="mailLink" href="mailto:user@example.com">user@example.com</a>`;
+    const element = document.getElementById("mailLink") as NavigationElement;
+    element.dispatchEvent(action);
+    expect(pushToDataLayer.pushToDataLayer).not.toBeCalled();
+  });
+
+  test("trackNavigation should return false for auto-linked sms links", () => {
+    document.body.innerHTML = `<a id="smsLink" href="sms:07123456789">07123 456 789</a>`;
+    const element = document.getElementById("smsLink") as NavigationElement;
+    element.dispatchEvent(action);
+    expect(pushToDataLayer.pushToDataLayer).not.toBeCalled();
+  });
+
+  test("trackNavigation should return false for auto-linked geo links", () => {
+    document.body.innerHTML = `<a id="geoLink" href="geo:51.5074,-0.1278">10 Downing Street</a>`;
+    const element = document.getElementById("geoLink") as NavigationElement;
+    element.dispatchEvent(action);
+    expect(pushToDataLayer.pushToDataLayer).not.toBeCalled();
+  });
+
   test("trackNavigation should return false if not a navigation button", () => {
     document.body.innerHTML = "<header></header><footer></footer>";
     const href = document.createElement("BUTTON");

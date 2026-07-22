@@ -157,10 +157,19 @@ export const isNavigatingElement = (element: NavigationElement) => {
   }
 
   if (element instanceof HTMLAnchorElement) {
+    const href = element.href || "";
+
+    // Only track links with http/https protocols — excludes browser
+    // auto-linked content (tel:, mailto:, geo:, sms:, and any other
+    // non-navigation schemes)
+    if (!href.startsWith("http:") && !href.startsWith("https:")) {
+      return false;
+    }
+
+    // Exclude same-page anchor links (e.g. "#" or "http://current-page#")
     if (
-      !element.href?.length ||
-      element.href === "#" ||
-      element.href === `${window.location.href}#`
+      href === "#" ||
+      href === `${window.location.href}#`
     ) {
       return false;
     }
