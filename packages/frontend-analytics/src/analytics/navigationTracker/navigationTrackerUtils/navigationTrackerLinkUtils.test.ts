@@ -4,6 +4,7 @@ import {
   isHeaderMenuBarLink,
   isFooterLink,
   isBackLink,
+  isNavigatingElement,
 } from "./navigationTrackerLinkUtils";
 
 describe("navigationTrackerLinkUtils", () => {
@@ -102,3 +103,49 @@ describe("navigationTrackerLinkUtils", () => {
     });
   });
 });
+
+  describe("isNavigatingElement", () => {
+    describe("only allows http/https protocol schemes", () => {
+      test("should return false for tel: links", () => {
+        document.body.innerHTML = `<a id="tel" href="tel:07123456789">07123 456 789</a>`;
+        const element = document.getElementById("tel") as NavigationElement;
+        expect(isNavigatingElement(element)).toBe(false);
+      });
+
+      test("should return false for mailto: links", () => {
+        document.body.innerHTML = `<a id="mailto" href="mailto:test@example.com">test@example.com</a>`;
+        const element = document.getElementById("mailto") as NavigationElement;
+        expect(isNavigatingElement(element)).toBe(false);
+      });
+
+      test("should return false for sms: links", () => {
+        document.body.innerHTML = `<a id="sms" href="sms:07123456789">07123 456 789</a>`;
+        const element = document.getElementById("sms") as NavigationElement;
+        expect(isNavigatingElement(element)).toBe(false);
+      });
+
+      test("should return false for geo: links", () => {
+        document.body.innerHTML = `<a id="geo" href="geo:51.5074,-0.1278">10 Downing Street</a>`;
+        const element = document.getElementById("geo") as NavigationElement;
+        expect(isNavigatingElement(element)).toBe(false);
+      });
+
+      test("should return false for unknown/custom protocol schemes", () => {
+        document.body.innerHTML = `<a id="custom" href="custom-app:some-data">Open app</a>`;
+        const element = document.getElementById("custom") as NavigationElement;
+        expect(isNavigatingElement(element)).toBe(false);
+      });
+
+      test("should return true for http: links", () => {
+        document.body.innerHTML = `<a id="http" href="http://www.gov.uk/page">GOV.UK</a>`;
+        const element = document.getElementById("http") as NavigationElement;
+        expect(isNavigatingElement(element)).toBe(true);
+      });
+
+      test("should return true for https: links", () => {
+        document.body.innerHTML = `<a id="https" href="https://www.gov.uk/page">GOV.UK</a>`;
+        const element = document.getElementById("https") as NavigationElement;
+        expect(isNavigatingElement(element)).toBe(true);
+      });
+    });
+  });
