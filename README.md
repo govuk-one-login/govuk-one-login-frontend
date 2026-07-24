@@ -57,10 +57,6 @@ To create a new package, follow these steps:
 
 - After answering the questions, the command will generate the package with the necessary files.
 
-
-
--
-
 ## Lint the code with eslint+prettier:
 
 ### To Run All Packages
@@ -164,6 +160,14 @@ To deprecate a specific package version from the monorepo, use the **GitHub Acti
 
 4. **Verify the Deprecated**
    Once the workflow completes, confirm the package has been deprecated on the NPM registry with an appropriate message.
+
+## How to Run Performance Tests 
+
+To run performance tests using k6, follow these steps:
+
+- Head over to the alpha app and run it in product mode
+- Change the end-point in the alpha app to `test-submit-button`
+- Run the command `k6 run testServer.js` if you have K6 installed otherwise run `npm run test:server`
 
 ## Contributing Code
 

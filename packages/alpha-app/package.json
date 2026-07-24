@@ -13,13 +13,15 @@
     "test:integration:ci:install": "npx playwright install --with-deps --only-shell chromium",
     "test:integration:ci:run": "start-server-and-test start http://localhost:3000 test:integration",
     "test:integration": "cucumber-js test/browser/features/v1/analytics --require test/browser/support/setup.ts --require test/browser/step_definitions/**/*.ts cucumber --tags 'not @skip'",
+    "test:browser": "k6 run testBrowser.js",
+    "test:server": "k6 run testServer.js",
     "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,md}\"",
     "build": "rm -rf build/ public/ && npm run build-sass && rollup -c",
     "dev-js": "rollup -c --watch"
   },
   "dependencies": {
     "@axe-core/playwright": "^4.11.0",
-    "@govuk-one-login/event-catalogue": "^43.2.0",
+    "@govuk-one-login/event-catalogue": "^43.2.4",
     "@govuk-one-login/event-catalogue-schemas": "^43.2.0",
     "@govuk-one-login/event-catalogue-utils": "0.x",
     "@govuk-one-login/frontend-analytics": "4.1",
