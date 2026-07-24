@@ -56,7 +56,7 @@ export class FormChangeTracker extends FormTracker {
         event_name: this.eventName,
         type: "undefined",
         url: validateParameter(element.href, 500),
-        text: "change", // put static value. Waiting final documentation on form change tracker,
+        text: element.textContent?.trim().toLowerCase() || "change",
         section: validateParameter(FormChangeTracker.getSection(element), 100),
         action: "change response",
         external: "false",
