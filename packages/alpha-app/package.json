@@ -2,7 +2,7 @@
   "name": "alpha-app",
   "version": "0.0.9",
   "scripts": {
-    "start": "npm-run-all build-sass --parallel dev",
+    "start": "npm-run-all2 build-sass --parallel dev",
     "dev": "node --watch build/app.js",
     "build-sass": "rm -rf public/stylesheets/*.css && sass --no-source-map src/frontend-assets/css/index.scss public/stylesheets/styles.css --style compressed",
     "serve": "nodemon serve",
