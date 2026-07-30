@@ -1,20 +1,33 @@
+/* GOV.UK Frontend v6 compatibility: v6 removed .govuk-header__link colour
+   styles in favour of scoped CSS custom properties. The One Login header
+   needs explicit link colours to remain white on the black background. */
+.govuk-header {
+  .govuk-header__link,
+  .govuk-header__link:link,
+  .govuk-header__link:visited,
+  .govuk-header__link:active {
+    color: #ffffff;
+    text-decoration: none;
+  }
+
+  .govuk-header__link:hover {
+    text-decoration: underline;
+    text-decoration-thickness: max(3px, .1875rem, .12em);
+  }
+
+  .govuk-header__link:focus {
+    color: #0b0c0c;
+  }
+}
+
 @media (max-width: 640px) {
   .govuk-header__navigation-item {
     border-left: none !important;
   }
-  .govuk-template--rebranded .govuk-header__navigation-list {
-    padding-bottom: 0px !important;
+
+  .govuk-header__navigation-item{
+    padding-top: 8px !important;
   }
-
-    .govuk-header__navigation-item{
-      padding-top: 8px !important;
-    }
-  } 
-
-.frontendUi_header_signOut-item {
-  padding: 5px 0px 5px 30px;
-  border-left: 1px solid #b1b4b6;
-  margin-left: auto;
 }
 
 .frontendUi_header_signOut-item--rebrand {
@@ -27,40 +40,39 @@
 .frontendUi_header__signOut {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+}
+
+.govuk-header__navigation-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .frontendUi-header__content {
   margin-left: auto;
 }
 
-.govuk-header__navigation--signOut {
-  padding: 15px 0 15px !important;
-}
-
-.govuk-template--rebranded .govuk-header__navigation {
+.govuk-header__navigation {
   padding: 15px 0 15px !important;
 }
 
 @media (max-width: 640px) {
-  .govuk-header__navigation--signOut {
-    padding: 18px 0 8px !important;
-  }
-
-  .govuk-template--rebranded .govuk-header__navigation {
+  .govuk-header__navigation {
     padding: 18px 0 8px !important;
   }
 }
 
-.govuk-template--rebranded .govuk-header__navigation-item a {
+.govuk-header__navigation-item a {
   font-weight: 700 !important;
 }
 
-.govuk-template--rebranded .govuk-header__navigation-item {
+.govuk-header__navigation-item {
   padding-top: 5px !important;
 }
 
 @media (min-width: 20em) and (max-width: 48.0525em) {
-  .govuk-template--rebranded .govuk-header__navigation-list {
+  .govuk-header__navigation-list {
     padding-bottom: 0px;
   }
 }
@@ -71,7 +83,7 @@
   padding-right: 5px;
 }
 
-.frontendUi_header_signOut-item
+.frontendUi_header_signOut-item--rebrand
 {
   padding-left: 0px;
 }
@@ -79,24 +91,21 @@
 
 @media (max-width: 261px) {
 
-      .frontendUi-header__content {
+  .frontendUi-header__content {
     margin-left: unset;
-}
+  }
 
-
-
-
-.govuk-template--rebranded .govuk-header__navigation {
-        padding: 0px 0 8px !important;
-    }
+  .govuk-header__navigation {
+    padding: 0px 0 8px !important;
+  }
 
   .govuk-header__logotype{
     max-width: 100%;
     max-height: auto;
   }
 
-  .govuk-template--rebranded .govuk-header__logo{
-  padding-top: 5% !important;
-  padding-bottom: 5% !important;
-}
+  .govuk-header__logo{
+    padding-top: 5% !important;
+    padding-bottom: 5% !important;
+  }
 }

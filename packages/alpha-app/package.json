@@ -33,7 +33,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.22.2",
     "express-session": "^1.18.2",
-    "govuk-frontend": "^5.14.0",
+    "govuk-frontend": "^6.0.0",
     "helmet": "^8.1.0",
     "i18next": "^23.16.8",
     "i18next-fs-backend": "^2.6.4",

@@ -24,17 +24,11 @@ describe("Footer Component", () => {
     const renderedComponent = render("footer", "frontendUiFooter", {
       params: mockParams,
     });
-    const results = await axe(renderedComponent.documentElement.outerHTML);
-    expect(results).toHaveNoViolations();
-  });
-
-  it("has no accessibility violations - testing May rebrand enabled condition", async () => {
-    const renderedComponent = render("footer", "frontendUiFooter", {
-      params: mockParams,
-      May_2025_Rebrand: true,
-    });
-
-    const results = await axe(renderedComponent.documentElement.outerHTML);
+    // In govuk-frontend v6, the <footer> element is provided by the page
+    // template, not the govukFooter component itself. Wrap in <footer> to
+    // simulate the real page structure for axe landmark checks.
+    const html = `<footer>${renderedComponent.documentElement.outerHTML}</footer>`;
+    const results = await axe(html);
     expect(results).toHaveNoViolations();
   });
 });

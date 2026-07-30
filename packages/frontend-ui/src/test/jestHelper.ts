@@ -19,8 +19,9 @@ export const nunjucksEnv = nunjucks.configure(
 );
 nunjucksEnv.addGlobal("addLanguageParam", addLanguageParam);
 nunjucksEnv.addGlobal("contactUsUrl", contactUsUrl);
-nunjucksEnv.addGlobal("MAY_2025_REBRAND_ENABLED", true);
-nunjucksEnv.addFilter("translate", () => "");
+nunjucksEnv.addFilter("translate", function () {
+  return "";
+});
 
 export function render(macroFolder: string, macroName: string, params = {}) {
   const macroParams = JSON.stringify(params, null, 2);
