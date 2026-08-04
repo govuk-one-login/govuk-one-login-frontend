@@ -18,17 +18,19 @@
 {% from "frontend-ui/build/components/language-select/macro.njk" import frontendUiLanguageSelect %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/skip-link/macro.njk" import govukSkipLink %}
-{% from "hmpo-components/components/hmpo-checkboxes/macro.njk" import hmpoCheckboxes %}
-{% from "hmpo-components/components/hmpo-date/macro.njk" import hmpoDate %}
-{% from "hmpo-components/components/hmpo-details/macro.njk" import hmpoDetails %}
-{% from "hmpo-components/components/hmpo-form/macro.njk" import hmpoForm %}
-{% from "hmpo-components/components/hmpo-html/macro.njk" import hmpoHtml %}
-{% from "hmpo-components/components/hmpo-inset-text/macro.njk" import hmpoInsetText %}
-{% from "hmpo-components/components/hmpo-radios/macro.njk" import hmpoRadios %}
-{% from "hmpo-components/components/hmpo-select/macro.njk" import hmpoSelect %}
-{% from "hmpo-components/components/hmpo-submit/macro.njk" import hmpoSubmit %}
-{% from "hmpo-components/components/hmpo-text/macro.njk" import hmpoText %}
-{% from "hmpo-components/components/hmpo-warning-text/macro.njk" import hmpoWarningText %}
+{# hmpo-components macros - imported via include so they are available to child templates #}
+{% include "frontend-ui/build/components/bases/identity/hmpo-all.njk" %}
+{# {% from "hmpo-components/components/hmpo-checkboxes/macro.njk" import hmpoCheckboxes %} #}
+{# {% from "hmpo-components/components/hmpo-date/macro.njk" import hmpoDate %} #}
+{# {% from "hmpo-components/components/hmpo-details/macro.njk" import hmpoDetails %} #}
+{# {% from "hmpo-components/components/hmpo-form/macro.njk" import hmpoForm %} #}
+{# {% from "hmpo-components/components/hmpo-html/macro.njk" import hmpoHtml %} #}
+{# {% from "hmpo-components/components/hmpo-inset-text/macro.njk" import hmpoInsetText %} #}
+{# {% from "hmpo-components/components/hmpo-radios/macro.njk" import hmpoRadios %} #}
+{# {% from "hmpo-components/components/hmpo-select/macro.njk" import hmpoSelect %} #}
+{# {% from "hmpo-components/components/hmpo-submit/macro.njk" import hmpoSubmit %} #}
+{# {% from "hmpo-components/components/hmpo-text/macro.njk" import hmpoText %} #}
+{# {% from "hmpo-components/components/hmpo-warning-text/macro.njk" import hmpoWarningText %} #}
 
 {% set htmlLang = htmlLang %}
 {% set pageTitleLang = htmlLang %}
