@@ -16,7 +16,21 @@
   }
 
   .govuk-header__link:focus {
+    outline: 3px solid transparent;
     color: #0b0c0c;
+    background-color: #fd0;
+    box-shadow:
+      0 -2px #fd0,
+      0 4px #0b0c0c;
+    text-decoration: none;
+  }
+
+  .govuk-header__link--homepage:focus {
+    background-color: transparent;
+    box-shadow: none;
+    outline: 3px solid #fd0;
+    outline-offset: 3px;
+    color: #ffffff;
   }
 }
 
