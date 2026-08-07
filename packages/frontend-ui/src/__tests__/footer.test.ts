@@ -24,10 +24,7 @@ describe("Footer Component", () => {
     const renderedComponent = render("footer", "frontendUiFooter", {
       params: mockParams,
     });
-    // In govuk-frontend v6, the <footer> element is provided by the page
-    // template, not the govukFooter component itself. Wrap in <footer> to
-    // simulate the real page structure for axe landmark checks.
-    const html = `<footer>${renderedComponent.documentElement.outerHTML}</footer>`;
+    const html = renderedComponent.documentElement.outerHTML;
     const results = await axe(html);
     expect(results).toHaveNoViolations();
   });
