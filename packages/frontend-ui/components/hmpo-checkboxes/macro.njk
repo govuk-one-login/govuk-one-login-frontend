@@ -1,0 +1,57 @@
+{% macro hmpoCheckboxes(ctx, params, base) %}
+    {%- set params = hmpoGetParams(ctx, params, base) %}
+
+    {%- set value = hmpoGetValue(ctx, params) %}
+
+    {%- set pageHeading = {
+        legend: {
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+        }
+    } if params.isPageHeading %}
+
+    {%- set fieldset = merge(
+        pageHeading,
+        {
+            legend: hmpoGetOptions(ctx, params, "legend"),
+            attributes: { id: params.id + '-fieldset' }
+        },
+        params.fieldset
+    ) %}
+
+    {%- if params.items %}
+        {%- set items = hmpoGetItems(ctx, params, value, false, true) %}
+    {% else %}
+        {%- set label = hmpoGetOptions(ctx, params, "label") %}
+        {%- set items = [{
+            id: params.id,
+            name: params.id,
+            value: params.value | default("true"),
+            label: merge(
+                { attributes: { id: params.id + "-label" } },
+                label
+            ),
+            html: label.html,
+            text: label.text,
+            conditional: params.conditional,
+            checked: value,
+            attributes: hmpoGetAttributes(ctx, params, {
+                "aria-required": hmpoGetValidatorAttribute(ctx, params, "required", null, false)
+            } | filter(null))
+        }] %}
+        {%- set fieldset = false if not params.fieldset and not params.isPageHeading %}
+    {% endif %}
+
+    {%- set args = {
+        idPrefix: params.id,
+        fieldset: fieldset,
+        hint: hmpoGetOptions(ctx, params, "hint", true),
+        errorMessage: hmpoGetError(ctx, params),
+        classes: params.classes,
+        formGroup: params.formGroup,
+        items: items
+    } %}
+
+    {%- from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+    {{- govukCheckboxes(args) }}
+{% endmacro %}

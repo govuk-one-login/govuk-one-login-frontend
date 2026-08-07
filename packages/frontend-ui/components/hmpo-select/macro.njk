@@ -1,0 +1,34 @@
+{% macro hmpoSelect(ctx, params, base) %}
+    {%- set params = hmpoGetParams(ctx, params, base) %}
+
+    {%- set value = hmpoGetValue(ctx, params) %}
+    {%- set required = hmpoGetValidatorAttribute(ctx, params, "required") %}
+
+    {%- set pageHeading = {
+        isPageHeading: true,
+        classes: "govuk-label--l"
+    } if params.isPageHeading %}
+
+    {%- set args = {
+        id: params.id,
+        name: params.id,
+        label: merge(
+            pageHeading,
+            { attributes: { id: params.id + "-label" } },
+            hmpoGetOptions(ctx, params, "label")
+        ),
+        hint: hmpoGetOptions(ctx, params, "hint", true),
+        errorMessage: hmpoGetError(ctx, params),
+        type: params.type,
+        classes: params.classes,
+        formGroup: params.formGroup,
+        autocomplete: params.autocomplete,
+        attributes: hmpoGetAttributes(ctx, params, {
+            "aria-required": null if required else false
+        } | filter(null)),
+        items: hmpoGetItems(ctx, params, value, required, false)
+    } %}
+
+    {%- from "govuk/components/select/macro.njk" import govukSelect %}
+    {{- govukSelect(args) }}
+{% endmacro %}
