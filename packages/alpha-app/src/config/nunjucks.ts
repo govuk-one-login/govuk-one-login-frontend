@@ -14,7 +14,6 @@ const configureNunjucks = (
 
   frontendUi.addFrontendUiGlobals(nunjucksEnv);
 
-
   nunjucksEnv.addFilter("translate", function (key, options) {
     const translate = i18next.getFixedT(this.ctx.language);
     return translate(key, options);

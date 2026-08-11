@@ -49,6 +49,12 @@ This document covers the upgrade of the `govuk-one-login-frontend` monorepo from
 | `src/config/nunjucks.ts` | Removed `MAY_2025_REBRAND_ENABLED` Nunjucks global |
 | `src/views/common/base.njk` | Removed `govukRebrand` flag; changed `{% block main %}` → `{% block container %}` |
 
+### Root
+
+| File | Change |
+|------|--------|
+| `package-lock.json` | Updated lockfile for `govuk-frontend` v6 resolution |
+
 ### `packages/frontend-ui/` (Shared UI Components)
 
 #### Package configuration
@@ -61,16 +67,16 @@ This document covers the upgrade of the `govuk-one-login-frontend` monorepo from
 
 | File | Change |
 |------|--------|
-| `components/header/_index.scss` | Added explicit `.govuk-header__link` colour styles (white on black); added `align-items: center` to flex container; added `list-style: none` reset for `.govuk-header__navigation-list`; removed all `.govuk-template--rebranded` conditional rules; made rebrand styles the default |
-| `components/footer/_index.scss` | Removed `.govuk-template--rebranded` conditionals; made blue border-top and light-blue background the default |
+| `components/header/_index.scss` | Added explicit `.govuk-header__link` colour styles block (white on black, hover underline, focus black); removed `.frontendUi_header_signOut-item` class (non-rebrand variant); removed `.govuk-header__navigation--signOut` rules; removed `.frontendUi-header__content` duplicate `margin-left` rule; added `align-items: center` to flex container; added `.govuk-header__navigation-list` reset (`list-style: none`); removed all `.govuk-template--rebranded` conditional rules; made rebrand styles the default; fixed indentation/formatting throughout |
+| `components/footer/_index.scss` | Removed `.govuk-template--rebranded` conditionals; made blue border-top and light-blue background the default; simplified `.govuk-footer__copyright-logo::before` to use `currentcolor` |
 
 #### Nunjucks Templates
 
 | File | Change |
 |------|--------|
-| `components/header/template.njk` | Removed `MAY_2025_REBRAND_ENABLED` conditional; removed `_rebrand` variable; removed `rebrand` param from logo macro; always uses `frontendUi_header_signOut-item--rebrand` class |
+| `components/header/template.njk` | Removed `MAY_2025_REBRAND_ENABLED` conditional; removed `_rebrand` variable; removed `rebrand` param from logo macro; removed conditional `govuk-header__navigation--signOut` class from `<nav>`; always uses `frontendUi_header_signOut-item--rebrand` class |
 | `components/footer/template.njk` | Removed `rebrand: MAY_2025_REBRAND_ENABLED` from `govukFooter` macro call |
-| `components/macros/logo.njk` | Removed `rebrand` parameter; always uses Tudor Crown and dot logotype |
+| `components/macros/logo.njk` | Removed `rebrand` parameter; removed entire `_logotype` SVG (non-dot variant); simplified `svgWidth` calculation; always uses Tudor Crown and dot logotype |
 
 #### Base Templates (7 files)
 
@@ -88,7 +94,7 @@ This document covers the upgrade of the `govuk-one-login-frontend` monorepo from
 
 | File | Change |
 |------|--------|
-| `src/__tests__/footer.test.ts` | Wrapped footer HTML in `<footer>` element for axe landmark check (v6 moved `<footer>` to template) |
+| `src/__tests__/footer.test.ts` | Removed separate rebrand accessibility test (`"has no accessibility violations - testing May rebrand enabled condition"`); wrapped footer HTML in `<footer>` element for axe landmark check (v6 moved `<footer>` to page template) |
 | `src/test/jestHelper.ts` | Removed `MAY_2025_REBRAND_ENABLED` Nunjucks global from test setup |
 | `README.md` | Removed `MAY_2025_REBRAND_ENABLED` from setup documentation |
 
@@ -113,6 +119,44 @@ v6 removed `.govuk-header__link:link { color: #fff }` rules. Instead, it sets `-
 ### Why `list-style: none` is needed on `.govuk-header__navigation-list`
 
 v6 removed the header's built-in navigation (moved to Service Navigation component). The list reset that was part of the old header CSS is gone. `frontendUiHeader` still uses `.govuk-header__navigation-list` for the sign-out link, so we provide the reset ourselves.
+
+---
+
+## Release Process
+
+This upgrade is a **major version bump** for `@govuk-one-login/frontend-ui` (v5 → v6). Before releasing, follow the version branch process documented in the repository README.
+
+### Pre-release Checklist
+
+1. **Create the `frontend-ui@v5` version branch** from the current state of `main` (before merging this PR):
+   ```bash
+   git checkout main
+   git checkout -b frontend-ui@v5
+   git push -u origin frontend-ui@v5
+   ```
+   This preserves the ability to release patches for v5.x.x consumers who haven't upgraded yet.
+
+2. **Merge this PR** into `main`.
+
+3. **Release v6.0.0** via the GitHub Actions Release workflow:
+   - Go to **Actions** → **Release** → **Run workflow**
+   - Select branch: `main`
+   - Target: `@govuk-one-login/frontend-ui`
+   - Increment: `major`
+   - First release: `false`
+   - Dry run: `true` (verify first), then `false` to publish
+
+4. **Verify** the package is published on NPM with the correct version and peer dependencies.
+
+### Patching v5 After Release
+
+If a bug fix is needed for v5 consumers after v6 is released:
+
+1. Create a feature branch from `frontend-ui@v5`
+2. Open a PR targeting `frontend-ui@v5` (not `main`)
+3. After merge, run the Release workflow from the `frontend-ui@v5` branch with increment `patch`
+
+See the [Maintaining Older Package Versions](../../../README.md#maintaining-older-package-versions) section in the root README for full details.
 
 ---
 
@@ -144,7 +188,7 @@ Services do **not** need to worry about header/footer link colours — the `fron
 ## Files Changed Summary
 
 ```
-21 files changed, 70 insertions(+), 139 deletions(-)
+22 files changed, 220 insertions(+), 139 deletions(-)
 ```
 
-Net reduction of 69 lines — the upgrade simplifies the codebase by removing conditional rebrand logic that is no longer needed.
+Net increase of 81 lines — the new explicit `.govuk-header__link` colour rules and `.govuk-header__navigation-list` reset add more code than the removed conditional rebrand logic, but the codebase is significantly simpler with all branching removed.
