@@ -10,7 +10,6 @@ import {
   NavigationEventInterface,
 } from "./navigationTracker.interface";
 import {
-  getContainingElement,
   getLinkType,
   getSection,
   getTargetUrl,
@@ -41,19 +40,32 @@ export class NavigationTracker {
   }
 
   /**
-   * Tracks the page load event and sends the relevant data to the data layer.
+   * Finds the nearest anchor or button ancestor from the clicked element.
+   * Uses closest() to properly handle event delegation — ensures we always
+   * resolve to the actual navigating element regardless of which child
+   * element received the click.
    *
-   * @param {PageViewParametersInterface} parameters - The parameters for the page view event.
+   * @param {HTMLElement} target - The element that received the click event.
+   * @return {NavigationElement | null} The nearest <a> or <button> ancestor, or null if none found.
+   */
+  getNavigatingAncestor(target: HTMLElement): NavigationElement | null {
+    return target.closest("a, button") as NavigationElement | null;
+  }
+
+  /**
+   * Tracks navigation click events and sends the relevant data to the data layer.
+   *
+   * @param {Event} event - The click event.
    * @return {boolean} Returns true if the event was successfully tracked, false otherwise.
    */
   trackNavigation(event: Event): boolean {
     if (!this.isEnabled()) return false;
 
-    let element: NavigationElement = event.target as NavigationElement;
-    const crownAnchor: NavigationElement = document.querySelector(
-      "a.govuk-header__link",
-    ) as NavigationElement;
-    element = getContainingElement(element, crownAnchor) as NavigationElement;
+    const target = event.target as HTMLElement;
+    if (!target) return false;
+
+    const element = this.getNavigatingAncestor(target);
+    if (!element) return false;
 
     if (!isNavigatingElement(element)) return false;
 
@@ -96,6 +108,6 @@ export class NavigationTracker {
     if (!this.enableNavigationTracking) {
       return false;
     }
-    return false;
+    return true;
   }
 }
