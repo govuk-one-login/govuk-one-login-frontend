@@ -92,3 +92,36 @@ sendEvent("AUTH_AUTH_CODE_ISSUED", event);
 |--------|------|-------------|
 | `sqsClient` | `SQSClient` | A custom AWS SQS client. Defaults to a memoized client in `eu-west-2`. |
 | `logParams` | `string[]` | Keys to extract from the event and include in the success log message. |
+
+## Performance Testing
+
+`validateEvent` precompiles all Event Catalogue JSON schemas at module load time using AJV, so there is no per-call compilation overhead. The k6 tests in `src/perf/` verify this under load.
+
+### Prerequisites
+
+- [k6](https://k6.io/docs/get-started/installation/) installed as a standalone binary:
+  ```bash
+  brew install k6
+  ```
+- The package built:
+  ```bash
+  npm run build
+  ```
+
+### Running the tests
+
+In one terminal, start the HTTP harness (which imports the built package):
+
+```bash
+npm run perf:harness
+```
+
+In a second terminal, run the k6 script against it:
+
+```bash
+npm run perf:k6
+```
+
+The test runs 10 virtual users for 10 seconds and checks:
+- Error rate < 1%
+- p95 response time < 50ms

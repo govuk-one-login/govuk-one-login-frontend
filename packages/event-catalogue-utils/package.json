@@ -16,7 +16,9 @@
   },
   "scripts": {
     "test": "vitest --run --coverage",
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "perf:harness": "node src/perf/harness.js",
+    "perf:k6": "k6 run src/perf/validateEvent.k6.js"
   },
   "files": [
     "build/",
