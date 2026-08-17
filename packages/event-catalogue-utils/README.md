@@ -95,7 +95,7 @@ sendEvent("AUTH_AUTH_CODE_ISSUED", event);
 
 ## Performance Testing
 
-`validateEvent` precompiles all Event Catalogue JSON schemas at module load time using AJV, so there is no per-call compilation overhead. The k6 tests in `src/perf/` verify this under load.
+`validateEvent` precompiles all Event Catalogue JSON schemas at module load time using AJV, so there is no per-call compilation overhead. The k6 test in `src/perf/` benchmarks `validateEvent` directly against the real schemas — no HTTP layer involved.
 
 ### Prerequisites
 
@@ -103,25 +103,21 @@ sendEvent("AUTH_AUTH_CODE_ISSUED", event);
   ```bash
   brew install k6
   ```
-- The package built:
+- `esbuild` installed (bundles the TypeScript source into a single file k6 can run):
   ```bash
-  npm run build
+  npm install --save-dev esbuild
   ```
 
 ### Running the tests
-
-In one terminal, start the HTTP harness (which imports the built package):
-
-```bash
-npm run perf:harness
-```
-
-In a second terminal, run the k6 script against it:
 
 ```bash
 npm run perf:k6
 ```
 
+This bundles `src/perf/validateEvent.k6.ts` (including the precompiled schemas) into a self-contained file, then runs it with k6.
+
 The test runs 10 virtual users for 10 seconds and checks:
-- Error rate < 1%
-- p95 response time < 50ms
+- All assertions pass at 100% rate
+- Valid events are accepted
+- Invalid event names are rejected
+- Invalid event shapes are rejected
