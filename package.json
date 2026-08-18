@@ -22,12 +22,12 @@
     "@cucumber/cucumber": "^13.0.0",
     "@jest/environment-jsdom-abstract": "^30.3.0",
     "@jest/globals": "^29.7.0",
-    "@nx/eslint": "23.0.1",
-    "@nx/eslint-plugin": "23.0.1",
-    "@nx/jest": "23.0.1",
-    "@nx/js": "23.0.1",
-    "@nx/node": "23.0.1",
-    "@nx/workspace": "23.0.1",
+    "@nx/eslint": "23.1.1",
+    "@nx/eslint-plugin": "23.1.1",
+    "@nx/jest": "23.1.1",
+    "@nx/js": "23.1.1",
+    "@nx/node": "23.1.1",
+    "@nx/workspace": "23.1.1",
     "@playwright/test": "^1.60.0",
     "@rollup/plugin-commonjs": "^29.0.2",
     "@rollup/plugin-json": "^6.1.0",
@@ -78,7 +78,7 @@
     "nock": "^13.5.6",
     "npm-run-all2": "^7.0.2",
     "nunjucks": "^3.2.4",
-    "nx": "23.0.2",
+    "nx": "23.1.1",
     "path": "^0.12.7",
     "playwright": "^1.61.1",
     "prettier": "3.5.3",
@@ -105,7 +105,9 @@
       "canvas": "$canvas"
     },
     "axios": "1.18.1",
-    "brace-expansion@>=5.0.0": "5.0.8"
+    "brace-expansion@>=5.0.0": "5.0.9",
+    "brace-expansion@>=2.0.0 <5.0.0": "2.1.4",
+    "brace-expansion@>=1.0.0 <2.0.0": "1.1.18"
   },
   "workspaces": [
     "packages/*"
