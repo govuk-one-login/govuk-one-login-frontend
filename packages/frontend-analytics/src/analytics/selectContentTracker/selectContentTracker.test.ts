@@ -1,7 +1,7 @@
-import { SelectContentTracker } from "./selectContentTracker";
-import { SelectContentEventInterface } from "./selectContentTracker.interface";
-import * as pushToDataLayer from "../../utils/pushToDataLayerUtil/pushToDataLayer";
 import { acceptCookies, rejectCookies } from "../../../test/utils";
+import * as pushToDataLayer from "../../utils/pushToDataLayerUtil/pushToDataLayer";
+import { SelectContentTracker } from "./selectContentTracker";
+import type { SelectContentEventInterface } from "./selectContentTracker.interface";
 
 describe("selectContentTracker", () => {
   let newInstance: SelectContentTracker;

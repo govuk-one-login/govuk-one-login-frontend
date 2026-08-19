@@ -1,4 +1,4 @@
-import type { Logger as PinoLogger, LoggerOptions } from "pino";
+import type { LoggerOptions, Logger as PinoLogger } from "pino";
 import { pino } from "pino";
 
 export type TLogLevel =

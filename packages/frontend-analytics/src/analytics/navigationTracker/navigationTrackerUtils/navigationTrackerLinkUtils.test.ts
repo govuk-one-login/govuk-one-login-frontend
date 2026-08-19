@@ -1,9 +1,9 @@
-import { NavigationElement } from "../navigationTracker.interface";
+import type { NavigationElement } from "../navigationTracker.interface";
 import {
-  isExternalLink,
-  isHeaderMenuBarLink,
-  isFooterLink,
   isBackLink,
+  isExternalLink,
+  isFooterLink,
+  isHeaderMenuBarLink,
 } from "./navigationTrackerLinkUtils";
 
 describe("navigationTrackerLinkUtils", () => {

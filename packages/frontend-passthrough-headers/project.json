@@ -4,22 +4,22 @@
   "sourceRoot": "packages/frontend-passthrough-headers/src",
   "projectType": "library",
   "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "biome check packages/frontend-passthrough-headers/src"
+      }
+    },
     "format": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "prettier --write packages/frontend-passthrough-headers/src/**/*"
+        "command": "biome format --write packages/frontend-passthrough-headers/src"
       }
     },
     "format:check": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "prettier --check packages/frontend-passthrough-headers/src/**/*"
-      }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": ["packages/frontend-passthrough-headers/src/**/*"]
+        "command": "biome format packages/frontend-passthrough-headers/src"
       }
     }
   }

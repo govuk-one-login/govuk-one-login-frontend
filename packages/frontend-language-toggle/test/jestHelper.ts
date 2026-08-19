@@ -1,4 +1,4 @@
-import path from "path";
+import path from "node:path";
 import { JSDOM } from "jsdom";
 import nunjucks from "nunjucks";
 

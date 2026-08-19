@@ -3,10 +3,10 @@ import * as piiRemover from "../../utils/piiRemoverUtil/piiRemover";
 import * as pushToDataLayer from "../../utils/pushToDataLayerUtil/pushToDataLayer";
 import { getTaxonomy } from "../../utils/taxonomyUtils/taxonomyUtils";
 import { validateParameter } from "../../utils/validateParameterUtils/validateParameter";
-import { OptionsInterface } from "../core/core.interface";
+import type { OptionsInterface } from "../core/core.interface";
 import { FormChangeTracker } from "../formChangeTracker/formChangeTracker";
 import { PageViewTracker } from "./pageViewTracker";
-import {
+import type {
   PageViewEventInterface,
   PageViewParametersInterface,
 } from "./pageViewTracker.interface";

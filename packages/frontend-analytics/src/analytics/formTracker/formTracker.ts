@@ -1,4 +1,4 @@
-import { FormField } from "./formTracker.interface";
+import type { FormField } from "./formTracker.interface";
 import { getElementValue } from "./formTrackerUtils/getFieldValues/getFieldValues";
 import { isExcludedType } from "./formTrackerUtils/isExcludedType/isExcludedType";
 import { isOptionalField } from "./formTrackerUtils/isOptionalField/isOptionalField";

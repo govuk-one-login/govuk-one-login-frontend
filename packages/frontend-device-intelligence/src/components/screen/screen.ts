@@ -1,4 +1,4 @@
-import { ComponentInterface } from "../index";
+import type { ComponentInterface } from "../index";
 
 export function screenDetails(): Promise<ComponentInterface> {
   return Promise.resolve({

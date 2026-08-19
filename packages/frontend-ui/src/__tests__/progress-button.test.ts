@@ -1,9 +1,9 @@
 import { getByText } from "@testing-library/dom";
-// import "@testing-library/vi-dom";
-import { nunjucksEnv } from "../test/jestHelper";
 import { JSDOM } from "jsdom";
 // @ts-ignore warning for non-rootDir import
 import { initialiseProgressButtons } from "../../frontend-src/progress-button/progress-button";
+// import "@testing-library/vi-dom";
+import { nunjucksEnv } from "../test/jestHelper";
 
 describe("Progress Button", () => {
   /**
@@ -38,7 +38,7 @@ describe("Progress Button", () => {
     const mock = vi.fn();
 
     document.querySelectorAll("form").forEach((form) => {
-      form.addEventListener("submit", function (event) {
+      form.addEventListener("submit", (event) => {
         event.preventDefault();
         mock();
       });

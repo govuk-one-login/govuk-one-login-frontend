@@ -144,9 +144,7 @@ describe("stripPIIFromString", () => {
 
     test("redacts a NINO without spaces", () => {
       const input = "NINO: SH123456C";
-      expect(stripPIIFromString(input)).toBe(
-        "NINO: [nationalInsuranceNumber]",
-      );
+      expect(stripPIIFromString(input)).toBe("NINO: [nationalInsuranceNumber]");
     });
 
     test("redacts a lowercase NINO", () => {

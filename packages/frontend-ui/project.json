@@ -5,24 +5,21 @@
   "sourceRoot": "packages/frontend-ui/src",
   "targets": {
     "lint": {
-      "executor": "@nx/eslint:lint",
+      "executor": "nx:run-commands",
       "options": {
-        "lintFilePatterns": [
-          "packages/frontend-ui/src/**/*"
-        ],
-        "jestConfig": "packages/automation/jest.config.ts"
+        "command": "biome check packages/frontend-ui/src"
       }
     },
     "format": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "prettier --write packages/frontend-ui/src/**/*"
+        "command": "biome format --write packages/frontend-ui/src"
       }
     },
     "format:check": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "prettier --check packages/frontend-ui/src/**/*"
+        "command": "biome format packages/frontend-ui/src"
       }
     }
   }

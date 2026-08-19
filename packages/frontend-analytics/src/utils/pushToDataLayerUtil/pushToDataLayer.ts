@@ -1,10 +1,10 @@
 import logger from "loglevel";
-import {
-  PageViewEventInterface,
+import type { FormEventInterface } from "../../analytics/formTracker/formTracker.interface";
+import type { NavigationEventInterface } from "../../analytics/navigationTracker/navigationTracker.interface";
+import type {
   GTMInitInterface,
+  PageViewEventInterface,
 } from "../../analytics/pageViewTracker/pageViewTracker.interface";
-import { NavigationEventInterface } from "../../analytics/navigationTracker/navigationTracker.interface";
-import { FormEventInterface } from "../../analytics/formTracker/formTracker.interface";
 import { stripPIIFromString } from "../piiRemoverUtil/piiRemover";
 
 declare global {

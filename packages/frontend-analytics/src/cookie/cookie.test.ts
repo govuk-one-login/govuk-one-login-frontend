@@ -1,7 +1,7 @@
+import type { Mock } from "vitest";
+import { acceptCookies, rejectCookies } from "../../test/utils";
 import * as Cookie from "./cookie";
 import { setLocalCookieVarMiddleware } from "./setCookieEnvVar";
-import { acceptCookies, rejectCookies } from "../../test/utils";
-import type { Mock } from "vitest";
 
 window.DI = {
   analyticsGa4: { loadGtmScript: () => {}, cookie: { consent: true } },

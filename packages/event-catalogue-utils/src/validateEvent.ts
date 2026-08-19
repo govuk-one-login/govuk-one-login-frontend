@@ -1,8 +1,8 @@
-import { Events } from "@govuk-one-login/event-catalogue";
+import type { Events } from "@govuk-one-login/event-catalogue";
 import * as schemas from "@govuk-one-login/event-catalogue-schemas";
 import Ajv2019 from "ajv/dist/2019.js";
 import logger from "./logger.js";
-import { isEventKey, UnknownEvent } from "./types.js";
+import { isEventKey, type UnknownEvent } from "./types.js";
 
 const ajv = new Ajv2019({ strict: true });
 
@@ -16,7 +16,7 @@ export function validateEvent<K extends keyof Events>(
 ): event is Events[K] {
   // Check event name matches valid schema
   const eventName = event.event_name;
-  const eventKey = eventName + "Schema";
+  const eventKey = `${eventName}Schema`;
   if (!isEventKey(eventKey)) {
     logger.error(`Invalid event_name: ${eventName}`);
     return false;

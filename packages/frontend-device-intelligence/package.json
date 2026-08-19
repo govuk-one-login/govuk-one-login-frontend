@@ -7,9 +7,7 @@
   "module": "build/esm/index.js",
   "scripts": {
     "build": "rm -rf dist/* && rm -rf types/* && rollup -c",
-    "test": "vitest --run --coverage",
-    "eslint": "eslint .",
-    "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,md}\""
+    "test": "vitest --run --coverage"
   },
   "files": [
     "build/",

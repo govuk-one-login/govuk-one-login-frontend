@@ -1,5 +1,5 @@
-import { browser } from "k6/browser";
 import { check, group } from "k6";
+import { browser } from "k6/browser";
 import { validateEventStructure } from "./k6-event-validator.js";
 
 function testEventValidation(eventName, eventData) {
@@ -8,14 +8,14 @@ function testEventValidation(eventName, eventData) {
     event_name: eventName,
     event_timestamp_ms: Date.now(),
     timestamp: Date.now(),
-    ...eventData
+    ...eventData,
   };
-  
+
   const isValid = validateEventStructure(testEvent);
   check(isValid, {
     [`Event ${eventName} validation passed`]: (valid) => valid === true,
   });
-  
+
   return isValid;
 }
 
@@ -54,7 +54,7 @@ export default async function () {
     await page.fill('input[name="name"]', "Umma");
     await page.click('button[type="submit"]');
     await page.waitForSelector("#header", { timeout: 5000 });
-    
+
     const headerText = await page.textContent("#header");
     if (!headerText.includes("Check answers")) {
       throw new Error(`Header ${headerText} does not match expected text!`);

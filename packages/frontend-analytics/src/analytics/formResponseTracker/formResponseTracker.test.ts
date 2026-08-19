@@ -1,8 +1,8 @@
-import { FormResponseTracker } from "./formResponseTracker";
-import { FormEventInterface } from "../formTracker/formTracker.interface";
+import { acceptCookies, rejectCookies } from "../../../test/utils";
 import * as pushToDataLayer from "../../utils/pushToDataLayerUtil/pushToDataLayer";
 import { FREE_TEXT_FIELD_TYPE } from "../formTracker/formTracker";
-import { acceptCookies, rejectCookies } from "../../../test/utils";
+import type { FormEventInterface } from "../formTracker/formTracker.interface";
+import { FormResponseTracker } from "./formResponseTracker";
 
 describe("form with multiple fields", () => {
   const action = new Event("submit", {

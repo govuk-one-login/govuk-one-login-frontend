@@ -1,11 +1,12 @@
 import logger from "loglevel";
+import { hasConsentForAnalytics } from "../../cookie/cookie";
 import {
   getDomain,
   getDomainPath,
 } from "../../utils/dataScrapersUtils/dataScrapers";
 import { pushToDataLayer } from "../../utils/pushToDataLayerUtil/pushToDataLayer";
 import { validateParameter } from "../../utils/validateParameterUtils/validateParameter";
-import {
+import type {
   NavigationElement,
   NavigationEventInterface,
 } from "./navigationTracker.interface";
@@ -19,7 +20,6 @@ import {
   isExternalLink,
   isNavigatingElement,
 } from "./navigationTrackerUtils/navigationTrackerLinkUtils";
-import { hasConsentForAnalytics } from "../../cookie/cookie";
 
 export class NavigationTracker {
   eventName: string = "event_data";

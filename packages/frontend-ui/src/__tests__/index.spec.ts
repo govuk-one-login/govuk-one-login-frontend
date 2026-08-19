@@ -1,17 +1,17 @@
-import i18next from "i18next";
 import fs from "node:fs";
-import { Request, Response } from "express";
 import path from "node:path";
+import type { Request, Response } from "express";
+import i18next from "i18next";
 import {
-  frontendUiMiddleware,
-  setFrontendUiTranslations,
+  addFrontendUiGlobals,
   addLanguageParam,
   contactUsUrl,
+  frontendUiMiddleware,
   getTranslationObject,
   setBaseTranslations,
-  addFrontendUiGlobals,
-  warnCharacterLimit,
+  setFrontendUiTranslations,
   validateTranslations,
+  warnCharacterLimit,
 } from "..";
 
 // Define types for Express and non-Express versions

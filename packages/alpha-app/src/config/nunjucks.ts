@@ -1,6 +1,6 @@
-import nunjucks from "nunjucks";
-import i18next from "i18next";
 import * as frontendUi from "@govuk-one-login/frontend-ui";
+import i18next from "i18next";
+import nunjucks from "nunjucks";
 
 const configureNunjucks = (
   app: Express.Application,
@@ -15,7 +15,7 @@ const configureNunjucks = (
   frontendUi.addFrontendUiGlobals(nunjucksEnv);
   nunjucksEnv.addGlobal(
     "MAY_2025_REBRAND_ENABLED",
-    process.env.MAY_2025_REBRAND_ENABLED == "true",
+    process.env.MAY_2025_REBRAND_ENABLED === "true",
   );
 
   nunjucksEnv.addFilter("translate", function (key, options) {

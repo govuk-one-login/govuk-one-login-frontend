@@ -57,11 +57,13 @@ To create a new package, follow these steps:
 
 - After answering the questions, the command will generate the package with the necessary files.
 
-## Lint the code with eslint+prettier:
+## Lint and format the code with Biome:
+
+This project uses [Biome](https://biomejs.dev/) for linting and formatting. Biome replaces ESLint and Prettier with a single fast tool.
 
 ### To Run All Packages
 
-To check ESLint issues in all packages:
+To check linting and formatting issues in all packages:
 `nx run-many --target=lint --all`
 
 To check code formatting in all packages:
@@ -70,19 +72,26 @@ To check code formatting in all packages:
 To fix formatting issues that can be resolved automatically:
 `nx run-many --target=format --all`
 
+To run a full check (lint + format + import sorting) and auto-fix:
+`npm run check:fix`
+
 To run the above commands on just affected packages, replace `run-many` with `affected`
 
 ### To Run a Singular Package
 
-To check ESLint issues in a specific package:
+To check lint issues in a specific package:
 `nx run [package-name]:lint`
 
 To check and fix code formatting issues in a specific package:
 `nx run [package-name]:format`
 
-### Configuration Files
+### Configuration
 
-The rules for linting and formatting are defined in .eslintrc and can be customized as needed. The configuration includes recommended rulesets from ESLint, TypeScript, and Prettier.
+The rules for linting and formatting are defined in `biome.json` at the root of the repository. Biome uses a single configuration file for both linting and formatting.
+
+### Editor Integration
+
+Install the [Biome VS Code extension](https://marketplace.visualstudio.com/items?itemName=biomejs.biome) for format-on-save and inline lint diagnostics.
 
 ## Setup Instructions
 
@@ -206,7 +215,7 @@ Before pushing your changes, run all tests and linting to make sure your code ad
 - If you only want to run tests in the affected package, `cd` into the package folder and run `npm test` or just `npm test` at the root level to run all test suites.
 - If there are any uncommitted changes, you will need to run `npx nx run-many -t test` as the tests and linters cache the results, so they will only run for changed cases.
 
-- [Lint the code with eslint+prettier:](#lint-the-code-with-eslintprettier)
+- [Lint and format the code with Biome:](#lint-and-format-the-code-with-biome)
 
 6. **Commit and Push Changes**
 

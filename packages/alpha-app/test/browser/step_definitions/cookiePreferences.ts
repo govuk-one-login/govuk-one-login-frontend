@@ -1,4 +1,4 @@
-import { When, Then } from "@cucumber/cucumber";
+import { Then, When } from "@cucumber/cucumber";
 import { expect } from "chai";
 
 When("I clear the browser context", async function () {

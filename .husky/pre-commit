@@ -1,1 +1,1 @@
-npm run prep:commit
+biome check --write --staged

@@ -31,7 +31,7 @@ export default function pocApp() {
   check(responseWithEvent, {
     "status is 200": (r) => r.status === 200,
     "page contains expected content": (r) =>
-      r.body && r.body.includes("GOV.UK One Login"),
+      r.body?.includes("GOV.UK One Login"),
   }) ||
     console.log(`Request failed: ${response.error || "Connection refused"}`);
 

@@ -38,7 +38,10 @@
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint"
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "biome check packages/automation/src"
+      }
     },
     "test": {
       "executor": "@nx/jest:jest",
