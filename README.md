@@ -134,6 +134,56 @@ To release a package from the monorepo, use the **GitHub Actions Release workflo
 4. **Verify the Release**  
    Once the workflow completes, confirm the package has been published on the NPM registry.
 
+## Maintaining Older Package Versions
+
+When releasing a new major version of a package (e.g., `frontend-ui` v5 → v6), you need to maintain the ability to patch the older version for consumers who haven't upgraded yet. This is done using **version branches**.
+
+### Branch Naming Convention
+
+Version branches follow the format: `{package-name}@v{major-version}`
+
+Examples:
+- `frontend-ui@v1` — maintains v1.x.x of `@govuk-one-login/frontend-ui`
+- `frontend-analytics@v2` — maintains v2.x.x of `@govuk-one-login/frontend-analytics`
+
+### When to Create a Version Branch
+
+Create a version branch **before releasing a new major version**. For example, if `frontend-ui` is currently on v5.3.2 and you're about to release v6.0.0:
+
+1. Create the version branch from the current state of `main` (or from the last release tag):
+   ```bash
+   git checkout main
+   git checkout -b frontend-ui@v5
+   git push -u origin frontend-ui@v5
+   ```
+2. Proceed with the major version release from `main`.
+
+### Releasing a Patch from a Version Branch
+
+1. Create a feature branch from the version branch:
+   ```bash
+   git checkout frontend-ui@v5
+   git checkout -b fix/ticket-number/description
+   ```
+2. Make your changes and push the feature branch.
+3. Open a PR targeting the version branch (e.g., `frontend-ui@v5`), **not** `main`.
+4. Get the required review approval and wait for status checks to pass.
+5. Merge the PR.
+6. Go to **Actions** → **Release** → **Run workflow**.
+7. Select the version branch (e.g., `frontend-ui@v5`) from the branch dropdown.
+8. Choose the target package and set increment to `patch`.
+9. Run the workflow — this will publish the patch release from the version branch.
+
+### Branch Protections
+
+Version branches have the same protections as `main`:
+- Pull requests are required (minimum 1 approving review)
+- Status checks must pass before merging
+- Force pushes are blocked
+- Branch deletion is blocked
+
+See [`docs/version-branch-ruleset-setup.md`](docs/version-branch-ruleset-setup.md) for details on how the repository ruleset is configured.
+
 ## Deprecating Packages
 
 To deprecate a specific package version from the monorepo, use the **GitHub Actions Deprecate workflow**. This workflow automates deprecating packages in NPM:
