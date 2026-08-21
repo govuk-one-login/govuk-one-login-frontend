@@ -1,5 +1,5 @@
-import typescript from "rollup-plugin-typescript2";
 import copy from "rollup-plugin-copy";
+import typescript from "rollup-plugin-typescript2";
 
 export default {
   external: ["pino"],

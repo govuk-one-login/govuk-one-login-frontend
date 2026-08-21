@@ -1,15 +1,15 @@
+import {
+  type CustomLogger,
+  getLogger,
+  setCustomLogger,
+} from "@govuk-one-login/frontend-logger";
+import type { Express } from "express";
 import fg from "fast-glob";
-import { Express } from "express";
 import {
   getDuplicateHashedFileName,
   mapAssetsToLocal,
   parseAssets,
 } from "./utils/utils";
-import {
-  getLogger,
-  setCustomLogger,
-  type CustomLogger,
-} from "@govuk-one-login/frontend-logger";
 
 export const loadAssets = (
   app: Express,

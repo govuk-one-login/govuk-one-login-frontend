@@ -1,49 +1,51 @@
 import dotenv from "dotenv";
+
 dotenv.config();
 
+import crypto from "node:crypto";
 import path from "node:path";
+import { loadAssets } from "@govuk-one-login/frontend-asset-loader";
+import {
+  frontendUiMiddleware,
+  getHelmetConfig,
+  setFrontendUiTranslations,
+} from "@govuk-one-login/frontend-ui";
 import express from "express";
 import session from "express-session";
 import helmet from "helmet";
-import { logger } from "./utils/logger";
 import { configureNunjucks } from "./config/nunjucks";
-import { validateOrganisationType } from "./journeys/organisationTypeService";
-import { validateHelpWithHint } from "./journeys/helpWithHintService";
-import { validateServiceDescription } from "./journeys/serviceDescriptionService";
 import { validateChooseLocation } from "./journeys/chooseLocationService";
 import { validateEnterEmail } from "./journeys/enterEmailService";
 import { validateEnterName } from "./journeys/enterNameService";
 import { validateFeedback } from "./journeys/feedbackService";
-import { loadAssets } from "@govuk-one-login/frontend-asset-loader";
-import {
-  setFrontendUiTranslations,
-  frontendUiMiddleware,
-  getHelmetConfig,
-} from "@govuk-one-login/frontend-ui";
+import { validateHelpWithHint } from "./journeys/helpWithHintService";
+import { validateOrganisationType } from "./journeys/organisationTypeService";
+import { validateServiceDescription } from "./journeys/serviceDescriptionService";
+import { logger } from "./utils/logger";
 
-import crypto from "crypto";
 const sessionId = crypto.randomBytes(32).toString("hex");
-import {
-  setGa4ContainerId,
-  setUaContainerId,
-  setStatusCode,
-  setTaxonomyValues,
-  setPageTitle,
-  setContentId,
-} from "./config/gtmMiddleware";
-import { checkSessionAndRedirect } from "./config/middleware";
-import i18next from "i18next";
-import * as i18nextMiddleware from "i18next-http-middleware";
-import Backend from "i18next-fs-backend";
-import { i18nextConfigurationOptions } from "./config/i18next";
-import { frontendVitalSignsInit } from "@govuk-one-login/frontend-vital-signs";
+
 import {
   createEvent,
   validateEvent,
 } from "@govuk-one-login/event-catalogue-utils";
-import { cspNonce } from "./config/csp";
+import type { TLogLevel } from "@govuk-one-login/frontend-logger";
+import { frontendVitalSignsInit } from "@govuk-one-login/frontend-vital-signs";
+import i18next from "i18next";
+import Backend from "i18next-fs-backend";
+import * as i18nextMiddleware from "i18next-http-middleware";
 import overloadProtection from "overload-protection";
-import { TLogLevel } from "@govuk-one-login/frontend-logger";
+import { cspNonce } from "./config/csp";
+import {
+  setContentId,
+  setGa4ContainerId,
+  setPageTitle,
+  setStatusCode,
+  setTaxonomyValues,
+  setUaContainerId,
+} from "./config/gtmMiddleware";
+import { i18nextConfigurationOptions } from "./config/i18next";
+import { checkSessionAndRedirect } from "./config/middleware";
 
 const __dirname = import.meta.dirname;
 
@@ -59,7 +61,7 @@ app.get("/api", (req, res) => {
   counter++;
   const processingTime =
     req.query.processingTime && typeof req.query.processingTime === "string"
-      ? parseInt(req.query.processingTime)
+      ? parseInt(req.query.processingTime, 10)
       : 1;
   logger.info(
     `Elapsed processing seconds: ${counter}. Processing time limit is: ${processingTime}`,
@@ -72,7 +74,7 @@ app.get("/api", (req, res) => {
   }
 });
 
-app.post("/api/test-submit-button", (req, res) => {
+app.post("/api/test-submit-button", (_req, res) => {
   const newEvent = createEvent("AIS_EVENT_TRANSITION_APPLIED", {
     component_id: "component_id",
     event_name: "AIS_EVENT_TRANSITION_APPLIED",
@@ -151,7 +153,7 @@ app.use(
     secret: sessionId,
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: process.env.ENV != "dev" },
+    cookie: { secure: process.env.ENV !== "dev" },
   }),
 );
 app.use((req, res, next) => {
@@ -161,7 +163,7 @@ app.use((req, res, next) => {
     res.locals.mainLang = req.i18n.language;
     try {
       res.locals.currentUrl = new URL(
-        req.protocol + "://" + req.get("host") + req.originalUrl,
+        `${req.protocol}://${req.get("host")}${req.originalUrl}`,
       );
     } catch (error) {
       logger.error(
@@ -185,57 +187,57 @@ app.use(setPageTitle);
 app.use(setContentId);
 app.use(checkSessionAndRedirect);
 
-app.get("/welcome", (req, res) => {
+app.get("/welcome", (_req, res) => {
   res.render("home.njk");
 });
 
-app.get("/enter-email", (req, res) => {
+app.get("/enter-email", (_req, res) => {
   res.render("enterEmail.njk");
 });
 
-app.get("/service-description", (req, res) => {
+app.get("/service-description", (_req, res) => {
   res.render("serviceDescription.njk"); // free text
 });
 
-app.get("/organisation-type", (req, res) => {
+app.get("/organisation-type", (_req, res) => {
   res.render("organisationType.njk"); // radio button
 });
 
-app.get("/help-with-hint", (req, res) => {
+app.get("/help-with-hint", (_req, res) => {
   res.render("helpWithHint.njk"); // checkbox
 });
 
-app.get("/choose-location", (req, res) => {
+app.get("/choose-location", (_req, res) => {
   res.render("chooseLocation.njk"); // select
 });
 
-app.get("/summary-page", (req, res) => {
+app.get("/summary-page", (_req, res) => {
   res.render("summaryPage.njk");
 });
 
-app.get("/feedback", (req, res) => {
+app.get("/feedback", (_req, res) => {
   res.render("feedback.njk");
 });
 
-app.get("/spinner", (req, res) => {
+app.get("/spinner", (_req, res) => {
   res.render("spinner.njk");
 });
 
-app.get("/test-progress-button", (req, res) => {
+app.get("/test-progress-button", (_req, res) => {
   res.render("test-progress-button.njk");
 });
 
-app.get("/step-card", (req, res) => {
+app.get("/step-card", (_req, res) => {
   res.render("step-card.njk");
 });
 
-app.get("/enter-name", (req, res) => {
+app.get("/enter-name", (_req, res) => {
   res.render("enterName.njk");
 });
 
 app.get(
   "/xDncNmqheVoQoeOTnVmwUnsuByWwKwwAPUZAWRYBnzgrDOCObSzFqMpwAxQRpHMUehzTfzGJjuFJOtWyQBdHQbtpEpxmopVEnghdxyz",
-  (req, res) => {
+  (_req, res) => {
     res.render("characterExample.njk");
   },
 );

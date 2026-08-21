@@ -1,10 +1,10 @@
-import http from "http";
-import https from "https";
-import { type EventLoopUtilization } from "perf_hooks";
-import { type Express } from "express";
+import type http from "node:http";
+import type https from "node:https";
+import type { EventLoopUtilization } from "node:perf_hooks";
+import { createLogger, type TLogLevel } from "@govuk-one-login/frontend-logger";
+import type { Express } from "express";
 // Importing package.json with the declared type
 import pjson from "../package.json";
-import { createLogger, TLogLevel } from "@govuk-one-login/frontend-logger";
 import {
   calculateAvgResponseTime,
   getAvgDynamicResponseTime,
@@ -147,9 +147,9 @@ export function frontendVitalSignsInitFromApp(
 ) {
   const originalListen = app.listen;
 
-  app.listen = function (...args: Parameters<typeof originalListen>) {
+  app.listen = ((...args: Parameters<typeof originalListen>) => {
     const server = originalListen.apply(app, args);
     frontendVitalSignsInit(server, options);
     return server;
-  } as typeof originalListen;
+  }) as typeof originalListen;
 }

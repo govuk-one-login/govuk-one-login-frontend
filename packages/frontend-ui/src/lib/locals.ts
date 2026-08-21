@@ -1,9 +1,9 @@
-import { NextFunction, Request, Response } from "express";
 import {
-  CustomLogger,
+  type CustomLogger,
   getLogger,
   setCustomLogger,
 } from "@govuk-one-login/frontend-logger";
+import type { NextFunction, Request, Response } from "express";
 
 const getGTM = (req: Request, res: Response, next: NextFunction): void => {
   res.locals.ga4ContainerId = req.app.get("APP.GTM.GA4_CONTAINER_ID");
@@ -57,7 +57,7 @@ const getLanguageToggle = (
   res.locals.htmlLang = req.i18n.language;
   try {
     res.locals.currentUrl = new URL(
-      req.protocol + "://" + req.get("host") + req.originalUrl,
+      `${req.protocol}://${req.get("host")}${req.originalUrl}`,
     );
   } catch (e: unknown) {
     if (e instanceof Error) {
@@ -83,4 +83,4 @@ const getDeviceIntelligence = (
   next();
 };
 
-export { getAssetPath, getGTM, getLanguageToggle, getDeviceIntelligence };
+export { getAssetPath, getDeviceIntelligence, getGTM, getLanguageToggle };

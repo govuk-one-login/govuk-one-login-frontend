@@ -1,6 +1,6 @@
 import { getLogger } from "@govuk-one-login/frontend-logger";
-import { isValidHashName, getDuplicateHashedFileName } from "../utils/utils";
 import type { Mock } from "vitest";
+import { getDuplicateHashedFileName, isValidHashName } from "../utils/utils";
 
 vi.mock("@govuk-one-login/frontend-logger", () => ({
   getLogger: vi.fn(),

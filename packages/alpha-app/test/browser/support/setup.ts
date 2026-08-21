@@ -1,7 +1,7 @@
-import { Before, BeforeAll, AfterAll, After } from "@cucumber/cucumber";
+import { After, AfterAll, Before, BeforeAll } from "@cucumber/cucumber";
 import { chromium } from "playwright";
 
-BeforeAll(async function () {
+BeforeAll(async () => {
   global.browser = await chromium.launch({
     headless: true,
     // slowMo: 500,
@@ -15,7 +15,7 @@ Before(async function () {
   this.page = await this.context.newPage();
 });
 
-AfterAll(async function () {
+AfterAll(async () => {
   await global.browser.close();
 });
 

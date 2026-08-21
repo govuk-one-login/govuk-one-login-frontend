@@ -1,4 +1,4 @@
-import type { Request, Response, NextFunction } from "express";
+import type { NextFunction, Request, Response } from "express";
 
 const noSessionPages = [
   "/welcome",
@@ -14,10 +14,7 @@ const checkSessionAndRedirect = (
   next: NextFunction,
 ) => {
   // Check if the user has an active session
-  const hasSession =
-    req.session &&
-    req.session.userSession &&
-    req.session.userSession.startedJourney;
+  const hasSession = req.session?.userSession?.startedJourney;
 
   // Check if the user is on the homepage
   const isOnNoSessionPage = noSessionPages.includes(req.path);
@@ -36,4 +33,5 @@ const checkSessionAndRedirect = (
 
   next();
 };
+
 export { checkSessionAndRedirect };

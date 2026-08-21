@@ -1,4 +1,4 @@
-import { FormField } from "../../formTracker.interface";
+import type { FormField } from "../../formTracker.interface";
 
 /**
  * Checks if the given array of form fields represents a date field.

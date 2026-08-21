@@ -1,4 +1,4 @@
-import { type LogLevelNames } from "loglevel";
+import type { LogLevelNames } from "loglevel";
 
 export interface AppConfigInterface {
   ga4ContainerId: string;

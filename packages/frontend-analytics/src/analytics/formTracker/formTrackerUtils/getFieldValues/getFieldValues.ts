@@ -1,4 +1,4 @@
-import { FormField } from "../../formTracker.interface";
+import type { FormField } from "../../formTracker.interface";
 
 export const getElementValue = (element: HTMLInputElement): string => {
   const label = document.querySelector(`label[for="${element.id}"]`);

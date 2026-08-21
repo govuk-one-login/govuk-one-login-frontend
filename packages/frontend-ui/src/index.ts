@@ -1,10 +1,10 @@
 import fs from "node:fs";
 import path from "node:path";
-import { NextFunction, Request, Response } from "express";
-import i18next from "i18next";
+import { createLogger } from "@govuk-one-login/frontend-logger";
+import type { NextFunction, Request, Response } from "express";
+import type i18next from "i18next";
 import translationCy from "../locales/cy/translation.json";
 import translationEn from "../locales/en/translation.json";
-import { createLogger } from "@govuk-one-login/frontend-logger";
 
 export * from "./lib";
 
@@ -245,5 +245,5 @@ export const getTranslationObject = (
   return {}; // Return an empty object as a fallback
 };
 
-export { default as frontendUiTranslationEn } from "../locales/en/translation.json";
 export { default as frontendUiTranslationCy } from "../locales/cy/translation.json";
+export { default as frontendUiTranslationEn } from "../locales/en/translation.json";

@@ -7,8 +7,8 @@ import {
   setTaxonomies,
 } from "../../utils/taxonomyUtils/taxonomyUtils";
 import { validateParameter } from "../../utils/validateParameterUtils/validateParameter";
-import { OptionsInterface } from "../core/core.interface";
-import {
+import type { OptionsInterface } from "../core/core.interface";
+import type {
   PageViewEventInterface,
   PageViewParametersInterface,
 } from "./pageViewTracker.interface";

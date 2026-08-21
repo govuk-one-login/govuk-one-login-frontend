@@ -1,7 +1,7 @@
-import { NavigationTracker } from "./navigationTracker";
-import * as pushToDataLayer from "../../utils/pushToDataLayerUtil/pushToDataLayer";
 // import { NavigationElement } from "./navigationTracker.interface";
 import { acceptCookies, rejectCookies } from "../../../test/utils";
+import * as pushToDataLayer from "../../utils/pushToDataLayerUtil/pushToDataLayer";
+import { NavigationTracker } from "./navigationTracker";
 
 describe("navigationTracker", () => {
   const enableNavigationTracking = true;

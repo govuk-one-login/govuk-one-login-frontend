@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { delay, raceAll, raceAllPerformance } from "./raceAll";
+import { delay } from "./raceAll";
 
 vi.useFakeTimers();
 

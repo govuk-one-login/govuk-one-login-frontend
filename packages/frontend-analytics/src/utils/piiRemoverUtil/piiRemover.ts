@@ -3,8 +3,7 @@ const POSTCODE_PATTERN =
   /\b[A-PR-UWYZ][A-HJ-Z]?\d[0-9A-HJKMNPR-Y]?(?:[\s+]|%20)*\d(?!refund)[ABD-HJLNPQ-Z]{2,3}\b/gi;
 
 // UK phone numbers: +44 or 0 prefix followed by 10-11 digits with optional spaces/hyphens
-const UK_PHONE_PATTERN =
-  /(?:\+44\s?|0)(?:\d[\s-]?){9,10}\d/g;
+const UK_PHONE_PATTERN = /(?:\+44\s?|0)(?:\d[\s-]?){9,10}\d/g;
 
 // International phone numbers: + followed by at least 10 digits with optional separators
 const INTERNATIONAL_PHONE_PATTERN = /\+\d[\d\s\-()]{8,}\d/g;
@@ -17,13 +16,13 @@ const NINO_PATTERN =
   /\b(?!BG|GB|NK|KN|TN|NT|ZZ)[A-CEGHJ-PRSTW-Z][A-CEGHJ-NPR-TW-Z]\s?\d{2}\s?\d{2}\s?\d{2}\s?[A-D]\b/gi;
 
 // e.g. 01/01/1990 or 01-01-1990 or 1-1-1990 or 1/1/1990 or 01\01\1990 or 1\1\1990
-const DATE_PATTERN_NUMERIC_1 = /\d{1,2}([-\/\\])\d{1,2}([-\/\\])\d{4}/g; // eslint-disable-line no-useless-escape
+const DATE_PATTERN_NUMERIC_1 = /\d{1,2}([-/\\])\d{1,2}([-/\\])\d{4}/g; // eslint-disable-line no-useless-escape
 
 // e.g. 1990/01/01 or 1990-01-01 or 1990-1-1 or 1990/1/1 or 1990\1\1 or 1990\01\01
-const DATE_PATTERN_NUMERIC_2 = /\d{4}([-\/\\])\d{1,2}([-\/\\])\d{1,2}/g; // eslint-disable-line no-useless-escape
+const DATE_PATTERN_NUMERIC_2 = /\d{4}([-/\\])\d{1,2}([-/\\])\d{1,2}/g; // eslint-disable-line no-useless-escape
 
 // e.g. 01/01/90 or 01-01-90 or 1-1-90 or 1/1/90 or 01\01\90 or 1\1\90
-const DATE_PATTERN_NUMERIC_3 = /\d{1,2}([-\/\\])\d{1,2}([-\/\\])\d{2}/g; // eslint-disable-line no-useless-escape
+const DATE_PATTERN_NUMERIC_3 = /\d{1,2}([-/\\])\d{1,2}([-/\\])\d{2}/g; // eslint-disable-line no-useless-escape
 
 // e.g. 1(st) (of) Jan(uary) 1990 (or 90 or '90) - where the bracketed characters are optional parts that can be matched
 const DATE_PATTERN_STRING_1 =
@@ -36,16 +35,14 @@ const DATE_PATTERN_STRING_2 =
 // UK Driving Licence number: surname-encoded format, 16 characters
 // Format: SSSSS DDDDDM YYGGG (5 surname chars, 6 DOB-encoded digits, 2 year, 3 check digits)
 // e.g. JONES 910100 AB 9AA or JONES910100AB9AA
-const DRIVING_LICENCE_PATTERN =
-  /\b[A-Z]{2,5}9?\d{6}[A-Z\d]{2}\d[A-Z]{2}\b/gi;
+const DRIVING_LICENCE_PATTERN = /\b[A-Z]{2,5}9?\d{6}[A-Z\d]{2}\d[A-Z]{2}\b/gi;
 
 // UK Passport number: 9 digits
 const PASSPORT_PATTERN = /\b\d{9}\b/g;
 
 // Credit/debit card numbers: 13-19 digits with optional spaces or hyphens
 // Covers Visa (4xxx), Mastercard (5xxx/2xxx), Amex (3xxx), etc.
-const CARD_NUMBER_PATTERN =
-  /\b(?:\d[\s-]?){12,18}\d\b/g;
+const CARD_NUMBER_PATTERN = /\b(?:\d[\s-]?){12,18}\d\b/g;
 
 // Sort code: 6 digits in XX-XX-XX format (hyphen-separated only)
 const SORT_CODE_PATTERN = /\b\d{2}-\d{2}-\d{2}\b/g;
@@ -121,12 +118,18 @@ export function stripPIIFromString(value: string) {
     INTERNATIONAL_PHONE_PATTERN,
     PHONENUMBER_REDACTION_STRING,
   );
-  stripped = stripped.replace(CARD_NUMBER_PATTERN, CARD_NUMBER_REDACTION_STRING);
+  stripped = stripped.replace(
+    CARD_NUMBER_PATTERN,
+    CARD_NUMBER_REDACTION_STRING,
+  );
 
   // Generic numeric patterns last — these catch remaining sensitive numbers
   // NHS numbers and UTRs are both 10 digits; passport numbers are 9 digits.
   // LONG_NUMERIC_PATTERN (10+ digits) covers NHS and UTR as a catch-all.
-  stripped = stripped.replace(LONG_NUMERIC_PATTERN, NUMERIC_REF_REDACTION_STRING);
+  stripped = stripped.replace(
+    LONG_NUMERIC_PATTERN,
+    NUMERIC_REF_REDACTION_STRING,
+  );
   stripped = stripped.replace(PASSPORT_PATTERN, PASSPORT_REDACTION_STRING);
 
   return stripped;

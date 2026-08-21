@@ -1,6 +1,6 @@
-import { PathAndFile } from "./utils.types";
 import { getLogger } from "@govuk-one-login/frontend-logger";
-import { Express } from "express";
+import type { Express } from "express";
+import type { PathAndFile } from "./utils.types";
 
 declare module "express" {
   interface Application {

@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import type { Page, Locator } from "playwright";
+import type { Locator, Page } from "playwright";
 
 async function findItem(page: Page, pwItem: string) {
   return await page.locator(`#${pwItem}`);
@@ -52,13 +52,13 @@ async function checkOnRightPage(page: Page, path: string) {
 }
 
 export {
-  findItem,
-  findAndClickItem,
-  clickContinueAndWait,
-  checkElementVisible,
   checkElementsVisible,
-  goToUrl,
-  goToPage,
+  checkElementVisible,
   checkOnRightPage,
+  clickContinueAndWait,
+  findAndClickItem,
+  findItem,
   getUrlOnItem,
+  goToPage,
+  goToUrl,
 };

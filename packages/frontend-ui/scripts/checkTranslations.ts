@@ -1,10 +1,11 @@
 /* eslint-disable no-console */
-import { join, parse } from "path";
-import { readdirSync, lstatSync } from "fs";
+
+import { lstatSync, readdirSync } from "node:fs";
+/* eslint-disable no-console */
+import path, { join, parse } from "node:path";
+import { fileURLToPath } from "node:url";
 import i18next from "i18next";
 import Backend from "i18next-fs-backend";
-import path from "path";
-import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
 const __dirname = path.dirname(__filename); // get the name of the directory
@@ -79,7 +80,7 @@ function compareContent(
 
   console.log(differences);
   differences.map((difference) => {
-    issues.push(`Missing ${parent ? parent + "." : ""}${difference}`);
+    issues.push(`Missing ${parent ? `${parent}.` : ""}${difference}`);
   });
 
   for (const key of Object.keys(set1)) {

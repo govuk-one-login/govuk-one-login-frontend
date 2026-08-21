@@ -38,7 +38,7 @@ export const isChangeLink = (element: HTMLElement): boolean => {
     try {
       return new URL(element.href).searchParams.get("edit") === "true";
       // eslint-disable-next-line
-    } catch (e) {
+    } catch (_e) {
       return false;
     }
   }

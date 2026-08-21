@@ -1,6 +1,6 @@
 import logger from "loglevel";
 import { isChangeLink } from "../../../utils/dataScrapersUtils/dataScrapers";
-import { NavigationElement } from "../navigationTracker.interface";
+import type { NavigationElement } from "../navigationTracker.interface";
 
 /**
  * Determines if the given URL is an external link.
@@ -95,7 +95,7 @@ export const isNavLink = (element: NavigationElement): boolean => {
   const isLink = elementClassName.includes("govuk-link");
   const header = document.getElementsByTagName("header")[0];
 
-  return header && header.contains(element) && isLink;
+  return header?.contains(element) && isLink;
 };
 
 /**
