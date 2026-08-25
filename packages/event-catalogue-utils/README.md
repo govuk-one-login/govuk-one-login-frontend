@@ -92,3 +92,32 @@ sendEvent("AUTH_AUTH_CODE_ISSUED", event);
 |--------|------|-------------|
 | `sqsClient` | `SQSClient` | A custom AWS SQS client. Defaults to a memoized client in `eu-west-2`. |
 | `logParams` | `string[]` | Keys to extract from the event and include in the success log message. |
+
+## Performance Testing
+
+`validateEvent` precompiles all Event Catalogue JSON schemas at module load time using AJV, so there is no per-call compilation overhead. The k6 test in `src/perf/` benchmarks `validateEvent` directly against the real schemas — no HTTP layer involved.
+
+### Prerequisites
+
+- [k6](https://k6.io/docs/get-started/installation/) installed as a standalone binary:
+  ```bash
+  brew install k6
+  ```
+- `esbuild` installed (bundles the TypeScript source into a single file k6 can run):
+  ```bash
+  npm install --save-dev esbuild
+  ```
+
+### Running the tests
+
+```bash
+npm run perf:k6
+```
+
+This bundles `src/perf/validateEvent.k6.ts` (including the precompiled schemas) into a self-contained file, then runs it with k6.
+
+The test runs 10 virtual users for 10 seconds and checks:
+- All assertions pass at 100% rate
+- Valid events are accepted
+- Invalid event names are rejected
+- Invalid event shapes are rejected

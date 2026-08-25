@@ -16,7 +16,9 @@
   },
   "scripts": {
     "test": "vitest --run --coverage",
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "perf:bundle": "esbuild src/perf/validateEvent.k6.ts --bundle --outfile=src/perf/validateEvent.k6.bundle.js --format=cjs --platform=node",
+    "perf:k6": "npm run perf:bundle && k6 run src/perf/validateEvent.k6.bundle.js"
   },
   "files": [
     "build/",
