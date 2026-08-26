@@ -1,3 +1,7 @@
+## 5.3.2 (2026-08-26)
+
+This was a version bump only for @govuk-one-login/frontend-ui to align it with other projects, there were no code changes.
+
 ## 5.3.1 (2026-07-15)
 
 ### 🚀 Features
