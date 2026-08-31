@@ -152,4 +152,61 @@ describe("FormChangeTracker", () => {
     const href = document.getElementById("change_link") as HTMLAnchorElement;
     expect(FormChangeTracker.getSection(href)).toBe("undefined");
   });
+
+  test("text property should reflect the actual link text content", () => {
+    document.body.innerHTML = `
+      <main id="main-content">
+        <form>
+          <a id="change_link" href="http://localhost?edit=true">Update</a>
+        </form>
+      </main>
+    `;
+    const changeLink = document.getElementById("change_link")!;
+    changeLink.dispatchEvent(action);
+    expect(pushToDataLayer.pushToDataLayer).toHaveBeenCalledWith(
+      expect.objectContaining({
+        event_data: expect.objectContaining({
+          text: "update",
+        }),
+      }),
+    );
+  });
+
+  test("text property should include visually hidden text content", () => {
+    document.body.innerHTML = `
+      <main id="main-content">
+        <form>
+          <a id="change_link" href="http://localhost?edit=true">Update<span class="govuk-visually-hidden"> your name</span></a>
+        </form>
+      </main>
+    `;
+    const changeLink = document.getElementById("change_link")!;
+    changeLink.dispatchEvent(action);
+    expect(pushToDataLayer.pushToDataLayer).toHaveBeenCalledWith(
+      expect.objectContaining({
+        event_data: expect.objectContaining({
+          text: "update your name",
+        }),
+      }),
+    );
+  });
+
+  test("text property should fall back to 'change' if element has no text content", () => {
+    document.body.innerHTML = `
+      <main id="main-content">
+        <form>
+          <a id="change_link" href="http://localhost?edit=true"></a>
+        </form>
+      </main>
+    `;
+    const changeLink = document.getElementById("change_link")!;
+    changeLink.dispatchEvent(action);
+    expect(pushToDataLayer.pushToDataLayer).toHaveBeenCalledWith(
+      expect.objectContaining({
+        event_data: expect.objectContaining({
+          text: "change",
+        }),
+      }),
+    );
+  });
 });

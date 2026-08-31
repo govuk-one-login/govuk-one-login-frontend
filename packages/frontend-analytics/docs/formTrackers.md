@@ -101,7 +101,9 @@ If a user has consented to analytics cookies, then the
 
 ### How it works
 
-The form change tracker works by looking in the url of the page if there is a query paremeter called "edit". This action is done when the page view tracker is called.
+The form change tracker works by listening for click events on links that have `edit=true` in the query string. When such a link is clicked, the tracker captures the event and pushes it to the data layer.
+
+The `text` property is populated with the full text content of the clicked element (including any visually hidden text), trimmed and lowercased. If the element has no text content, it falls back to `"change"`.
 
 ### Example of event
 
@@ -109,7 +111,7 @@ The form change tracker works by looking in the url of the page if there is a qu
 event_name: "form_change_response",
 type: "undefined",
 url: "http://localhost:3001/organisation-type?edit=true",
-text: "change",
+text: "change your organisation type",
 section: "what is your organisation type?",
 action: "change response",
 external: "undefined",
