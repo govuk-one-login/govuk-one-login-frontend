@@ -193,6 +193,73 @@ Version branches have the same protections as `main`:
 
 See [`docs/version-branch-ruleset-setup.md`](docs/version-branch-ruleset-setup.md) for details on how the repository ruleset is configured.
 
+## Releasing on Alternative Channels
+
+Sometimes you need to release a pre-release or alternative-channel version of a package — for example, a release candidate (`rc`) or a beta — without affecting consumers on the `latest` npm tag. This is done using **channel branches**.
+
+### Channel Branch Naming Convention
+
+Channel branches follow the format: `{package-name}@v{version}/{channel-name}`
+
+Examples:
+- `frontend-analytics@v1.0.0/rc` — release candidate channel for `@govuk-one-login/frontend-analytics`
+- `frontend-ui@v5.2.0/beta` — beta channel for `@govuk-one-login/frontend-ui`
+
+### When to Use a Channel Branch
+
+Use a channel branch when you need to:
+- Publish a release candidate for testing before a full release
+- Provide a hotfix to specific consumers without promoting it to `latest`
+- Test a package change in a production-like environment before general availability
+
+### Creating a Channel Branch and Releasing
+
+1. Create the channel branch from the appropriate base (e.g., `main` or a version branch):
+   ```bash
+   git checkout main
+   git checkout -b frontend-analytics@v1.0.0/rc
+   git push -u origin frontend-analytics@v1.0.0/rc
+   ```
+
+2. Create a feature branch from the channel branch for your changes:
+   ```bash
+   git checkout frontend-analytics@v1.0.0/rc
+   git checkout -b fix/ticket-number/description
+   ```
+
+3. Make your changes and push the feature branch.
+
+4. Open a PR targeting the channel branch (e.g., `frontend-analytics@v1.0.0/rc`), **not** `main`.
+
+5. Get the required review approval and wait for status checks to pass.
+
+6. Merge the PR.
+
+7. Go to **Actions** → **Release** → **Run workflow**.
+
+8. Select the channel branch (e.g., `frontend-analytics@v1.0.0/rc`) from the branch dropdown.
+
+9. Choose the target package. The **increment** input is ignored for channel branches — the workflow automatically detects the channel name from the branch and produces a prerelease version (e.g., `1.0.0-rc.0`, `1.0.0-rc.1`, etc.).
+
+10. Run the workflow — this will publish a prerelease version to npm.
+
+### Installing a Channel Release
+
+Consumers can install a specific prerelease version:
+```bash
+npm install @govuk-one-login/frontend-analytics@1.0.0-rc.0
+```
+
+### Channel Branch Protections
+
+Channel branches have the same protections as `main` and version branches:
+- Pull requests are required (minimum 1 approving review)
+- Status checks must pass before merging
+- Force pushes are blocked
+- Branch deletion is blocked
+
+See [`docs/version-branch-ruleset-setup.md`](docs/version-branch-ruleset-setup.md) for details on how the repository ruleset is configured.
+
 ## Deprecating Packages
 
 To deprecate a specific package version from the monorepo, use the **GitHub Actions Deprecate workflow**. This workflow automates deprecating packages in NPM:

@@ -94,10 +94,44 @@ jobs:
           git config --global user.email "226340596+govuk-one-login-frontend-publisher[bot]@users.noreply.github.com"
           git config --global user.name "govuk-one-login-frontend-publisher[bot]"
 
+      - name: Detect channel branch
+        id: channel
+        run: |
+          BRANCH="${GITHUB_REF#refs/heads/}"
+          if [[ "$BRANCH" =~ ^.+@v[0-9]+(\.[0-9]+)*/.+$ ]]; then
+            CHANNEL_NAME="${BRANCH##*/}"
+            echo "is_channel=true" >> "$GITHUB_OUTPUT"
+            echo "name=$CHANNEL_NAME" >> "$GITHUB_OUTPUT"
+            echo "Detected channel branch: channel=$CHANNEL_NAME"
+          else
+            echo "is_channel=false" >> "$GITHUB_OUTPUT"
+            echo "Not a channel branch"
+          fi
+
       - name: Publish packages
         if: ${{ github.ref == 'refs/heads/main' || contains(github.ref, '@v') }}
-        run: npx nx release ${{ github.event.inputs.increment }} --projects=${{ github.event.inputs.target }} ${{ github.event.inputs.first_release == 'true' && '--first-release' || '' }} ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '--yes' }}
+        run: |
+          if [ "${{ steps.channel.outputs.is_channel }}" = "true" ]; then
+            npx nx release prerelease \
+              --preid=${{ steps.channel.outputs.name }} \
+              --projects=${{ github.event.inputs.target }} \
+              --skip-publish \
+              ${{ github.event.inputs.first_release == 'true' && '--first-release' || '' }} \
+              ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '--yes' }}
+          else
+            npx nx release ${{ github.event.inputs.increment }} \
+              --projects=${{ github.event.inputs.target }} \
+              ${{ github.event.inputs.first_release == 'true' && '--first-release' || '' }} \
+              ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '--yes' }}
+          fi
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
           # See here for why legacy peer deps setting is required: https://github.com/nrwl/nx/issues/22066
+          npm_config_legacy_peer_deps: false
+
+      - name: Publish channel release to npm
+        if: ${{ steps.channel.outputs.is_channel == 'true' && (github.ref == 'refs/heads/main' || contains(github.ref, '@v')) }}
+        run: npx nx release publish --projects=${{ github.event.inputs.target }} --tag=${{ steps.channel.outputs.name }} ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
           npm_config_legacy_peer_deps: false
