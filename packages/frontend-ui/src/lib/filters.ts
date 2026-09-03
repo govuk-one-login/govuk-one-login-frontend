@@ -1,12 +1,12 @@
-import { Environment as NunjucksEnvironment } from "nunjucks";
-import { HmpoFilterCondition, HmpoTranslateFn } from "./types";
-
 import debugLib from "debug";
+import type { Environment as NunjucksEnvironment } from "nunjucks";
+import type { HmpoFilterCondition, HmpoTranslateFn } from "./types";
+
 const debug = debugLib("hmpo:components:filters");
 
-import { posix as path } from "path";
-import moment from "moment";
+import { posix as path } from "node:path";
 import bytes from "bytes";
+import moment from "moment";
 
 type GlobalThis = {
   ctx: {
@@ -15,7 +15,7 @@ type GlobalThis = {
   };
 };
 
-let filters = {
+const filters = {
   currency(
     input: string,
     {
@@ -29,7 +29,7 @@ let filters = {
     } = {},
   ) {
     let value: string | number = parseFloat(input);
-    if (isNaN(value)) {
+    if (Number.isNaN(value)) {
       return input;
     } else if (zeroValue !== undefined && value === 0) {
       return zeroValue;
@@ -58,7 +58,7 @@ let filters = {
 
   date(txt: string, format = "D MMMM YYYY", locale = "en", invalid = "") {
     if (!txt) return invalid;
-    let date = moment(txt);
+    const date = moment(txt);
     if (!date.isValid()) return invalid;
     date.locale(locale);
     return date.format(format);
@@ -95,9 +95,9 @@ let filters = {
 
   possessive(txt: string, lang = "en", curly = true) {
     if (typeof txt !== "string") return txt;
-    let apos = curly ? "’" : "'";
+    const apos = curly ? "’" : "'";
     if (lang === "en")
-      return txt.slice(-1) === "s" ? txt + apos : txt + apos + "s";
+      return txt.slice(-1) === "s" ? txt + apos : `${txt + apos}s`;
     return txt;
   },
 
@@ -123,7 +123,7 @@ let filters = {
   },
 
   // fake first this (removed in compilation)
-  translate(this: GlobalThis, txt: string, options?: {}) {
+  translate(this: GlobalThis, txt: string, options?: Record<string, unknown>) {
     return this.ctx.translate ? this.ctx.translate(txt, options) : txt;
   },
 
@@ -161,7 +161,7 @@ let filters = {
         });
       }
       const cnd = String(condition);
-      return obj.filter((i) => i && i[cnd]);
+      return obj.filter((i) => i?.[cnd]);
     }
     if (typeof obj === "object") {
       let keys = Object.keys(obj);
@@ -177,10 +177,12 @@ let filters = {
         });
       } else {
         const cnd = String(condition);
-        keys = keys.filter((i) => obj[i] && obj[i][cnd]);
+        keys = keys.filter((i) => obj[i]?.[cnd]);
       }
-      let result: Record<string, unknown> = {};
-      keys.forEach((key) => (result[key] = obj[key]));
+      const result: Record<string, unknown> = {};
+      keys.forEach((key) => {
+        result[key] = obj[key];
+      });
       return result;
     }
     return obj;
@@ -211,13 +213,13 @@ let filters = {
   },
 };
 
-let addFilters = (env: NunjucksEnvironment) => {
+const addFilters = (env: NunjucksEnvironment) => {
   debug("adding filters");
-  for (let name in filters)
+  for (const name in filters)
     env.addFilter(
       name,
       (filters as Record<string, (...args: any[]) => any>)[name],
     );
 };
 
-export { filters, addFilters };
+export { addFilters, filters };

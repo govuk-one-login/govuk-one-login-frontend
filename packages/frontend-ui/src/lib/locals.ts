@@ -3,10 +3,10 @@ import {
   getLogger,
   setCustomLogger,
 } from "@govuk-one-login/frontend-logger";
-import type { Application, NextFunction, Request, Response } from "express";
 import debugLib from "debug";
+import type { Application, NextFunction, Request, Response } from "express";
 import nunjucks from "nunjucks";
-import { HmpoTranslateFn } from "./types";
+import type { HmpoTranslateFn } from "./types";
 
 const debug = debugLib("hmpo:components:locals");
 
@@ -113,7 +113,7 @@ function middleware(
       tmpl = new nunjucks.Template(
         value,
         env,
-        "locale:" + (context.htmlLang as string) + ":" + path,
+        `locale:${context.htmlLang as string}:${path}`,
       );
       if (!opts!.noCache) {
         renderCache.set(value, tmpl);
@@ -134,18 +134,18 @@ function middleware(
   ): unknown {
     if (Array.isArray(value)) {
       return value.map((item, index) =>
-        recursiveRender(item, context, path + "." + index),
+        recursiveRender(item, context, `${path}.${index}`),
       );
     }
     if (value && typeof value === "object") {
       const result: Record<string, unknown> = {};
       for (const key in value as object) {
         /* istanbul ignore else */
-        if (Object.prototype.hasOwnProperty.call(value, key)) {
+        if (Object.hasOwn(value, key)) {
           result[key] = recursiveRender(
             (value as Record<string, unknown>)[key],
             context,
-            path + "." + key,
+            `${path}.${key}`,
           );
         }
       }

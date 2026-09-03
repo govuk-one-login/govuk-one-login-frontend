@@ -1,6 +1,9 @@
 import debugLib from "debug";
+
 const debug = debugLib("hmpo:components:globals");
+
 import deepCloneMerge from "deep-clone-merge";
+import type { Environment as NunjucksEnvironment } from "nunjucks";
 import _ from "underscore";
 import type {
   HmpoContext,
@@ -14,9 +17,8 @@ import type {
   HmpoPlaceholder,
   HmpoTranslateFn,
 } from "./types";
-import type { Environment as NunjucksEnvironment } from "nunjucks";
 
-let globals = {
+const globals = {
   isArray(arr: unknown) {
     return Array.isArray(arr);
   },
@@ -50,7 +52,8 @@ let globals = {
   },
 
   set(obj: { [key: string]: unknown }, key: string, value: unknown) {
-    return (obj[key] = value);
+    obj[key] = value;
+    return obj[key];
   },
 
   substr(str: unknown, start: number, length: number) {
@@ -58,11 +61,11 @@ let globals = {
   },
 
   hmpoGetParams(ctx: HmpoContext, params: HmpoParams, ...base: object[]) {
-    let options =
-      params && (ctx("options.fields." + params.id) as HmpoFieldOptions);
-    let mergedItems: { items?: HmpoItem[] } = {};
-    if (options && options.items && params && params.items) {
-      let indexedParamItems = _.isArray(params.items)
+    const options =
+      params && (ctx(`options.fields.${params.id}`) as HmpoFieldOptions);
+    const mergedItems: { items?: HmpoItem[] } = {};
+    if (options?.items && params?.items) {
+      const indexedParamItems = _.isArray(params.items)
         ? _.indexBy(params.items, "value")
         : params.items;
       mergedItems.items = options.items.map((i) => {
@@ -75,7 +78,7 @@ let globals = {
   },
 
   hmpoGetValidator(
-    ctx: HmpoContext,
+    _ctx: HmpoContext,
     params: HmpoParams,
     type: HmpoParams["validate"],
   ) {
@@ -83,7 +86,7 @@ let globals = {
     if (params.validate === type) return { type };
     if (!Array.isArray(params.validate)) return;
     if (params.validate.includes(type)) return { type };
-    let validator = params.validate.filter((v) => v.type === type)[0];
+    const validator = params.validate.filter((v) => v.type === type)[0];
     if (!validator) return;
     return {
       type,
@@ -96,7 +99,7 @@ let globals = {
   },
 
   hmpoGetAttributes(
-    ctx: HmpoContext,
+    _ctx: HmpoContext,
     params: HmpoParams,
     attributes: Record<string, string>,
   ) {
@@ -113,7 +116,7 @@ let globals = {
     value = true,
     falseValue = typeof value === "boolean" ? false : undefined,
   ) {
-    let validator = globals.hmpoGetValidator(ctx, params, type);
+    const validator = globals.hmpoGetValidator(ctx, params, type);
     if (!validator) return falseValue;
     if (typeof value === "number") return validator.arguments[value];
     return value;
@@ -127,15 +130,15 @@ let globals = {
     setIdsBasedOnValues: boolean,
     defaults: Array<HmpoItem>,
   ) {
-    let translate = ctx("translate") as HmpoTranslateFn;
+    const translate = ctx("translate") as HmpoTranslateFn;
     let items: Array<HmpoItem | HmpoPlaceholder> =
       params.items || params.options || defaults || [];
-    let conditionals = params.conditionals || {};
-    let contentKey = "fields." + (params.contentKey || params.id);
+    const conditionals = params.conditionals || {};
+    const contentKey = `fields.${params.contentKey || params.id}`;
     let placeholder: Partial<HmpoParams["placeholder"]> = params.placeholder;
     if (placeholder === true) placeholder = { value: "" };
     if (placeholder) {
-      let key = placeholder.key || contentKey + ".placeholder";
+      const key = placeholder.key || `${contentKey}.placeholder`;
       placeholder.text = translate(key, { default: " " });
       if (required) placeholder.disabled = true;
       if (value === undefined || value === "") placeholder.selected = true;
@@ -146,8 +149,8 @@ let globals = {
 
       if (item.divider) {
         if (typeof item.divider !== "string") {
-          let key: HmpoKey = (item.key as HmpoKey) || [
-            contentKey + ".divider.label",
+          const key: HmpoKey = (item.key as HmpoKey) || [
+            `${contentKey}.divider.label`,
             "fields.default.divider.label",
           ];
           item.divider = translate(key);
@@ -156,9 +159,9 @@ let globals = {
       }
 
       if (!item.text && !item.html) {
-        let key = (item.key as HmpoKey) || [
-          contentKey + ".items." + item.value + ".label",
-          "fields.default.items." + item.value + ".label",
+        const key = (item.key as HmpoKey) || [
+          `${contentKey}.items.${item.value}.label`,
+          `fields.default.items.${item.value}.label`,
         ];
         item.html = item.text = translate(key);
       }
@@ -168,7 +171,7 @@ let globals = {
           item.selected = item.checked = true;
         if (value === item.value) item.selected = item.checked = true;
       }
-      let conditional = conditionals[item.value];
+      const conditional = conditionals[item.value];
       if (conditional) {
         if (!params.inline) {
           item.conditional =
@@ -181,13 +184,13 @@ let globals = {
         }
       }
       if (setIdsBasedOnValues) {
-        let cleanedValue = String(item.value).replace(/[^a-zA-Z0-9]+/g, "");
-        if (cleanedValue) item.id = params.id + "-" + cleanedValue;
+        const cleanedValue = String(item.value).replace(/[^a-zA-Z0-9]+/g, "");
+        if (cleanedValue) item.id = `${params.id}-${cleanedValue}`;
       }
       if (item.id) {
         item.label = globals.merge(
           {
-            attributes: { id: item.id + "-label" },
+            attributes: { id: `${item.id}-label` },
           },
           item.label,
         ) as HmpoLabel;
@@ -197,9 +200,9 @@ let globals = {
       if (setIdsBasedOnValues && index === 0) item.id = params.id;
 
       if (!item.hint || (!item.hint.html && !item.hint.text)) {
-        let key = [
-          contentKey + ".items." + item.value + ".hint",
-          "fields.default.items." + item.value + ".hint",
+        const key = [
+          `${contentKey}.items.${item.value}.hint`,
+          `fields.default.items.${item.value}.hint`,
         ];
         const html = translate(key, { self: false });
         if (html) {
@@ -221,7 +224,7 @@ let globals = {
     type: HmpoOptionType,
     optional = false,
   ) {
-    let translate = ctx("translate") as HmpoTranslateFn;
+    const translate = ctx("translate") as HmpoTranslateFn;
     let options: Record<string, unknown> = {};
     if (typeof params[type] === "string") {
       options = {
@@ -230,8 +233,8 @@ let globals = {
     } else {
       options = Object.assign({}, params[type]);
       if (!options.text && !options.html) {
-        let contentKey = "fields." + (params.contentKey || params.id);
-        let key: HmpoKey = (options.key as string) || contentKey + "." + type;
+        const contentKey = `fields.${params.contentKey || params.id}`;
+        const key: HmpoKey = (options.key as string) || `${contentKey}.${type}`;
         options.html = translate(key, { self: !optional });
         if (optional && !options.html) return undefined;
       }
@@ -246,75 +249,75 @@ let globals = {
     fieldKey: HmpoKey,
     optional = false,
   ) {
-    let translate = ctx("translate") as HmpoTranslateFn;
-    let contentKey = "fields." + (params.contentKey || params.id);
-    let key = contentKey + "." + fieldKey;
+    const translate = ctx("translate") as HmpoTranslateFn;
+    const contentKey = `fields.${params.contentKey || params.id}`;
+    const key = `${contentKey}.${fieldKey}`;
     const translation = translate(key, { self: !optional });
     debug("hmpoTranslateExtraFieldContent", params, fieldKey, translation);
-    return translation == `[${key}]` ? undefined : translation;
+    return translation === `[${key}]` ? undefined : translation;
   },
 
   hmpoGetValue(ctx: HmpoContext, params: HmpoParams) {
-    let errorValue = ctx("errorValues." + params.id);
-    return errorValue !== undefined ? errorValue : ctx("values." + params.id);
+    const errorValue = ctx(`errorValues.${params.id}`);
+    return errorValue !== undefined ? errorValue : ctx(`values.${params.id}`);
   },
 
   hmpoBuildErrorMessage(ctx: HmpoContext, error: HmpoError, header = false) {
     if (error.message) return error.message;
     if (header && error.headerMessage) return error.headerMessage;
 
-    let translate = ctx("translate") as HmpoTranslateFn;
+    const translate = ctx("translate") as HmpoTranslateFn;
 
-    let contentkey =
-      ctx("options.fields." + error.key + ".contentKey") || error.key;
+    const contentkey =
+      ctx(`options.fields.${error.key}.contentKey`) || error.key;
 
-    let keys = [];
+    const keys = [];
 
     if (header)
       keys.push(
-        "fields." + contentkey + ".validation." + error.type + "_header",
-        "validation." + contentkey + "." + error.type + "_header",
-        "fields." + contentkey + ".validation.default_header",
-        "validation." + contentkey + ".default_header",
+        `fields.${contentkey}.validation.${error.type}_header`,
+        `validation.${contentkey}.${error.type}_header`,
+        `fields.${contentkey}.validation.default_header`,
+        `validation.${contentkey}.default_header`,
       );
 
     if (header && error.errorGroup)
       keys.push(
-        "fields." + error.errorGroup + ".validation." + error.type + "_header",
-        "validation." + error.errorGroup + "." + error.type + "_header",
-        "fields." + error.errorGroup + ".validation.default_header",
-        "validation." + error.errorGroup + ".default_header",
+        `fields.${error.errorGroup}.validation.${error.type}_header`,
+        `validation.${error.errorGroup}.${error.type}_header`,
+        `fields.${error.errorGroup}.validation.default_header`,
+        `validation.${error.errorGroup}.default_header`,
       );
 
     keys.push(
-      "fields." + contentkey + ".validation." + error.type,
-      "validation." + contentkey + "." + error.type,
-      "fields." + contentkey + ".validation.default",
-      "validation." + contentkey + ".default",
+      `fields.${contentkey}.validation.${error.type}`,
+      `validation.${contentkey}.${error.type}`,
+      `fields.${contentkey}.validation.default`,
+      `validation.${contentkey}.default`,
     );
 
     if (error.errorGroup)
       keys.push(
-        "fields." + error.errorGroup + ".validation." + error.type,
-        "validation." + error.errorGroup + "." + error.type,
-        "fields." + error.errorGroup + ".validation.default",
-        "validation." + error.errorGroup + ".default",
+        `fields.${error.errorGroup}.validation.${error.type}`,
+        `validation.${error.errorGroup}.${error.type}`,
+        `fields.${error.errorGroup}.validation.default`,
+        `validation.${error.errorGroup}.default`,
       );
 
-    keys.push("validation." + error.type, "validation.default");
+    keys.push(`validation.${error.type}`, "validation.default");
 
-    let context = Object.assign(
+    const context = Object.assign(
       {},
       ctx(),
       {
         error,
-        key: "fields." + contentkey,
-        label: translate("fields." + contentkey + ".label").toLowerCase(),
-        legend: translate("fields." + contentkey + ".legend").toLowerCase(),
+        key: `fields.${contentkey}`,
+        label: translate(`fields.${contentkey}.label`).toLowerCase(),
+        legend: translate(`fields.${contentkey}.legend`).toLowerCase(),
         name: translate([
-          "fields." + contentkey + ".name",
-          "fields." + contentkey + ".label",
-          "fields." + contentkey + ".legend",
+          `fields.${contentkey}.name`,
+          `fields.${contentkey}.label`,
+          `fields.${contentkey}.legend`,
         ]).toLowerCase(),
       },
       error.args,
@@ -324,15 +327,16 @@ let globals = {
   },
 
   hmpoGetError(ctx: HmpoContext, params: HmpoParams) {
-    let error = ctx("errors." + params.id);
+    const error = ctx(`errors.${params.id}`);
 
-    let translate = ctx("translate") as HmpoTranslateFn;
+    const translate = ctx("translate") as HmpoTranslateFn;
 
     // if this field is part of a group and the group has a group error style this field as an error
-    let fieldErrorGroup = ctx("options.fields." + params.id + ".errorGroup");
+    const fieldErrorGroup = ctx(`options.fields.${params.id}.errorGroup`);
     if (fieldErrorGroup) {
       if (error) return true;
-      let errorGroupError = fieldErrorGroup && ctx("errors." + fieldErrorGroup);
+      const errorGroupError =
+        fieldErrorGroup && ctx(`errors.${fieldErrorGroup}`);
       if (
         errorGroupError &&
         !(errorGroupError as Record<string, unknown>).errorGroup
@@ -343,8 +347,8 @@ let globals = {
 
     if (!error) return;
 
-    let govukError = {
-      id: params.id + "-error",
+    const govukError = {
+      id: `${params.id}-error`,
       visuallyHiddenText: translate("govuk.error"),
       text: globals.hmpoBuildErrorMessage(ctx, error),
     };
@@ -353,12 +357,12 @@ let globals = {
   },
 
   hmpoGetErrorSummary(ctx: HmpoContext) {
-    let errors = ctx("errorlist") as Array<HmpoError> | undefined;
+    const errors = ctx("errorlist") as Array<HmpoError> | undefined;
     if (!errors) return;
-    let errorSummary = [];
-    for (let error of errors) {
+    const errorSummary = [];
+    for (const error of errors) {
       errorSummary.push({
-        href: "#" + (error.field || error.key),
+        href: `#${error.field || error.key}`,
         text: globals.hmpoBuildErrorMessage(ctx, error, true),
       });
     }
@@ -367,11 +371,11 @@ let globals = {
   },
 };
 
-let addGlobals = (env: NunjucksEnvironment) => {
+const addGlobals = (env: NunjucksEnvironment) => {
   debug("adding globals");
-  for (let name in globals) {
+  for (const name in globals) {
     env.addGlobal(name, (globals as Record<string, unknown>)[name]);
   }
 };
 
-export { globals, addGlobals };
+export { addGlobals, globals };
