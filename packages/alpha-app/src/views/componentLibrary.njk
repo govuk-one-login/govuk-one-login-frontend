@@ -1,0 +1,27 @@
+{% extends 'common/base.njk' %}
+
+{% set title = 'pages.componentLibrary.title' %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/accordion/macro.njk" import govukAccordion %}
+
+{% block backLink %}
+  {{ govukBackLink({
+    text: "general.govuk.backLink" | translate,
+    href: "/welcome"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <h1 class="govuk-heading-l">
+    {{"pages.componentLibrary.title" | translate}}
+  </h1>
+  <ul class="govuk-list">
+  <li>
+    <a class="govuk-link" href="components/step-card">Step card</a>
+  </li>
+  <li>
+    <a class="govuk-link" href="components/text">Text</a>
+  </li>
+</ul>
+{% endblock %}
