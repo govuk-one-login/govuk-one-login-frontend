@@ -6,6 +6,15 @@ import type i18next from "i18next";
 import translationCy from "../locales/cy/translation.json";
 import translationEn from "../locales/en/translation.json";
 
+import { addFilters } from "./lib/filters";
+import { addGlobals } from "./lib/globals";
+import { middleware } from "./lib/locals";
+export const localsMiddleware = middleware;
+
+// Unused in current components - will be included or removed when others are migrated
+// import mixins from "./lib/mixins";
+import type { Environment } from "nunjucks";
+
 export * from "./lib";
 
 const logger = createLogger({ name: "@govuk-one-login/frontend-ui" });
@@ -165,12 +174,14 @@ export function warnCharacterLimit(text: string, limit: number) {
   }
 }
 
-export function addFrontendUiGlobals(nunjucksEnv: {
-  addGlobal: (name: string, value: unknown) => void;
-}) {
+export function addFrontendUiGlobals(nunjucksEnv: Environment) {
   nunjucksEnv.addGlobal("addLanguageParam", addLanguageParam);
   nunjucksEnv.addGlobal("contactUsUrl", contactUsUrl);
   nunjucksEnv.addGlobal("warnCharacterLimit", warnCharacterLimit);
+
+  // HMPO globals
+  addGlobals(nunjucksEnv);
+  addFilters(nunjucksEnv);
 }
 
 export function addLanguageParam(language: string, url?: URL) {
