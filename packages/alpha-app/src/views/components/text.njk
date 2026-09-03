@@ -1,0 +1,11 @@
+{% extends "common/base.njk" %}
+{% from "frontend-ui/build/components/text/macro.njk" import hmpoText %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    {{ hmpoText(ctx, {id: "library-text.textarea", type: "textarea"}) }}
+  </div>
+  <div class="govuk-grid-row">
+    {{ hmpoText(ctx, {id: "library-text.other"}) }}
+  </div>
+{% endblock %}
