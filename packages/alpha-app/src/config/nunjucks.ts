@@ -1,11 +1,11 @@
 import * as frontendUi from "@govuk-one-login/frontend-ui";
+import type { Application } from "express";
 import i18next from "i18next";
 import nunjucks from "nunjucks";
 
-const configureNunjucks = (
-  app: Express.Application,
-  viewsPath: string | string[],
-) => {
+const localsMiddleware = frontendUi.locals.middleware;
+
+const configureNunjucks = (app: Application, viewsPath: string | string[]) => {
   const nunjucksEnv = nunjucks.configure(viewsPath, {
     autoescape: true,
     express: app,
@@ -22,6 +22,9 @@ const configureNunjucks = (
     const translate = i18next.getFixedT(this.ctx.language);
     return translate(key, options);
   });
+
+  app.use(localsMiddleware(app, nunjucksEnv));
+
   return nunjucksEnv;
 };
 
