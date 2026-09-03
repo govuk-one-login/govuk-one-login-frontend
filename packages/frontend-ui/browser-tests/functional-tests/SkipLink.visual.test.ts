@@ -5,8 +5,9 @@ test.describe("Skip Link Component", () => {
     await page.goto("http://localhost:3000/welcome");
   });
 
-  test("should match visual snapshot default state", async ({ page }) => {
-    const skipLink = page.locator(".govuk-skip-link");
+  test('should match visual snapshot when focused', async ({ page }) => {
+    const skipLink = page.locator('.govuk-skip-link');
+    await skipLink.focus();
     await expect(skipLink).toBeVisible();
 
     await expect(skipLink).toHaveScreenshot("skip-link-default.png");
