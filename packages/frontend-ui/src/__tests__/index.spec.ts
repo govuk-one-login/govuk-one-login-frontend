@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import type { Request, Response } from "express";
 import i18next from "i18next";
+import type { Environment } from "nunjucks";
 import {
   addFrontendUiGlobals,
   addLanguageParam,
@@ -13,6 +14,7 @@ import {
   validateTranslations,
   warnCharacterLimit,
 } from "..";
+import { globals } from "../lib/globals";
 
 // Define types for Express and non-Express versions
 interface I18nData {
@@ -428,7 +430,8 @@ describe("warnCharacterLimit", () => {
 describe("addFrontendUiGlobals", () => {
   it("registers all globals", () => {
     const addGlobal = vi.fn();
-    addFrontendUiGlobals({ addGlobal });
+    const addFilter = vi.fn();
+    addFrontendUiGlobals({ addGlobal, addFilter } as unknown as Environment);
     expect(addGlobal).toHaveBeenCalledWith(
       "addLanguageParam",
       expect.any(Function),
@@ -441,6 +444,11 @@ describe("addFrontendUiGlobals", () => {
       "warnCharacterLimit",
       expect.any(Function),
     );
-    expect(addGlobal).toHaveBeenCalledTimes(3);
+    Object.keys(globals).forEach((global) => {
+      expect(
+        expect(addGlobal).toHaveBeenCalledWith(global, expect.any(Function)),
+      );
+    });
+    expect(addGlobal).toHaveBeenCalledTimes(24);
   });
 });
