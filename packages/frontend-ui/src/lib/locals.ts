@@ -140,8 +140,8 @@ function middleware(
     if (value && typeof value === "object") {
       const result: Record<string, unknown> = {};
       for (const key in value as object) {
-        /* istanbul ignore else */
-        if (Object.hasOwn(value, key)) {
+        // biome-ignore lint: attempts to use hasOwn causing build issues
+        if (value.hasOwnProperty(key)) {
           result[key] = recursiveRender(
             (value as Record<string, unknown>)[key],
             context,
