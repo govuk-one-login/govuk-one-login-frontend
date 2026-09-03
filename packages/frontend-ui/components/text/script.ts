@@ -1,4 +1,4 @@
-((scope: Document, window: Window & typeof globalThis) => {
+((_scope: Document, window: Window & typeof globalThis) => {
   documentReady(noPaste);
 
   function documentReady(callback: () => void): void {
@@ -11,11 +11,16 @@
     cb: (item: T, index: number, arr: T[]) => void,
   ): void {
     const arr = [].slice.call(a) as T[];
-    for (var i = 0; i < arr.length; i++) cb(arr[i], i, arr);
+    for (let i = 0; i < arr.length; i++) cb(arr[i], i, arr);
   }
 
   var prevent = (e: Event & { returnValue?: boolean }): false => {
-    e.preventDefault ? e.preventDefault() : (e.returnValue = true);
+    if (e.preventDefault) {
+      e.preventDefault();
+    } else {
+      e.returnValue = true;
+    }
+
     return false;
   };
 
@@ -31,7 +36,7 @@
     if (parent.getElementsByClassName) {
       return parent.getElementsByClassName(className);
     } else {
-      var elems: Element[] = [];
+      const elems: Element[] = [];
       each(
         parent.getElementsByTagName(Array.isArray(tag) ? tag[0] : tag),
         (t: Element) => {
@@ -89,7 +94,7 @@
     if (el.addEventListener) {
       el.addEventListener(type, callback, false);
     } else if (el.attachEvent) {
-      el.attachEvent("on" + type, callback);
+      el.attachEvent(`on${type}`, callback);
     }
   }
 })(document, window);

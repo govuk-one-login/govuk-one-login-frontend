@@ -1,4 +1,4 @@
-import { Locals, NextFunction, Request, Response } from "express";
+import type { Locals, NextFunction, Request, Response } from "express";
 
 export type HmpoKey = string | Array<string>;
 
@@ -92,7 +92,9 @@ export interface HmpoRequest extends Request {
   };
 }
 
-export type HmpoController = new (...args: unknown[]) => {
+export type HmpoController = new (
+  ...args: unknown[]
+) => {
   configure(req: HmpoRequest, res: Response, next: NextFunction): void;
   getValues(
     req: HmpoRequest,

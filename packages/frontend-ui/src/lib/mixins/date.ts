@@ -1,13 +1,12 @@
-import { NextFunction, Response } from "express";
-import {
+import type { NextFunction, Response } from "express";
+import moment from "moment";
+import _ from "underscore";
+import type {
   HmpoController,
   HmpoDateField,
   HmpoError,
   HmpoRequest,
 } from "../types";
-
-import moment from "moment";
-import _ from "underscore";
 
 const DATE_PARTS = ["day", "month", "year"];
 
@@ -30,23 +29,23 @@ export default (Controller: HmpoController) =>
     }
 
     configureDateField(req: HmpoRequest, fieldName: string) {
-      let dateField = req.form.options.fields[fieldName];
-      let required = _.contains(dateField.validate, "required");
+      const dateField = req.form.options.fields[fieldName];
+      const required = _.contains(dateField.validate, "required");
 
       DATE_PARTS.forEach((part) => {
         // get any existing date part field options
-        let field = req.form.options.fields[fieldName + "-" + part];
+        let field = req.form.options.fields[`${fieldName}-${part}`];
 
         field = _.extend(
           {
             errorGroup: fieldName,
-            hintId: fieldName + "-hint",
-            contentKey: "date-" + part,
+            hintId: `${fieldName}-hint`,
+            contentKey: `date-${part}`,
             autocomplete:
               dateField.autocomplete &&
               (dateField.autocomplete === "off"
                 ? "off"
-                : dateField.autocomplete + "-" + part),
+                : `${dateField.autocomplete}-${part}`),
             dependent: dateField.dependent,
             labelClassName: "form-label",
           },
@@ -57,13 +56,13 @@ export default (Controller: HmpoController) =>
         if (!field.validate) field.validate = [];
         if (!_.isArray(field.validate)) field.validate = [field.validate];
 
-        field.validate.unshift("date-" + part);
+        field.validate.unshift(`date-${part}`);
         field.validate.unshift("numeric");
 
         // only make part required if date field is required
         if (required) field.validate.unshift("required");
 
-        req.form.options.fields[fieldName + "-" + part] = field;
+        req.form.options.fields[`${fieldName}-${part}`] = field;
       });
     }
 
@@ -75,16 +74,16 @@ export default (Controller: HmpoController) =>
       super.getValues(req, res, (err, values) => {
         if (err) return callback(err, {});
         if (!values) return;
-        let errorValues = req.sessionModel.get("errorValues") || {};
+        const errorValues = req.sessionModel.get("errorValues") || {};
         req.form.options.dateFields.forEach((fieldName) => {
           if (!values[fieldName]) return;
-          let [year, month, day] = values[fieldName].split("-");
-          values[fieldName + "-day"] =
-            errorValues[fieldName + "-day-raw"] || day;
-          values[fieldName + "-month"] =
-            errorValues[fieldName + "-month-raw"] || month;
-          values[fieldName + "-year"] =
-            errorValues[fieldName + "-year-raw"] || year;
+          const [year, month, day] = values[fieldName].split("-");
+          values[`${fieldName}-day`] =
+            errorValues[`${fieldName}-day-raw`] || day;
+          values[`${fieldName}-month`] =
+            errorValues[`${fieldName}-month-raw`] || month;
+          values[`${fieldName}-year`] =
+            errorValues[`${fieldName}-year-raw`] || year;
         });
         callback(null, values);
       });
@@ -98,24 +97,23 @@ export default (Controller: HmpoController) =>
     }
 
     processDateField(req: HmpoRequest, fieldName: string) {
-      const dayName = fieldName + "-day";
-      const monthName = fieldName + "-month";
-      const yearName = fieldName + "-year";
+      const dayName = `${fieldName}-day`;
+      const monthName = `${fieldName}-month`;
+      const yearName = `${fieldName}-year`;
 
-      let body = req.form.values;
-      let field = req.form.options.fields[fieldName];
+      const body = req.form.values;
+      const field = req.form.options.fields[fieldName];
 
       // save raw values to replay on validation error
-      body[dayName + "-raw"] = body[dayName];
-      body[monthName + "-raw"] = body[monthName];
-      body[yearName + "-raw"] = body[yearName];
+      body[`${dayName}-raw`] = body[dayName];
+      body[`${monthName}-raw`] = body[monthName];
+      body[`${yearName}-raw`] = body[yearName];
 
       body[dayName] = field.inexact ? "01" : this._padDayMonth(body[dayName]);
       body[monthName] = this._padDayMonth(body[monthName]);
       body[yearName] = this._padYear(body[yearName], field.offset || 0);
 
-      body[fieldName] =
-        body[yearName] + "-" + body[monthName] + "-" + body[dayName];
+      body[fieldName] = `${body[yearName]}-${body[monthName]}-${body[dayName]}`;
 
       if (
         body[fieldName] === "--" ||
@@ -126,15 +124,15 @@ export default (Controller: HmpoController) =>
     }
 
     _padDayMonth(value: string) {
-      if (value && value.match(/^\d$/)) return "0" + value;
+      if (value?.match(/^\d$/)) return `0${value}`;
       return value;
     }
 
     _padYear(value: string, offset: number) {
-      if (value && value.match(/^\d{2}$/)) {
-        let year = parseInt(value, 10);
-        let centurySplit = moment().year() - 2000 + (offset || 0);
-        let prefix = year <= centurySplit ? "20" : "19";
+      if (value?.match(/^\d{2}$/)) {
+        const year = parseInt(value, 10);
+        const centurySplit = moment().year() - 2000 + (offset || 0);
+        const prefix = year <= centurySplit ? "20" : "19";
         return prefix + value;
       }
       return value;
@@ -158,33 +156,33 @@ export default (Controller: HmpoController) =>
       fieldName: string,
       errors: Record<string, HmpoError>,
     ) {
-      let fieldErrors = _.pick(
+      const fieldErrors = _.pick(
         errors,
         (error, key) => key !== fieldName && error.errorGroup === fieldName,
       );
 
-      let requiredErrors = _.pick(
+      const requiredErrors = _.pick(
         fieldErrors,
         (error) => error!.type === "required",
       );
       if (!_.isEmpty(requiredErrors)) {
-        let field = req.form.options.fields[fieldName];
-        let fieldCount = field.inexact ? 2 : 3;
+        const field = req.form.options.fields[fieldName];
+        const fieldCount = field.inexact ? 2 : 3;
         let errorType = "required";
-        let part;
+        let part: string | undefined;
         if (Object.keys(requiredErrors).length < fieldCount) {
           part = _.find(
             DATE_PARTS,
-            (part) => !!requiredErrors[fieldName + "-" + part],
+            (part) => !!requiredErrors[`${fieldName}-${part}`],
           );
           /* istanbul ignore next */
-          if (part) errorType += "-" + part;
+          if (part) errorType += `-${part}`;
         }
         errors[fieldName] = new this.Error(
           fieldName,
           {
             type: errorType,
-            field: fieldName + "-" + (part || "day"),
+            field: `${fieldName}-${part || "day"}`,
             errorGroup: fieldName,
           },
           req,
@@ -194,26 +192,26 @@ export default (Controller: HmpoController) =>
 
       if (!req.form.values[fieldName]) return;
 
-      let numericErrors = _.pick(
+      const numericErrors = _.pick(
         fieldErrors,
         (error) => error!.type === "numeric",
       );
       if (!_.isEmpty(numericErrors)) {
         let errorType = "numeric";
-        let part;
+        let part: string | undefined;
         if (Object.keys(numericErrors).length === 1) {
           part = _.find(
             DATE_PARTS,
-            (part) => !!numericErrors[fieldName + "-" + part],
+            (part) => !!numericErrors[`${fieldName}-${part}`],
           );
           /* istanbul ignore next */
-          if (part) errorType += "-" + part;
+          if (part) errorType += `-${part}`;
         }
         errors[fieldName] = new this.Error(
           fieldName,
           {
             type: errorType,
-            field: fieldName + "-" + (part || "day"),
+            field: `${fieldName}-${part || "day"}`,
             errorGroup: fieldName,
           },
           req,
@@ -222,7 +220,10 @@ export default (Controller: HmpoController) =>
       }
 
       if (req.form.values[fieldName].match(/^\d{4}-\d{2}-\d{2}$/)) {
-        let code = moment(req.form.values[fieldName], "YYYY-MM-DD").invalidAt();
+        const code = moment(
+          req.form.values[fieldName],
+          "YYYY-MM-DD",
+        ).invalidAt();
         let invalidElement = null;
         /* istanbul ignore next */
         if (code === 0) invalidElement = "year";
@@ -230,12 +231,12 @@ export default (Controller: HmpoController) =>
         if (code === 2) invalidElement = "day";
 
         if (invalidElement) {
-          errors[fieldName] = errors[fieldName + "-" + invalidElement] =
+          errors[fieldName] = errors[`${fieldName}-${invalidElement}`] =
             new this.Error(
-              fieldName + "-" + invalidElement,
+              `${fieldName}-${invalidElement}`,
               {
-                type: "date-" + invalidElement,
-                field: fieldName + "-" + invalidElement,
+                type: `date-${invalidElement}`,
+                field: `${fieldName}-${invalidElement}`,
                 errorGroup: fieldName,
               },
               req,
@@ -244,15 +245,15 @@ export default (Controller: HmpoController) =>
       }
 
       if (errors[fieldName] && !errors[fieldName].field) {
-        errors[fieldName].field = fieldName + "-day";
+        errors[fieldName].field = `${fieldName}-day`;
       }
     }
 
     saveValues(req: HmpoRequest, res: Response, next: NextFunction) {
       _.forEach(req.form.options.dateFields, (fieldName: string) => {
         DATE_PARTS.forEach((part) => {
-          delete req.form.values[fieldName + "-" + part];
-          delete req.form.values[fieldName + "-" + part + "-raw"];
+          delete req.form.values[`${fieldName}-${part}`];
+          delete req.form.values[`${fieldName}-${part}-raw`];
         });
       });
       super.saveValues(req, res, next);
