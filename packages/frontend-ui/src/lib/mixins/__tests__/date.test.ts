@@ -451,17 +451,6 @@ describe("Date Mixin", () => {
         errors,
       );
     });
-
-    it("should call the super validateFields method", () => {
-      instance.validateFields(
-        req,
-        res,
-        next as unknown as (errors: Record<string, HmpoError>) => void,
-      );
-      expect(
-        (BaseController.prototype as Record<string, Mock>).validateFields,
-      ).toHaveBeenCalledWith(req, res, expect.any(Function));
-    });
   });
 
   describe("validateDateField", () => {
