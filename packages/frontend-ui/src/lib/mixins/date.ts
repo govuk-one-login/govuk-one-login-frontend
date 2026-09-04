@@ -56,7 +56,7 @@ export default (Controller: HmpoController) =>
         if (!field.validate) field.validate = [];
         if (!Array.isArray(field.validate)) field.validate = [field.validate];
 
-        field.validate.unshift(`date-${part}`, "numeric");
+        field.validate.unshift("numeric", `date-${part}`);
 
         // only make part required if date field is required
         if (required) field.validate.unshift("required");
@@ -68,10 +68,10 @@ export default (Controller: HmpoController) =>
     getValues(
       req: HmpoRequest,
       res: Response,
-      callback: (err: unknown, values: Record<string, string>) => void,
+      callback: (err: unknown, values?: Record<string, string>) => void,
     ) {
       super.getValues(req, res, (err, values) => {
-        if (err) return callback(err, {});
+        if (err) return callback(err);
         if (!values) return;
         const errorValues = req.sessionModel.get("errorValues") || {};
         req.form.options.dateFields.forEach((fieldName) => {

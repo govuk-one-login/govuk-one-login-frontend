@@ -99,7 +99,7 @@ export type HmpoController = new (
   getValues(
     req: HmpoRequest,
     res: Response,
-    callback: (err: unknown, values: Record<string, string>) => void,
+    callback: (err: unknown, values?: Record<string, string>) => void,
   ): void;
   process(req: HmpoRequest, res: Response, next: NextFunction): void;
   validateFields(
@@ -121,4 +121,5 @@ export interface HmpoDateField {
   autocomplete?: string;
   dependent?: unknown;
   validate: Array<unknown> | string;
+  errorGroup?: string;
 }
