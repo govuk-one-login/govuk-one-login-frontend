@@ -54,10 +54,9 @@ export default (Controller: HmpoController) =>
 
         // add date part validators first
         if (!field.validate) field.validate = [];
-        if (!_.isArray(field.validate)) field.validate = [field.validate];
+        if (!Array.isArray(field.validate)) field.validate = [field.validate];
 
-        field.validate.unshift(`date-${part}`);
-        field.validate.unshift("numeric");
+        field.validate.unshift(`date-${part}`, "numeric");
 
         // only make part required if date field is required
         if (required) field.validate.unshift("required");
@@ -124,13 +123,13 @@ export default (Controller: HmpoController) =>
     }
 
     _padDayMonth(value: string) {
-      if (value?.match(/^\d$/)) return `0${value}`;
+      if (/^\d$/.exec(value)) return `0${value}`;
       return value;
     }
 
     _padYear(value: string, offset: number) {
-      if (value?.match(/^\d{2}$/)) {
-        const year = parseInt(value, 10);
+      if (/^\d{2}$/.exec(value)) {
+        const year = Number.parseInt(value, 10);
         const centurySplit = moment().year() - 2000 + (offset || 0);
         const prefix = year <= centurySplit ? "20" : "19";
         return prefix + value;
@@ -171,8 +170,7 @@ export default (Controller: HmpoController) =>
         let errorType = "required";
         let part: string | undefined;
         if (Object.keys(requiredErrors).length < fieldCount) {
-          part = _.find(
-            DATE_PARTS,
+          part = DATE_PARTS.find(
             (part) => !!requiredErrors[`${fieldName}-${part}`],
           );
           /* istanbul ignore next */
@@ -200,8 +198,7 @@ export default (Controller: HmpoController) =>
         let errorType = "numeric";
         let part: string | undefined;
         if (Object.keys(numericErrors).length === 1) {
-          part = _.find(
-            DATE_PARTS,
+          part = DATE_PARTS.find(
             (part) => !!numericErrors[`${fieldName}-${part}`],
           );
           /* istanbul ignore next */
@@ -219,7 +216,7 @@ export default (Controller: HmpoController) =>
         return;
       }
 
-      if (req.form.values[fieldName].match(/^\d{4}-\d{2}-\d{2}$/)) {
+      if (/^\d{4}-\d{2}-\d{2}$/.exec(req.form.values[fieldName])) {
         const code = moment(
           req.form.values[fieldName],
           "YYYY-MM-DD",

@@ -8,8 +8,8 @@ import translationEn from "../locales/en/translation.json";
 
 import { addFilters } from "./lib/filters";
 import { addGlobals } from "./lib/globals";
-import { middleware } from "./lib/locals";
-export const localsMiddleware = middleware;
+
+export { middleware as localsMiddleware } from "./lib/locals";
 
 // Unused in current components - will be included or removed when others are migrated
 // import mixins from "./lib/mixins";

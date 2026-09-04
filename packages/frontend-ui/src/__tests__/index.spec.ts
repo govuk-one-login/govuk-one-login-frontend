@@ -445,9 +445,7 @@ describe("addFrontendUiGlobals", () => {
       expect.any(Function),
     );
     Object.keys(globals).forEach((global) => {
-      expect(
-        expect(addGlobal).toHaveBeenCalledWith(global, expect.any(Function)),
-      );
+      expect(addGlobal).toHaveBeenCalledWith(global, expect.any(Function));
     });
     expect(addGlobal).toHaveBeenCalledTimes(24);
   });
