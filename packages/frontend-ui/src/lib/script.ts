@@ -1,3 +1,5 @@
+// TODO test this is split nicely from nunjucks
+
 ((_scope: Document, window: Window & typeof globalThis) => {
   documentReady(noPaste);
 
