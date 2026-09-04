@@ -1,3 +1,3 @@
-import Date from "./date";
+import _Date from "./date";
 
-export default { Date };
+export default { Date: _Date };
