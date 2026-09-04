@@ -90,7 +90,7 @@ describe("hmpoText", () => {
     expect($label.text().trim()).toEqual("fields.my-input.label");
     expect($label.attr("id")).toEqual("my-input-label");
     const $hint = $(".govuk-hint");
-    expect($hint.length).toEqual(0);
+    expect($hint).toHaveLength(0);
   });
 
   it("renders with label and prefix", () => {
