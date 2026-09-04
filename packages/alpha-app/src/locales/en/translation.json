@@ -42,7 +42,8 @@
         "pagination": {
           "text": "Services you can use with GOV.UK One Login"
         },
-        "printGuideLinkText": "View a printable version of the whole guide"
+        "printGuideLinkText": "View a printable version of the whole guide",
+        "componentLibraryLink": "Component Library"
       }
     },
     "organisationType": {
@@ -212,6 +213,23 @@
           "bulletList": ["first item", "second item", "third item"]
         }
       ]
+    },
+    "componentLibrary": {
+      "title": "Component library"
+    }
+  },
+
+  "fields": {
+    "library-text": {
+      "textarea": {
+        "label": "Textarea variant",
+        "hint": "Hint"
+      },
+      "other": {
+        "label": "Non-textarea variant",
+        "hint": "Hint",
+        "prefix": "Prefix"
+      }
     }
   }
 }

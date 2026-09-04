@@ -22,6 +22,7 @@ import { validateHelpWithHint } from "./journeys/helpWithHintService";
 import { validateOrganisationType } from "./journeys/organisationTypeService";
 import { validateServiceDescription } from "./journeys/serviceDescriptionService";
 import { logger } from "./utils/logger";
+import componentList from "./views/components/componentList";
 
 const sessionId = crypto.randomBytes(32).toString("hex");
 
@@ -228,7 +229,21 @@ app.get("/test-progress-button", (_req, res) => {
 });
 
 app.get("/step-card", (_req, res) => {
-  res.render("step-card.njk");
+  res.render("components/step-card.njk");
+});
+
+app.get("/components", (_req, res) => {
+  res.render("componentLibrary.njk");
+});
+
+app.get(/components\/([\w-]*)/, (req, res) => {
+  const componentName = req.params[0];
+
+  if (componentList.includes(componentName)) {
+    res.render(`components/${componentName}.njk`);
+  } else {
+    res.render("componentLibrary.njk");
+  }
 });
 
 app.get("/enter-name", (_req, res) => {
