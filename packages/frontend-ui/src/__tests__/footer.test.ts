@@ -24,17 +24,8 @@ describe("Footer Component", () => {
     const renderedComponent = render("footer", "frontendUiFooter", {
       params: mockParams,
     });
-    const results = await axe(renderedComponent.documentElement.outerHTML);
-    expect(results).toHaveNoViolations();
-  });
-
-  it("has no accessibility violations - testing May rebrand enabled condition", async () => {
-    const renderedComponent = render("footer", "frontendUiFooter", {
-      params: mockParams,
-      May_2025_Rebrand: true,
-    });
-
-    const results = await axe(renderedComponent.documentElement.outerHTML);
+    const html = renderedComponent.documentElement.outerHTML;
+    const results = await axe(html);
     expect(results).toHaveNoViolations();
   });
 });

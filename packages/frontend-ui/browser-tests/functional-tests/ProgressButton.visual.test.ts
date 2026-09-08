@@ -21,10 +21,10 @@ test.describe("Progress Button visual regression", () => {
     await expect(button).toHaveScreenshot("progress-button-default.png");
   });
 
-  test("should match visual snapshot after clicking", async ({ page }) => {
-    const button = page.locator(".govuk-button--progress").first();
-    button.click({ force: true });
-    await expect(button).toHaveScreenshot("progress-button-clicked.png");
+  test('should match visual snapshot after clicking', async ({ page }) => {
+    const button = page.locator('.govuk-button--progress').first();
+    await button.click({force: true});
+    await expect(button).toHaveScreenshot('progress-button-clicked.png');
   });
 
   test("should match visual snapshot after clicking and waiting 5 seconds", async ({
@@ -53,15 +53,11 @@ test.describe("Progress Button visual regression", () => {
     );
   });
 
-  test("should match visual snapshot after clicking - reduced motion", async ({
-    page,
-  }) => {
-    await page.emulateMedia({ reducedMotion: "reduce" });
-    const button = page.locator(".govuk-button--progress").first();
-    button.click({ force: true });
-    await expect(button).toHaveScreenshot(
-      "progress-button-clicked-no-motion.png",
-    );
+  test('should match visual snapshot after clicking - reduced motion', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    const button = page.locator('.govuk-button--progress').first();
+    await button.click({force: true});
+    await expect(button).toHaveScreenshot('progress-button-clicked-no-motion.png');
   });
 
   test("should match visual snapshot after clicking and waiting 5 seconds - reduced motion", async ({

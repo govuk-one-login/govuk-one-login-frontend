@@ -1,7 +1,3 @@
-{% if MAY_2025_REBRAND_ENABLED %}
-{%set govukRebrand = true %}
-{% endif %}
-
 {% extends "govuk/template.njk" %}
 
 {% block head %}
@@ -43,7 +39,7 @@
   }) }}
 {% endblock %}
 
-{% block main %}
+{% block container %}
   <div class="govuk-width-container">
     {{ frontendUiPhaseBanner({
       translations: translations.translation.phaseBanner,
