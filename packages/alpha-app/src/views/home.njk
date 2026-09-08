@@ -1,6 +1,11 @@
 {% extends 'common/base.njk' %} {% set title = 'pages.home.title' %} {% block
 content %}
 
+{% from "govuk/components/button/macro.njk" import govukButton %} {{
+  govukButton({ text: "pages.home.content.componentLibraryLink"|translate, href: "/components",
+  isStartButton: true, "attributes": {"data-nav": true,"data-link": "undefined"} })
+}}
+
 <h1 class="govuk-heading-xl">{{"pages.home.content.header"| translate}}</h1>
 <aside>
   <nav>

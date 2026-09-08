@@ -42,7 +42,8 @@
         "pagination": {
           "text": "Gwasanaethau y gallwch eu defnyddio gyda Mewngofnod One Login GOV.UK"
         },
-        "printGuideLinkText": "Gweld fersiwn argraffu cyflawn y canllaw"
+        "printGuideLinkText": "Gweld fersiwn argraffu cyflawn y canllaw",
+        "componentLibraryLink": "Component Library (cy)"
       }
     },
     "organisationType": {
@@ -211,7 +212,24 @@
           "title": "Parhewch ar wefan GOV.UK",
           "bulletList": ["eitem gyntaf", "eitem ail", "eitem drydydd"]
         }
-      ]
+      ],
+      "componentLibrary": {
+        "title": "Component library (cy)"
+      }
+    },
+
+    "fields": {
+      "library-text": {
+        "textarea": {
+          "label": "Textarea variant (cy)",
+          "hint": "Hint (cy)"
+        },
+        "other": {
+          "label": "Non-textarea variant (cy)",
+          "hint": "Hint (cy)",
+          "prefix": "Prefix (cy)"
+        }
+      }
     }
   }
 }

@@ -1,0 +1,11 @@
+{% extends "common/base.njk" %}
+{% from "frontend-ui/build/components/text/macro.njk" import text %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    {{ text(ctx, {id: "library-text.textarea", type: "textarea"}) }}
+  </div>
+  <div class="govuk-grid-row">
+    {{ text(ctx, {id: "library-text.other"}) }}
+  </div>
+{% endblock %}
