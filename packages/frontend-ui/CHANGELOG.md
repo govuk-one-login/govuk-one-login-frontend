@@ -1,3 +1,15 @@
+## 5.3.3 (2026-09-10)
+
+### 🚀 Features
+
+- **DFC-1375:** Migrate HMPO components utils to frontend-ui ([#482](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/482))
+- prevent identity-base from being indexed by search engines ([#485](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/485))
+
+### ❤️ Thank You
+
+- mikebeeby @mikebeeby
+- Sam Bunce
+
 ## 5.3.2 (2026-08-26)
 
 This was a version bump only for @govuk-one-login/frontend-ui to align it with other projects, there were no code changes.
