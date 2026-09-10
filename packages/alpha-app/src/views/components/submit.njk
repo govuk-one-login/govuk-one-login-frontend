@@ -1,0 +1,7 @@
+{% extends "common/base.njk" %}
+{% from "frontend-ui/build/components/submit/macro.njk" import submit %}
+
+{% block content %}
+  <h1 class="govuk-heading-xl">{{"pages.componentLibrary.components.submit" | translate}}</h1>
+  {{ submit(ctx, {id: "library-submit"}) }}
+{% endblock %}
