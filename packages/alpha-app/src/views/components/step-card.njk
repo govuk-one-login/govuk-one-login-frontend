@@ -3,6 +3,7 @@
 
 {% block content %}
   <h1 class="govuk-heading-xl">{{"pages.componentLibrary.components.step-card" | translate}}</h1>
+  <div class="govuk-grid-row">
   {{ frontendUiStepCard({
     translations: translations.translation.stepCard,
     steps: [
@@ -12,4 +13,5 @@
       { data: translations.translation.pages.stepCard1.steps[3], image: "/assets/TakeASelfie.svg" }
     ]
   }) }}
+  </div>
 {% endblock %}
