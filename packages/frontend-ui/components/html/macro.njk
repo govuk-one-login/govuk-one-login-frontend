@@ -1,9 +1,8 @@
-
 {% macro html(params) %}
     {%- if isArray(params) %}
         {% for item in params %}
             {%- if isArray(item) or item.items %}
-                {{ hmpoHtmlList(item) }}
+                {{ htmlList(item) }}
             {%- else %}
                 {{ htmlItem("p", item) }}
             {% endif %}
@@ -24,19 +23,19 @@
 
 {% macro htmlItem(tag, value) %}
     {%- if not isObject(value) %}{%- set value = { "": value } %}{% endif %}
-    {%- for id, html in value | filter %}
+    {%- for id, content in value | filter %}
         {%- if startsWith(id, ">") %}
             {%- from "govuk/components/inset-text/macro.njk" import govukInsetText %}
-            {{ govukInsetText({ html: hmpoHtml(html), id: substr(id, 2) } | filter) }}
-        {%- elif tag == "p" and startsWith(html, "> ") %}
+            {{ govukInsetText({ html: html(content), id: substr(id, 2) } | filter) }}
+        {%- elif tag == "p" and startsWith(content, "> ") %}
             {%- from "govuk/components/inset-text/macro.njk" import govukInsetText %}
-            {{ govukInsetText({ html: hmpoHtml(substr(html, 2)) }) }}
+            {{ govukInsetText({ html: html(substr(content, 2)) }) }}
         {%- else %}
-            {%- if isArray(html) %}{%- set html = hmpoHtml(html) %}{%- endif %}
-            {%- if tag == "p" and startsWith(html, "## ") %}{%- set tag = "h2" %}{%- set html = substr(html, 3) %}{%- endif %}
-            {%- if tag == "p" and startsWith(html, "### ") %}{%- set tag = "h3" %}{%- set html = substr(html, 4) %}{%- endif %}
-            {%- if tag == "p" and startsWith(html, "#### ") %}{%- set tag = "h4" %}{%- set html = substr(html, 5) %}{%- endif %}
-            <{{tag}}{% if id %} id="{{id}}"{% endif %}>{{ html | safe }}</{{tag}}>
+            {%- if isArray(content) %}{%- set content = html(content) %}{%- endif %}
+            {%- if tag == "p" and startsWith(content, "## ") %}{%- set tag = "h2" %}{%- set content = substr(content, 3) %}{%- endif %}
+            {%- if tag == "p" and startsWith(content, "### ") %}{%- set tag = "h3" %}{%- set content = substr(content, 4) %}{%- endif %}
+            {%- if tag == "p" and startsWith(content, "#### ") %}{%- set tag = "h4" %}{%- set content = substr(content, 5) %}{%- endif %}
+            <{{tag}}{% if id %} id="{{id}}"{% endif %}>{{ content | safe }}</{{tag}}>
         {%- endif %}
     {%- endfor %}
 {% endmacro %}

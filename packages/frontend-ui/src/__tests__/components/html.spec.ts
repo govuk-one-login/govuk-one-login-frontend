@@ -1,10 +1,31 @@
+// @vitest-environment node
+
+import type * as filtersModule from "../../lib/filters";
+import type * as globalsModule from "../../lib/globals";
+
+vi.mock("../../lib/globals", async (importOriginal) => {
+  const original = await importOriginal<typeof globalsModule>();
+  return {
+    globals: { ...original.globals, addGlobals: original.addGlobals },
+  };
+});
+
+vi.mock("../../lib/filters", async (importOriginal) => {
+  const original = await importOriginal<typeof filtersModule>();
+  return {
+    filters: { ...original.filters, addFilters: original.addFilters },
+  };
+});
+
+import { cleanHtml, render } from "../helpers";
+
 describe("hmpoHtml", () => {
   it("renders string paragraph", () => {
     const html = "Single <b>string</b>";
     const $ = render({ component: "html", params: html });
 
     const result = cleanHtml($("body"));
-    expect(result).to.equal("<p>Single <b>string</b></p>");
+    expect(result).toEqual("<p>Single <b>string</b></p>");
   });
 
   it("renders an array of paragraphs", () => {
@@ -12,7 +33,7 @@ describe("hmpoHtml", () => {
     const $ = render({ component: "html", params: html });
 
     const result = cleanHtml($("body"));
-    expect(result).to.equal(
+    expect(result).toEqual(
       "<p>First <b>string</b></p>" + "<p>Second <b>string</b></p>",
     );
   });
@@ -26,7 +47,7 @@ describe("hmpoHtml", () => {
     const $ = render({ component: "html", params: html });
 
     const result = cleanHtml($("body"));
-    expect(result).to.equal(
+    expect(result).toEqual(
       "<p>First <b>string</b></p>" +
         "<p>Second <b>string</b></p>" +
         '<ul class="govuk-list govuk-list--bullet">' +
@@ -55,7 +76,7 @@ describe("hmpoHtml", () => {
     const $ = render({ component: "html", params: html });
 
     const result = cleanHtml($("body"));
-    expect(result).to.equal(
+    expect(result).toEqual(
       "<p>First <b>string</b></p>" +
         "<p># Not header</p>" +
         "<h2>Second header</h2>" +
@@ -88,7 +109,7 @@ describe("hmpoHtml", () => {
     const $ = render({ component: "html", params: html });
 
     const result = cleanHtml($("body"));
-    expect(result).to.equal(
+    expect(result).toEqual(
       '<p id="id1">First <b>string</b></p>' +
         "<p>Second <b>string</b></p>" +
         '<ul id="alist" class="list class">' +
@@ -116,7 +137,7 @@ describe("hmpoHtml", () => {
     const $ = render({ component: "html", params: html });
 
     const result = cleanHtml($("body"));
-    expect(result).to.equal(
+    expect(result).toEqual(
       "<p>No indent</p>" +
         '<div class="govuk-inset-text">' +
         "<p>Single indent</p>" +
@@ -152,7 +173,7 @@ describe("hmpoHtml", () => {
     const $ = render({ component: "html", params: html });
 
     const result = cleanHtml($("body"));
-    expect(result).to.equal(
+    expect(result).toEqual(
       "<p>First <b>string</b></p>" +
         "<p>Second <b>string</b></p>" +
         '<ul class="govuk-list govuk-list--bullet">' +
