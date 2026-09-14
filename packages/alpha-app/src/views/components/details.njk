@@ -1,0 +1,7 @@
+{% extends "common/base.njk" %}
+{% from "frontend-ui/build/components/details/macro.njk" import details %}
+
+{% block content %}
+  <h1 class="govuk-heading-xl">{{"pages.componentLibrary.components.details" | translate}}</h1>
+  {{ details({summaryText: "components.details.summaryText" | translate, html: "components.details.html" | translate}) }}
+{% endblock %}

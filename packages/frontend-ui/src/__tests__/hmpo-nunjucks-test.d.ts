@@ -9,8 +9,9 @@ declare module "hmpo-nunjucks-test" {
     withLocale?: boolean,
   ): (...args: unknown[]) => CheerioAPI;
 
-  function cleanHtml(html: string): string;
+  function cleanHtml(
+    html: import("cheerio").Cheerio<import("domhandler").Element> | string,
+  ): string;
 
   export { cleanHtml, renderer };
-  // export default { renderer, cleanHtml };
 }

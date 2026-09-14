@@ -215,11 +215,44 @@
       ]
     },
     "componentLibrary": {
-      "title": "Component library"
+      "title": "Component library",
+      "components": {
+        "checkboxes": "Checkboxes",
+        "date": "Date",
+        "details": "Details",
+        "html": "HTML",
+        "inset-text": "Inset text",
+        "radios": "Radio buttons",
+        "select": "Select",
+        "step-card": "Step card",
+        "submit": "Submit button",
+        "text": "Text input",
+        "warning-text": "Warning text"
+      }
+    },
+    "html": {
+      "htmlComponent": "HTML block",
+      "htmlListComponent": "HTML list",
+      "htmlItemComponent": "HTML item"
     }
   },
-
+  "components": {
+    "details": {
+      "label": "Details",
+      "summaryText": "Summary Text",
+      "html": "<h2>HTML Block</h2><p>More detailed information</p>"
+    },
+    "inset-text": {
+      "text": "Inset text"
+    },
+    "warning-text": {
+      "text": "Warning text"
+    }
+  },
   "fields": {
+    "date-day": { "label": "Day" },
+    "date-month": { "label": "Month" },
+    "date-year": { "label": "Year" },
     "library-text": {
       "textarea": {
         "label": "Textarea variant",
@@ -230,6 +263,77 @@
         "hint": "Hint",
         "prefix": "Prefix"
       }
+    },
+    "library-checkboxes": {
+      "legend": "Checkboxes",
+      "hint": "Hint",
+      "items": {
+        "a": {
+          "label": "Option A",
+          "hint": "Hint for option A"
+        },
+        "b": {
+          "label": "Option B",
+          "hint": "Hint for option B"
+        },
+        "c": {
+          "label": "Option C",
+          "hint": "Hint for option C"
+        }
+      }
+    },
+    "library-date": {
+      "legend": "Date",
+      "hint": "Hint"
+    },
+
+    "library-form": {
+      "label": "Form"
+    },
+
+    "library-radios": {
+      "legend": "Radios",
+      "hint": "Hint",
+      "items": {
+        "a": {
+          "label": "Option A",
+          "hint": "Hint for option A"
+        },
+        "b": {
+          "label": "Option B",
+          "hint": "Hint for option B"
+        },
+        "c": {
+          "label": "Option C",
+          "hint": "Hint for option C"
+        }
+      }
+    },
+    "library-select": {
+      "label": "Select",
+      "hint": "Hint",
+      "placeholder": "Placeholder",
+      "items": {
+        "a": {
+          "label": "Option A"
+        },
+        "b": {
+          "label": "Option B"
+        },
+        "c": {
+          "label": "Option C"
+        }
+      }
+    },
+    "library-html": {
+      "label": "HTML"
+    },
+    "library-html-list": {
+      "label": "HTML list"
+    },
+    "library-html-item": {
+      "label": "HTML item"
     }
-  }
+  },
+  "buttons": { "next": "Submit" }
 }

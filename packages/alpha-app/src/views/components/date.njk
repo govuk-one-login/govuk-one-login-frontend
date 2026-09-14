@@ -1,0 +1,7 @@
+{% extends "common/base.njk" %}
+{% from "frontend-ui/build/components/date/macro.njk" import date %}
+
+{% block content %}
+  <h1 class="govuk-heading-xl">{{"pages.componentLibrary.components.date" | translate}}</h1>
+  {{ date(ctx, {id: "library-date"}) }}
+{% endblock %}

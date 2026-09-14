@@ -5,6 +5,7 @@ import { globals } from "../lib/globals";
 
 const views = [
   path.resolve(__dirname, "..", "..", "components"),
+  path.resolve(__dirname, "..", "..", ".."),
   path.resolve(
     __dirname,
     "..",
@@ -19,14 +20,13 @@ const views = [
 
 export const render = nunjucksTest.renderer(views, null, globals, filters);
 
-// Used in other components, will be reenabled or deleted as part of that work
-// const locales = [path.resolve(__dirname, "locale.json")];
+const locales = [path.resolve(__dirname, "locale.json")];
 
-// export const renderWithLocale = nunjucksTest.renderer(
-//   views,
-//   locales,
-//   globals,
-//   filters,
-//   true,
-// );
-// global.cleanHtml = nunjucksTest.cleanHtml;
+export const renderWithLocale = nunjucksTest.renderer(
+  views,
+  locales,
+  globals,
+  filters,
+  true,
+);
+export const cleanHtml = nunjucksTest.cleanHtml;

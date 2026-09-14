@@ -1,0 +1,7 @@
+{% extends "common/base.njk" %}
+{% from "frontend-ui/build/components/select/macro.njk" import select %}
+
+{% block content %}
+  <h1 class="govuk-heading-xl">{{"pages.componentLibrary.components.select" | translate}}</h1>
+  {{ select(ctx, {id: "library-select", items: ['a', 'b', 'c'], placeholder: true}) }}
+{% endblock %}
