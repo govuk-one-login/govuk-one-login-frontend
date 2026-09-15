@@ -1,11 +1,14 @@
 import type { NextFunction, Request, Response } from "express";
+import componentList from "../views/components/componentList";
 
 const noSessionPages = [
+  "/components",
   "/welcome",
   "/spinner",
   "/test-progress-button",
   "/step-card",
   "/enter-name",
+  ...componentList.map((component) => `/components/${component}`),
 ];
 
 const checkSessionAndRedirect = (
@@ -17,7 +20,8 @@ const checkSessionAndRedirect = (
   const hasSession = req.session?.userSession?.startedJourney;
 
   // Check if the user is on the homepage
-  const isOnNoSessionPage = noSessionPages.includes(req.path);
+  const isOnNoSessionPage =
+    noSessionPages.includes(req.path) || req.path.startsWith("/components/");
 
   // If the user is on the Home Page and does not have a session, set it
   if (isOnNoSessionPage && !hasSession) {

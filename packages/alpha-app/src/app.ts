@@ -242,7 +242,7 @@ app.get(/components\/([\w-]*)/, (req, res) => {
   if (componentList.includes(componentName)) {
     res.render(`components/${componentName}.njk`);
   } else {
-    res.render("componentLibrary.njk");
+    res.redirect("/components");
   }
 });
 
