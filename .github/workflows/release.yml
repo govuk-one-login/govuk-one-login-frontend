@@ -51,6 +51,7 @@ jobs:
   prepare-branch-for-main:
     name: Prepare branch for main
     runs-on: ubuntu-latest
+    environment: npm
     steps:
       - uses: actions/create-github-app-token@v1
         id: app-token
