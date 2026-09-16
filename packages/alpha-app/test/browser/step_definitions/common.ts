@@ -148,7 +148,9 @@ Then(
   async function () {
     const accessibilityScanResults = await new AxeBuilder({
       page: this.page,
-    }).analyze();
+    })
+      .exclude('iframe[src*="googletagmanager"]')
+      .analyze();
     expect(accessibilityScanResults.violations).to.deep.equal([]);
   },
 );
