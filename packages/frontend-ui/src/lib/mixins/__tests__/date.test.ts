@@ -325,19 +325,19 @@ describe("Date Mixin", () => {
 
     it("should use separate input fields for year, month and day", () => {
       instance.processDateField(req, "date1");
-      expect(req.form.values["date1"]).toEqual("1982-10-24");
+      expect(req.form.values.date1).toEqual("1982-10-24");
     });
 
     it("should pad date day with leading zero if required", () => {
       req.form.values["date1-day"] = "1";
       instance.processDateField(req, "date1");
-      expect(req.form.values["date1"]).toEqual("1982-10-01");
+      expect(req.form.values.date1).toEqual("1982-10-01");
     });
 
     it("should pad date month with leading zero if required", () => {
       req.form.values["date1-month"] = "1";
       instance.processDateField(req, "date1");
-      expect(req.form.values["date1"]).toEqual("1982-01-24");
+      expect(req.form.values.date1).toEqual("1982-01-24");
     });
 
     it("should leave blank sections of date blank for validation", () => {
@@ -345,7 +345,7 @@ describe("Date Mixin", () => {
       req.form.values["date1-day"] = "";
       req.form.values["date1-month"] = "";
       instance.processDateField(req, "date1");
-      expect(req.form.values["date1"]).toEqual("1982--");
+      expect(req.form.values.date1).toEqual("1982--");
     });
 
     it("should leave field blank if no values are entered", () => {
@@ -353,44 +353,44 @@ describe("Date Mixin", () => {
       req.form.values["date1-month"] = "";
       req.form.values["date1-year"] = "";
       instance.processDateField(req, "date1");
-      expect(req.form.values["date1"]).toEqual("");
+      expect(req.form.values.date1).toEqual("");
     });
 
     it('should default day to "01" if field is set up as "inexact"', () => {
-      options.fields["date1"].inexact = true;
+      options.fields.date1.inexact = true;
       req.form.values["date1-day"] = "";
       instance.processDateField(req, "date1");
-      expect(req.form.values["date1"]).toEqual("1982-10-01");
+      expect(req.form.values.date1).toEqual("1982-10-01");
     });
 
     it("should handle two digit years", () => {
       req.form.values["date1-year"] = "14";
       instance.processDateField(req, "date1");
-      expect(req.form.values["date1"]).toEqual("2014-10-24");
+      expect(req.form.values.date1).toEqual("2014-10-24");
 
       req.form.values["date1-year"] = "16";
       instance.processDateField(req, "date1");
-      expect(req.form.values["date1"]).toEqual("1916-10-24");
+      expect(req.form.values.date1).toEqual("1916-10-24");
     });
 
     it("supports offset option when expanding two digit year values", () => {
-      options.fields["date1"].offset = 20;
+      options.fields.date1.offset = 20;
 
       req.form.values["date1-year"] = "34";
       instance.processDateField(req, "date1");
-      expect(req.form.values["date1"]).toEqual("2034-10-24");
+      expect(req.form.values.date1).toEqual("2034-10-24");
 
       req.form.values["date1-year"] = "36";
       instance.processDateField(req, "date1");
-      expect(req.form.values["date1"]).toEqual("1936-10-24");
+      expect(req.form.values.date1).toEqual("1936-10-24");
     });
 
     it("should leave field blank if set as inexact and no month or year values are entered", () => {
-      options.fields["date1"].inexact = true;
+      options.fields.date1.inexact = true;
       req.form.values["date1-month"] = "";
       req.form.values["date1-year"] = "";
       instance.processDateField(req, "date1");
-      expect(req.form.values["date1"]).toEqual("");
+      expect(req.form.values.date1).toEqual("");
     });
 
     it("should set the raw values for day, month, and year", () => {
@@ -482,8 +482,8 @@ describe("Date Mixin", () => {
 
         instance.validateDateField(req, "date1", errors);
 
-        expect(errors["date1"].type).toEqual("required-day");
-        expect(errors["date1"].field).toEqual("date1-day");
+        expect(errors.date1.type).toEqual("required-day");
+        expect(errors.date1.field).toEqual("date1-day");
       });
 
       it("should create the first part required error if the day and month are missing", () => {
@@ -496,8 +496,8 @@ describe("Date Mixin", () => {
 
         instance.validateDateField(req, "date1", errors);
 
-        expect(errors["date1"].type).toEqual("required-day");
-        expect(errors["date1"].field).toEqual("date1-day");
+        expect(errors.date1.type).toEqual("required-day");
+        expect(errors.date1.field).toEqual("date1-day");
       });
 
       it("should create a new required error if all three parts are missing", () => {
@@ -511,8 +511,8 @@ describe("Date Mixin", () => {
 
         instance.validateDateField(req, "date1", errors);
 
-        expect(errors["date1"].type).toEqual("required");
-        expect(errors["date1"].field).toEqual("date1-day");
+        expect(errors.date1.type).toEqual("required");
+        expect(errors.date1.field).toEqual("date1-day");
       });
 
       it("should create a new required error if inexact and the month and year parts are missing", () => {
@@ -523,12 +523,12 @@ describe("Date Mixin", () => {
           "date1-year": { errorGroup: "date1", type: "required" },
         };
 
-        options.fields["date1"].inexact = true;
+        options.fields.date1.inexact = true;
 
         instance.validateDateField(req, "date1", errors);
 
-        expect(errors["date1"].type).toEqual("required");
-        expect(errors["date1"].field).toEqual("date1-day");
+        expect(errors.date1.type).toEqual("required");
+        expect(errors.date1.field).toEqual("date1-day");
       });
     });
 
@@ -539,11 +539,11 @@ describe("Date Mixin", () => {
           date1: { type: "original" },
           "date1-day": { errorGroup: "date1", type: "numeric" },
         };
-        req.form.values["date1"] = "";
+        req.form.values.date1 = "";
 
         instance.validateDateField(req, "date1", errors);
 
-        expect(errors["date1"].type).toEqual("original");
+        expect(errors.date1.type).toEqual("original");
       });
 
       it("should create a new error if letters are used in the day", () => {
@@ -555,8 +555,8 @@ describe("Date Mixin", () => {
 
         instance.validateDateField(req, "date1", errors);
 
-        expect(errors["date1"].type).toEqual("numeric-day");
-        expect(errors["date1"].field).toEqual("date1-day");
+        expect(errors.date1.type).toEqual("numeric-day");
+        expect(errors.date1.field).toEqual("date1-day");
       });
 
       it("should create a new error if letters are used in the month", () => {
@@ -568,8 +568,8 @@ describe("Date Mixin", () => {
 
         instance.validateDateField(req, "date1", errors);
 
-        expect(errors["date1"].type).toEqual("numeric-month");
-        expect(errors["date1"].field).toEqual("date1-month");
+        expect(errors.date1.type).toEqual("numeric-month");
+        expect(errors.date1.field).toEqual("date1-month");
       });
 
       it("should create a new error if letters are used in multiple parts of the date", () => {
@@ -583,8 +583,8 @@ describe("Date Mixin", () => {
 
         instance.validateDateField(req, "date1", errors);
 
-        expect(errors["date1"].type).toEqual("numeric");
-        expect(errors["date1"].field).toEqual("date1-day");
+        expect(errors.date1.type).toEqual("numeric");
+        expect(errors.date1.field).toEqual("date1-day");
       });
 
       it("should not set a date field error if an error is not numeric", () => {
@@ -596,11 +596,11 @@ describe("Date Mixin", () => {
 
         instance.validateDateField(req, "date1", errors);
 
-        expect(errors["date1"].type).toEqual("original");
+        expect(errors.date1.type).toEqual("original");
       });
 
       it("should not create a new error if date is not a valid format (eg if year is missing)", () => {
-        req.form.values["date1"] = "-10-22";
+        req.form.values.date1 = "-10-22";
 
         instance.validateDateField(req, "date1", errors);
 
@@ -610,11 +610,11 @@ describe("Date Mixin", () => {
 
     describe("checks validity of numerical values in date fields", () => {
       it("should creates a new error if the day number is invalid for the month", () => {
-        req.form.values["date1"] = "1970-02-30";
+        req.form.values.date1 = "1970-02-30";
 
         instance.validateDateField(req, "date1", errors);
 
-        expect(errors["date1"]).toEqual(
+        expect(errors.date1).toEqual(
           new instance.Error(
             "date1-day",
             { type: "date-day", errorGroup: "date1", field: "date1-day" },
@@ -631,11 +631,11 @@ describe("Date Mixin", () => {
       });
 
       it("should create a new error if the day number is invalid", () => {
-        req.form.values["date1"] = "1970-11-33";
+        req.form.values.date1 = "1970-11-33";
 
         instance.validateDateField(req, "date1", errors);
 
-        expect(errors["date1"]).toEqual(
+        expect(errors.date1).toEqual(
           new instance.Error(
             "date1-day",
             { type: "date-day", errorGroup: "date1", field: "date1-day" },
@@ -652,11 +652,11 @@ describe("Date Mixin", () => {
       });
 
       it("should create a new error if the month number is invalid", () => {
-        req.form.values["date1"] = "1970-13-22";
+        req.form.values.date1 = "1970-13-22";
 
         instance.validateDateField(req, "date1", errors);
 
-        expect(errors["date1"]).toEqual(
+        expect(errors.date1).toEqual(
           new instance.Error(
             "date1-month",
             { type: "date-month", errorGroup: "date1", field: "date1-month" },
@@ -673,7 +673,7 @@ describe("Date Mixin", () => {
       });
 
       it("should not create a new error if moment doesnt report year day or month", () => {
-        req.form.values["date1"] = "2017-10-22";
+        req.form.values.date1 = "2017-10-22";
 
         instance.validateDateField(req, "date1", errors);
 
