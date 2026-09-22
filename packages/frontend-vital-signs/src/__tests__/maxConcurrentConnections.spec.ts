@@ -1,9 +1,9 @@
-import { setup, teardown } from "./testApp/testApp";
 import pjson from "../../package.json";
 import {
   calculateMaxConcurrentConnections,
   getMaxConcurrentConnections,
 } from "../metrics/maxConcurrentConnections";
+import { setup, teardown } from "./testApp/testApp";
 
 describe("maxConcurrentConnections", () => {
   let logger: ReturnType<typeof setup>["logger"];

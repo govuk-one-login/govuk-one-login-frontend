@@ -31,11 +31,11 @@ describe("initFromApp", () => {
       metrics: [],
     });
 
-    app.get("/test/dynamic", (req, res) => {
+    app.get("/test/dynamic", (_req, res) => {
       res.status(200).send("Dynamic test endpoint called.");
     });
 
-    app.get("/test/static", (req, res) => {
+    app.get("/test/static", (_req, res) => {
       res.status(200).send("Static test endpoint called.");
     });
 

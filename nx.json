@@ -38,30 +38,12 @@
   "targetDefaults": {
     "@nx/js:tsc": {
       "cache": true,
-      "dependsOn": [
-        "^build"
-      ],
-      "inputs": [
-        "default",
-        "^default"
-      ]
-    },
-    "@nx/eslint:lint": {
-      "cache": true,
-      "inputs": [
-        "default",
-        "{workspaceRoot}/.eslintrc.json",
-        "{workspaceRoot}/.eslintignore",
-        "{workspaceRoot}/eslint.config.js"
-      ]
+      "dependsOn": ["^build"],
+      "inputs": ["default", "^default"]
     },
     "@nx/jest:jest": {
       "cache": false,
-      "inputs": [
-        "default",
-        "^default",
-        "{workspaceRoot}/jest.preset.js"
-      ],
+      "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"],
       "options": {
         "passWithNoTests": true
       },
@@ -73,21 +55,16 @@
       }
     },
     "lint": {
-      "cache": false,
-      "inputs": [
-        "default",
-        "{workspaceRoot}/.eslintrc.js",
-        "{workspaceRoot}/.eslintignore",
-        "{workspaceRoot}/eslint.config.js"
-      ]
+      "cache": true,
+      "inputs": ["default", "{workspaceRoot}/biome.json"]
     },
     "format": {
-      "cache": false,
-      "inputs": [
-        "default",
-        "{workspaceRoot}/.prettierrc",
-        "{workspaceRoot}/.prettierignore"
-      ]
+      "cache": true,
+      "inputs": ["default", "{workspaceRoot}/biome.json"]
+    },
+    "format:check": {
+      "cache": true,
+      "inputs": ["default", "{workspaceRoot}/biome.json"]
     }
   },
   "$schema": "./node_modules/nx/schemas/nx-schema.json",

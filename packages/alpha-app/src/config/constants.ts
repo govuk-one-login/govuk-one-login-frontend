@@ -131,4 +131,5 @@ const ROUTE_INFO = [
     contentId: "<e4a3603d-2d3c-4ff1-9b80-d72c1e6b7c02>",
   },
 ];
-export { GA4_CONTAINER_ID, UA_CONTAINER_ID, ROUTE_INFO };
+
+export { GA4_CONTAINER_ID, ROUTE_INFO, UA_CONTAINER_ID };

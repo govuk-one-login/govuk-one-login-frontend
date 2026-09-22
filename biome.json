@@ -1,0 +1,94 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.5.9/schema.json",
+  "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
+  "files": {
+    "includes": [
+      "**",
+      "!node_modules",
+      "!dist",
+      "!build",
+      "!coverage",
+      "!*.d.ts.map",
+      "!**/cjs/",
+      "!**/esm/",
+      "!.nx/cache",
+      "!tmp",
+      "!*.njk",
+      "!*.scss",
+      "!*.css"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 80
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "preset": "recommended",
+      "style": {
+        "useImportType": "warn",
+        "useNodejsImportProtocol": "warn",
+        "noNonNullAssertion": "off",
+        "useTemplate": "warn"
+      },
+      "correctness": {
+        "noUnusedFunctionParameters": "warn",
+        "noUnusedVariables": "warn",
+        "noUnusedImports": "warn"
+      },
+      "suspicious": {
+        "noExplicitAny": "off",
+        "noFallthroughSwitchClause": "off",
+        "noDocumentCookie": "off",
+        "noGlobalAssign": "warn",
+        "noAssignInExpressions": "warn",
+        "useIterableCallbackReturn": "warn"
+      },
+      "complexity": {
+        "useArrowFunction": "warn",
+        "useOptionalChain": "warn",
+        "noBannedTypes": "warn",
+        "noStaticOnlyClass": "warn"
+      },
+      "performance": {
+        "noAccumulatingSpread": "warn",
+        "noDynamicNamespaceImportAccess": "warn"
+      }
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double",
+      "semicolons": "always",
+      "trailingCommas": "all",
+      "arrowParentheses": "always",
+      "bracketSpacing": true
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["**/*.test.ts", "**/*.spec.ts"],
+      "linter": {
+        "rules": {
+          "suspicious": { "noTsIgnore": "off" }
+        }
+      }
+    },
+    {
+      "includes": ["**/*.svg"],
+      "linter": {
+        "rules": {
+          "a11y": { "noSvgWithoutTitle": "off" }
+        }
+      }
+    }
+  ],
+  "assist": {
+    "enabled": true,
+    "actions": { "source": { "organizeImports": "on" } }
+  }
+}

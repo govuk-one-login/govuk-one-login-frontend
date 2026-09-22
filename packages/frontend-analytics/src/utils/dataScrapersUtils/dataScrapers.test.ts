@@ -1,4 +1,4 @@
-import { isChangeLink, getDomain, getDomainPath } from "./dataScrapers";
+import { getDomain, getDomainPath, isChangeLink } from "./dataScrapers";
 
 describe("getDomain", () => {
   test("Get domain from absolute url", () => {

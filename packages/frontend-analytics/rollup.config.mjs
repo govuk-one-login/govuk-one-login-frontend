@@ -1,10 +1,10 @@
-import path from "path";
-import { fileURLToPath } from "url";
-import typescript from "rollup-plugin-typescript2";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import commonjs from "@rollup/plugin-commonjs";
+import resolve from "@rollup/plugin-node-resolve";
 import terser from "@rollup/plugin-terser";
 import copy from "rollup-plugin-copy";
-import resolve from "@rollup/plugin-node-resolve";
-import commonjs from "@rollup/plugin-commonjs";
+import typescript from "rollup-plugin-typescript2";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);

@@ -1,14 +1,14 @@
-import * as FormErrorTracker from "./formErrorTracker";
-import {
+import { acceptCookies, rejectCookies } from "../../../test/utils";
+import * as dataScrapers from "../../utils/dataScrapersUtils/dataScrapers";
+import * as piiRemover from "../../utils/piiRemoverUtil/piiRemover";
+import * as pushToDataLayer from "../../utils/pushToDataLayerUtil/pushToDataLayer";
+import { FREE_TEXT_FIELD_TYPE } from "../formTracker/formTracker";
+import type {
   FormEventInterface,
   FormField,
 } from "../formTracker/formTracker.interface";
-import * as pushToDataLayer from "../../utils/pushToDataLayerUtil/pushToDataLayer";
-import * as dataScrapers from "../../utils/dataScrapersUtils/dataScrapers";
 import * as getSubmitUrlModule from "../formTracker/formTrackerUtils/getSubmitUrl/getSubmitUrl";
-import * as piiRemover from "../../utils/piiRemoverUtil/piiRemover";
-import { FREE_TEXT_FIELD_TYPE } from "../formTracker/formTracker";
-import { acceptCookies, rejectCookies } from "../../../test/utils";
+import * as FormErrorTracker from "./formErrorTracker";
 
 window.DI = { analyticsGa4: { cookie: { consent: true } } };
 

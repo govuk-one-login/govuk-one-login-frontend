@@ -1,5 +1,5 @@
+import type { FormField } from "../../formTracker.interface";
 import { combineDateFields, isDateFields } from "./dateUtils";
-import { FormField } from "../../formTracker.interface";
 
 describe("dateUtils", () => {
   beforeEach(() => {

@@ -1,4 +1,4 @@
-import { NavigationElement } from "../navigationTracker.interface";
+import type { NavigationElement } from "../navigationTracker.interface";
 import { getLinkType, getSection } from "./navigationTrackerGetUtils";
 
 describe("getLinkType", () => {

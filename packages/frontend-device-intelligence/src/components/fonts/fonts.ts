@@ -1,7 +1,7 @@
-import { ComponentInterface } from "../index";
+import logger from "../../logger";
 import { ephemeralIFrame } from "../../utils/ephemeralIFrame";
 import { hash } from "../../utils/hash";
-import logger from "../../logger";
+import type { ComponentInterface } from "../index";
 
 const availableFonts = [
   "Arial",

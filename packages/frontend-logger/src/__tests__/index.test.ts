@@ -1,11 +1,11 @@
+import pino from "pino";
 import {
   createLogger,
   getLogger,
+  type Logger,
   resetLogger,
   setCustomLogger,
-  type Logger,
 } from "..";
-import pino from "pino";
 
 // Custom matcher for pseudo-deep equality: JSON string (does not include all properties), log level, name
 expect.extend({
@@ -17,12 +17,12 @@ expect.extend({
         JSON.stringify(expected) === JSON.stringify(received) &&
         expected?.level &&
         expected.level === received.level &&
-        JSON.stringify(expected.bindings && expected.bindings()) ===
-          JSON.stringify(received.bindings && received.bindings()),
+        JSON.stringify(expected.bindings?.()) ===
+          JSON.stringify(received.bindings?.()),
       message: () =>
         `${received} ${isNot ? "matches" : "does not match"} ${expected}.
-        Expected: ${JSON.stringify({ logLevel: expected.level, bindings: expected.bindings && expected.bindings() })} 
-        Received: ${JSON.stringify({ logLevel: received.level, bindings: received.bindings && received.bindings() })} 
+        Expected: ${JSON.stringify({ logLevel: expected.level, bindings: expected.bindings?.() })} 
+        Received: ${JSON.stringify({ logLevel: received.level, bindings: received.bindings?.() })} 
       `,
     };
   },

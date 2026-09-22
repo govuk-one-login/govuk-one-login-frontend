@@ -1,7 +1,7 @@
-import { createEvent, sendEventToSQS, validateEvent } from "./index.js";
-import { EventKey, Events, Options } from "./types.js";
-import logger from "./logger.js";
 import _ from "lodash";
+import { createEvent, sendEventToSQS, validateEvent } from "./index.js";
+import logger from "./logger.js";
+import type { EventKey, Events, Options } from "./types.js";
 
 export function sendToTXMA<K extends EventKey>(
   type: K,
@@ -11,7 +11,7 @@ export function sendToTXMA<K extends EventKey>(
 ) {
   const event = createEvent(type, entity);
   const valid = validateEvent<K>(event);
-  if (!valid) logger.info("Invalid event created: " + JSON.stringify(event));
+  if (!valid) logger.info(`Invalid event created: ${JSON.stringify(event)}`);
   sendEventToSQS(event, queueUrl, options);
 }
 

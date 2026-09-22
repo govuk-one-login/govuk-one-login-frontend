@@ -1,14 +1,23 @@
-export async function useSpinner(containerId: string, pollingFunction: PollingFunction, successFunction: VoidFunction, errorFunction: VoidFunction) {
+export async function useSpinner(
+  containerId: string,
+  pollingFunction: PollingFunction,
+  successFunction: VoidFunction,
+  errorFunction: VoidFunction,
+) {
   const element = document.getElementById(containerId);
 
   if (element && element instanceof HTMLDivElement) {
     let spinner: Spinner;
     try {
-      spinner = new Spinner(element, pollingFunction, successFunction, errorFunction);
-    }
-    catch (e) {
+      spinner = new Spinner(
+        element,
+        pollingFunction,
+        successFunction,
+        errorFunction,
+      );
+    } catch (e) {
       const errorText = document.createElement("p");
-      errorText.textContent = "Error configuring spinner: " + e;
+      errorText.textContent = `Error configuring spinner: ${e}`;
       element.replaceChildren(errorText);
       return;
     }
@@ -136,25 +145,25 @@ export class Spinner {
   private getConfig(element: HTMLDivElement): SpinnerConfig {
     return {
       msBeforeInformingOfLongWait: element.dataset.msBeforeInformingOfLongWait
-        ? parseInt(element.dataset.msBeforeInformingOfLongWait)
+        ? parseInt(element.dataset.msBeforeInformingOfLongWait, 10)
         : 5000,
       msBeforeAbort: element.dataset.msBeforeAbort
-        ? parseInt(element.dataset.msBeforeAbort)
+        ? parseInt(element.dataset.msBeforeAbort, 10)
         : 30000,
       msBetweenRequests: element.dataset.msBetweenRequests
-        ? parseInt(element.dataset.msBetweenRequests)
+        ? parseInt(element.dataset.msBetweenRequests, 10)
         : 2000,
       msBetweenDomUpdate: element.dataset.msBetweenDomUpdate
-        ? parseInt(element.dataset.msBetweenDomUpdate)
+        ? parseInt(element.dataset.msBetweenDomUpdate, 10)
         : 1000,
       ariaAlertCompletionText: element.dataset.ariaAlertCompletionText
         ? element.dataset.ariaAlertCompletionText
         : undefined,
       hideSpinnerOnError: element.dataset.hideSpinnerOnError
-        ? (element.dataset.hideSpinnerOnError === 'true')
+        ? element.dataset.hideSpinnerOnError === "true"
         : false,
       maxBackoffTries: element.dataset.maxBackoffTries
-        ? parseInt(element.dataset.maxBackoffTries)
+        ? parseInt(element.dataset.maxBackoffTries, 10)
         : 3,
     };
   }
@@ -282,12 +291,15 @@ export class Spinner {
       }
       this.updateAriaAlert(this.config.ariaAlertCompletionText);
     }
-    if (this.displayState === SpinnerState.Error && !!this.onError) {
+    if (this.displayState === SpinnerState.Error && this.onError) {
       this.onError();
     }
   };
 
-  private cloneAndAddIfExists(list: HTMLElement[], element: HTMLElement | undefined) {
+  private cloneAndAddIfExists(
+    list: HTMLElement[],
+    element: HTMLElement | undefined,
+  ) {
     if (element) {
       const cloned = element.cloneNode(true) as HTMLElement;
       cloned.style.display = "";
@@ -340,7 +352,7 @@ export class Spinner {
   }
 
   private calculateBackoffTime(backOffCount: number): number {
-    const extraDelay = Math.pow(2, backOffCount - 2) * this.config.msBetweenRequests;
+    const extraDelay = 2 ** (backOffCount - 2) * this.config.msBetweenRequests;
     return this.config.msBetweenRequests + extraDelay;
   }
 

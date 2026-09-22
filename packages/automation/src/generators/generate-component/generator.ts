@@ -1,13 +1,13 @@
+import * as path from "node:path";
 import {
   addProjectConfiguration,
   formatFiles,
   generateFiles,
-  Tree,
   names,
   readJson,
+  type Tree,
 } from "@nx/devkit";
-import * as path from "path";
-import { GenerateComponentGeneratorSchema } from "./schema";
+import type { GenerateComponentGeneratorSchema } from "./schema";
 
 export async function generateComponentGenerator(
   tree: Tree,

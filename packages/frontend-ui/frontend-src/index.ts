@@ -1,3 +1,3 @@
-export { useSpinner, PollResult } from "./spinner/spinner";
-export type { PollingFunction } from "./spinner/spinner";
 export { initialiseProgressButtons } from "./progress-button/progress-button";
+export type { PollingFunction } from "./spinner/spinner";
+export { PollResult, useSpinner } from "./spinner/spinner";

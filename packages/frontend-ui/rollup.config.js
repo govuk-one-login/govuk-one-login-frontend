@@ -15,8 +15,6 @@ function onwarn(warning, warn) {
   warn(warning);
 }
 
-
-
 export default [
   // Main library build
   {
@@ -73,7 +71,7 @@ export default [
             src: "./build/cjs/frontend/index.d.ts",
             dest: "./build/cjs/frontend/",
             rename: "index.d.cts",
-          }
+          },
         ],
         hook: "closeBundle",
       }),

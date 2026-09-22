@@ -1,13 +1,13 @@
 import logger from "loglevel";
 import { Cookie, hasConsentForAnalytics } from "../../cookie/cookie";
+import { pushToDataLayer } from "../../utils/pushToDataLayerUtil/pushToDataLayer";
 import { FormChangeTracker } from "../formChangeTracker/formChangeTracker";
+import { trackFormError } from "../formErrorTracker/formErrorTracker";
 import { FormResponseTracker } from "../formResponseTracker/formResponseTracker";
 import { NavigationTracker } from "../navigationTracker/navigationTracker";
 import { PageViewTracker } from "../pageViewTracker/pageViewTracker";
 import { SelectContentTracker } from "../selectContentTracker/selectContentTracker";
-import { OptionsInterface } from "./core.interface";
-import { pushToDataLayer } from "../../utils/pushToDataLayerUtil/pushToDataLayer";
-import { trackFormError } from "../formErrorTracker/formErrorTracker";
+import type { OptionsInterface } from "./core.interface";
 
 export class Analytics {
   gtmId: string;
@@ -63,7 +63,7 @@ export class Analytics {
       pushToDataLayer({
         "gtm.allowlist": ["google"],
         "gtm.blocklist": ["adm", "awct", "sp", "gclidw", "gcs", "opt"],
-        "gtm.start": new Date().getTime(),
+        "gtm.start": Date.now(),
         event: "gtm.js",
       });
       this.formResponseTracker = new FormResponseTracker(

@@ -1,5 +1,5 @@
-import { type Request } from "express";
 import type { APIGatewayProxyEvent } from "aws-lambda";
+import type { Request } from "express";
 
 export function getHeader(req: Request | APIGatewayProxyEvent, header: string) {
   const lowerCaseHeader = header.toLowerCase();

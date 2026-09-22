@@ -1,5 +1,5 @@
+import { type Mock, vi } from "vitest";
 import { PollResult, Spinner, useSpinner } from "../spinner";
-import { vi, type Mock } from "vitest";
 
 export function wait(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));

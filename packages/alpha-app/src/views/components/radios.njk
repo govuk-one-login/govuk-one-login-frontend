@@ -1,0 +1,7 @@
+{% extends "common/base.njk" %}
+{% from "frontend-ui/build/components/radios/macro.njk" import radios %}
+
+{% block content %}
+  <h1 class="govuk-heading-xl">{{"pages.componentLibrary.components.radios" | translate}}</h1>
+  {{ radios(ctx, {id: "library-radios", items: ['a', 'b', 'c']}) }}
+{% endblock %}

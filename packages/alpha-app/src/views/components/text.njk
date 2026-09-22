@@ -1,0 +1,8 @@
+{% extends "common/base.njk" %}
+{% from "frontend-ui/build/components/text/macro.njk" import text %}
+
+{% block content %}
+  <h1 class="govuk-heading-xl">{{"pages.componentLibrary.components.text" | translate}}</h1>
+  {{ text(ctx, {id: "library-text.textarea", type: "textarea"}) }}
+  {{ text(ctx, {id: "library-text.other"}) }}
+{% endblock %}

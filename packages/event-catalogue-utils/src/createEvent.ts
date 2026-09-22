@@ -1,4 +1,4 @@
-import { type EventKey, Events } from "./types.js";
+import type { EventKey, Events } from "./types.js";
 
 /**
  * This function provides static type-checking against the event catalogue.
@@ -7,7 +7,7 @@ import { type EventKey, Events } from "./types.js";
  * @returns - The event
  */
 export function createEvent<K extends EventKey>(
-  type: K,
+  _type: K,
   entity: Events[K],
 ): Events[K] {
   return entity;

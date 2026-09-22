@@ -1,4 +1,4 @@
-import { ComponentInterface } from "../index";
+import type { ComponentInterface } from "../index";
 
 export function getLocales(): Promise<ComponentInterface> {
   return Promise.resolve({

@@ -57,15 +57,13 @@ To create a new package, follow these steps:
 
 - After answering the questions, the command will generate the package with the necessary files.
 
+## Lint and format the code with Biome:
 
-
--
-
-## Lint the code with eslint+prettier:
+This project uses [Biome](https://biomejs.dev/) for linting and formatting. Biome replaces ESLint and Prettier with a single fast tool.
 
 ### To Run All Packages
 
-To check ESLint issues in all packages:
+To check linting and formatting issues in all packages:
 `nx run-many --target=lint --all`
 
 To check code formatting in all packages:
@@ -74,19 +72,26 @@ To check code formatting in all packages:
 To fix formatting issues that can be resolved automatically:
 `nx run-many --target=format --all`
 
+To run a full check (lint + format + import sorting) and auto-fix:
+`npm run check:fix`
+
 To run the above commands on just affected packages, replace `run-many` with `affected`
 
 ### To Run a Singular Package
 
-To check ESLint issues in a specific package:
+To check lint issues in a specific package:
 `nx run [package-name]:lint`
 
 To check and fix code formatting issues in a specific package:
 `nx run [package-name]:format`
 
-### Configuration Files
+### Configuration
 
-The rules for linting and formatting are defined in .eslintrc and can be customized as needed. The configuration includes recommended rulesets from ESLint, TypeScript, and Prettier.
+The rules for linting and formatting are defined in `biome.json` at the root of the repository. Biome uses a single configuration file for both linting and formatting.
+
+### Editor Integration
+
+Install the [Biome VS Code extension](https://marketplace.visualstudio.com/items?itemName=biomejs.biome) for format-on-save and inline lint diagnostics.
 
 ## Setup Instructions
 
@@ -138,6 +143,123 @@ To release a package from the monorepo, use the **GitHub Actions Release workflo
 4. **Verify the Release**  
    Once the workflow completes, confirm the package has been published on the NPM registry.
 
+## Maintaining Older Package Versions
+
+When releasing a new major version of a package (e.g., `frontend-ui` v5 → v6), you need to maintain the ability to patch the older version for consumers who haven't upgraded yet. This is done using **version branches**.
+
+### Branch Naming Convention
+
+Version branches follow the format: `{package-name}@v{major-version}`
+
+Examples:
+- `frontend-ui@v1` — maintains v1.x.x of `@govuk-one-login/frontend-ui`
+- `frontend-analytics@v2` — maintains v2.x.x of `@govuk-one-login/frontend-analytics`
+
+### When to Create a Version Branch
+
+Create a version branch **before releasing a new major version**. For example, if `frontend-ui` is currently on v5.3.2 and you're about to release v6.0.0:
+
+1. Create the version branch from the current state of `main` (or from the last release tag):
+   ```bash
+   git checkout main
+   git checkout -b frontend-ui@v5
+   git push -u origin frontend-ui@v5
+   ```
+2. Proceed with the major version release from `main`.
+
+### Releasing a Patch from a Version Branch
+
+1. Create a feature branch from the version branch:
+   ```bash
+   git checkout frontend-ui@v5
+   git checkout -b fix/ticket-number/description
+   ```
+2. Make your changes and push the feature branch.
+3. Open a PR targeting the version branch (e.g., `frontend-ui@v5`), **not** `main`.
+4. Get the required review approval and wait for status checks to pass.
+5. Merge the PR.
+6. Go to **Actions** → **Release** → **Run workflow**.
+7. Select the version branch (e.g., `frontend-ui@v5`) from the branch dropdown.
+8. Choose the target package and set increment to `patch`.
+9. Run the workflow — this will publish the patch release from the version branch.
+
+### Branch Protections
+
+Version branches have the same protections as `main`:
+- Pull requests are required (minimum 1 approving review)
+- Status checks must pass before merging
+- Force pushes are blocked
+- Branch deletion is blocked
+
+See [`docs/version-branch-ruleset-setup.md`](docs/version-branch-ruleset-setup.md) for details on how the repository ruleset is configured.
+
+## Releasing on Alternative Channels
+
+Sometimes you need to release a pre-release or alternative-channel version of a package — for example, a release candidate (`rc`) or a beta — without affecting consumers on the `latest` npm tag. This is done using **channel branches**.
+
+### Channel Branch Naming Convention
+
+Channel branches follow the format: `{package-name}@v{version}/{channel-name}`
+
+Examples:
+- `frontend-analytics@v1.0.0/rc` — release candidate channel for `@govuk-one-login/frontend-analytics`
+- `frontend-ui@v5.2.0/beta` — beta channel for `@govuk-one-login/frontend-ui`
+
+### When to Use a Channel Branch
+
+Use a channel branch when you need to:
+- Publish a release candidate for testing before a full release
+- Provide a hotfix to specific consumers without promoting it to `latest`
+- Test a package change in a production-like environment before general availability
+
+### Creating a Channel Branch and Releasing
+
+1. Create the channel branch from the appropriate base (e.g., `main` or a version branch):
+   ```bash
+   git checkout main
+   git checkout -b frontend-analytics@v1.0.0/rc
+   git push -u origin frontend-analytics@v1.0.0/rc
+   ```
+
+2. Create a feature branch from the channel branch for your changes:
+   ```bash
+   git checkout frontend-analytics@v1.0.0/rc
+   git checkout -b fix/ticket-number/description
+   ```
+
+3. Make your changes and push the feature branch.
+
+4. Open a PR targeting the channel branch (e.g., `frontend-analytics@v1.0.0/rc`), **not** `main`.
+
+5. Get the required review approval and wait for status checks to pass.
+
+6. Merge the PR.
+
+7. Go to **Actions** → **Release** → **Run workflow**.
+
+8. Select the channel branch (e.g., `frontend-analytics@v1.0.0/rc`) from the branch dropdown.
+
+9. Choose the target package. The **increment** input is ignored for channel branches — the workflow automatically detects the channel name from the branch and produces a prerelease version (e.g., `1.0.0-rc.0`, `1.0.0-rc.1`, etc.).
+
+10. Run the workflow — this will publish a prerelease version to npm.
+
+### Installing a Channel Release
+
+Consumers can install a specific prerelease version:
+```bash
+npm install @govuk-one-login/frontend-analytics@1.0.0-rc.0
+```
+
+### Channel Branch Protections
+
+Channel branches have the same protections as `main` and version branches:
+- Pull requests are required (minimum 1 approving review)
+- Status checks must pass before merging
+- Force pushes are blocked
+- Branch deletion is blocked
+
+See [`docs/version-branch-ruleset-setup.md`](docs/version-branch-ruleset-setup.md) for details on how the repository ruleset is configured.
+
 ## Deprecating Packages
 
 To deprecate a specific package version from the monorepo, use the **GitHub Actions Deprecate workflow**. This workflow automates deprecating packages in NPM:
@@ -164,6 +286,14 @@ To deprecate a specific package version from the monorepo, use the **GitHub Acti
 
 4. **Verify the Deprecated**
    Once the workflow completes, confirm the package has been deprecated on the NPM registry with an appropriate message.
+
+## How to Run Performance Tests 
+
+To run performance tests using k6, follow these steps:
+
+- Head over to the alpha app and run it in product mode
+- Change the end-point in the alpha app to `test-submit-button`
+- Run the command `k6 run testServer.js` if you have K6 installed otherwise run `npm run test:server`
 
 ## Contributing Code
 
@@ -202,7 +332,7 @@ Before pushing your changes, run all tests and linting to make sure your code ad
 - If you only want to run tests in the affected package, `cd` into the package folder and run `npm test` or just `npm test` at the root level to run all test suites.
 - If there are any uncommitted changes, you will need to run `npx nx run-many -t test` as the tests and linters cache the results, so they will only run for changed cases.
 
-- [Lint the code with eslint+prettier:](#lint-the-code-with-eslintprettier)
+- [Lint and format the code with Biome:](#lint-and-format-the-code-with-biome)
 
 6. **Commit and Push Changes**
 

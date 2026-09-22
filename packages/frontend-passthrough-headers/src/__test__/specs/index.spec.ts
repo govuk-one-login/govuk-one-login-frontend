@@ -1,7 +1,7 @@
-import { type Request } from "express";
-import { createPersonalDataHeaders } from "../../index";
 import { createLogger } from "@govuk-one-login/frontend-logger";
 import type { APIGatewayProxyEvent } from "aws-lambda";
+import type { Request } from "express";
+import { createPersonalDataHeaders } from "../../index";
 
 const MOCK_CLOUDFRONT_VIEWER_IPV4 = "198.51.100.10:46532";
 const MOCK_CLOUDFRONT_VIEWER_IPV6 = "[2001:db8:cafe::17]:46532";
@@ -27,21 +27,21 @@ describe("createPersonalDataHeaders", () => {
   describe("handle txma-audit-encoded header", () => {
     it("should return an object with the txma-audit-encoded header if there is one present - lower case", () => {
       const headers = createPersonalDataHeaders("https://account.gov.uk", {
-        headers: { ["txma-audit-encoded"]: "dummy-txma-header" },
+        headers: { "txma-audit-encoded": "dummy-txma-header" },
       } as unknown as Request);
 
       expect(headers).toEqual({
-        ["txma-audit-encoded"]: "dummy-txma-header",
+        "txma-audit-encoded": "dummy-txma-header",
       });
     });
 
     it("should return an object with the txma-audit-encoded header if there is one present - upper case", () => {
       const headers = createPersonalDataHeaders("https://account.gov.uk", {
-        headers: { ["Txma-Audit-Encoded"]: "dummy-txma-header" },
+        headers: { "Txma-Audit-Encoded": "dummy-txma-header" },
       } as unknown as Request);
 
       expect(headers).toEqual({
-        ["txma-audit-encoded"]: "dummy-txma-header",
+        "txma-audit-encoded": "dummy-txma-header",
       });
     });
 

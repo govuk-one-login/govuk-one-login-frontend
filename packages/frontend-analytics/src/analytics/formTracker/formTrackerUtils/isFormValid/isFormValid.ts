@@ -1,4 +1,4 @@
-import { FormField } from "../../formTracker.interface";
+import type { FormField } from "../../formTracker.interface";
 
 /**
  * Check if the form fields are valid.

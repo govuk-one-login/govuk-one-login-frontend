@@ -5,21 +5,21 @@
   "projectType": "library",
   "targets": {
     "lint": {
-      "executor": "@nx/eslint:lint",
+      "executor": "nx:run-commands",
       "options": {
-        "lintFilePatterns": ["packages/frontend-language-toggle/src/**/*"]
+        "command": "biome check packages/frontend-language-toggle/src"
       }
     },
     "format": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "prettier --write packages/frontend-language-toggle/src/**/*"
+        "command": "biome format --write packages/frontend-language-toggle/src"
       }
     },
     "format:check": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "prettier --check packages/frontend-language-toggle/src/**/*"
+        "command": "biome format packages/frontend-language-toggle/src"
       }
     }
   }

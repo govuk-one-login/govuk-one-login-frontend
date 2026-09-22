@@ -1,7 +1,7 @@
 import logger from "loglevel";
-import { SelectContentEventInterface } from "./selectContentTracker.interface";
-import { pushToDataLayer } from "../../utils/pushToDataLayerUtil/pushToDataLayer";
 import { hasConsentForAnalytics } from "../../cookie/cookie";
+import { pushToDataLayer } from "../../utils/pushToDataLayerUtil/pushToDataLayer";
+import type { SelectContentEventInterface } from "./selectContentTracker.interface";
 
 export class SelectContentTracker {
   eventName: string = "select_content";

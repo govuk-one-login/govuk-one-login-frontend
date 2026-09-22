@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { type Request } from "express";
+
+import type { APIGatewayProxyEvent } from "aws-lambda";
+import type { Request } from "express";
 import forwardedParse from "forwarded-parse";
 import { logger } from "../utils/logger";
-import type { APIGatewayProxyEvent } from "aws-lambda";
 import { getHeader } from "./getHeader";
 
 const HEADER_CLOUDFRONT_VIEWER = "cloudfront-viewer-address";
@@ -104,7 +105,6 @@ export function processUserIP(
     case IPSources.XForwardedFor: {
       return handleXForwardedForIP(req);
     }
-    case IPSources.None:
     default:
       return null;
   }

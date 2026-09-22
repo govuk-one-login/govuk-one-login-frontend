@@ -62,4 +62,4 @@ const setDeviceIntelligence = ({
   app.set("APP.DEVICE_INTELLIGENCE_DOMAIN", deviceIntelligenceDomain);
 };
 
-export { setGTM, setLanguageToggle, setDeviceIntelligence };
+export { setDeviceIntelligence, setGTM, setLanguageToggle };

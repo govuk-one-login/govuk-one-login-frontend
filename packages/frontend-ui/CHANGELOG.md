@@ -1,3 +1,34 @@
+## 5.3.4 (2026-09-21)
+
+### 🚀 Features
+
+- **DFC-1287:** Migrate remaining HMPO components to frontend-ui ([#486](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/486))
+
+### 🩹 Fixes
+
+- update the test types config to fix build issues ([#489](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/489))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+- Sam Bunce
+
+## 5.3.3 (2026-09-10)
+
+### 🚀 Features
+
+- **DFC-1375:** Migrate HMPO components utils to frontend-ui ([#482](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/482))
+- prevent identity-base from being indexed by search engines ([#485](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/485))
+
+### ❤️ Thank You
+
+- mikebeeby @mikebeeby
+- Sam Bunce
+
+## 5.3.2 (2026-08-26)
+
+This was a version bump only for @govuk-one-login/frontend-ui to align it with other projects, there were no code changes.
+
 ## 5.3.1 (2026-07-15)
 
 ### 🚀 Features

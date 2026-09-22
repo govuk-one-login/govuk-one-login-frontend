@@ -1,0 +1,7 @@
+{% extends "common/base.njk" %}
+{% from "frontend-ui/build/components/inset-text/macro.njk" import insetText %}
+
+{% block content %}
+  <h1 class="govuk-heading-xl">{{"pages.componentLibrary.components.inset-text" | translate}}</h1>
+  {{ insetText({text: "components.inset-text.text" | translate}) }}
+{% endblock %}

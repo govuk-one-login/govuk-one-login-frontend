@@ -1,6 +1,6 @@
-import nunjucks from "nunjucks";
-import { JSDOM } from "jsdom";
 import path from "node:path";
+import { JSDOM } from "jsdom";
+import nunjucks from "nunjucks";
 import { addLanguageParam, contactUsUrl } from "../index";
 
 const govukComponentsPath = path.resolve(
@@ -20,9 +20,7 @@ export const nunjucksEnv = nunjucks.configure(
 nunjucksEnv.addGlobal("addLanguageParam", addLanguageParam);
 nunjucksEnv.addGlobal("contactUsUrl", contactUsUrl);
 nunjucksEnv.addGlobal("MAY_2025_REBRAND_ENABLED", true);
-nunjucksEnv.addFilter("translate", function () {
-  return "";
-});
+nunjucksEnv.addFilter("translate", () => "");
 
 export function render(macroFolder: string, macroName: string, params = {}) {
   const macroParams = JSON.stringify(params, null, 2);

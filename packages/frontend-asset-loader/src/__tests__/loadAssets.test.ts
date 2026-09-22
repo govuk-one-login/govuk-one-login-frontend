@@ -1,10 +1,10 @@
-import { Express } from "express";
-import fg from "fast-glob";
-import { PathAndFile } from "../utils/utils.types";
-import { loadAssets } from "../index";
-import type { Mock } from "vitest";
-import * as utils from "../utils/utils";
 import * as logger from "@govuk-one-login/frontend-logger";
+import type { Express } from "express";
+import fg from "fast-glob";
+import type { Mock } from "vitest";
+import { loadAssets } from "../index";
+import * as utils from "../utils/utils";
+import type { PathAndFile } from "../utils/utils.types";
 
 vi.mock("fast-glob", () => ({
   __esModule: true,
@@ -60,7 +60,12 @@ describe("loadAssets", () => {
 
   it("should call setCustomLogger when a customLogger is provided", () => {
     const assetPath = "assets/**/*";
-    const customLogger = { trace: vi.fn(), warn: vi.fn(), error: vi.fn(), info: vi.fn() };
+    const customLogger = {
+      trace: vi.fn(),
+      warn: vi.fn(),
+      error: vi.fn(),
+      info: vi.fn(),
+    };
 
     (fg.sync as Mock).mockReturnValue([]);
 

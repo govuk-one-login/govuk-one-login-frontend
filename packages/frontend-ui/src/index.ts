@@ -1,10 +1,19 @@
 import fs from "node:fs";
 import path from "node:path";
-import { NextFunction, Request, Response } from "express";
-import i18next from "i18next";
+import { createLogger } from "@govuk-one-login/frontend-logger";
+import type { NextFunction, Request, Response } from "express";
+import type i18next from "i18next";
 import translationCy from "../locales/cy/translation.json";
 import translationEn from "../locales/en/translation.json";
-import { createLogger } from "@govuk-one-login/frontend-logger";
+
+import { addFilters } from "./lib/filters";
+import { addGlobals } from "./lib/globals";
+
+export { middleware as localsMiddleware } from "./lib/locals";
+
+// Unused in current components - will be included or removed when others are migrated
+// import mixins from "./lib/mixins";
+import type { Environment } from "nunjucks";
 
 export * from "./lib";
 
@@ -165,12 +174,14 @@ export function warnCharacterLimit(text: string, limit: number) {
   }
 }
 
-export function addFrontendUiGlobals(nunjucksEnv: {
-  addGlobal: (name: string, value: unknown) => void;
-}) {
+export function addFrontendUiGlobals(nunjucksEnv: Environment) {
   nunjucksEnv.addGlobal("addLanguageParam", addLanguageParam);
   nunjucksEnv.addGlobal("contactUsUrl", contactUsUrl);
   nunjucksEnv.addGlobal("warnCharacterLimit", warnCharacterLimit);
+
+  // HMPO globals
+  addGlobals(nunjucksEnv);
+  addFilters(nunjucksEnv);
 }
 
 export function addLanguageParam(language: string, url?: URL) {
@@ -245,5 +256,5 @@ export const getTranslationObject = (
   return {}; // Return an empty object as a fallback
 };
 
-export { default as frontendUiTranslationEn } from "../locales/en/translation.json";
 export { default as frontendUiTranslationCy } from "../locales/cy/translation.json";
+export { default as frontendUiTranslationEn } from "../locales/en/translation.json";

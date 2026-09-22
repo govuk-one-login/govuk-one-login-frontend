@@ -1,9 +1,9 @@
-import nunjucks from "nunjucks";
 import { JSDOM } from "jsdom";
+import nunjucks from "nunjucks";
 import "../index";
-import * as pushToDataLayer from "../utils/pushToDataLayerUtil/pushToDataLayer";
-import { acceptCookies, unsetCookies } from "../../test/utils";
 import type { Mock } from "vitest";
+import { acceptCookies, unsetCookies } from "../../test/utils";
+import * as pushToDataLayer from "../utils/pushToDataLayerUtil/pushToDataLayer";
 
 async function renderTemplate() {
   const nunjucksEnv = nunjucks.configure(["./src/components"], {

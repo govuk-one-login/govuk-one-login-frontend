@@ -5,21 +5,21 @@
   "sourceRoot": "packages/frontend-device-intelligence/src",
   "targets": {
     "lint": {
-      "executor": "@nx/eslint:lint",
+      "executor": "nx:run-commands",
       "options": {
-        "lintFilePatterns": ["packages/frontend-device-intelligence/src/**/*"]
+        "command": "biome check packages/frontend-device-intelligence/src"
       }
     },
     "format": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "prettier --write packages/frontend-device-intelligence/src/**/*"
+        "command": "biome format --write packages/frontend-device-intelligence/src"
       }
     },
     "format:check": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "prettier --check packages/frontend-device-intelligence/src/**/*"
+        "command": "biome format packages/frontend-device-intelligence/src"
       }
     }
   }

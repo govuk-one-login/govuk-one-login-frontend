@@ -1,4 +1,4 @@
-import http from "http";
+import type http from "node:http";
 
 let totalStaticResponseTime = 0;
 let totalDynamicResponseTime = 0;
