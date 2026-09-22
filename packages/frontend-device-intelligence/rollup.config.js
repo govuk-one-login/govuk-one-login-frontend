@@ -1,7 +1,7 @@
-import typescript from "rollup-plugin-typescript2";
-import copy from "rollup-plugin-copy";
-import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
+import resolve from "@rollup/plugin-node-resolve";
+import copy from "rollup-plugin-copy";
+import typescript from "rollup-plugin-typescript2";
 
 export default {
   input: "src/index.ts",
@@ -18,7 +18,7 @@ export default {
       file: "build/iife/index.js",
       format: "iife",
       name: "ThumbmarkJS",
-    }
+    },
   ],
   plugins: [
     resolve(),

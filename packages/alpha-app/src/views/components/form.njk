@@ -1,0 +1,8 @@
+{% extends "common/base.njk" %}
+{% from "frontend-ui/build/components/form/macro.njk" import form %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    {{ form(ctx, {id: "library-form"}) }}
+  </div>
+{% endblock %}

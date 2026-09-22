@@ -1,5 +1,5 @@
 import {
-  PageViewParametersInterface,
+  type PageViewParametersInterface,
   TaxonomyLevels,
 } from "../../analytics/pageViewTracker/pageViewTracker.interface";
 

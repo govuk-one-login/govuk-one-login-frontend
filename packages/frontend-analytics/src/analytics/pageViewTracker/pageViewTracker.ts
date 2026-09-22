@@ -7,8 +7,8 @@ import {
   setTaxonomies,
 } from "../../utils/taxonomyUtils/taxonomyUtils";
 import { validateParameter } from "../../utils/validateParameterUtils/validateParameter";
-import { OptionsInterface } from "../core/core.interface";
-import {
+import type { OptionsInterface } from "../core/core.interface";
+import type {
   PageViewEventInterface,
   PageViewParametersInterface,
 } from "./pageViewTracker.interface";
@@ -49,7 +49,7 @@ export class PageViewTracker {
           getTaxonomy(parameters.taxonomy_level2, "Level2"),
           100,
         ),
-        content_id: validateParameter(parameters.content_id, 100),
+        content_id: PageViewTracker.getContentId(parameters.content_id),
         logged_in_status: PageViewTracker.getLoggedInStatus(
           parameters.logged_in_status,
         ),
@@ -76,6 +76,21 @@ export class PageViewTracker {
     };
 
     pushToDataLayer(pageViewTrackerEvent);
+  }
+
+  /**
+   * Validates the content_id parameter without applying PII redaction.
+   * Content IDs are static taxonomy identifiers (UUIDs) that should not be stripped.
+   *
+   * @param {string} contentId - The content ID value.
+   * @return {string} The validated content ID in lowercase, or "undefined" if invalid.
+   */
+  static getContentId(contentId: string | undefined): string {
+    if (!contentId || typeof contentId !== "string") {
+      return "undefined";
+    }
+    const value = contentId.substring(0, 100);
+    return value.toLowerCase();
   }
 
   /**
@@ -143,9 +158,14 @@ export class PageViewTracker {
    * @return {string} The current location URL as a lowercase string, or "undefined" if not available.
    */
   static getLocation(): string {
-    return (
-      stripPIIFromString(document.location.href?.toLowerCase()) ?? "undefined"
-    );
+    const href = document.location.href?.toLowerCase();
+    if (!href) return "undefined";
+    try {
+      const decoded = PageViewTracker.fullyDecode(href);
+      return stripPIIFromString(decoded) ?? "undefined";
+    } catch {
+      return stripPIIFromString(href) ?? "undefined";
+    }
   }
 
   /**
@@ -154,8 +174,29 @@ export class PageViewTracker {
    * @return {string} The referrer as a lowercase string, or "undefined" if it is empty.
    */
   static getReferrer(): string {
-    return document.referrer.length
-      ? document.referrer?.toLowerCase()
-      : "undefined";
+    if (!document.referrer.length) return "undefined";
+    const referrer = document.referrer.toLowerCase();
+    try {
+      const decoded = PageViewTracker.fullyDecode(referrer);
+      return stripPIIFromString(decoded) ?? "undefined";
+    } catch {
+      return stripPIIFromString(referrer) ?? "undefined";
+    }
+  }
+
+  /**
+   * Fully decodes a URL string, handling + as space and repeated encoding.
+   * Decodes iteratively until the string stops changing.
+   */
+  private static fullyDecode(value: string): string {
+    // Replace + with space first (query string convention), then decode
+    let decoded = decodeURIComponent(value.replace(/\+/g, " "));
+    let prev = value;
+    // Continue decoding if there are still encoded sequences (from double-encoding)
+    while (decoded !== prev && decoded.includes("%")) {
+      prev = decoded;
+      decoded = decodeURIComponent(decoded);
+    }
+    return decoded;
   }
 }

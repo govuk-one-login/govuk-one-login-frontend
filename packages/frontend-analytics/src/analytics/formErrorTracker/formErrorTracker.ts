@@ -1,20 +1,20 @@
 import logger from "loglevel";
-import { validateParameter } from "../../utils/validateParameterUtils/validateParameter";
-import { FormTracker } from "../formTracker/formTracker";
-import {
-  FormEventInterface,
-  FormField,
-} from "../formTracker/formTracker.interface";
+import { hasConsentForAnalytics } from "../../cookie/cookie";
 import {
   getDomain,
   getDomainPath,
   isFormErrorPage,
 } from "../../utils/dataScrapersUtils/dataScrapers";
 import { pushToDataLayer } from "../../utils/pushToDataLayerUtil/pushToDataLayer";
+import { validateParameter } from "../../utils/validateParameterUtils/validateParameter";
+import { FormTracker } from "../formTracker/formTracker";
+import type {
+  FormEventInterface,
+  FormField,
+} from "../formTracker/formTracker.interface";
 import { getFormElement } from "../formTracker/formTrackerUtils/getFieldValues/getFieldValues";
 import { getSectionValue } from "../formTracker/formTrackerUtils/getSectionValue/getSectionValue";
 import { getSubmitUrl } from "../formTracker/formTrackerUtils/getSubmitUrl/getSubmitUrl";
-import { hasConsentForAnalytics } from "../../cookie/cookie";
 
 /**
  * Tracks error in a form and sends data to the analytics platform.

@@ -1,11 +1,10 @@
-import { getBrowser } from "./system/browser";
-
 import { getFontMetrics } from "./fonts/fonts";
 import { getHardwareInfo } from "./hardware/hardware";
 import { getLocales } from "./locales/locales";
 import { getBrowserPermissions } from "./permissions/permissions";
 import { getInstalledPlugins } from "./plugins/plugins";
 import { screenDetails } from "./screen/screen";
+import { getBrowser } from "./system/browser";
 import { getSystemDetails } from "./system/system";
 
 export interface ComponentInterface {
@@ -21,7 +20,7 @@ export const components: { [name: string]: () => Promise<ComponentInterface> } =
     screen: screenDetails,
     system: getSystemDetails,
   };
-if (getBrowser().name != "Firefox") {
+if (getBrowser().name !== "Firefox") {
   components.fonts = getFontMetrics;
 }
 

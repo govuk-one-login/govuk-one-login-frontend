@@ -2,8 +2,8 @@
  * @vitest-environment node
  */
 
-import { setFingerprintCookie } from "./functions";
 import logger from "../logger";
+import { setFingerprintCookie } from "./functions";
 
 describe("setFingerprintCookie()", () => {
   beforeEach(() => {

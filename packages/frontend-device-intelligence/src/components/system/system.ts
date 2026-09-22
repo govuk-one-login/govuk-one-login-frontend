@@ -4,7 +4,7 @@ import {
   hasSupportForApplePayVersion,
   isHTTPS,
 } from "../../utils/windowTools";
-import { ComponentInterface } from "../index";
+import type { ComponentInterface } from "../index";
 import { getBrowser } from "./browser";
 
 interface LegacyNavigator {
@@ -42,7 +42,7 @@ function getApplePayVersion(): number {
         }
       }
       // eslint-disable-next-line
-    } catch (error) {
+    } catch (_error) {
       logger.error("No supported version available for the payment method");
       return 0;
     }

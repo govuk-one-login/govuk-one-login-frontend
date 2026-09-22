@@ -1,6 +1,6 @@
-import { FormChangeTracker } from "./formChangeTracker";
-import * as pushToDataLayer from "../../utils/pushToDataLayerUtil/pushToDataLayer";
 import { acceptCookies, rejectCookies } from "../../../test/utils";
+import * as pushToDataLayer from "../../utils/pushToDataLayerUtil/pushToDataLayer";
+import { FormChangeTracker } from "./formChangeTracker";
 
 function createForm() {
   document.body.innerHTML = `

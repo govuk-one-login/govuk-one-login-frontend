@@ -1,12 +1,12 @@
-import * as functions from "./functions";
+import type { ComponentInterface } from "../components/index";
 import * as components from "../components/index";
+import logger from "../logger";
+import * as functions from "./functions";
 import {
-  getFingerprintData,
   filterFingerprintData,
+  getFingerprintData,
   setFingerprintCookie,
 } from "./functions";
-import { ComponentInterface } from "../components/index";
-import logger from "../logger";
 
 vi.mock("../components/index", () => ({
   getComponentPromises: vi.fn(() => ({

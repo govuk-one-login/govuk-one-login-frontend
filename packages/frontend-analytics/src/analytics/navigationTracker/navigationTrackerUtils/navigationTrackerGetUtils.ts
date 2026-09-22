@@ -1,4 +1,4 @@
-import { NavigationElement } from "../navigationTracker.interface";
+import type { NavigationElement } from "../navigationTracker.interface";
 import {
   isBackLink,
   isCopyright,
@@ -30,7 +30,6 @@ export const getTargetUrl = (element: NavigationElement) => {
 
   return "undefined";
 };
-
 
 /**
  * Returns the type of link based on the given HTML link element.

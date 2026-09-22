@@ -1,5 +1,5 @@
-import http from "http";
-import https from "https";
+import type http from "node:http";
+import type https from "node:https";
 
 export const trackRequestsPerSecond = (
   server: http.Server | https.Server,

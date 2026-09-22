@@ -1,6 +1,6 @@
 import request from "supertest";
-import { setup, teardown } from "./testApp/testApp";
 import pjson from "../../package.json";
+import { setup, teardown } from "./testApp/testApp";
 
 describe("averageResponseTime", () => {
   let logger: ReturnType<typeof setup>["logger"];

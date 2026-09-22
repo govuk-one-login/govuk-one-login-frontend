@@ -1,6 +1,5 @@
 import { Given, Then } from "@cucumber/cucumber";
-import { expect } from "chai";
-import chai from "chai";
+import chai, { expect } from "chai";
 import chaiSubset from "chai-subset";
 
 chai.use(chaiSubset);
@@ -10,7 +9,7 @@ declare global {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     dataLayer: any;
   }
-  // @ts-ignore redefining browser
+  // @ts-expect-error redefining browser
   var browser: { newContext: (...args: any[]) => any; close: () => void };
 }
 

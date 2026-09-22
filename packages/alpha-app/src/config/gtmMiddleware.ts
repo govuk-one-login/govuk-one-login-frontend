@@ -1,11 +1,15 @@
-import { GA4_CONTAINER_ID, UA_CONTAINER_ID, ROUTE_INFO } from "./constants";
+import type { NextFunction, Request, Response } from "express";
 import { logger } from "../utils/logger";
-import type { Request, Response, NextFunction } from "express";
+import { GA4_CONTAINER_ID, ROUTE_INFO, UA_CONTAINER_ID } from "./constants";
 
 // This function makes sure that the GA4 Container ID is accessible to all pages,
 // so we don't have to repeat it in every route
 
-const setGa4ContainerId = (req: Request, res: Response, next: NextFunction) => {
+const setGa4ContainerId = (
+  _req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   //     Set the GA4 Container ID in (locals) that all pages can see.
   res.locals.ga4ContainerId = GA4_CONTAINER_ID;
   next(); // Pass control to the next middleware function
@@ -14,14 +18,14 @@ const setGa4ContainerId = (req: Request, res: Response, next: NextFunction) => {
 // This function makes sure that the UA Container ID is accessible to all pages,
 //so we don't have to repeat it in every route
 
-const setUaContainerId = (req: Request, res: Response, next: NextFunction) => {
+const setUaContainerId = (_req: Request, res: Response, next: NextFunction) => {
   //     Set the UA Container ID in (locals) that all pages can see.
   res.locals.uaContainerId = UA_CONTAINER_ID;
   next(); // Pass control to the next middleware function
 };
 
 // Middleware to instantiate the status code for the On Page Load tracker
-const setStatusCode = (req: Request, res: Response, next: NextFunction) => {
+const setStatusCode = (_req: Request, res: Response, next: NextFunction) => {
   res.locals.statusCode = res.statusCode;
   next();
 };
@@ -72,10 +76,10 @@ const setContentId = (req: Request, res: Response, next: NextFunction) => {
 };
 
 export {
+  setContentId,
   setGa4ContainerId,
-  setUaContainerId,
+  setPageTitle,
   setStatusCode,
   setTaxonomyValues,
-  setPageTitle,
-  setContentId,
+  setUaContainerId,
 };

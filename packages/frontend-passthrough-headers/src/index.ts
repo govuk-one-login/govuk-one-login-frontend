@@ -1,8 +1,8 @@
-import { type Request } from "express";
-import { processUserIP } from "./utils/userIP";
 import type { APIGatewayProxyEvent } from "aws-lambda";
+import type { Request } from "express";
 import { getHeader } from "./utils/getHeader";
 import { logger } from "./utils/logger";
+import { processUserIP } from "./utils/userIP";
 
 const HEADERS = {
   HEADER_TXMA: "txma-audit-encoded",

@@ -1,6 +1,6 @@
-import { Given, When, Then } from "@cucumber/cucumber";
-import { expect } from "chai";
 import AxeBuilder from "@axe-core/playwright";
+import { Given, Then, When } from "@cucumber/cucumber";
+import { expect } from "chai";
 
 const getSessionIdCookieValue = (
   cookies: { name: string; value: string }[],
@@ -148,7 +148,9 @@ Then(
   async function () {
     const accessibilityScanResults = await new AxeBuilder({
       page: this.page,
-    }).analyze();
+    })
+      .exclude('iframe[src*="googletagmanager"]')
+      .analyze();
     expect(accessibilityScanResults.violations).to.deep.equal([]);
   },
 );

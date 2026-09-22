@@ -1,6 +1,6 @@
-import { SQSClient } from "@aws-sdk/client-sqs";
-import { sendToTXMA, customSendToTXMA } from "../";
-import { EventKey } from "../types";
+import type { SQSClient } from "@aws-sdk/client-sqs";
+import { customSendToTXMA, sendToTXMA } from "../";
+import type { EventKey } from "../types";
 
 const createEventMock = vi.fn((_: string, entity: object) => entity);
 const validateEventMock = vi.fn().mockReturnValue(true);

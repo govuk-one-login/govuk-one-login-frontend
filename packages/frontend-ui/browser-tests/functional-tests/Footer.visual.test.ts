@@ -1,12 +1,12 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from "@playwright/test";
 
-test.describe('Footer component visual regression', () => {
+test.describe("Footer component visual regression", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:3000/welcome');
+    await page.goto("http://localhost:3000/welcome");
   });
 
-  test('should match visual snapshot of the footer', async ({ page }) => {
+  test("should match visual snapshot of the footer", async ({ page }) => {
     const footer = await page.locator('[aria-label="footer"]');
-    await expect(footer).toHaveScreenshot('footer-default.png');
+    await expect(footer).toHaveScreenshot("footer-default.png");
   });
 });

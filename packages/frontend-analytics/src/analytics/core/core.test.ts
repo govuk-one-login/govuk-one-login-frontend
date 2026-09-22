@@ -1,7 +1,7 @@
-import { Analytics } from "./core";
-import { PageViewTracker } from "../pageViewTracker/pageViewTracker";
-import { OptionsInterface } from "./core.interface";
 import { acceptCookies, unsetCookies } from "../../../test/utils";
+import { PageViewTracker } from "../pageViewTracker/pageViewTracker";
+import { Analytics } from "./core";
+import type { OptionsInterface } from "./core.interface";
 
 describe("should initialize the ga4 class", () => {
   const options: OptionsInterface = {

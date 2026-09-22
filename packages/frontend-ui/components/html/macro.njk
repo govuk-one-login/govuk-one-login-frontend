@@ -1,0 +1,41 @@
+{% macro html(params) %}
+    {%- if isArray(params) %}
+        {% for item in params %}
+            {%- if isArray(item) or item.items %}
+                {{ htmlList(item) }}
+            {%- else %}
+                {{ htmlItem("p", item) }}
+            {% endif %}
+        {% endfor %}
+    {%- else %}
+        {{ htmlItem("p", params) }}
+    {%- endif %}
+{% endmacro %}
+
+{% macro htmlList(params) %}
+    {%- set items = params.items | default(params) %}
+    <ul{% if params.id %} id="{{params.id}}"{% endif %} class={% if params.classes %}"{{params.classes}}"{% else %}"govuk-list govuk-list--bullet"{% endif %}>
+    {% for item in items | filter %}
+        {{ htmlItem("li", item) }}
+    {% endfor %}
+    </ul>
+{% endmacro %}
+
+{% macro htmlItem(tag, value) %}
+    {%- if not isObject(value) %}{%- set value = { "": value } %}{% endif %}
+    {%- for id, content in value | filter %}
+        {%- if startsWith(id, ">") %}
+            {%- from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+            {{ govukInsetText({ html: html(content), id: substr(id, 2) } | filter) }}
+        {%- elif tag == "p" and startsWith(content, "> ") %}
+            {%- from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+            {{ govukInsetText({ html: html(substr(content, 2)) }) }}
+        {%- else %}
+            {%- if isArray(content) %}{%- set content = html(content) %}{%- endif %}
+            {%- if tag == "p" and startsWith(content, "## ") %}{%- set tag = "h2" %}{%- set content = substr(content, 3) %}{%- endif %}
+            {%- if tag == "p" and startsWith(content, "### ") %}{%- set tag = "h3" %}{%- set content = substr(content, 4) %}{%- endif %}
+            {%- if tag == "p" and startsWith(content, "#### ") %}{%- set tag = "h4" %}{%- set content = substr(content, 5) %}{%- endif %}
+            <{{tag}}{% if id %} id="{{id}}"{% endif %}>{{ content | safe }}</{{tag}}>
+        {%- endif %}
+    {%- endfor %}
+{% endmacro %}

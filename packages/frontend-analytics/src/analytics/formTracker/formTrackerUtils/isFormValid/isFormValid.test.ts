@@ -1,4 +1,4 @@
-import { FormField } from "../../formTracker.interface";
+import type { FormField } from "../../formTracker.interface";
 import { isFormValid } from "./isFormValid";
 
 describe("isFormValid", () => {

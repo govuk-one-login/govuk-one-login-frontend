@@ -1,6 +1,6 @@
 import json from "@rollup/plugin-json";
+import copy from "rollup-plugin-copy";
 import typescript from "rollup-plugin-typescript2";
-import copy from 'rollup-plugin-copy';
 
 export default {
   external: ["pino"],
@@ -20,9 +20,13 @@ export default {
     json(),
     copy({
       targets: [
-        { src: "./build/cjs/index.d.ts", dest: "./build/cjs/", rename: "index.d.cts" }
+        {
+          src: "./build/cjs/index.d.ts",
+          dest: "./build/cjs/",
+          rename: "index.d.cts",
+        },
       ],
-      hook: "closeBundle"
+      hook: "closeBundle",
     }),
   ],
 };

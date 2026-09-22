@@ -1,0 +1,54 @@
+{% extends 'common/base.njk' %}
+
+{% set title = 'pages.componentLibrary.title' %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/accordion/macro.njk" import govukAccordion %}
+
+{% block backLink %}
+  {{ govukBackLink({
+    text: "general.govuk.backLink" | translate,
+    href: "/welcome"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <h1 class="govuk-heading-l">
+    {{"pages.componentLibrary.title" | translate}}
+  </h1>
+  <ul class="govuk-list">
+  <li>
+    <a class="govuk-link" href="components/checkboxes">{{"pages.componentLibrary.components.checkboxes"| translate}}</a>
+  </li>
+  <li>
+    <a class="govuk-link" href="components/date">{{"pages.componentLibrary.components.date" | translate}}</a>
+  </li>
+  <li>
+    <a class="govuk-link" href="components/details">{{"pages.componentLibrary.components.details" | translate}}</a>
+  </li>
+  <li>
+    <a class="govuk-link" href="components/inset-text">{{"pages.componentLibrary.components.inset-text" | translate}}</a>
+  </li>
+  <li>
+    <a class="govuk-link" href="components/radios">{{"pages.componentLibrary.components.radios" | translate}}</a>
+  </li>
+  <li>
+    <a class="govuk-link" href="components/select">{{"pages.componentLibrary.components.select" | translate}}</a>
+  </li>
+  <li>
+    <a class="govuk-link" href="components/step-card">{{"pages.componentLibrary.components.step-card" | translate}}</a>
+  </li>
+  <li>
+    <a class="govuk-link" href="components/submit">{{"pages.componentLibrary.components.submit" | translate}}</a>
+  </li>
+  <li>
+    <a class="govuk-link" href="components/text">{{"pages.componentLibrary.components.text" | translate}}</a>
+  </li>
+  <li>
+    <a class="govuk-link" href="components/warning-text">{{"pages.componentLibrary.components.warning-text" | translate}}</a>
+  </li>
+  <li>
+    <a class="govuk-link" href="components/html">{{"pages.componentLibrary.components.html" | translate}}</a>
+  </li>
+</ul>
+{% endblock %}

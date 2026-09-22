@@ -1,5 +1,5 @@
-import { SQSClient } from "@aws-sdk/client-sqs";
-import { type Events as _Events } from "@govuk-one-login/event-catalogue";
+import type { SQSClient } from "@aws-sdk/client-sqs";
+import type { Events as _Events } from "@govuk-one-login/event-catalogue";
 import * as schemas from "@govuk-one-login/event-catalogue-schemas";
 
 export type Events = _Events;

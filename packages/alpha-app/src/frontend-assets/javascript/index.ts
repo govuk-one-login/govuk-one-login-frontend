@@ -1,7 +1,7 @@
 import {
-  useSpinner,
-  PollResult,
   initialiseProgressButtons,
+  PollResult,
+  useSpinner,
 } from "@govuk-one-login/frontend-ui/frontend"; // Maps to node_modules/@govuk-one-login/frontend-ui/build/esm/frontend
 
 declare global {
@@ -34,9 +34,7 @@ useSpinner(
 window.DI = window.DI || {};
 window.DI.analyticsUa = window.DI.analyticsUa || {};
 
-(function (analytics) {
-  "use strict";
-
+((analytics) => {
   function initGtm() {
     const sendData = window.DI.analyticsGa4.pageViewTracker.pushToDataLayer;
 
@@ -72,12 +70,12 @@ window.DI.analyticsUa = window.DI.analyticsUa || {};
     });
 
     sendData({
-      "gtm.start": new Date().getTime(),
+      "gtm.start": Date.now(),
       event: "gtm.js",
     });
   }
 
-  const init = function () {
+  const init = () => {
     const consentGiven = window.DI.analyticsGa4.cookie.hasConsentForAnalytics();
     console.log("consentGiven", consentGiven);
     if (consentGiven) {

@@ -5,23 +5,21 @@
   "projectType": "library",
   "targets": {
     "lint": {
-      "executor": "@nx/eslint:lint",
+      "executor": "nx:run-commands",
       "options": {
-        "lintFilePatterns": [
-          "packages/alpha-app/src/**/*.{js,ts,json}"
-        ]
+        "command": "biome check packages/alpha-app/src"
       }
     },
     "format": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "prettier --write \"packages/alpha-app/src/**/!(*.nunjucks).ts\""
+        "command": "biome format --write packages/alpha-app/src"
       }
     },
     "format:check": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "prettier --check packages/alpha-app/src/**/*"
+        "command": "biome format packages/alpha-app/src"
       }
     }
   }

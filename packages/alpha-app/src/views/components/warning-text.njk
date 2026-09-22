@@ -1,0 +1,7 @@
+{% extends "common/base.njk" %}
+{% from "frontend-ui/build/components/warning-text/macro.njk" import warningText %}
+
+{% block content %}
+  <h1 class="govuk-heading-xl">{{"pages.componentLibrary.components.warning-text" | translate}}</h1>
+  {{ warningText({text: "components.warning-text.text" | translate}) }}
+{% endblock %}

@@ -1,6 +1,6 @@
+import type { Request, Response } from "express";
+import type { HelmetOptions } from "helmet";
 import { merge } from "lodash-es";
-import { type Request, type Response } from "express";
-import { type HelmetOptions } from "helmet";
 
 const baseHelmetConfig = {
   contentSecurityPolicy: {

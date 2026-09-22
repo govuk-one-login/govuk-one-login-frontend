@@ -1,4 +1,4 @@
-import { Given, When, Then } from "@cucumber/cucumber";
+import { Then, When } from "@cucumber/cucumber";
 import { expect } from "@playwright/test";
 
 Then("the {word} cookie has been set", async function (cookieName) {

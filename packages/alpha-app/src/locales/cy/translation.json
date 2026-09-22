@@ -42,7 +42,8 @@
         "pagination": {
           "text": "Gwasanaethau y gallwch eu defnyddio gyda Mewngofnod One Login GOV.UK"
         },
-        "printGuideLinkText": "Gweld fersiwn argraffu cyflawn y canllaw"
+        "printGuideLinkText": "Gweld fersiwn argraffu cyflawn y canllaw",
+        "componentLibraryLink": "Component Library (cy)"
       }
     },
     "organisationType": {
@@ -212,6 +213,127 @@
           "bulletList": ["eitem gyntaf", "eitem ail", "eitem drydydd"]
         }
       ]
+    },
+    "componentLibrary": {
+      "title": "Component library (cy)",
+      "components": {
+        "checkboxes": "Checkboxes (cy)",
+        "date": "Date (cy)",
+        "details": "Details (cy)",
+        "html": "HTML (cy)",
+        "inset-text": "Inset text (cy)",
+        "radios": "Radio buttons (cy)",
+        "select": "Select (cy)",
+        "step-card": "Step card (cy)",
+        "submit": "Submit button (cy)",
+        "text": "Text input (cy)",
+        "warning-text": "Warning text (cy)"
+      }
+    },
+    "html": {
+      "htmlComponent": "HTML block (cy)",
+      "htmlListComponent": "HTML list (cy)",
+      "htmlItemComponent": "HTML item (cy)"
     }
-  }
+  },
+  "components": {
+    "details": {
+      "label": "Details (cy)",
+      "summaryText": "Summary Text (cy)",
+      "html": "<h2>HTML Block</h2><p>More detailed information</p> (cy)"
+    },
+    "inset-text": {
+      "text": "Inset text (cy)"
+    },
+    "warning-text": {
+      "text": "Warning text (cy)"
+    }
+  },
+  "fields": {
+    "date-day": { "label": "Diwrnod" },
+    "date-month": { "label": "Mis" },
+    "date-year": { "label": "Blwyddyn" },
+    "library-text": {
+      "textarea": {
+        "label": "Textarea variant (cy)",
+        "hint": "Hint (cy)"
+      },
+      "other": {
+        "label": "Non-textarea variant (cy)",
+        "hint": "Hint (cy)",
+        "prefix": "Prefix (cy)"
+      }
+    },
+    "library-checkboxes": {
+      "legend": "Checkboxes (cy)",
+      "hint": "Hint (cy)",
+      "items": {
+        "a": {
+          "label": "Option A (cy)",
+          "hint": "Hint for option A (cy)"
+        },
+        "b": {
+          "label": "Option B (cy)",
+          "hint": "Hint for option B (cy)"
+        },
+        "c": {
+          "label": "Option C (cy)",
+          "hint": "Hint for option C (cy)"
+        }
+      }
+    },
+    "library-date": {
+      "legend": "Date (cy)",
+      "hint": "Hint (cy)"
+    },
+
+    "library-form": {
+      "label": "Form (cy)"
+    },
+
+    "library-radios": {
+      "legend": "Radios (cy)",
+      "hint": "Hint (cy)",
+      "items": {
+        "a": {
+          "label": "Option A (cy)",
+          "hint": "Hint for option A (cy)"
+        },
+        "b": {
+          "label": "Option B (cy)",
+          "hint": "Hint for option B (cy)"
+        },
+        "c": {
+          "label": "Option C (cy)",
+          "hint": "Hint for option C (cy)"
+        }
+      }
+    },
+    "library-select": {
+      "label": "Select (cy)",
+      "hint": "Hint (cy)",
+      "placeholder": "Placeholder (cy)",
+      "items": {
+        "a": {
+          "label": "Option A (cy)"
+        },
+        "b": {
+          "label": "Option B (cy)"
+        },
+        "c": {
+          "label": "Option C (cy)"
+        }
+      }
+    },
+    "library-html": {
+      "label": "HTML (cy)"
+    },
+    "library-html-list": {
+      "label": "HTML list (cy)"
+    },
+    "library-html-item": {
+      "label": "HTML item (cy)"
+    }
+  },
+  "buttons": { "next": "Submit (cy)" }
 }

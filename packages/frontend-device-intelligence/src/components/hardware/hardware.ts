@@ -1,4 +1,4 @@
-import { ComponentInterface } from "../index";
+import type { ComponentInterface } from "../index";
 
 type ExtendedNavigator = Navigator & { deviceMemory?: number };
 type ExtendedPerformance = Performance & {

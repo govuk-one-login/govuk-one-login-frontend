@@ -1,11 +1,11 @@
+import { getFontMetrics } from "../components/fonts/fonts";
 import {
   type ComponentInterface,
   getComponentPromises,
 } from "../components/index";
+import logger from "../logger";
 import { hash } from "../utils/hash";
 import { raceAll } from "../utils/raceAll";
-import { getFontMetrics } from "../components/fonts/fonts";
-import logger from "../logger";
 
 const timeoutInstance: ComponentInterface = {
   timeout: "true",
@@ -61,7 +61,7 @@ export function filterFingerprintData(
   const result: ComponentInterface = {};
 
   for (const [key, value] of Object.entries(obj)) {
-    const currentPath = path + key + ".";
+    const currentPath = `${path + key}.`;
 
     if (typeof value === "object" && !Array.isArray(value)) {
       const filtered = filterFingerprintData(

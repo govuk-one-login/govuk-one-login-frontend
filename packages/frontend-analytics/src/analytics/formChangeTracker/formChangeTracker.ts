@@ -1,14 +1,14 @@
 import logger from "loglevel";
-import { validateParameter } from "../../utils/validateParameterUtils/validateParameter";
-import { FormTracker } from "../formTracker/formTracker";
-import { FormEventInterface } from "../formTracker/formTracker.interface";
+import { hasConsentForAnalytics } from "../../cookie/cookie";
 import {
   getDomain,
   getDomainPath,
   isChangeLink,
 } from "../../utils/dataScrapersUtils/dataScrapers";
 import { pushToDataLayer } from "../../utils/pushToDataLayerUtil/pushToDataLayer";
-import { hasConsentForAnalytics } from "../../cookie/cookie";
+import { validateParameter } from "../../utils/validateParameterUtils/validateParameter";
+import { FormTracker } from "../formTracker/formTracker";
+import type { FormEventInterface } from "../formTracker/formTracker.interface";
 
 export class FormChangeTracker extends FormTracker {
   eventName: string = "form_change_response";

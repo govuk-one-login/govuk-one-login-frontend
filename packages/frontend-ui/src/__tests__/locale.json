@@ -1,0 +1,53 @@
+{
+  "fields": {
+    "my-input": {
+      "hint": "Hint text"
+    },
+    "my-input-reveals": {
+      "items": {
+        "a": {
+          "reveal": "overridden"
+        },
+        "b": {
+          "reveal": "second"
+        }
+      }
+    },
+    "my-input-hints": {
+      "items": {
+        "a": {},
+        "b": {
+          "hint": "<i>locale b hint</i>"
+        },
+        "c": {
+          "hint": "<i>locale c hint</i>"
+        },
+        "d": {
+          "hint": "<i>locale d hint</i>"
+        }
+      }
+    },
+    "labeltest": {
+      "label": "Label text"
+    },
+    "legendtest": {
+      "legend": "Legend text"
+    },
+    "taskList": {
+      "label": "Your application",
+      "statuses": {
+        "default": "Incomplete",
+        "completed": "Completed",
+        "inProgress": "In progress"
+      },
+      "tasks": {
+        "taskOne": {
+          "title": "Task one"
+        },
+        "taskTwo": {
+          "title": "Task two"
+        }
+      }
+    }
+  }
+}

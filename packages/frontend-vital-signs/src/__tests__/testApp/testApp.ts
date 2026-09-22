@@ -1,6 +1,6 @@
-import { IncomingMessage, Server, ServerResponse } from "http";
+import type { IncomingMessage, Server, ServerResponse } from "node:http";
+import type { frontendVitalSignsInit } from "../..";
 import { createTestApp } from "./createTestApp";
-import { frontendVitalSignsInit } from "../..";
 
 const logger = {
   info: vi.fn(),

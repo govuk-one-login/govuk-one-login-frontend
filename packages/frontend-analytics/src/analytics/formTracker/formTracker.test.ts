@@ -1,5 +1,6 @@
+import { acceptCookies } from "../../../test/utils";
 import { FormTracker, FREE_TEXT_FIELD_TYPE } from "./formTracker";
-import { FormField } from "./formTracker.interface";
+import type { FormField } from "./formTracker.interface";
 import {
   getElementValue,
   getFieldLabel,
@@ -7,7 +8,6 @@ import {
   getFormElement,
 } from "./formTrackerUtils/getFieldValues/getFieldValues";
 import { getSectionValue } from "./formTrackerUtils/getSectionValue/getSectionValue";
-import { acceptCookies } from "../../../test/utils";
 
 describe("FormTracker", () => {
   let instance: FormTracker;
