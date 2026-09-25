@@ -58,6 +58,26 @@ describe("stripPIIFromString", () => {
       const input = "date 01\\01\\1990";
       expect(stripPIIFromString(input)).toBe("date [date]");
     });
+
+    test("redacts DD MM YYYY with space separator (data pod pattern)", () => {
+      const input = "born on 01 01 1990";
+      expect(stripPIIFromString(input)).toBe("born on [date]");
+    });
+
+    test("redacts 31 12 2024 with space separator", () => {
+      const input = "expires 31 12 2024";
+      expect(stripPIIFromString(input)).toBe("expires [date]");
+    });
+
+    test("does not redact invalid space-separated date (day 32)", () => {
+      const input = "value 32 01 1990";
+      expect(stripPIIFromString(input)).toBe("value 32 01 1990");
+    });
+
+    test("does not redact invalid space-separated date (month 13)", () => {
+      const input = "value 01 13 1990";
+      expect(stripPIIFromString(input)).toBe("value 01 13 1990");
+    });
   });
 
   describe("postcode redaction", () => {
@@ -131,6 +151,16 @@ describe("stripPIIFromString", () => {
     test("does not redact short digit sequences", () => {
       const input = "error code 404";
       expect(stripPIIFromString(input)).toBe("error code 404");
+    });
+
+    test("redacts 0044 prefixed number (data pod pattern)", () => {
+      const input = "ring 00447911123456";
+      expect(stripPIIFromString(input)).toBe("ring [phonenumber]");
+    });
+
+    test("redacts 0044 prefixed number with space", () => {
+      const input = "call 0044 7911123456";
+      expect(stripPIIFromString(input)).toBe("call [phonenumber]");
     });
   });
 
@@ -348,6 +378,82 @@ describe("stripPIIFromString", () => {
     });
   });
 
+  describe("street address redaction (data pod pattern)", () => {
+    test("redacts a typical street address", () => {
+      const input = "lives at 10 Downing Street";
+      expect(stripPIIFromString(input)).toBe("lives at [streetAddress]");
+    });
+
+    test("redacts a multi-word street address", () => {
+      const input = "address: 123 Old Kent Road";
+      expect(stripPIIFromString(input)).toBe("address: [streetAddress]");
+    });
+
+    test("redacts a hyphenated street name", () => {
+      const input = "at 42 Stoke-on-Trent Road";
+      expect(stripPIIFromString(input)).toBe("at [streetAddress]");
+    });
+
+    test("redacts a longer street address", () => {
+      const input = "sent to 1 Horse Guards Parade";
+      expect(stripPIIFromString(input)).toBe("sent to [streetAddress]");
+    });
+
+    test("redacts 5-digit house number", () => {
+      const input = "at 12345 Long Lane North";
+      expect(stripPIIFromString(input)).toBe("at [streetAddress]");
+    });
+
+    test("does not redact a single word after number (not enough words for address)", () => {
+      const input = "has 5 items";
+      expect(stripPIIFromString(input)).toBe("has 5 items");
+    });
+  });
+
+  describe("tel: URL redaction (data pod pattern)", () => {
+    test("redacts a tel: URL with phone number", () => {
+      const input = "tel:07123456789";
+      expect(stripPIIFromString(input)).toBe("[telUrl]");
+    });
+
+    test("redacts a tel: URL with +44 prefix", () => {
+      const input = "tel:+447123456789";
+      expect(stripPIIFromString(input)).toBe("[telUrl]");
+    });
+
+    test("redacts tel: URL within a string", () => {
+      const input = "link is tel:07123456789 here";
+      expect(stripPIIFromString(input)).toBe("link is [telUrl] here");
+    });
+
+    test("redacts tel: URL case-insensitively", () => {
+      const input = "TEL:07123456789";
+      expect(stripPIIFromString(input)).toBe("[telUrl]");
+    });
+  });
+
+  describe("mailto: URL redaction (data pod pattern)", () => {
+    test("redacts a mailto: URL with email address", () => {
+      const input = "mailto:user@example.com";
+      expect(stripPIIFromString(input)).toBe("[mailtoUrl]");
+    });
+
+    test("redacts mailto: URL within a string", () => {
+      const input = "send to mailto:support@gov.uk please";
+      expect(stripPIIFromString(input)).toBe("send to [mailtoUrl] please");
+    });
+
+    test("redacts mailto: URL with query parameters", () => {
+      const input = "mailto:user@example.com?subject=Hello&body=Hi";
+      expect(stripPIIFromString(input)).toBe("[mailtoUrl]");
+    });
+
+    test("redacts mailto: URL case-insensitively", () => {
+      const input = "MAILTO:user@example.com";
+      expect(stripPIIFromString(input)).toBe("[mailtoUrl]");
+    });
+  });
+
   describe("combined PII - all types redacted (else-if bug fixed)", () => {
     test("string with date AND postcode - both are redacted", () => {
       const input = "DOB: 01/01/1990 Postcode: SW1A 1AA";
@@ -390,6 +496,13 @@ describe("stripPIIFromString", () => {
         "Email: user@gov.uk NINO: AB 12 34 56 D DOB: 15/06/1985 Home: EC1A 1BB Phone: +44 7911 123456";
       expect(stripPIIFromString(input)).toBe(
         "Email: [email] NINO: [nationalInsuranceNumber] DOB: [date] Home: [postcode] Phone: [phonenumber]",
+      );
+    });
+
+    test("string with mailto: URL and street address - both redacted", () => {
+      const input = "contact mailto:user@example.com address 10 Downing Street";
+      expect(stripPIIFromString(input)).toBe(
+        "contact [mailtoUrl] address [streetAddress]",
       );
     });
   });

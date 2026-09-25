@@ -32,23 +32,6 @@ export const getTargetUrl = (element: NavigationElement) => {
 };
 
 /**
- * Returns the parent element of the given HTMLAnchorElement if it has a specific class.
- *
- * @param {NavigationElement} element - The NavigationElement to check for a specific class.
- * @param {string[]} classes - An array of classes to check against the parent element's class.
- * @return {NavigationElement} - The parent element of the parent element of the given HTMLAnchorElement if it has a specific class, otherwise returns the original element.
- */
-export const getContainingElement = (
-  clickedElement: HTMLElement,
-  containerElement?: NavigationElement,
-): HTMLElement => {
-  if (containerElement?.contains(clickedElement)) {
-    return containerElement;
-  }
-  return clickedElement;
-};
-
-/**
  * Returns the type of link based on the given HTML link element.
  *
  * @param {NavigationElement} element - The HTML link element to get the type of.
