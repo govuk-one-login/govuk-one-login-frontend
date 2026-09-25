@@ -1,0 +1,12 @@
+{% extends "common/base.njk" %}
+{% from "frontend-ui/build/components/html/macro.njk" import html, htmlList, htmlItem %}
+
+{% block content %}
+  <h1 class="govuk-heading-xl">{{"pages.componentLibrary.components.html" | translate}}</h1>
+  <h1 class="govuk-heading-m">{{"pages.html.htmlComponent" | translate}}</h1>
+  {{ html({"library-html": "<p>Two paragraph tags, this is the first.</p><p>This is the second.<p>"}) }}
+  <h1 class="govuk-heading-m">{{"pages.html.htmlListComponent" | translate}}</h1>
+  {{ htmlList({id: "library-html-list", items: ["Item in a list", "Another item", "And a third"]}) }}
+  <h1 class="govuk-heading-m">{{"pages.html.htmlItemComponent" | translate}}</h1>
+  {{ htmlItem("p", {"library-html-item": "<p>Two paragraph tags, this is the first.</p><p>This is the second.<p>"}) }}
+{% endblock %}

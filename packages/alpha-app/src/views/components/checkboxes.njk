@@ -1,0 +1,7 @@
+{% extends "common/base.njk" %}
+{% from "frontend-ui/build/components/checkboxes/macro.njk" import checkboxes %}
+
+{% block content %}
+  <h1 class="govuk-heading-xl">{{"pages.componentLibrary.components.checkboxes"| translate}}</h1>
+  {{ checkboxes(ctx, {id: "library-checkboxes", items: [ 'a', 'b', 'c' ]}) }}
+{% endblock %}
