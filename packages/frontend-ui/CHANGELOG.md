@@ -1,3 +1,13 @@
+## 5.3.5 (2026-09-28)
+
+### 🚀 Features
+
+- **1446:** updating footer tests ([#492](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/492))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+
 ## 5.3.4 (2026-09-21)
 
 ### 🚀 Features
