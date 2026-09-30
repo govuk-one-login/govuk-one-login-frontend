@@ -1,8 +1,15 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "noEmit": true,
+    "composite": true,
+    "typeRoots": [
+      "./src/@types",
+      "./node_modules/@types",
+      "../../node_modules/@types",
+      "../../node_modules"
+    ],
     "types": ["vitest/globals", "bytes", "debug", "node", "nunjucks"]
   },
-  "include": ["./**/__tests__/**/*.ts"]
+  "exclude": [],
+  "include": ["./**/__tests__/**/*.ts", "./src/test/**/*.ts"]
 }
