@@ -1,6 +1,7 @@
 {
   "include": ["./src"],
   "exclude": ["./**/__tests__/**"],
+  "references": [{ "path": "./tsconfig.test.json" }],
   "compilerOptions": {
     /* Basic Options */
     // "incremental": true,                   /* Enable incremental compilation */
