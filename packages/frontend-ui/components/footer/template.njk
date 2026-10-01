@@ -1,12 +1,10 @@
 {% set footer = params.translations %}
 
 {% from "govuk/components/footer/macro.njk" import govukFooter %}
+<footer>
     {{ govukFooter({
     meta: { visuallyHiddenTitle: footer.navItemHiddenHeader, items: footer.footerNavItems },
     contentLicence: { html: footer.contentLicence.html },
-    copyright: { text: footer.copyright.text },
-    rebrand: MAY_2025_REBRAND_ENABLED,
-    attributes: {
-        "aria-label": "footer"
-    }
+    copyright: { text: footer.copyright.text }
     }) }}
+</footer>

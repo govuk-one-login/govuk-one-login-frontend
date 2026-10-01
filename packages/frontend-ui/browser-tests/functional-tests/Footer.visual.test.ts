@@ -5,8 +5,8 @@ test.describe("Footer component visual regression", () => {
     await page.goto("http://localhost:3000/welcome");
   });
 
-  test("should match visual snapshot of the footer", async ({ page }) => {
-    const footer = await page.locator('[aria-label="footer"]');
-    await expect(footer).toHaveScreenshot("footer-default.png");
+  test('should match visual snapshot of the footer', async ({ page }) => {
+    const footer = await page.locator('footer');
+    await expect(footer).toHaveScreenshot('footer-default.png');
   });
 });
