@@ -33,7 +33,6 @@ describe("Mobile base template", () => {
       const renderedComponent = renderTemplate("mobile/mobile-base.njk", {
         displayBanner: false,
       });
-      console.log(renderedComponent.documentElement.outerHTML);
       const results = await axe(renderedComponent.documentElement.outerHTML);
       expect(results).toHaveNoViolations();
     });
