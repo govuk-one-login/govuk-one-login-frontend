@@ -18,17 +18,20 @@ vi.mock("../../lib/filters", async (importOriginal) => {
 });
 
 import { cleanHtml, render } from "../helpers";
+import { expectComponentToHaveNoAxeViolations } from "./helpers";
 
 describe("hmpoHtml", () => {
-  it("renders string paragraph", () => {
+  it("renders string paragraph", async () => {
     const html = "Single <b>string</b>";
     const $ = render({ component: "html", params: html });
 
     const result = cleanHtml($("body"));
     expect(result).toEqual("<p>Single <b>string</b></p>");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders an array of paragraphs", () => {
+  it("renders an array of paragraphs", async () => {
     const html = ["First <b>string</b>", "Second <b>string</b>"];
     const $ = render({ component: "html", params: html });
 
@@ -36,9 +39,11 @@ describe("hmpoHtml", () => {
     expect(result).toEqual(
       "<p>First <b>string</b></p>" + "<p>Second <b>string</b></p>",
     );
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders bullets", () => {
+  it("renders bullets", async () => {
     const html = [
       "First <b>string</b>",
       "Second <b>string</b>",
@@ -55,9 +60,11 @@ describe("hmpoHtml", () => {
         "<li>Second <b>item</b></li>" +
         "</ul>",
     );
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders headers", () => {
+  it("renders headers", async () => {
     const html = [
       "First <b>string</b>",
       "# Not header",
@@ -94,9 +101,11 @@ describe("hmpoHtml", () => {
         "</li>" +
         "</ul>",
     );
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders custom ids and classes", () => {
+  it("renders custom ids and classes", async () => {
     const html = [
       { id1: "First <b>string</b>" },
       "Second <b>string</b>",
@@ -117,9 +126,11 @@ describe("hmpoHtml", () => {
         "<li>Second <b>item</b></li>" +
         "</ul>",
     );
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders insert content", () => {
+  it("renders insert content", async () => {
     const html = [
       "No indent",
       "> Single indent",
@@ -159,6 +170,8 @@ describe("hmpoHtml", () => {
         "</ul>" +
         "</div>",
     );
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
   it("filters out empty items", () => {

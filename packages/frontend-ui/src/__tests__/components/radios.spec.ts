@@ -18,6 +18,7 @@ vi.mock("../../lib/filters", async (importOriginal) => {
 });
 
 import { cleanHtml, render, renderWithLocale } from "../helpers";
+import { expectComponentToHaveNoAxeViolations } from "./helpers";
 
 describe("hmpoRadios", () => {
   let locals: {
@@ -57,16 +58,17 @@ describe("hmpoRadios", () => {
     };
   });
 
-  it("renders with id", () => {
+  it("renders with id", async () => {
     const $ = renderWithLocale(
       { component: "radios", params: { id: "my-input" }, ctx: true },
       locals,
     );
     const $component = $(".govuk-fieldset");
     expect($component.attr("id")).toEqual("my-input-fieldset");
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders with legend and hint", () => {
+  it("renders with legend and hint", async () => {
     const $ = renderWithLocale(
       { component: "radios", params: { id: "my-input" }, ctx: true },
       locals,
@@ -76,9 +78,11 @@ describe("hmpoRadios", () => {
     expect($legend.text().trim()).toEqual("fields.my-input.label");
     const $hint = $(".govuk-hint");
     expect($hint.text().trim()).toEqual("Hint text");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders items with ids and labels", () => {
+  it("renders items with ids and labels", async () => {
     const $ = renderWithLocale(
       { component: "radios", params: { id: "my-input" }, ctx: true },
       locals,
@@ -101,9 +105,11 @@ describe("hmpoRadios", () => {
     const $itemlabel2 = $(".govuk-radios__label").eq(1);
     expect($itemlabel2.text().trim()).toEqual("fields.my-input.items.b.label");
     expect($itemlabel2.attr("id")).toEqual("my-input-b-label");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders merged items from options and params", () => {
+  it("renders merged items from options and params", async () => {
     locals.options.fields["my-input"].items = [
       { value: 1 },
       "a",
@@ -133,9 +139,11 @@ describe("hmpoRadios", () => {
     expect($item3.attr("value")).toEqual("true");
     const $itemlabel3 = $(".govuk-radios__label").eq(2);
     expect($itemlabel3.text().trim()).toEqual("boolean");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders merged items from options with params as an array", () => {
+  it("renders merged items from options with params as an array", async () => {
     locals.options.fields["my-input"].items = [
       { value: 1 },
       "a",
@@ -168,9 +176,11 @@ describe("hmpoRadios", () => {
     expect($item3.attr("value")).toEqual("true");
     const $itemlabel3 = $(".govuk-radios__label").eq(2);
     expect($itemlabel3.text().trim()).toEqual("boolean");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders default items", () => {
+  it("renders default items", async () => {
     const $ = renderWithLocale(
       { component: "radios", params: { id: "default-input" }, ctx: true },
       locals,
@@ -189,9 +199,11 @@ describe("hmpoRadios", () => {
     expect($itemlabel2.text().trim()).toEqual(
       "fields.default-input.items.false.label",
     );
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders items with conditionals", () => {
+  it("renders items with conditionals", async () => {
     const $ = renderWithLocale(
       {
         component: "radios",
@@ -211,9 +223,11 @@ describe("hmpoRadios", () => {
     expect(cleanHtml($item1)).toEqual("a <b>string</b>");
     const $item2 = $(".govuk-radios__conditional").eq(1);
     expect(cleanHtml($item2)).toEqual("b <b>object</b>");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders items with hints", () => {
+  it("renders items with hints", async () => {
     locals.options.fields["my-input-hints"] = {
       items: [
         "a",
@@ -236,9 +250,11 @@ describe("hmpoRadios", () => {
     expect(cleanHtml($item2)).toEqual("<b>item c hint</b>");
     const $item3 = $(".govuk-radios__hint").eq(2);
     expect(cleanHtml($item3)).toEqual("<b>item d hint</b>");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders items with conditionals inline", () => {
+  it("renders items with conditionals inline", async () => {
     const $ = renderWithLocale(
       {
         component: "radios",
@@ -273,9 +289,11 @@ describe("hmpoRadios", () => {
     expect($item3.attr("id")).toEqual("conditional-my-input-c");
     expect($item3.attr("class")).toEqual("govuk-radios__conditional");
     expect(cleanHtml($item3)).toEqual("b <b>third</b>");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders items with conditionals from localisation", () => {
+  it("renders items with conditionals from localisation", async () => {
     const $ = renderWithLocale(
       {
         component: "radios",
@@ -294,9 +312,11 @@ describe("hmpoRadios", () => {
     expect(cleanHtml($item1)).toEqual("a <b>first</b>");
     const $item2 = $(".govuk-radios__conditional").eq(1);
     expect(cleanHtml($item2)).toEqual("<p>second</p>");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders items with inline conditionals with no html", () => {
+  it("renders items with inline conditionals with no html", async () => {
     const $ = renderWithLocale(
       {
         component: "radios",
@@ -313,9 +333,11 @@ describe("hmpoRadios", () => {
       locals,
     );
     expect($(".govuk-radios__conditional").length).toEqual(1);
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders items with inline conditionals with multiConditional flag", () => {
+  it("renders items with inline conditionals with multiConditional flag", async () => {
     const $ = renderWithLocale(
       {
         component: "radios",
@@ -334,9 +356,11 @@ describe("hmpoRadios", () => {
     );
     const $radiosControl = $("div[data-module=govuk-radios]");
     expect($radiosControl.attr("data-multi-conditional")).toEqual("true");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders items with conditionals without inset", () => {
+  it("renders items with conditionals without inset", async () => {
     const $ = renderWithLocale(
       {
         component: "radios",
@@ -368,9 +392,11 @@ describe("hmpoRadios", () => {
       "govuk-radios__conditional govuk-radios__removeInset anotherclass",
     );
     expect(cleanHtml($item2)).toEqual("b <b>second</b>");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders radio buttons with header", () => {
+  it("renders radio buttons with header", async () => {
     const $ = renderWithLocale(
       {
         component: "radios",
@@ -386,9 +412,11 @@ describe("hmpoRadios", () => {
     expect(cleanHtml($legend)).toEqual(
       '<h1 class="govuk-fieldset__heading">fields.my-input.label</h1>',
     );
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders radio buttons with header attributes", () => {
+  it("renders radio buttons with header attributes", async () => {
     const $ = renderWithLocale(
       {
         component: "radios",
@@ -408,9 +436,11 @@ describe("hmpoRadios", () => {
     expect(cleanHtml($legend)).toEqual(
       '<h1 class="govuk-fieldset__heading"><span data-test="test value">Legend text</span></h1>',
     );
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders radio buttons with header label localisation instead of legend when legend is not present", () => {
+  it("renders radio buttons with header label localisation instead of legend when legend is not present", async () => {
     const $ = renderWithLocale(
       {
         component: "radios",
@@ -430,9 +460,11 @@ describe("hmpoRadios", () => {
     expect(cleanHtml($legend)).toEqual(
       '<h1 class="govuk-fieldset__heading"><span data-test="test value">Label text</span></h1>',
     );
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders radio buttons with localised dividers", () => {
+  it("renders radio buttons with localised dividers", async () => {
     const $ = renderWithLocale(
       {
         component: "radios",
@@ -459,5 +491,7 @@ describe("hmpoRadios", () => {
 
     const $div3 = $(".govuk-radios__divider").eq(2);
     expect($div3.text().trim()).toEqual("my.key");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 });

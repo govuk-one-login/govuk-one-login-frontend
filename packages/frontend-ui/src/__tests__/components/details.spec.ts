@@ -18,9 +18,10 @@ vi.mock("../../lib/filters", async (importOriginal) => {
 });
 
 import { cleanHtml, render } from "../helpers";
+import { expectComponentToHaveNoAxeViolations } from "./helpers";
 
 describe("hmpoDetails", () => {
-  it("renders with text", () => {
+  it("renders with text", async () => {
     const $ = render({
       component: "details",
       params: { text: "my text <br>" },
@@ -28,9 +29,11 @@ describe("hmpoDetails", () => {
 
     const $component = $("div");
     expect(cleanHtml($component)).toEqual("my text &lt;br&gt;");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders with html", () => {
+  it("renders with html", async () => {
     const $ = render({
       component: "details",
       params: { html: "my text <br>" },
@@ -38,9 +41,11 @@ describe("hmpoDetails", () => {
 
     const $component = $("div");
     expect(cleanHtml($component)).toEqual("my text <br>");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders with caller", () => {
+  it("renders with caller", async () => {
     const $ = render({
       component: "details",
       params: { html: "my text <br>" },
@@ -49,5 +54,7 @@ describe("hmpoDetails", () => {
 
     const $component = $("div");
     expect(cleanHtml($component)).toEqual("<br>caller text<br>");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 });

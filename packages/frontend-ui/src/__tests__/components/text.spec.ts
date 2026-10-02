@@ -19,6 +19,7 @@ vi.mock("../../lib/filters", async (importOriginal) => {
 
 import type { Mock } from "vitest";
 import { render } from "../helpers";
+import { expectComponentToHaveNoAxeViolations } from "./helpers";
 
 interface Locals {
   options: {
@@ -51,7 +52,7 @@ describe("hmpoText", () => {
     };
   });
 
-  it("renders with id", () => {
+  it("renders with id", async () => {
     const $ = render(
       { component: "text", params: { id: "my-input" }, ctx: true },
       locals,
@@ -59,9 +60,11 @@ describe("hmpoText", () => {
 
     const $component = $(".govuk-input");
     expect($component.attr("id")).toEqual("my-input");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders with label and hint", () => {
+  it("renders with label and hint", async () => {
     const $ = render(
       { component: "text", params: { id: "my-input" }, ctx: true },
       locals,
@@ -72,9 +75,11 @@ describe("hmpoText", () => {
     expect($label.attr("id")).toEqual("my-input-label");
     const $hint = $(".govuk-hint");
     expect($hint.text().trim()).toEqual("[fields.my-input.hint]");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("does not render hint if there is no localisation", () => {
+  it("does not render hint if there is no localisation", async () => {
     locals.translate = vi.fn();
     locals.translate.mockImplementation((key: string) =>
       key === "fields.my-input.hint" ? undefined : key,
@@ -91,9 +96,11 @@ describe("hmpoText", () => {
     expect($label.attr("id")).toEqual("my-input-label");
     const $hint = $(".govuk-hint");
     expect($hint).toHaveLength(0);
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders with label and prefix", () => {
+  it("renders with label and prefix", async () => {
     const $ = render(
       { component: "text", params: { id: "my-input" }, ctx: true },
       locals,
@@ -104,9 +111,11 @@ describe("hmpoText", () => {
     expect($label.attr("id")).toEqual("my-input-label");
     const $prefix = $(".govuk-input__prefix");
     expect($prefix.text().trim()).toEqual("[fields.my-input.prefix]");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders with value", () => {
+  it("renders with value", async () => {
     const $ = render(
       { component: "text", params: { id: "my-input" }, ctx: true },
       locals,
@@ -114,9 +123,11 @@ describe("hmpoText", () => {
 
     const $component = $(".govuk-input");
     expect($component.attr("value")).toEqual("abc123");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders with aria-required=false if validator is not required", () => {
+  it("renders with aria-required=false if validator is not required", async () => {
     locals.options.fields["my-input"].validate = undefined;
     const $ = render(
       { component: "text", params: { id: "my-input" }, ctx: true },
@@ -125,9 +136,11 @@ describe("hmpoText", () => {
 
     const $component = $(".govuk-input");
     expect($component.attr("aria-required")).toEqual("false");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders with no aria-required if validator is required", () => {
+  it("renders with no aria-required if validator is required", async () => {
     const $ = render(
       { component: "text", params: { id: "my-input" }, ctx: true },
       locals,
@@ -135,9 +148,11 @@ describe("hmpoText", () => {
 
     const $component = $(".govuk-input");
     expect($component.attr("aria-required")).toBeUndefined();
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders with no aria-required if validators contains required", () => {
+  it("renders with no aria-required if validators contains required", async () => {
     locals.options.fields["my-input"].validate = ["required"];
     const $ = render(
       { component: "text", params: { id: "my-input" }, ctx: true },
@@ -146,9 +161,11 @@ describe("hmpoText", () => {
 
     const $component = $(".govuk-input");
     expect($component.attr("aria-required")).toBeUndefined();
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders with no aria-required if validators contains required validator object", () => {
+  it("renders with no aria-required if validators contains required validator object", async () => {
     locals.options.fields["my-input"].validate = [{ type: "required" }];
     const $ = render(
       { component: "text", params: { id: "my-input" }, ctx: true },
@@ -157,9 +174,11 @@ describe("hmpoText", () => {
 
     const $component = $(".govuk-input");
     expect($component.attr("aria-required")).toBeUndefined();
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders with max-length from validator", () => {
+  it("renders with max-length from validator", async () => {
     locals.options.fields["my-input"].validate = [
       { type: "maxlength", arguments: 5 },
     ];
@@ -171,9 +190,11 @@ describe("hmpoText", () => {
 
     const $component = $(".govuk-input");
     expect($component.attr("maxlength")).toEqual("5");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders with max-length from validator array", () => {
+  it("renders with max-length from validator array", async () => {
     locals.options.fields["my-input"].validate = [
       { type: "maxlength", arguments: [5] },
     ];
@@ -185,9 +206,11 @@ describe("hmpoText", () => {
 
     const $component = $(".govuk-input");
     expect($component.attr("maxlength")).toEqual("5");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders with errorValue if available", () => {
+  it("renders with errorValue if available", async () => {
     locals.errorValues = {
       "my-input": "def456",
     };
@@ -199,9 +222,11 @@ describe("hmpoText", () => {
 
     const $component = $(".govuk-input");
     expect($component.attr("value")).toEqual("def456");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders error message if available", () => {
+  it("renders error message if available", async () => {
     locals.errors = {
       "my-input": { key: "my-input", type: "validator" },
     };
@@ -215,9 +240,11 @@ describe("hmpoText", () => {
     expect($component.text().trim()).toEqual(
       "[govuk.error]: [fields.my-input.validation.validator]",
     );
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders label as header", () => {
+  it("renders label as header", async () => {
     const $ = render(
       {
         component: "text",
@@ -228,9 +255,11 @@ describe("hmpoText", () => {
     );
     const $label = $("h1 .govuk-label");
     expect($label.attr("class")).toEqual("govuk-label govuk-label--l");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders with nopaste", () => {
+  it("renders with nopaste", async () => {
     const $ = render(
       {
         component: "text",
@@ -243,9 +272,11 @@ describe("hmpoText", () => {
     expect($label.attr("class")).toEqual(
       "govuk-input govuk-!-width-one-half js-nopaste",
     );
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders with no extra classes", () => {
+  it("renders with no extra classes", async () => {
     const $ = render(
       {
         component: "text",
@@ -256,9 +287,11 @@ describe("hmpoText", () => {
     );
     const $label = $(".govuk-input");
     expect($label.attr("class")).toEqual("govuk-input govuk-!-width-one-half");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders with extra classes", () => {
+  it("renders with extra classes", async () => {
     const $ = render(
       {
         component: "text",
@@ -269,9 +302,11 @@ describe("hmpoText", () => {
     );
     const $label = $(".govuk-input");
     expect($label.attr("class")).toEqual("govuk-input test");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders with extra classes and noPaste", () => {
+  it("renders with extra classes and noPaste", async () => {
     const $ = render(
       {
         component: "text",
@@ -287,9 +322,11 @@ describe("hmpoText", () => {
     );
     const $label = $(".govuk-input");
     expect($label.attr("class")).toEqual("govuk-input test js-nopaste");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders with noPaste set to false", () => {
+  it("renders with noPaste set to false", async () => {
     const $ = render(
       {
         component: "text",
@@ -300,5 +337,7 @@ describe("hmpoText", () => {
     );
     const $label = $(".govuk-input");
     expect($label.attr("class")).toEqual("govuk-input govuk-!-width-one-half");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 });
