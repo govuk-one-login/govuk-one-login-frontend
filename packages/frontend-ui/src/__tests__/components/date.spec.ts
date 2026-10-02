@@ -18,6 +18,7 @@ vi.mock("../../lib/filters", async (importOriginal) => {
 });
 
 import { cleanHtml, render, renderWithLocale } from "../helpers";
+import { expectComponentToHaveNoAxeViolations } from "./helpers";
 
 describe("hmpoDate", () => {
   let locals: {
@@ -36,7 +37,7 @@ describe("hmpoDate", () => {
     };
   });
 
-  it("renders inputs with ids and names", () => {
+  it("renders inputs with ids and names", async () => {
     const $ = render(
       { component: "date", params: { id: "my-input" }, ctx: true },
       locals,
@@ -57,6 +58,8 @@ describe("hmpoDate", () => {
     expect($year.attr("name")).toEqual("my-input-year");
     expect($year.attr("type")).toEqual("text");
     expect($year.attr("maxlength")).toEqual("4");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
   it("sets id on fieldset", () => {
@@ -68,7 +71,7 @@ describe("hmpoDate", () => {
     expect($fieldset.attr("id")).toEqual("my-input-fieldset");
   });
 
-  it("renders legend as header", () => {
+  it("renders legend as header", async () => {
     const $ = render(
       {
         component: "date",
@@ -84,9 +87,10 @@ describe("hmpoDate", () => {
     expect(cleanHtml($legend)).toEqual(
       '<h1 class="govuk-fieldset__heading">[fields.my-input.legend]</h1>',
     );
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders with header label localisation instead of legend when legend is not present", () => {
+  it("renders with header label localisation instead of legend when legend is not present", async () => {
     const $ = renderWithLocale(
       {
         component: "date",
@@ -106,5 +110,6 @@ describe("hmpoDate", () => {
     expect(cleanHtml($legend)).toEqual(
       '<h1 class="govuk-fieldset__heading"><span data-test="test value">Label text</span></h1>',
     );
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 });

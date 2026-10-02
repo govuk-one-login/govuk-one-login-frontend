@@ -18,6 +18,7 @@ vi.mock("../../lib/filters", async (importOriginal) => {
 });
 
 import { render } from "../helpers";
+import { expectComponentToHaveNoAxeViolations } from "./helpers";
 
 describe("hmpoForm", () => {
   let locals: Record<string, unknown>;
@@ -28,7 +29,7 @@ describe("hmpoForm", () => {
     };
   });
 
-  it("renders with default action and method", () => {
+  it("renders with default action and method", async () => {
     const $ = render({ component: "form", params: {}, ctx: true }, locals);
 
     const $component = $("form");
@@ -36,16 +37,18 @@ describe("hmpoForm", () => {
     expect($component.attr("method")).toEqual("POST");
   });
 
-  it("renders with action from locals", () => {
+  it("renders with action from locals", async () => {
     locals.action = "/local/action";
 
     const $ = render({ component: "form", params: {}, ctx: true }, locals);
 
     const $component = $("form");
     expect($component.attr("action")).toEqual("/local/action");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders with overridden action and method", () => {
+  it("renders with overridden action and method", async () => {
     const $ = render(
       {
         component: "form",
@@ -58,9 +61,11 @@ describe("hmpoForm", () => {
     const $component = $("form");
     expect($component.attr("action")).toEqual("/path");
     expect($component.attr("method")).toEqual("GET");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders caller children", () => {
+  it("renders caller children", async () => {
     const caller = '<span id="child"></span>';
     const $ = render(
       { component: "form", params: {}, caller, ctx: true },
@@ -69,15 +74,19 @@ describe("hmpoForm", () => {
 
     const $children = $("form #child");
     expect($children.length).toEqual(1);
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders csrf hidden input", () => {
+  it("renders csrf hidden input", async () => {
     const $ = render({ component: "form", params: {}, ctx: true }, locals);
 
     const $csrf = $("input");
     expect($csrf.attr("type")).toEqual("hidden");
     expect($csrf.attr("name")).toEqual("x-csrf-token");
     expect($csrf.attr("value")).toEqual("abcd1234");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
   it("does not render csrf hidden input if no value supplied in locals", () => {
