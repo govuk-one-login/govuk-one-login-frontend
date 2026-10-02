@@ -18,9 +18,10 @@ vi.mock("../../lib/filters", async (importOriginal) => {
 });
 
 import { cleanHtml, render } from "../helpers";
+import { expectComponentToHaveNoAxeViolations } from "./helpers";
 
 describe("hmpoWarningText", () => {
-  it("renders with text", () => {
+  it("renders with text", async () => {
     const $ = render({
       component: "warningText",
       params: { text: "my text <br>" },
@@ -30,9 +31,11 @@ describe("hmpoWarningText", () => {
     expect(cleanHtml($component)).toEqual(
       '<span class="govuk-visually-hidden">Warning</span>my text &lt;br&gt;',
     );
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders with html", () => {
+  it("renders with html", async () => {
     const $ = render({
       component: "warningText",
       params: { html: "my text <br>" },
@@ -42,9 +45,11 @@ describe("hmpoWarningText", () => {
     expect(cleanHtml($component)).toEqual(
       '<span class="govuk-visually-hidden">Warning</span>my text <br>',
     );
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders with caller", () => {
+  it("renders with caller", async () => {
     const $ = render({
       component: "warningText",
       params: { html: "my text <br>" },
@@ -55,5 +60,7 @@ describe("hmpoWarningText", () => {
     expect(cleanHtml($component)).toEqual(
       '<span class="govuk-visually-hidden">Warning</span><br>caller text<br>',
     );
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 });
