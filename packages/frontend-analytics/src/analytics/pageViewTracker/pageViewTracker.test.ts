@@ -81,6 +81,7 @@ describe("pageViewTracker", () => {
     const parameters = getParameters();
     const dataLayerEvent: PageViewEventInterface = {
       event: instance.eventName,
+      package_version: "__PACKAGE_VERSION__",
       page_view: {
         language: PageViewTracker.getLanguage(),
         location: PageViewTracker.getLocation(),
@@ -125,6 +126,7 @@ describe("pageViewTracker", () => {
     const parameters = getParameters();
     const dataLayerEvent: PageViewEventInterface = {
       event: instance.eventName,
+      package_version: "__PACKAGE_VERSION__",
       page_view: {
         language: PageViewTracker.getLanguage(),
         location: PageViewTracker.getLocation(),

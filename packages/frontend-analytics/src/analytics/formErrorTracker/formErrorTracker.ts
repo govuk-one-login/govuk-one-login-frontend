@@ -1,4 +1,5 @@
 import logger from "loglevel";
+import { PACKAGE_VERSION } from "../..";
 import { hasConsentForAnalytics } from "../../cookie/cookie";
 import {
   getDomain,
@@ -45,6 +46,7 @@ export function trackFormError(enabled: boolean = false) {
     fields.forEach((field) => {
       const formErrorTrackerEvent: FormEventInterface = {
         event: "event_data",
+        package_version: PACKAGE_VERSION,
         event_data: {
           event_name: "form_error",
           type: validateParameter(FormTracker.getFieldType([field]), 100),

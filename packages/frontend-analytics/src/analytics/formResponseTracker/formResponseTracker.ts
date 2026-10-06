@@ -1,4 +1,5 @@
 import logger from "loglevel";
+import { PACKAGE_VERSION } from "../..";
 import { hasConsentForAnalytics } from "../../cookie/cookie";
 import {
   getDomain,
@@ -108,6 +109,7 @@ export class FormResponseTracker extends FormTracker {
       fields.forEach((field) => {
         const formResponseTrackerEvent: FormEventInterface = {
           event: this.eventType,
+          package_version: PACKAGE_VERSION,
           event_data: {
             event_name: this.eventName,
             type: validateParameter(FormTracker.getFieldType([field]), 100),

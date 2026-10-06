@@ -42,6 +42,7 @@ describe("appInit", () => {
 
     const dataLayerEvent: FormEventInterface = {
       event: "event_data",
+      package_version: "__PACKAGE_VERSION__",
       event_data: {
         event_name: "form_response",
         type: "radio buttons",

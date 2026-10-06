@@ -1,3 +1,4 @@
+import { PACKAGE_VERSION } from "../..";
 import { hasConsentForAnalytics } from "../../cookie/cookie";
 import { isFormErrorPage } from "../../utils/dataScrapersUtils/dataScrapers";
 import { stripPIIFromString } from "../../utils/piiRemoverUtil/piiRemover";
@@ -36,6 +37,7 @@ export class PageViewTracker {
 
     const pageViewTrackerEvent: PageViewEventInterface = {
       event: this.eventName,
+      package_version: PACKAGE_VERSION,
       page_view: {
         language: PageViewTracker.getLanguage(),
         location: PageViewTracker.getLocation(),

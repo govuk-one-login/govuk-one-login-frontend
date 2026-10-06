@@ -54,8 +54,8 @@
     "chai": "^4.5.0",
     "chai-subset": "^1.6.0",
     "clean-css": "^5.3.3",
-    "express": "^5.2.1",
     "deep-clone-merge": "^1.5.5",
+    "express": "^5.2.1",
     "fast-glob": "^3.3.3",
     "helmet": "^8.1.0",
     "hmpo-nunjucks-test": "^3.0.0",
@@ -107,5 +107,8 @@
   },
   "repository": {
     "url": "https://github.com/govuk-one-login/govuk-one-login-frontend"
+  },
+  "dependencies": {
+    "@rollup/plugin-replace": "^6.0.3"
   }
 }
