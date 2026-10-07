@@ -179,7 +179,7 @@ export function addFrontendUiGlobals(nunjucksEnv: Environment) {
   nunjucksEnv.addGlobal("contactUsUrl", contactUsUrl);
   nunjucksEnv.addGlobal("warnCharacterLimit", warnCharacterLimit);
 
-  // HMPO globals
+  // Component globals
   addGlobals(nunjucksEnv);
   addFilters(nunjucksEnv);
 }

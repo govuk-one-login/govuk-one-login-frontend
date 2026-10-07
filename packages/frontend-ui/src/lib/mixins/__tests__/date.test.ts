@@ -2,34 +2,34 @@ import type { NextFunction, Response } from "express";
 import _ from "underscore";
 import type { Mock } from "vitest";
 import type {
-  HmpoController,
-  HmpoDateField,
-  HmpoError,
-  HmpoRequest,
+  DateField,
+  FieldError,
+  FormController,
+  FormRequest,
 } from "../../types";
 import DateMixin from "../date";
 
 describe("Date Mixin", () => {
   let BaseController: new () => object;
-  let Controller: HmpoController;
-  let instance: InstanceType<HmpoController> & {
+  let Controller: FormController;
+  let instance: InstanceType<FormController> & {
     Error: new (
       key: string,
-      options: Partial<HmpoError>,
-      req: HmpoRequest,
-    ) => HmpoError & { key: string };
+      options: Partial<FieldError>,
+      req: FormRequest,
+    ) => FieldError & { key: string };
     configureDateField: Mock;
     processDateField: Mock;
     validateDateField: Mock;
   };
-  let req: HmpoRequest;
+  let req: FormRequest;
   let res: Response;
   let next: Mock;
   let callback: Mock;
   let options: {
     route: string;
     template: string;
-    fields: Record<string, Partial<HmpoDateField> & { errorGroup?: string }>;
+    fields: Record<string, Partial<DateField> & { errorGroup?: string }>;
     dateFields?: string[];
   };
 
@@ -63,17 +63,17 @@ describe("Date Mixin", () => {
       sessionModel: {
         get: vi.fn(),
       },
-    } as unknown as HmpoRequest;
+    } as unknown as FormRequest;
     res = {} as Response;
     next = vi.fn();
     callback = vi.fn();
 
     BaseController = class {};
-    Controller = DateMixin(BaseController as unknown as HmpoController);
+    Controller = DateMixin(BaseController as unknown as FormController);
     instance = new Controller() as typeof instance;
     instance.Error = class {
       key: string;
-      constructor(key: string, options: Partial<HmpoError>) {
+      constructor(key: string, options: Partial<FieldError>) {
         this.key = key;
         _.extend(this, options);
       }
@@ -135,14 +135,14 @@ describe("Date Mixin", () => {
     it("should prepend date part validators to date part field", () => {
       instance.configureDateField(req, "date2");
       expect(
-        (req.form.options.fields["date2-year"] as HmpoDateField).validate,
+        (req.form.options.fields["date2-year"] as DateField).validate,
       ).toEqual(["numeric", "date-year", "part-validator"]);
     });
 
     it("should prepend required validator if the date field is required", () => {
       instance.configureDateField(req, "date1");
       expect(
-        (req.form.options.fields["date1-year"] as HmpoDateField).validate,
+        (req.form.options.fields["date1-year"] as DateField).validate,
       ).toEqual(["required", "numeric", "date-year"]);
     });
 
@@ -196,7 +196,7 @@ describe("Date Mixin", () => {
         .fn()
         .mockImplementation(
           (
-            _req: HmpoRequest,
+            _req: FormRequest,
             _res: Response,
             cb: (err: null, values: Record<string, string>) => void,
           ) => cb(null, { date1: "1980-04-23", date2: "2017-10-04" }),
@@ -229,7 +229,7 @@ describe("Date Mixin", () => {
         BaseController.prototype as Record<string, Mock>
       ).getValues.mockImplementation(
         (
-          _req: HmpoRequest,
+          _req: FormRequest,
           _res: Response,
           cb: (err: null, values: Record<string, string>) => void,
         ) => cb(null, { date1: "1980-04-23" }),
@@ -249,7 +249,7 @@ describe("Date Mixin", () => {
         BaseController.prototype as Record<string, Mock>
       ).getValues.mockImplementation(
         (
-          _req: HmpoRequest,
+          _req: FormRequest,
           _res: Response,
           cb: (err: null, values: Record<string, string>) => void,
         ) => cb(null, { date1: "1980--" }),
@@ -269,7 +269,7 @@ describe("Date Mixin", () => {
         BaseController.prototype as Record<string, Mock>
       ).getValues.mockImplementation(
         (
-          _req: HmpoRequest,
+          _req: FormRequest,
           _res: Response,
           cb: (err: null, values: Record<string, string>) => void,
         ) => cb(null, {}),
@@ -283,7 +283,7 @@ describe("Date Mixin", () => {
       (
         BaseController.prototype as Record<string, Mock>
       ).getValues.mockImplementation(
-        (_req: HmpoRequest, _res: Response, cb: (err: Error) => void) =>
+        (_req: FormRequest, _res: Response, cb: (err: Error) => void) =>
           cb(err),
       );
       instance.getValues(req, res, callback);
@@ -405,7 +405,7 @@ describe("Date Mixin", () => {
   });
 
   describe("validateFields", () => {
-    let errors: Record<string, HmpoError>;
+    let errors: Record<string, FieldError>;
 
     beforeEach(() => {
       errors = {};
@@ -414,9 +414,9 @@ describe("Date Mixin", () => {
         .fn()
         .mockImplementation(
           (
-            _req: HmpoRequest,
+            _req: FormRequest,
             _res: Response,
-            cb: (errors: Record<string, HmpoError>) => void,
+            cb: (errors: Record<string, FieldError>) => void,
           ) => cb(errors),
         );
       instance.validateDateField = vi.fn();
@@ -426,7 +426,7 @@ describe("Date Mixin", () => {
       instance.validateFields(
         req,
         res,
-        next as unknown as (errors: Record<string, HmpoError>) => void,
+        next as unknown as (errors: Record<string, FieldError>) => void,
       );
       expect(
         (BaseController.prototype as Record<string, Mock>).validateFields,
@@ -437,7 +437,7 @@ describe("Date Mixin", () => {
       instance.validateFields(
         req,
         res,
-        next as unknown as (errors: Record<string, HmpoError>) => void,
+        next as unknown as (errors: Record<string, FieldError>) => void,
       );
       expect(instance.validateDateField).toHaveBeenCalledTimes(2);
       expect(instance.validateDateField).toHaveBeenCalledWith(
@@ -454,7 +454,7 @@ describe("Date Mixin", () => {
   });
 
   describe("validateDateField", () => {
-    let errors: Record<string, HmpoError>;
+    let errors: Record<string, FieldError>;
 
     beforeEach(() => {
       errors = {};

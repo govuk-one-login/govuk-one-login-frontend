@@ -1,12 +1,12 @@
 import type { Locals, NextFunction, Request, Response } from "express";
 
-export type HmpoKey = string | Array<string>;
+export type Key = string | Array<string>;
 
-type HmpoItemObject = {
+type FieldItemObject = {
   value: string;
-  key?: HmpoKey;
+  key?: Key;
   text?: string;
-  label?: HmpoLabel;
+  label?: FieldLabel;
   divider?: unknown;
   attributes?: Record<string, unknown>;
   disabled?: boolean;
@@ -14,53 +14,48 @@ type HmpoItemObject = {
   hint?: { text?: string; html?: string };
   [key: string]: unknown;
 };
-export type HmpoItem = HmpoItemObject;
+export type FieldItem = FieldItemObject;
 
-export type HmpoPlaceholder = HmpoItemObject;
+export type Placeholder = FieldItemObject;
 
-export type HmpoContext = {
+export type Context = {
   (key: string): unknown;
   (): Locals;
 };
 
-export interface HmpoParams {
+export interface Params {
   id: string;
   contentKey?: string;
   label?: { key?: string; text?: string; html?: string };
   hint?: { key?: string; text?: string; html?: string };
   legend?: { key?: string; text?: string; html?: string };
   validate?: string | { type: string; arguments?: unknown };
-  items?: Array<HmpoItem>;
-  options?: Array<HmpoItem>;
+  items?: Array<FieldItem>;
+  options?: Array<FieldItem>;
   attributes?: Record<string, string>;
   classes?: string;
-  placeholder?: HmpoPlaceholder | true;
+  placeholder?: Placeholder | true;
   conditionals?: { [key: string]: { id: unknown } };
 
   [key: string]: unknown;
 }
 
-export type HmpoFieldOptions = {
+export type FieldOptions = {
   items?: Array<string | { value: string | number; [key: string]: unknown }>;
-} & Partial<HmpoParams>;
+} & Partial<Params>;
 
-export type HmpoTranslateFn = (key: HmpoKey, options?: object) => string;
+export type TranslateFn = (key: Key, options?: object) => string;
 
-export type HmpoConditionals = { [key: string]: unknown };
+export type Conditionals = { [key: string]: unknown };
 
-export type HmpoLabel = {
+export type FieldLabel = {
   text: string;
   classes: string;
 };
 
-export type HmpoOptionType =
-  | "legend"
-  | "hint"
-  | "label"
-  | "prefix"
-  | "spellcheck";
+export type OptionType = "legend" | "hint" | "label" | "prefix" | "spellcheck";
 
-export interface HmpoError {
+export interface FieldError {
   headerMessage?: string;
   message?: string;
   key?: string;
@@ -70,7 +65,7 @@ export interface HmpoError {
   args?: Record<string, unknown>;
 }
 
-export type HmpoFilterCondition =
+export type FilterCondition =
   | {
       [key: string]: unknown;
     }
@@ -79,10 +74,10 @@ export type HmpoFilterCondition =
   | null
   | undefined;
 
-export interface HmpoRequest extends Request {
+export interface FormRequest extends Request {
   form: {
     options: {
-      fields: Record<string, HmpoDateField>;
+      fields: Record<string, DateField>;
       dateFields: string[];
     };
     values: Record<string, string>;
@@ -92,30 +87,30 @@ export interface HmpoRequest extends Request {
   };
 }
 
-export type HmpoController = new (
+export type FormController = new (
   ...args: unknown[]
 ) => {
-  configure(req: HmpoRequest, res: Response, next: NextFunction): void;
+  configure(req: FormRequest, res: Response, next: NextFunction): void;
   getValues(
-    req: HmpoRequest,
+    req: FormRequest,
     res: Response,
     callback: (err: unknown, values?: Record<string, string>) => void,
   ): void;
-  process(req: HmpoRequest, res: Response, next: NextFunction): void;
+  process(req: FormRequest, res: Response, next: NextFunction): void;
   validateFields(
-    req: HmpoRequest,
+    req: FormRequest,
     res: Response,
-    callback: (errors: Record<string, HmpoError>) => void,
+    callback: (errors: Record<string, FieldError>) => void,
   ): void;
-  saveValues(req: HmpoRequest, res: Response, next: NextFunction): void;
+  saveValues(req: FormRequest, res: Response, next: NextFunction): void;
   Error: new (
     field: string,
-    options: Partial<HmpoError>,
-    req: HmpoRequest,
-  ) => HmpoError;
+    options: Partial<FieldError>,
+    req: FormRequest,
+  ) => FieldError;
 };
 
-export interface HmpoDateField {
+export interface DateField {
   inexact?: boolean;
   offset?: number;
   autocomplete?: string;
