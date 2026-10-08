@@ -68,7 +68,7 @@
     "moment": "^2.31.0",
     "npm-run-all2": "^7.0.2",
     "nunjucks": "^3.2.4",
-    "nx": "23.1.1",
+    "nx": "23.2.1",
     "playwright": "^1.62.1",
     "rollup": "4.59.0",
     "rollup-plugin-copy": "^3.5.0",
