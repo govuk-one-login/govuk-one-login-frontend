@@ -10,8 +10,8 @@ export const options = {
       preAllocatedVUs: 1,
       maxVUs: 100,
       stages: [
-        { target: 100, duration: "30s" },
-        { target: 100, duration: "30s" },
+        { target: 400, duration: "30s" },
+        { target: 400, duration: "30s" },
       ],
     },
   },
@@ -23,22 +23,11 @@ export const options = {
 
 export default function pocApp() {
   const responseWithEvent = http.get(
-    "http://localhost:3000/test-submit-button",
+    "http://localhost:3000/api/test-event-validation",
   );
 
-  // const responseWithOutEvent = http.get("http://localhost:3000/api");
-
   check(responseWithEvent, {
-    "status is 200": (r) => r.status === 200,
-    "page contains expected content": (r) =>
-      r.body?.includes("GOV.UK One Login"),
+    "status is 200": (r) => r.status === 200
   }) ||
     console.log(`Request failed: ${response.error || "Connection refused"}`);
-
-  // check(responseWithOutEvent, {
-  //   "status is 200": (r) => r.status === 200,
-  //   "page contains expected content": (r) =>
-  //     r.body && r.body.includes("GOV.UK One Login"),
-  // }) ||
-  //   console.log(`Request failed: ${response.error || "Connection refused"}`);
 }

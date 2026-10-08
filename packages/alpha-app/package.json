@@ -7,7 +7,7 @@
     "build-sass": "rm -rf public/stylesheets/*.css && sass --no-source-map src/frontend-assets/css/index.scss public/stylesheets/styles.css --style compressed",
     "serve": "nodemon serve",
     "precommit": "npm run test && npm run format && git add .",
-    "prod": "export NODE_ENV=production && node src/app.ts",
+    "prod": "export NODE_ENV=production && node build/app.js",
     "test": "node -e \"console.log('No tests currently defined');\"",
     "test:integration:ci": "npm run test:integration:ci:install && npm run test:integration:ci:run",
     "test:integration:ci:install": "npx playwright install --with-deps --only-shell chromium",
