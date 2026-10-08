@@ -91,6 +91,20 @@ app.post("/api/test-submit-button", (_req, res) => {
   }, 11000);
 });
 
+app.get("/api/test-event-validation", (_req, res) => {
+  // logger.info("Event validation test api called")
+  const newEvent = createEvent("AIS_EVENT_TRANSITION_APPLIED", {
+    component_id: "component_id",
+    event_name: "AIS_EVENT_TRANSITION_APPLIED",
+    event_timestamp_ms: Date.now(),
+    timestamp: Date.now(),
+  });
+  // logger.info(`New event created: ${JSON.stringify(newEvent)}`);
+  const valid = validateEvent(newEvent);
+  // logger.info(`Created event is valid?: ${valid}`);
+  res.json({ status: "COMPLETED" });
+});
+
 const protect = overloadProtection("express", {
   production: process.env.NODE_ENV === "production",
   maxEventLoopDelay: 400,
