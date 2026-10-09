@@ -6,9 +6,9 @@ import {
 import debugLib from "debug";
 import type { Application, NextFunction, Request, Response } from "express";
 import nunjucks from "nunjucks";
-import type { HmpoTranslateFn } from "./types";
+import type { TranslateFn } from "./types";
 
-const debug = debugLib("hmpo:components:locals");
+const debug = debugLib("govuk:components:locals");
 
 const getGTM = (req: Request, res: Response, next: NextFunction): void => {
   res.locals.ga4ContainerId = req.app.get("APP.GTM.GA4_CONTAINER_ID");
@@ -160,7 +160,7 @@ function middleware(
       key: string | string[],
       options: Record<string, unknown> = {},
     ) => {
-      const reqWithT = req as Request & { t?: HmpoTranslateFn };
+      const reqWithT = req as Request & { t?: TranslateFn };
       const txt = reqWithT.t ? reqWithT.t(key, options) : key;
       if (!txt) return;
       if (options.noRender) return txt;

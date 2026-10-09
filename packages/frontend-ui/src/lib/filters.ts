@@ -1,8 +1,8 @@
 import debugLib from "debug";
 import type { Environment as NunjucksEnvironment } from "nunjucks";
-import type { HmpoFilterCondition, HmpoTranslateFn } from "./types";
+import type { FilterCondition, TranslateFn } from "./types";
 
-const debug = debugLib("hmpo:components:filters");
+const debug = debugLib("govuk:components:filters");
 
 import { posix as path } from "node:path";
 import bytes from "bytes";
@@ -10,7 +10,7 @@ import moment from "moment";
 
 type GlobalThis = {
   ctx: {
-    translate?: HmpoTranslateFn;
+    translate?: TranslateFn;
     baseUrl?: string;
   };
 };
@@ -146,7 +146,7 @@ const filters = {
 
   filter(
     obj: Record<string, Record<string, unknown>>,
-    condition: HmpoFilterCondition,
+    condition: FilterCondition,
   ) {
     if (!obj) return obj;
     if (Array.isArray(obj)) {
