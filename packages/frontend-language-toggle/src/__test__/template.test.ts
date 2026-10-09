@@ -1,6 +1,6 @@
 import path from "node:path";
 import nunjucks from "nunjucks";
-import { render } from "../../test/jestHelper";
+import { render } from "../../test/testHelper";
 
 const nunjucksEnv = nunjucks.configure(
   path.dirname("frontend-language-toggle"),
@@ -11,7 +11,7 @@ const nunjucksEnv = nunjucks.configure(
 
 nunjucksEnv.addGlobal(
   "addLanguageParam",
-  jest.fn((language) => `/?lng=${language}`),
+  vi.fn((language) => `/?lng=${language}`),
 );
 
 describe("languageSelect Component", () => {

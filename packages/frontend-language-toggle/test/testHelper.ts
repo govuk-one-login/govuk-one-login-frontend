@@ -1,6 +1,9 @@
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { JSDOM } from "jsdom";
 import nunjucks from "nunjucks";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export function render(macroName: string, params = {}) {
   if (Object.keys(params).length === 0 && params.constructor === Object) {

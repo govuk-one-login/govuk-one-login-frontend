@@ -1,13 +1,10 @@
-/**
- * @jest-environment jsdom
- */
-
 import path from "node:path";
-import { axe, toHaveNoViolations } from "jest-axe";
 import nunjucks from "nunjucks";
-import { render } from "../../test/jestHelper";
+import { axe } from "vitest-axe";
+import * as matchers from "vitest-axe/matchers";
+import { render } from "../../test/testHelper";
 
-expect.extend(toHaveNoViolations);
+expect.extend(matchers);
 
 const nunjucksEnv = nunjucks.configure(
   path.dirname("frontend-language-toggle"),
@@ -18,7 +15,7 @@ const nunjucksEnv = nunjucks.configure(
 
 nunjucksEnv.addGlobal(
   "addLanguageParam",
-  jest.fn((language) => `/?lng=${language}`),
+  vi.fn((language) => `/?lng=${language}`),
 );
 
 describe("languageSelect Component", () => {
