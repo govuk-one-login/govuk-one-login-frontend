@@ -41,19 +41,6 @@
       "dependsOn": ["^build"],
       "inputs": ["default", "^default"]
     },
-    "@nx/jest:jest": {
-      "cache": false,
-      "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"],
-      "options": {
-        "passWithNoTests": true
-      },
-      "configurations": {
-        "ci": {
-          "ci": true,
-          "codeCoverage": true
-        }
-      }
-    },
     "lint": {
       "cache": true,
       "inputs": ["default", "{workspaceRoot}/biome.json"]

@@ -57,8 +57,8 @@ export const cleanHtml = (
   return html
     .replace(/&#x2019;/g, "\u2019")
     .replace(/>\s+/g, ">")
-    .replace(/\s+<\//g, "</")
-    .replace(/[\r\n][ \t]*/g, "")
+    .replace(/\s+(<\/)/g, "$1")
+    .replace(/\r?\n[ \t]*/g, "")
     .trim();
 };
 

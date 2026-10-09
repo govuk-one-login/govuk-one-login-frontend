@@ -54,7 +54,9 @@
     }
   },
   "dependencies": {
+    "@aws-sdk/client-sqs": "^3.1006.0",
     "@govuk-one-login/frontend-logger": "^0.0.2",
-    "ajv": "^8.18.0"
+    "ajv": "^8.18.0",
+    "lodash": "^4.17.21"
   }
 }
