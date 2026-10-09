@@ -35,7 +35,8 @@
     "directory": "packages/frontend-asset-loader"
   },
   "dependencies": {
-    "@govuk-one-login/frontend-logger": "^0.0.2"
+    "@govuk-one-login/frontend-logger": "^0.0.2",
+    "fast-glob": "^3.3.3"
   },
   "peerDependencies": {
     "@govuk-one-login/frontend-logger": "^0.0.2"
