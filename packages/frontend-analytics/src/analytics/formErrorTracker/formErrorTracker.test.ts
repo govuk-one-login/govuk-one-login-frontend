@@ -110,6 +110,7 @@ describe("FormErrorTracker", () => {
 
     const dataLayerEventCheckbox: FormEventInterface = {
       event: "event_data",
+      package_version: "__PACKAGE_VERSION__",
       event_data: {
         event_name: "form_error",
         type: "checkbox",
@@ -128,6 +129,7 @@ describe("FormErrorTracker", () => {
     };
     const dataLayerEventDropdown: FormEventInterface = {
       event: "event_data",
+      package_version: "__PACKAGE_VERSION__",
       event_data: {
         event_name: "form_error",
         type: "drop-down list",
@@ -146,6 +148,7 @@ describe("FormErrorTracker", () => {
     };
     const dataLayerEventRadio: FormEventInterface = {
       event: "event_data",
+      package_version: "__PACKAGE_VERSION__",
       event_data: {
         event_name: "form_error",
         type: "radio buttons",
@@ -164,6 +167,7 @@ describe("FormErrorTracker", () => {
     };
     const dataLayerEventTextarea: FormEventInterface = {
       event: "event_data",
+      package_version: "__PACKAGE_VERSION__",
       event_data: {
         event_name: "form_error",
         type: FREE_TEXT_FIELD_TYPE,
@@ -182,6 +186,7 @@ describe("FormErrorTracker", () => {
     };
     const dataLayerEventText: FormEventInterface = {
       event: "event_data",
+      package_version: "__PACKAGE_VERSION__",
       event_data: {
         event_name: "form_error",
         type: FREE_TEXT_FIELD_TYPE,
@@ -201,6 +206,7 @@ describe("FormErrorTracker", () => {
 
     const dataLayerEventPassword: FormEventInterface = {
       event: "event_data",
+      package_version: "__PACKAGE_VERSION__",
       event_data: {
         event_name: "form_error",
         type: FREE_TEXT_FIELD_TYPE,
@@ -256,6 +262,7 @@ describe("FormErrorTracker", () => {
 
     const dataLayerEvent: FormEventInterface = {
       event: "event_data",
+      package_version: "__PACKAGE_VERSION__",
       event_data: {
         event_name: "form_error",
         type: "checkbox",

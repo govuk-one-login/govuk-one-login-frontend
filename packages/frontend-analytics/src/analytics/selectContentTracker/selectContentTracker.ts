@@ -1,4 +1,5 @@
 import logger from "loglevel";
+import { PACKAGE_VERSION } from "../..";
 import { hasConsentForAnalytics } from "../../cookie/cookie";
 import { pushToDataLayer } from "../../utils/pushToDataLayerUtil/pushToDataLayer";
 import type { SelectContentEventInterface } from "./selectContentTracker.interface";
@@ -48,6 +49,7 @@ export class SelectContentTracker {
 
     const SelectContentEvent: SelectContentEventInterface = {
       event: this.eventType,
+      package_version: PACKAGE_VERSION,
       event_data: {
         event_name: "select_content",
         type: "details ui",

@@ -1,4 +1,5 @@
 import logger from "loglevel";
+import { PACKAGE_VERSION } from "../..";
 import { hasConsentForAnalytics } from "../../cookie/cookie";
 import {
   getDomain,
@@ -61,6 +62,7 @@ export class NavigationTracker {
 
     const navigationTrackerEvent: NavigationEventInterface = {
       event: this.eventName,
+      package_version: PACKAGE_VERSION,
       event_data: {
         event_name: "navigation",
         type: getLinkType(element),

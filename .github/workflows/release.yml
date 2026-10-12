@@ -136,3 +136,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
           npm_config_legacy_peer_deps: false
+
+      - name: Upload build files
+        uses: actions/upload-artifact@v7
+        if: github.event.inputs.dry_run == 'true'
+        with:
+          name: build
+          path: packages/${{ github.event.inputs.target }}/build

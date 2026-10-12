@@ -79,6 +79,7 @@ describe("selectContentTracker", () => {
     secondDetails.append(span2);
     const dataLayerEventFirstDetails: SelectContentEventInterface = {
       event: "event_data",
+      package_version: "__PACKAGE_VERSION__",
       event_data: {
         event_name: "select_content",
         type: "details ui",
@@ -98,6 +99,7 @@ describe("selectContentTracker", () => {
 
     const dataLayerEventSecondDetails: SelectContentEventInterface = {
       event: "event_data",
+      package_version: "__PACKAGE_VERSION__",
       event_data: {
         event_name: "select_content",
         type: "details ui",

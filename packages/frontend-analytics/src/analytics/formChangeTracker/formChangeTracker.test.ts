@@ -53,6 +53,7 @@ describe("FormChangeTracker", () => {
     changeLink.dispatchEvent(action);
     expect(pushToDataLayer.pushToDataLayer).toBeCalledWith({
       event: "event_data",
+      package_version: "__PACKAGE_VERSION__",
       event_data: {
         action: "change response",
         event_name: "form_change_response",
