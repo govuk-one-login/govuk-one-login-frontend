@@ -79,7 +79,7 @@ jobs:
       - name: Print Environment Information
         run: npx nx report
 
-        - name: Version packages
+      - name: Version packages
         if: ${{ github.ref == 'refs/heads/main' || contains(github.ref, '@v') }}
         run: |
           if [ "${{ steps.channel.outputs.is_channel }}" = "true" ]; then
