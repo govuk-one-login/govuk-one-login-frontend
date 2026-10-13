@@ -2,21 +2,21 @@ import type { NextFunction, Response } from "express";
 import moment from "moment";
 import _ from "underscore";
 import type {
-  HmpoController,
-  HmpoDateField,
-  HmpoError,
-  HmpoRequest,
+  DateField,
+  FieldError,
+  FormController,
+  FormRequest,
 } from "../types";
 
 const DATE_PARTS = ["day", "month", "year"];
 
-export default (Controller: HmpoController) =>
+export default (Controller: FormController) =>
   class extends Controller {
-    configure(req: HmpoRequest, res: Response, next: NextFunction) {
+    configure(req: FormRequest, res: Response, next: NextFunction) {
       req.form.options.dateFields = _.keys(
         _.pick(
           req.form.options.fields,
-          (field: HmpoDateField) =>
+          (field: DateField) =>
             field.validate === "date" || _.contains(field.validate, "date"),
         ),
       );
@@ -28,7 +28,7 @@ export default (Controller: HmpoController) =>
       super.configure(req, res, next);
     }
 
-    configureDateField(req: HmpoRequest, fieldName: string) {
+    configureDateField(req: FormRequest, fieldName: string) {
       const dateField = req.form.options.fields[fieldName];
       const required = _.contains(dateField.validate, "required");
 
@@ -66,7 +66,7 @@ export default (Controller: HmpoController) =>
     }
 
     getValues(
-      req: HmpoRequest,
+      req: FormRequest,
       res: Response,
       callback: (err: unknown, values?: Record<string, string>) => void,
     ) {
@@ -88,14 +88,14 @@ export default (Controller: HmpoController) =>
       });
     }
 
-    process(req: HmpoRequest, res: Response, next: NextFunction) {
+    process(req: FormRequest, res: Response, next: NextFunction) {
       _.forEach(req.form.options.dateFields, (fieldName: string) =>
         this.processDateField(req, fieldName),
       );
       super.process(req, res, next);
     }
 
-    processDateField(req: HmpoRequest, fieldName: string) {
+    processDateField(req: FormRequest, fieldName: string) {
       const dayName = `${fieldName}-day`;
       const monthName = `${fieldName}-month`;
       const yearName = `${fieldName}-year`;
@@ -138,9 +138,9 @@ export default (Controller: HmpoController) =>
     }
 
     validateFields(
-      req: HmpoRequest,
+      req: FormRequest,
       res: Response,
-      callback: (errors: Record<string, HmpoError>) => void,
+      callback: (errors: Record<string, FieldError>) => void,
     ) {
       super.validateFields(req, res, (errors) => {
         _.forEach(req.form.options.dateFields, (fieldName: string) =>
@@ -151,9 +151,9 @@ export default (Controller: HmpoController) =>
     }
 
     validateDateField(
-      req: HmpoRequest,
+      req: FormRequest,
       fieldName: string,
-      errors: Record<string, HmpoError>,
+      errors: Record<string, FieldError>,
     ) {
       const fieldErrors = _.pick(
         errors,
@@ -246,7 +246,7 @@ export default (Controller: HmpoController) =>
       }
     }
 
-    saveValues(req: HmpoRequest, res: Response, next: NextFunction) {
+    saveValues(req: FormRequest, res: Response, next: NextFunction) {
       _.forEach(req.form.options.dateFields, (fieldName: string) => {
         DATE_PARTS.forEach((part) => {
           delete req.form.values[`${fieldName}-${part}`];

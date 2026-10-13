@@ -11,6 +11,7 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       reporter: ["text", "lcov"],
+      exclude: ["**/__tests__/helpers.ts", "**/__tests__/locale.json"],
     },
   },
 });

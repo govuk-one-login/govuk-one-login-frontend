@@ -1,9 +1,10 @@
 /**
  * Determines whether a form element is optional.
  *
- * Reads aria-required="false" on the element itself (set by hmpo-components for
- * text/textarea/select fields) or on its closest fieldset ancestor (set by
- * hmpo-components for radios/checkboxes). If neither is present, the field is
+ * Reads aria-required="false" on the element itself (set by govuk-one-login
+ * components for text/textarea/select fields) or on its closest fieldset
+ * ancestor (set by govuk-one-login components for radios/checkboxes). If
+ * neither is present, the field is
  * treated as required.
  *
  * @param {HTMLElement} element - The form element to check
