@@ -150,9 +150,16 @@ jobs:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
           npm_config_legacy_peer_deps: false
 
+      - name: Resolve package directory
+        id: pkg
+        if: github.event.inputs.dry_run == 'true'
+        run: echo "dir=${TARGET##*/}" >> "$GITHUB_OUTPUT"
+        env:
+          TARGET: ${{ github.event.inputs.target }}
+
       - name: Upload build files
         uses: actions/upload-artifact@v7
         if: github.event.inputs.dry_run == 'true'
         with:
           name: build
-          path: packages/${{ replace(github.event.inputs.target, '@govuk-one-login/', '') }}
+          path: packages/${{ steps.pkg.outputs.dir }}
