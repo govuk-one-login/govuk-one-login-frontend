@@ -1,3 +1,4 @@
+import { PACKAGE_VERSION } from "../..";
 import type { PageViewEventInterface } from "../../analytics/pageViewTracker/pageViewTracker.interface";
 import * as pushToDataLayer from "./pushToDataLayer";
 
@@ -5,7 +6,7 @@ describe("should push to dataLayer", () => {
   test("Push preserves system-controlled fields", () => {
     const pageViewTrackerDataLayerEvent: PageViewEventInterface = {
       event: "page_view_ga4",
-      package_version: "__PACKAGE_VERSION__",
+      package_version: PACKAGE_VERSION,
       page_view: {
         language: "en",
         location: "http://localhost:3000/",
@@ -51,7 +52,7 @@ describe("should push to dataLayer", () => {
   test("Push strips PII from user-facing fields", () => {
     const eventWithPII = {
       event: "page_view_ga4",
-      package_version: "__PACKAGE_VERSION__",
+      package_version: PACKAGE_VERSION,
       page_view: {
         language: "en",
         location: "http://example.com/verify?email=user@example.com",
@@ -81,7 +82,7 @@ describe("should push to dataLayer", () => {
   test("Push strips PII from form event fields", () => {
     const event = {
       event: "form_response",
-      package_version: "__PACKAGE_VERSION__",
+      package_version: PACKAGE_VERSION,
       event_data: {
         event_name: "form_response",
         text: "Call 07911 123456 for help",

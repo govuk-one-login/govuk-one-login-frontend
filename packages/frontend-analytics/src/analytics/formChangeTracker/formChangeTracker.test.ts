@@ -1,4 +1,5 @@
 import { acceptCookies, rejectCookies } from "../../../test/utils";
+import { PACKAGE_VERSION } from "../..";
 import * as pushToDataLayer from "../../utils/pushToDataLayerUtil/pushToDataLayer";
 import { FormChangeTracker } from "./formChangeTracker";
 
@@ -53,7 +54,7 @@ describe("FormChangeTracker", () => {
     changeLink.dispatchEvent(action);
     expect(pushToDataLayer.pushToDataLayer).toBeCalledWith({
       event: "event_data",
-      package_version: "__PACKAGE_VERSION__",
+      package_version: PACKAGE_VERSION,
       event_data: {
         action: "change response",
         event_name: "form_change_response",

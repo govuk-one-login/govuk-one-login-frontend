@@ -1,4 +1,5 @@
 import { acceptCookies, rejectCookies } from "../../../test/utils";
+import { PACKAGE_VERSION } from "../..";
 import * as dataScrapers from "../../utils/dataScrapersUtils/dataScrapers";
 import * as piiRemover from "../../utils/piiRemoverUtil/piiRemover";
 import * as pushToDataLayer from "../../utils/pushToDataLayerUtil/pushToDataLayer";
@@ -110,7 +111,7 @@ describe("FormErrorTracker", () => {
 
     const dataLayerEventCheckbox: FormEventInterface = {
       event: "event_data",
-      package_version: "__PACKAGE_VERSION__",
+      package_version: PACKAGE_VERSION,
       event_data: {
         event_name: "form_error",
         type: "checkbox",
@@ -129,7 +130,7 @@ describe("FormErrorTracker", () => {
     };
     const dataLayerEventDropdown: FormEventInterface = {
       event: "event_data",
-      package_version: "__PACKAGE_VERSION__",
+      package_version: PACKAGE_VERSION,
       event_data: {
         event_name: "form_error",
         type: "drop-down list",
@@ -148,7 +149,7 @@ describe("FormErrorTracker", () => {
     };
     const dataLayerEventRadio: FormEventInterface = {
       event: "event_data",
-      package_version: "__PACKAGE_VERSION__",
+      package_version: PACKAGE_VERSION,
       event_data: {
         event_name: "form_error",
         type: "radio buttons",
@@ -167,7 +168,7 @@ describe("FormErrorTracker", () => {
     };
     const dataLayerEventTextarea: FormEventInterface = {
       event: "event_data",
-      package_version: "__PACKAGE_VERSION__",
+      package_version: PACKAGE_VERSION,
       event_data: {
         event_name: "form_error",
         type: FREE_TEXT_FIELD_TYPE,
@@ -186,7 +187,7 @@ describe("FormErrorTracker", () => {
     };
     const dataLayerEventText: FormEventInterface = {
       event: "event_data",
-      package_version: "__PACKAGE_VERSION__",
+      package_version: PACKAGE_VERSION,
       event_data: {
         event_name: "form_error",
         type: FREE_TEXT_FIELD_TYPE,
@@ -206,7 +207,7 @@ describe("FormErrorTracker", () => {
 
     const dataLayerEventPassword: FormEventInterface = {
       event: "event_data",
-      package_version: "__PACKAGE_VERSION__",
+      package_version: PACKAGE_VERSION,
       event_data: {
         event_name: "form_error",
         type: FREE_TEXT_FIELD_TYPE,
@@ -262,7 +263,7 @@ describe("FormErrorTracker", () => {
 
     const dataLayerEvent: FormEventInterface = {
       event: "event_data",
-      package_version: "__PACKAGE_VERSION__",
+      package_version: PACKAGE_VERSION,
       event_data: {
         event_name: "form_error",
         type: "checkbox",

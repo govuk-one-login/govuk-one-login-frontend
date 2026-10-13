@@ -1,4 +1,5 @@
 import { acceptCookies, rejectCookies } from "../../../test/utils";
+import { PACKAGE_VERSION } from "../..";
 import * as pushToDataLayer from "../../utils/pushToDataLayerUtil/pushToDataLayer";
 import { FREE_TEXT_FIELD_TYPE } from "../formTracker/formTracker";
 import type { FormEventInterface } from "../formTracker/formTracker.interface";
@@ -79,7 +80,7 @@ describe("form with multiple fields", () => {
 
     const dataLayerEventCheckbox: FormEventInterface = {
       event: "event_data",
-      package_version: "__PACKAGE_VERSION__",
+      package_version: PACKAGE_VERSION,
       event_data: {
         event_name: "form_response",
         type: "checkbox",
@@ -99,7 +100,7 @@ describe("form with multiple fields", () => {
 
     const dataLayerEventDropdown: FormEventInterface = {
       event: "event_data",
-      package_version: "__PACKAGE_VERSION__",
+      package_version: PACKAGE_VERSION,
       event_data: {
         event_name: "form_response",
         type: "drop-down list",
@@ -118,7 +119,7 @@ describe("form with multiple fields", () => {
     };
     const dataLayerEventText: FormEventInterface = {
       event: "event_data",
-      package_version: "__PACKAGE_VERSION__",
+      package_version: PACKAGE_VERSION,
       event_data: {
         event_name: "form_response",
         type: FREE_TEXT_FIELD_TYPE,
@@ -137,7 +138,7 @@ describe("form with multiple fields", () => {
     };
     const dataLayerEventPassword: FormEventInterface = {
       event: "event_data",
-      package_version: "__PACKAGE_VERSION__",
+      package_version: PACKAGE_VERSION,
       event_data: {
         event_name: "form_response",
         type: FREE_TEXT_FIELD_TYPE,
@@ -156,7 +157,7 @@ describe("form with multiple fields", () => {
     };
     const dataLayerEventRadio: FormEventInterface = {
       event: "event_data",
-      package_version: "__PACKAGE_VERSION__",
+      package_version: PACKAGE_VERSION,
       event_data: {
         event_name: "form_response",
         type: "radio buttons",
@@ -175,7 +176,7 @@ describe("form with multiple fields", () => {
     };
     const dataLayerEventTextarea: FormEventInterface = {
       event: "event_data",
-      package_version: "__PACKAGE_VERSION__",
+      package_version: PACKAGE_VERSION,
       event_data: {
         event_name: "form_response",
         type: FREE_TEXT_FIELD_TYPE,
@@ -257,7 +258,7 @@ describe("form with radio buttons", () => {
 
     const dataLayerEvent: FormEventInterface = {
       event: "event_data",
-      package_version: "__PACKAGE_VERSION__",
+      package_version: PACKAGE_VERSION,
       event_data: {
         event_name: "form_response",
         type: "radio buttons",
@@ -305,7 +306,7 @@ describe("form with radio buttons", () => {
 
     const dataLayerEvent: FormEventInterface = {
       event: "event_data",
-      package_version: "__PACKAGE_VERSION__",
+      package_version: PACKAGE_VERSION,
       event_data: {
         event_name: "form_response",
         type: "radio buttons",
@@ -362,7 +363,7 @@ describe("form with input checkbox", () => {
 
     const dataLayerEvent: FormEventInterface = {
       event: "event_data",
-      package_version: "__PACKAGE_VERSION__",
+      package_version: PACKAGE_VERSION,
       event_data: {
         event_name: "form_response",
         type: "checkbox",
@@ -410,7 +411,7 @@ describe("form with input text", () => {
 
     const dataLayerEvent: FormEventInterface = {
       event: "event_data",
-      package_version: "__PACKAGE_VERSION__",
+      package_version: PACKAGE_VERSION,
       event_data: {
         event_name: "form_response",
         type: FREE_TEXT_FIELD_TYPE,
@@ -459,7 +460,7 @@ describe("form with input textarea", () => {
 
     const dataLayerEvent: FormEventInterface = {
       event: "event_data",
-      package_version: "__PACKAGE_VERSION__",
+      package_version: PACKAGE_VERSION,
       event_data: {
         event_name: "form_response",
         type: FREE_TEXT_FIELD_TYPE,
@@ -508,7 +509,7 @@ describe("form with dropdown", () => {
 
     const dataLayerEvent: FormEventInterface = {
       event: "event_data",
-      package_version: "__PACKAGE_VERSION__",
+      package_version: PACKAGE_VERSION,
       event_data: {
         event_name: "form_response",
         type: "drop-down list",

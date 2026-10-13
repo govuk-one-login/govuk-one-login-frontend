@@ -1,4 +1,5 @@
 import { acceptCookies, rejectCookies } from "../../../test/utils";
+import { PACKAGE_VERSION } from "../..";
 import * as piiRemover from "../../utils/piiRemoverUtil/piiRemover";
 import * as pushToDataLayer from "../../utils/pushToDataLayerUtil/pushToDataLayer";
 import { getTaxonomy } from "../../utils/taxonomyUtils/taxonomyUtils";
@@ -81,7 +82,7 @@ describe("pageViewTracker", () => {
     const parameters = getParameters();
     const dataLayerEvent: PageViewEventInterface = {
       event: instance.eventName,
-      package_version: "__PACKAGE_VERSION__",
+      package_version: PACKAGE_VERSION,
       page_view: {
         language: PageViewTracker.getLanguage(),
         location: PageViewTracker.getLocation(),
@@ -126,7 +127,7 @@ describe("pageViewTracker", () => {
     const parameters = getParameters();
     const dataLayerEvent: PageViewEventInterface = {
       event: instance.eventName,
-      package_version: "__PACKAGE_VERSION__",
+      package_version: PACKAGE_VERSION,
       page_view: {
         language: PageViewTracker.getLanguage(),
         location: PageViewTracker.getLocation(),
