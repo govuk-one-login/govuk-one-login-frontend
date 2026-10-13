@@ -147,12 +147,11 @@
                 .DI
                 .appInit({
                     ga4ContainerId: "{{ ga4ContainerId }}",
-                    uaContainerId: "{{ uaContainerId }}"
+                    uaContainerId: "not used" // We don't use UA anymore, but it's a required param
                 }, {
                     isDataSensitive: {{analyticsDataSensitive}},
                     isPageDataSensitive: {{isPageDataSensitive}},
                     enableGa4Tracking: {{isGa4Enabled}},
-                    enableUaTracking: {{isUaEnabled}},
                     cookieDomain: "{{analyticsCookieDomain}}"
                 });
         </script>
