@@ -1,3 +1,21 @@
+## 5.3.6 (2026-10-13)
+
+### 🚀 Features
+
+- removal of hmpo-nunjucks-test ([#497](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/497))
+- Disable UA for core ([#507](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/507))
+- updated package hoisting and vulnerabilities patching ([#504](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/504))
+
+### 🩹 Fixes
+
+- Testing TSConfig for frontend-ui ([#493](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/493))
+
+### ❤️ Thank You
+
+- Dan Corder @DanCorderIPV
+- DavidMcMichael-GDS
+- Sam Bunce
+
 ## 5.3.5 (2026-09-28)
 
 ### 🚀 Features
