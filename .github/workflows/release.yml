@@ -155,4 +155,4 @@ jobs:
         if: github.event.inputs.dry_run == 'true'
         with:
           name: build
-          path: packages/${{ github.event.inputs.target }}/build
+          path: packages/${{ replace(github.event.inputs.target, '@govuk-one-login/', '') }}
