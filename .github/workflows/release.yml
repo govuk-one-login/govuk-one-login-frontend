@@ -79,35 +79,6 @@ jobs:
       - name: Print Environment Information
         run: npx nx report
 
-      - name: Version packages
-        if: ${{ github.ref == 'refs/heads/main' || contains(github.ref, '@v') }}
-        run: |
-          if [ "${{ steps.channel.outputs.is_channel }}" = "true" ]; then
-            npx nx release version prerelease \
-              --preid=${{ steps.channel.outputs.name }} \
-              --projects=${{ github.event.inputs.target }} \
-              ${{ github.event.inputs.first_release == 'true' && '--first-release' || '' }} \
-              ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
-          else
-            npx nx release version ${{ github.event.inputs.increment }} \
-              --projects=${{ github.event.inputs.target }} \
-              ${{ github.event.inputs.first_release == 'true' && '--first-release' || '' }} \
-              ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
-          fi
-        env:
-          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
-          npm_config_legacy_peer_deps: false
-      - name: Format, lint, and test affected packages
-        run: npx nx run-many -t format,lint,test --projects=${{ github.event.inputs.target }}
-
-      - name: Build all projects
-        run: npx nx run-many -t build
-
-      # This line is needed for nx affected to work when CI is running on a PR
-      - name: Set up main branch tracking
-        run: git branch --track main origin/main
-        if: ${{ github.event_name == 'pull_request' }}
-
       - name: Configure git user
         run: |
           git config --global user.email "226340596+govuk-one-login-frontend-publisher[bot]@users.noreply.github.com"
@@ -127,10 +98,50 @@ jobs:
             echo "Not a channel branch"
           fi
 
+      - name: Resolve package directory
+        id: pkg
+        run: echo "dir=${TARGET##*/}" >> "$GITHUB_OUTPUT"
+        env:
+          TARGET: ${{ github.event.inputs.target }}
+
+      - name: Version packages
+        id: version
+        if: ${{ github.ref == 'refs/heads/main' || contains(github.ref, '@v') }}
+        run: |
+          if [ "${{ steps.channel.outputs.is_channel }}" = "true" ]; then
+            npx nx release version prerelease \
+              --preid=${{ steps.channel.outputs.name }} \
+              --projects=${{ github.event.inputs.target }} \
+              ${{ github.event.inputs.first_release == 'true' && '--first-release' || '' }} \
+              ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
+          else
+            npx nx release version ${{ github.event.inputs.increment }} \
+              --projects=${{ github.event.inputs.target }} \
+              ${{ github.event.inputs.first_release == 'true' && '--first-release' || '' }} \
+              ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
+          fi
+          NEW_VERSION="$(node -p "require('./packages/${{ steps.pkg.outputs.dir }}/package.json').version")"
+          echo "number=$NEW_VERSION" >> "$GITHUB_OUTPUT"
+          echo "Resolved version for changelog: $NEW_VERSION"
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
+          npm_config_legacy_peer_deps: false
+
+      - name: Format, lint, and test affected packages
+        run: npx nx run-many -t format,lint,test --projects=${{ github.event.inputs.target }}
+
+      - name: Build all projects
+        run: npx nx run-many -t build
+
+      # This line is needed for nx affected to work when CI is running on a PR
+      - name: Set up main branch tracking
+        run: git branch --track main origin/main
+        if: ${{ github.event_name == 'pull_request' }}
+
       - name: Changelog and publish packages
         if: ${{ github.ref == 'refs/heads/main' || contains(github.ref, '@v') }}
         run: |
-          npx nx release changelog ${{ github.event.inputs.increment }} \
+          npx nx release changelog ${{ steps.version.outputs.number }} \
             --projects=${{ github.event.inputs.target }} \
             ${{ github.event.inputs.first_release == 'true' && '--first-release' || '' }} \
             ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
@@ -149,13 +160,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
           npm_config_legacy_peer_deps: false
-
-      - name: Resolve package directory
-        id: pkg
-        if: github.event.inputs.dry_run == 'true'
-        run: echo "dir=${TARGET##*/}" >> "$GITHUB_OUTPUT"
-        env:
-          TARGET: ${{ github.event.inputs.target }}
 
       - name: Upload build files
         uses: actions/upload-artifact@v7
