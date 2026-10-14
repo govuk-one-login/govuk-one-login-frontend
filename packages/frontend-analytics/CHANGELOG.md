@@ -1,3 +1,15 @@
+## 4.2.3 (2026-10-14)
+
+### 🚀 Features
+
+- **DFC-1413:** Bake frontend-analytics package number into events ([#510](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/510))
+- removal of hmpo-nunjucks-test ([#497](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/497))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+- Sam Bunce
+
 # patch (2026-10-14)
 
 ### 🚀 Features
