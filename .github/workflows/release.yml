@@ -133,7 +133,7 @@ jobs:
           npx nx release changelog ${{ github.event.inputs.increment }} \
             --projects=${{ github.event.inputs.target }} \
             ${{ github.event.inputs.first_release == 'true' && '--first-release' || '' }} \
-            ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '--yes' }}
+            ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
           if [ "${{ steps.channel.outputs.is_channel }}" != "true" ]; then
             npx nx release publish \
               --projects=${{ github.event.inputs.target }} \
