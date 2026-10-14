@@ -1,5 +1,6 @@
 export interface PageViewEventInterface {
   event: string; // page_view_ga4
+  package_version?: string;
   page_view: {
     language: string;
     location: string;

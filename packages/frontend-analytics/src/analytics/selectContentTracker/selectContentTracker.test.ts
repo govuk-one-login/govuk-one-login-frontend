@@ -1,4 +1,5 @@
 import { acceptCookies, rejectCookies } from "../../../test/utils";
+import { PACKAGE_VERSION } from "../..";
 import * as pushToDataLayer from "../../utils/pushToDataLayerUtil/pushToDataLayer";
 import { SelectContentTracker } from "./selectContentTracker";
 import type { SelectContentEventInterface } from "./selectContentTracker.interface";
@@ -79,6 +80,7 @@ describe("selectContentTracker", () => {
     secondDetails.append(span2);
     const dataLayerEventFirstDetails: SelectContentEventInterface = {
       event: "event_data",
+      package_version: PACKAGE_VERSION,
       event_data: {
         event_name: "select_content",
         type: "details ui",
@@ -98,6 +100,7 @@ describe("selectContentTracker", () => {
 
     const dataLayerEventSecondDetails: SelectContentEventInterface = {
       event: "event_data",
+      package_version: PACKAGE_VERSION,
       event_data: {
         event_name: "select_content",
         type: "details ui",

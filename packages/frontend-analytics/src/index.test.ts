@@ -1,6 +1,7 @@
 import "./index";
 import { acceptCookies } from "../test/utils";
 import type { FormEventInterface } from "./analytics/formTracker/formTracker.interface";
+import { PACKAGE_VERSION } from "./index";
 import * as pushToDataLayer from "./utils/pushToDataLayerUtil/pushToDataLayer";
 
 declare global {
@@ -42,6 +43,7 @@ describe("appInit", () => {
 
     const dataLayerEvent: FormEventInterface = {
       event: "event_data",
+      package_version: PACKAGE_VERSION,
       event_data: {
         event_name: "form_response",
         type: "radio buttons",

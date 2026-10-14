@@ -6,6 +6,9 @@ import type {
 } from "./analytics/core/core.interface";
 import { applyDefaults } from "./utils/applyDefaultsUtil/applyDefaults";
 
+// __PACKAGE_VERSION__ is replaced by rollup during build process
+export const PACKAGE_VERSION = "__PACKAGE_VERSION__";
+
 declare global {
   interface Window {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

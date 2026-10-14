@@ -1,5 +1,6 @@
 export interface NavigationEventInterface {
   event: string;
+  package_version?: string;
   event_data: {
     event_name: string;
     type: string;

@@ -97,5 +97,8 @@
   },
   "repository": {
     "url": "https://github.com/govuk-one-login/govuk-one-login-frontend"
+  },
+  "dependencies": {
+    "@rollup/plugin-replace": "^6.0.3"
   }
 }

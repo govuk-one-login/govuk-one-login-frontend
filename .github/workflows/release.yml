@@ -79,11 +79,29 @@ jobs:
       - name: Print Environment Information
         run: npx nx report
 
+      - name: Version packages
+        if: ${{ github.ref == 'refs/heads/main' || contains(github.ref, '@v') }}
+        run: |
+          if [ "${{ steps.channel.outputs.is_channel }}" = "true" ]; then
+            npx nx release version prerelease \
+              --preid=${{ steps.channel.outputs.name }} \
+              --projects=${{ github.event.inputs.target }} \
+              ${{ github.event.inputs.first_release == 'true' && '--first-release' || '' }} \
+              ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
+          else
+            npx nx release version ${{ github.event.inputs.increment }} \
+              --projects=${{ github.event.inputs.target }} \
+              ${{ github.event.inputs.first_release == 'true' && '--first-release' || '' }} \
+              ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
+          fi
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
+          npm_config_legacy_peer_deps: false
+      - name: Format, lint, and test affected packages
+        run: npx nx run-many -t format,lint,test --projects=${{ github.event.inputs.target }}
+
       - name: Build all projects
         run: npx nx run-many -t build
-
-      - name: Format, lint, test, and build affected packages
-        run: npx nx run-many -t format,lint,test --projects=${{ github.event.inputs.target }}
 
       # This line is needed for nx affected to work when CI is running on a PR
       - name: Set up main branch tracking
@@ -109,25 +127,20 @@ jobs:
             echo "Not a channel branch"
           fi
 
-      - name: Publish packages
+      - name: Changelog and publish packages
         if: ${{ github.ref == 'refs/heads/main' || contains(github.ref, '@v') }}
         run: |
-          if [ "${{ steps.channel.outputs.is_channel }}" = "true" ]; then
-            npx nx release prerelease \
-              --preid=${{ steps.channel.outputs.name }} \
+          npx nx release changelog ${{ github.event.inputs.increment }} \
+            --projects=${{ github.event.inputs.target }} \
+            ${{ github.event.inputs.first_release == 'true' && '--first-release' || '' }} \
+            ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '--yes' }}
+          if [ "${{ steps.channel.outputs.is_channel }}" != "true" ]; then
+            npx nx release publish \
               --projects=${{ github.event.inputs.target }} \
-              --skip-publish \
-              ${{ github.event.inputs.first_release == 'true' && '--first-release' || '' }} \
-              ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '--yes' }}
-          else
-            npx nx release ${{ github.event.inputs.increment }} \
-              --projects=${{ github.event.inputs.target }} \
-              ${{ github.event.inputs.first_release == 'true' && '--first-release' || '' }} \
-              ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '--yes' }}
+              ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
           fi
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
-          # See here for why legacy peer deps setting is required: https://github.com/nrwl/nx/issues/22066
           npm_config_legacy_peer_deps: false
 
       - name: Publish channel release to npm
@@ -136,3 +149,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
           npm_config_legacy_peer_deps: false
+
+      - name: Resolve package directory
+        id: pkg
+        if: github.event.inputs.dry_run == 'true'
+        run: echo "dir=${TARGET##*/}" >> "$GITHUB_OUTPUT"
+        env:
+          TARGET: ${{ github.event.inputs.target }}
+
+      - name: Upload build files
+        uses: actions/upload-artifact@v7
+        if: github.event.inputs.dry_run == 'true'
+        with:
+          name: build
+          path: packages/${{ steps.pkg.outputs.dir }}
