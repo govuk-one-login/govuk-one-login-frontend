@@ -22,24 +22,31 @@ The `stripPIIFromString` function removes Personally Identifiable Information (P
 | UK Postcode | `[postcode]` | `SW1A 1AA` | `[postcode]` |
 | UK Phone Number | `[phonenumber]` | `07911 123 456` | `[phonenumber]` |
 | +44 Phone Number | `[phonenumber]` | `+44 7911 123456` | `[phonenumber]` |
+| 0044 Phone Number | `[phonenumber]` | `00447911123456` | `[phonenumber]` |
 | International Phone | `[phonenumber]` | `+33 1 23 45 67 89` | `[phonenumber]` |
 | Card Number | `[cardNumber]` | `4111 1111 1111 1111` | `[cardNumber]` |
 | Long Numeric (10+ digits) | `[numericReference]` | `9434765919` | `[numericReference]` |
 | Passport (9 digits) | `[passport]` | `123456789` | `[passport]` |
+| Street Address | `[streetAddress]` | `10 Downing Street` | `[streetAddress]` |
+| tel: URL | `[telUrl]` | `tel:07123456789` | `[telUrl]` |
+| mailto: URL | `[mailtoUrl]` | `mailto:user@example.com` | `[mailtoUrl]` |
+| Date (DD MM YYYY) | `[date]` | `01 01 1990` | `[date]` |
 
 ## Application Order
 
 Patterns are applied sequentially from top to bottom. More specific patterns are applied first to prevent generic patterns from consuming structured data:
 
-1. **Email** — applied first as it has a distinct `@`/`%40` signature
-2. **Structured identifiers** — UUID, IPv4, IPv6, NINO, Driving Licence, VRN
-3. **Sort codes** — applied before dates to prevent `12-34-56` being matched as DD-MM-YY
-4. **Dates** — numeric and string formats
-5. **Postcodes** — UK format
-6. **Phone numbers** — UK and international
-7. **Card numbers** — 13-19 digit sequences with optional separators
-8. **Long numeric catch-all** — 10+ digits (covers NHS numbers, UTRs, account references)
-9. **Passport numbers** — 9-digit sequences (applied last as the most generic numeric pattern)
+1. **tel:/mailto: URLs** — applied first to fully redact tel: and mailto: URI schemes before other patterns consume parts of them
+2. **Email** — applied next as it has a distinct `@`/`%40` signature
+3. **Structured identifiers** — UUID, IPv4, IPv6, NINO, Driving Licence, VRN
+4. **Sort codes** — applied before dates to prevent `12-34-56` being matched as DD-MM-YY
+5. **Dates** — numeric formats (slash, hyphen, backslash, space separators) and string formats
+6. **Postcodes** — UK format
+7. **Phone numbers** — UK (0, +44, 0044 prefixes) and international
+8. **Card numbers** — 13-19 digit sequences with optional separators
+9. **Street addresses** — house number followed by 2+ words (applied after postcodes and phone numbers to avoid conflicts)
+10. **Long numeric catch-all** — 10+ digits (covers NHS numbers, UTRs, account references)
+11. **Passport numbers** — 9-digit sequences (applied last as the most generic numeric pattern)
 
 ## Known Limitations
 

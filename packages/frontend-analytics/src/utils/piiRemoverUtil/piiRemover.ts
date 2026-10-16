@@ -2,8 +2,8 @@ const EMAIL_PATTERN = /[^\s=@/?&#+]+\s?(?:@|%40)\s?[^\s=@/?&+]+/g;
 const POSTCODE_PATTERN =
   /\b[A-PR-UWYZ][A-HJ-Z]?\d[0-9A-HJKMNPR-Y]?(?:[\s+]|%20)*\d(?!refund)[ABD-HJLNPQ-Z]{2,3}\b/gi;
 
-// UK phone numbers: +44 or 0 prefix followed by 10-11 digits with optional spaces/hyphens
-const UK_PHONE_PATTERN = /(?:\+44\s?|0)(?:\d[\s-]?){9,10}\d/g;
+// UK phone numbers: +44, 0044, or 0 prefix followed by 10-11 digits with optional spaces/hyphens
+const UK_PHONE_PATTERN = /(?:\+44\s?|0044\s?|0)(?:\d[\s-]?){9,10}\d/g;
 
 // International phone numbers: + followed by at least 10 digits with optional separators
 const INTERNATIONAL_PHONE_PATTERN = /\+\d[\d\s\-()]{8,}\d/g;
@@ -31,6 +31,10 @@ const DATE_PATTERN_STRING_1 =
 // e.g. Jan(uary) 1(st) 1990 (or 90 or '90) - where the bracketed characters are optional parts that can be matched
 const DATE_PATTERN_STRING_2 =
   /(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:t)?(?:ember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s\d{1,2}?(?:st|nd|rd|th)?\s(?:')?(\d{4}|\d{2})/gi;
+
+// e.g. 01 01 1990 or 31 12 2024 (DD MM YYYY with space separator, matching data pod pattern)
+const DATE_PATTERN_SPACE =
+  /\b(?:0[1-9]|[12]\d|3[01])\s(?:0[1-9]|1[0-2])\s\d{4}\b/g;
 
 // UK Driving Licence number: surname-encoded format, 16 characters
 // Format: SSSSS DDDDDM YYGGG (5 surname chars, 6 DOB-encoded digits, 2 year, 3 check digits)
@@ -78,6 +82,16 @@ const VRN_CURRENT = /\b[A-Z]{2}\d{2}\s?[A-Z]{3}\b/gi;
 const VRN_PREFIX = /\b[A-Z]\d{1,3}\s?[A-Z]{3}\b/gi;
 const VRN_SUFFIX = /\b[A-Z]{3}\s?\d{1,3}[A-Z]\b/gi;
 
+// Street address: house number followed by one or more words (e.g. "10 Downing Street")
+// Matching data pod pattern: r'^\d{1,5}\s+[a-z-]+(?:\s+[a-z-]+)*$'
+const STREET_ADDRESS_PATTERN = /\b\d{1,5}\s+[a-z-]+(?:\s+[a-z-]+)+\b/gi;
+
+// tel: and mailto: URLs — fully redacted as they contain PII (phone numbers, email addresses)
+// Matching data pod rule: if link_url starts with tel: or mailto:, redact everything
+// Only matches tel:/mailto: immediately followed by a non-whitespace char (URI scheme, not label text)
+const TEL_URL_PATTERN = /tel:(?=\S)[^\s]*/gi;
+const MAILTO_URL_PATTERN = /mailto:(?=\S)[^\s]*/gi;
+
 export function stripPIIFromString(value: string) {
   const DATE_REDACTION_STRING = "[date]";
   const POSTCODE_REDACTION_STRING = "[postcode]";
@@ -91,8 +105,15 @@ export function stripPIIFromString(value: string) {
   const NUMERIC_REF_REDACTION_STRING = "[numericReference]";
   const VRN_REDACTION_STRING = "[vrn]";
   const PASSPORT_REDACTION_STRING = "[passport]";
+  const STREET_ADDRESS_REDACTION_STRING = "[streetAddress]";
+  const TEL_URL_REDACTION_STRING = "[telUrl]";
+  const MAILTO_URL_REDACTION_STRING = "[mailtoUrl]";
 
-  let stripped = value.replace(EMAIL_PATTERN, "[email]");
+  // Redact tel: and mailto: URLs first — they contain full PII (phone numbers, emails)
+  let stripped = value.replace(TEL_URL_PATTERN, TEL_URL_REDACTION_STRING);
+  stripped = stripped.replace(MAILTO_URL_PATTERN, MAILTO_URL_REDACTION_STRING);
+
+  stripped = stripped.replace(EMAIL_PATTERN, "[email]");
 
   // Apply specific structured patterns first (before generic numeric patterns)
   stripped = stripped.replace(UUID_PATTERN, UUID_REDACTION_STRING);
@@ -112,6 +133,7 @@ export function stripPIIFromString(value: string) {
   stripped = stripped.replace(DATE_PATTERN_NUMERIC_3, DATE_REDACTION_STRING);
   stripped = stripped.replace(DATE_PATTERN_STRING_1, DATE_REDACTION_STRING);
   stripped = stripped.replace(DATE_PATTERN_STRING_2, DATE_REDACTION_STRING);
+  stripped = stripped.replace(DATE_PATTERN_SPACE, DATE_REDACTION_STRING);
   stripped = stripped.replace(POSTCODE_PATTERN, POSTCODE_REDACTION_STRING);
   stripped = stripped.replace(UK_PHONE_PATTERN, PHONENUMBER_REDACTION_STRING);
   stripped = stripped.replace(
@@ -121,6 +143,12 @@ export function stripPIIFromString(value: string) {
   stripped = stripped.replace(
     CARD_NUMBER_PATTERN,
     CARD_NUMBER_REDACTION_STRING,
+  );
+
+  // Street address pattern — applied after postcodes and phone numbers to avoid conflicts
+  stripped = stripped.replace(
+    STREET_ADDRESS_PATTERN,
+    STREET_ADDRESS_REDACTION_STRING,
   );
 
   // Generic numeric patterns last — these catch remaining sensitive numbers
