@@ -2,6 +2,8 @@
 
 import type * as filtersModule from "../../lib/filters";
 import type * as globalsModule from "../../lib/globals";
+import { cleanHtml, render, renderWithLocale } from "../helpers";
+import { expectComponentToHaveNoAxeViolations } from "./helpers";
 
 vi.mock("../../lib/globals", async (importOriginal) => {
   const original = await importOriginal<typeof globalsModule>();
@@ -16,8 +18,6 @@ vi.mock("../../lib/filters", async (importOriginal) => {
     filters: { ...original.filters, addFilters: original.addFilters },
   };
 });
-
-import { cleanHtml, render, renderWithLocale } from "../helpers";
 
 describe("hmpoCheckboxes", () => {
   let locals: {
@@ -42,16 +42,18 @@ describe("hmpoCheckboxes", () => {
     };
   });
 
-  it("renders with id", () => {
+  it("renders with id", async () => {
     const $ = render(
       { component: "checkboxes", params: { id: "my-input" }, ctx: true },
       locals,
     );
     const $component = $(".govuk-fieldset");
     expect($component.attr("id")).toEqual("my-input-fieldset");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders single checkbox with id", () => {
+  it("renders single checkbox with id", async () => {
     locals = {
       options: {
         fields: {
@@ -79,9 +81,11 @@ describe("hmpoCheckboxes", () => {
     expect($componentlabel.attr("id")).toEqual("my-input-label");
     const $legend = $(".govuk-fieldset__legend");
     expect($legend.length).toEqual(0);
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders single checkbox with custom value", () => {
+  it("renders single checkbox with custom value", async () => {
     locals = {
       options: {
         fields: {
@@ -106,9 +110,11 @@ describe("hmpoCheckboxes", () => {
     const $component = $(".govuk-checkboxes__input");
     expect($component.attr("name")).toEqual("my-input");
     expect($component.attr("value")).toEqual("foobar");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders with legend and hint", () => {
+  it("renders with legend and hint", async () => {
     const $ = render(
       { component: "checkboxes", params: { id: "my-input" }, ctx: true },
       locals,
@@ -118,9 +124,11 @@ describe("hmpoCheckboxes", () => {
     expect($legend.text().trim()).toEqual("[fields.my-input.legend]");
     const $hint = $(".govuk-hint").eq(0);
     expect($hint.text().trim()).toEqual("[fields.my-input.hint]");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders items with ids, names, and labels", () => {
+  it("renders items with ids, names, and labels", async () => {
     const $ = render(
       { component: "checkboxes", params: { id: "my-input" }, ctx: true },
       locals,
@@ -147,9 +155,11 @@ describe("hmpoCheckboxes", () => {
       "[fields.my-input.items.b.label]",
     );
     expect($itemlabel2.attr("id")).toEqual("my-input-b-label");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders items with hints", () => {
+  it("renders items with hints", async () => {
     locals.options.fields["my-input-hints"] = {
       items: [
         "a",
@@ -173,9 +183,11 @@ describe("hmpoCheckboxes", () => {
     expect(cleanHtml($item2)).toEqual("<b>item c hint</b>");
     const $item3 = $(".govuk-checkboxes__hint").eq(2);
     expect(cleanHtml($item3)).toEqual("<b>item d hint</b>");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders radio buttons with header", () => {
+  it("renders radio buttons with header", async () => {
     const $ = render(
       {
         component: "checkboxes",
@@ -191,5 +203,7 @@ describe("hmpoCheckboxes", () => {
     expect(cleanHtml($legend)).toEqual(
       '<h1 class="govuk-fieldset__heading">[fields.my-input.legend]</h1>',
     );
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 });

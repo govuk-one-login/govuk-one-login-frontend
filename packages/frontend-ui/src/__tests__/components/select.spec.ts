@@ -18,6 +18,7 @@ vi.mock("../../lib/filters", async (importOriginal) => {
 });
 
 import { render } from "../helpers";
+import { expectComponentToHaveNoAxeViolations } from "./helpers";
 
 describe("hmpoSelect", () => {
   let locals: {
@@ -43,7 +44,7 @@ describe("hmpoSelect", () => {
     };
   });
 
-  it("renders with name and id", () => {
+  it("renders with name and id", async () => {
     const $ = render(
       { component: "select", params: { id: "my-input" }, ctx: true },
       locals,
@@ -51,9 +52,11 @@ describe("hmpoSelect", () => {
 
     const $component = $("select");
     expect($component.attr("id")).toEqual("my-input");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders with label and hint", () => {
+  it("renders with label and hint", async () => {
     const $ = render(
       { component: "select", params: { id: "my-input" }, ctx: true },
       locals,
@@ -64,9 +67,11 @@ describe("hmpoSelect", () => {
     expect($label.attr("id")).toEqual("my-input-label");
     const $hint = $(".govuk-hint");
     expect($hint.text().trim()).toEqual("[fields.my-input.hint]");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
-  it("renders items with names and labels", () => {
+  it("renders items with names and labels", async () => {
     const $ = render(
       { component: "select", params: { id: "my-input" }, ctx: true },
       locals,
@@ -81,10 +86,12 @@ describe("hmpoSelect", () => {
     expect($item2.attr("value")).toEqual("b");
     expect($item2.attr("selected")).toEqual("selected");
     expect($item2.text().trim()).toEqual("[fields.my-input.items.b.label]");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 
   describe("placeholders", () => {
-    it("renders items with a placeholder", () => {
+    it("renders items with a placeholder", async () => {
       const $ = render(
         {
           component: "select",
@@ -111,9 +118,11 @@ describe("hmpoSelect", () => {
       expect($item2.attr("value")).toEqual("b");
       expect($item2.attr("selected")).toEqual("selected");
       expect($item2.text().trim()).toEqual("[fields.my-input.items.b.label]");
+
+      await expectComponentToHaveNoAxeViolations($.html());
     });
 
-    it("renders placeholder as not disabled when select is not required to be filled", () => {
+    it("renders placeholder as not disabled when select is not required to be filled", async () => {
       const $ = render(
         {
           component: "select",
@@ -130,9 +139,11 @@ describe("hmpoSelect", () => {
       expect($placeholder.text().trim()).toEqual(
         "[fields.my-input.placeholder]",
       );
+
+      await expectComponentToHaveNoAxeViolations($.html());
     });
 
-    it("renders with placeholder selected if value is undefined", () => {
+    it("renders with placeholder selected if value is undefined", async () => {
       locals.values["my-input"] = undefined;
 
       const $ = render(
@@ -151,10 +162,12 @@ describe("hmpoSelect", () => {
       expect($placeholder.text().trim()).toEqual(
         "[fields.my-input.placeholder]",
       );
+
+      await expectComponentToHaveNoAxeViolations($.html());
     });
   });
 
-  it("renders label as header", () => {
+  it("renders label as header", async () => {
     const $ = render(
       {
         component: "select",
@@ -165,5 +178,7 @@ describe("hmpoSelect", () => {
     );
     const $label = $("h1 .govuk-label");
     expect($label.attr("class")).toEqual("govuk-label govuk-label--l");
+
+    await expectComponentToHaveNoAxeViolations($.html());
   });
 });
