@@ -1,0 +1,52 @@
+
+.govuk-summary-list.govuk-summary-list--confirmation {
+    padding-top: govuk-spacing(1);
+
+    img {
+        max-height: 187px;
+        vertical-align: top;
+    }
+
+    .govuk-summary-list__key {
+        color: govuk-functional-colour(secondary-text);
+        font-weight: normal;
+        @include govuk-media-query($from: tablet) {
+            padding: 1em 1em 1em 0;
+        }
+    }
+    .govuk-summary-list__value {
+        @include govuk-media-query($from: tablet) {
+            padding: 1em 0 1em 0;
+        }
+    }
+}
+
+.govuk-summary-list.govuk-summary-list--wide {
+    .govuk-summary-list__key {
+        @include govuk-media-query($from: tablet) {
+            width: 50%;
+        }
+    }
+    .govuk-summary-list__value {
+        @include govuk-media-query($until: tablet) {
+            margin-bottom: govuk-spacing(3);
+        }
+        @include govuk-media-query($from: tablet) {
+            width: 30%;
+        }
+    }
+    // Expand width when value is last column (no action)
+    .govuk-summary-list__value:last-child {
+        @include govuk-media-query($from: tablet) {
+            width: 50%;
+        }
+    }
+}
+
+$hmpo-summary-list: true !default;
+@if $hmpo-summary-list {
+    .govuk-summary-list {
+        @extend .govuk-summary-list--confirmation;
+    }
+}
+

@@ -1,0 +1,20 @@
+.app-related-items {
+    padding-top: govuk-spacing(2);
+    margin-bottom: govuk-spacing(4);
+    img {
+        width: 100%;
+        max-width: 400px;
+    }
+    @include govuk-media-query($from: tablet) {
+        border-top: 2px solid govuk-colour("blue");
+        &.app-related-items__thick-border {
+            border-top: 10px solid govuk-colour("blue");
+        }
+        padding-top: govuk-spacing(2);
+        margin-bottom: 0;
+    }
+}
+
+.app-related-items li {
+    margin-bottom: govuk-spacing(2);
+}
