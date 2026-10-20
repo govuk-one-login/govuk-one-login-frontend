@@ -158,6 +158,12 @@
           isDataSensitive: {{ analyticsDataSensitive | default(true) }},
           isPageDataSensitive: {{ isPageDataSensitive | default(true) }},
           enableGa4Tracking: {{ isGa4Enabled | default(false) }},
+          enablePageViewTracking: {{ ga4PageViewEnabled | default(false) }},
+          enableFormErrorTracking: {{ ga4FormErrorEnabled | default(false) }},
+          enableFormChangeTracking: {{ ga4FormChangeEnabled | default(false) }},
+          enableFormResponseTracking: {{ ga4FormResponseEnabled | default(false) }},
+          enableNavigationTracking: {{ ga4NavigationEnabled | default(false) }},
+          enableSelectContentTracking: {{ ga4SelectContentEnabled | default(false) }},
           cookieDomain: "{{analyticsCookieDomain}}"
         });
     {% else %}
