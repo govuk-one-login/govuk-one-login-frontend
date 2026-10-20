@@ -119,14 +119,14 @@
         ga4ContainerId: "{{ ga4ContainerId }}"
       }, {
         enableGa4Tracking: {{ isGa4Enabled }},
+        enablePageViewTracking: {{ ga4PageViewEnabled }},
+        enableFormErrorTracking: {{ ga4FormErrorEnabled }},
+        enableFormChangeTracking: {{ ga4FormChangeEnabled }},
+        enableFormResponseTracking: {{ ga4FormResponseEnabled }},
+        enableNavigationTracking: {{ ga4NavigationEnabled }},
+        enableSelectContentTracking: {{ ga4SelectContentEnabled }},
         cookieDomain: "{{ analyticsCookieDomain }}",
-        isDataSensitive: true,
-        enablePageViewTracking: true,
-        enableFormResponseTracking: true,
-        enableFormChangeTracking: true,
-        enableFormErrorTracking: true,
-        enableNavigationTracking: true,
-        enableSelectContentTracking: {{ isSelectContentTrackingEnabled }}
+        isDataSensitive: true
       });
     }
   </script>

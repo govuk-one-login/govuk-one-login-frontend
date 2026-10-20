@@ -24,7 +24,7 @@ export class PageViewTracker {
 
   constructor(options: OptionsInterface) {
     this.enableGa4Tracking = options.enableGa4Tracking ?? false;
-    this.enablePageViewTracking = options.enablePageViewTracking ?? true;
+    this.enablePageViewTracking = options.enablePageViewTracking ?? false;
   }
 
   trackOnPageLoad(parameters: PageViewParametersInterface): void {
