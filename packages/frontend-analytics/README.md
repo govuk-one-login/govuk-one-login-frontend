@@ -38,6 +38,9 @@
     <li>
       <a href="#updating-to-v4">Updating to V4</a>
     </li>
+    <li>
+      <a href="#upgrading-to-v5">Upgrading to V5</a>
+    </li>
   </ol>
 </details>
 
@@ -85,15 +88,15 @@ The package is owned by the DI Frontend Capability team, part of the development
 | Variable                | Example            | Required  | Notes   |
 | ----------------------- | ------------------ | --------  | ------- |
 | Ga4ContainerId          | `'GTM-XXXXXXX'`    | Yes       | Provided by the Analytics Team |
-| isGa4Enabled            | `true`             | Yes       |Global flag for the package |
+| isGa4Enabled            | `true`             | Yes       |Global flag for the package (maps to `enableGa4Tracking`) |
 | cookieDomain            | `'account.gov.uk'` | No       | Set this to the environment domain eg. `'account.gov.uk'` or `'build.account.gov.uk'` |
 | isDataSensitive         | `true`             | No       |If turned on, will redact all form data from analytics, can be set at page level (See Redacting PII) |
-| ga4PageViewEnabled      | `true`             | No       | |
-| ga4NavigationEnabled    | `true`             | No       | |
-| ga4FormResponseEnabled  | `true`             | No       | |
-| ga4FormErrorEnabled     | `true`             | No       | |
-| ga4FormChangeEnabled    | `true`             | No       | |
-| ga4SelectContentEnabled | `true`             | No       | |
+| ga4PageViewEnabled      | `true`             | No       | Maps to `enablePageViewTracking`. Defaults to `false` — must be explicitly enabled |
+| ga4NavigationEnabled    | `true`             | No       | Maps to `enableNavigationTracking`. Defaults to `false` — must be explicitly enabled |
+| ga4FormResponseEnabled  | `true`             | No       | Maps to `enableFormResponseTracking`. Defaults to `false` — must be explicitly enabled |
+| ga4FormErrorEnabled     | `true`             | No       | Maps to `enableFormErrorTracking`. Defaults to `false` — must be explicitly enabled |
+| ga4FormChangeEnabled    | `true`             | No       | Maps to `enableFormChangeTracking`. Defaults to `false` — must be explicitly enabled |
+| ga4SelectContentEnabled | `true`             | No       | Maps to `enableSelectContentTracking`. Defaults to `false` — must be explicitly enabled |
 
 These will need to be accessible via your base nunjucks template (example: src/views/common/layout/base.njk).
 
@@ -111,7 +114,7 @@ These will need to be accessible via your base nunjucks template (example: src/v
    window.DI.appInit can take another parameter: an object of settings. That can be used if you want to disable some options. This is the property of this settings object:
 
    - isDataSensitive (boolean): specify if form response tracker can be collect form inputs for tracking purposes (default set to true, this will redact PII)
-   - enableGa4Tracking (boolean): enable/disable GA4 trackers
+   - enableGa4Tracking (boolean): enable/disable GA4 trackers (default set to false, must be explicitly enabled)
    - cookieDomain (string): specify the domain the analytics consent cookie should be raised against (default is "account.gov.uk")
 
 Example of call:
@@ -395,6 +398,76 @@ The new behaviour can be best described as:
 | false | undefined | **Data is redacted—this is the breaking change you will experience if you upgrade to V4 without making any other changes.** |
 
 To maintain existing behaviour of V3 you'd have to set `isPageDataSensitive` to `false` on every page. This way sensitivity would be entirely determined by `isDataSensitive` as it is in V3.
+
+## Upgrading to V5
+
+> ‼️ V5 is a breaking change. The default values for 6 of the 7 tracking feature flags have changed from `true` to `false`. Teams must explicitly enable each tracker after upgrading.
+
+### What changed
+
+The flag **names** are unchanged from V4. The breaking change is that all flags now default to `false`, meaning trackers that were previously enabled by default must now be explicitly enabled.
+
+| Flag Name | V4 Default | V5 Default |
+| --- | --- | --- |
+| `enableGa4Tracking` | `false` | `false` (unchanged) |
+| `enablePageViewTracking` | `true` | `false` |
+| `enableNavigationTracking` | `true` | `false` |
+| `enableFormResponseTracking` | `true` | `false` |
+| `enableFormErrorTracking` | `true` | `false` |
+| `enableFormChangeTracking` | `true` | `false` |
+| `enableSelectContentTracking` | `true` | `false` |
+
+The flags `isDataSensitive`, `isPageDataSensitive`, and `enableUaTracking` are **unchanged**.
+
+### Migration steps
+
+1. Update the packages:
+   ```sh
+   npm install @govuk-one-login/frontend-analytics@latest
+   npm install @govuk-one-login/frontend-ui@latest
+   ```
+2. If your team **already passes all 7 flags explicitly** in your middleware or Nunjucks context, no code changes are needed — your existing values will continue to take effect.
+
+3. If your team **relied on the defaults** for any of the sub-tracker flags (i.e. you did not pass them explicitly), you must now add environment variables and set each to `true` to maintain existing behaviour:
+
+   | Environment Variable | Nunjucks Variable | Controls |
+   | --- | --- | --- |
+   | `GA4_PAGE_VIEW_ENABLED` | `ga4PageViewEnabled` | Page view tracking |
+   | `GA4_NAVIGATION_ENABLED` | `ga4NavigationEnabled` | Navigation link tracking |
+   | `GA4_FORM_RESPONSE_ENABLED` | `ga4FormResponseEnabled` | Form submission tracking |
+   | `GA4_FORM_ERROR_ENABLED` | `ga4FormErrorEnabled` | Form error tracking |
+   | `GA4_FORM_CHANGE_ENABLED` | `ga4FormChangeEnabled` | Form change tracking |
+   | `GA4_SELECT_CONTENT_ENABLED` | `ga4SelectContentEnabled` | Select content tracking |
+
+   These are in addition to your existing `isGa4Enabled` (or `ga4Enabled`) variable which controls the main GA4 flag.
+
+4. If you **use a `frontend-ui` base template** (auth, identity, ipv-core, mobile, or home), the templates already pass these variables through to `appInit` — you just need to set them in your middleware/Nunjucks context. No template changes required on your side.
+
+5. If you **use your own base template** that calls `window.DI.appInit` directly, ensure you are passing values for each flag you want enabled.
+
+#### Example middleware update
+
+```js
+// Before (V4) — sub-trackers defaulted to true, no variables needed
+res.locals.isGa4Enabled = process.env.GA4_ENABLED === "true";
+
+// After (V5) — sub-trackers now default to false, each must be explicitly enabled
+res.locals.isGa4Enabled = process.env.GA4_ENABLED === "true";
+res.locals.ga4PageViewEnabled = process.env.GA4_PAGE_VIEW_ENABLED === "true";
+res.locals.ga4NavigationEnabled = process.env.GA4_NAVIGATION_ENABLED === "true";
+res.locals.ga4FormResponseEnabled = process.env.GA4_FORM_RESPONSE_ENABLED === "true";
+res.locals.ga4FormErrorEnabled = process.env.GA4_FORM_ERROR_ENABLED === "true";
+res.locals.ga4FormChangeEnabled = process.env.GA4_FORM_CHANGE_ENABLED === "true";
+res.locals.ga4SelectContentEnabled = process.env.GA4_SELECT_CONTENT_ENABLED === "true";
+```
+
+### Why
+
+Changing the defaults to `false` gives teams and AppE more control during roll-outs. Instead of all trackers being active by default, teams must explicitly opt in to each one. This means:
+
+- Teams can enable trackers incrementally during initial setup or after upgrading.
+- Individual trackers can be quickly disabled by removing or changing an environment variable, without needing a new package release.
+- There is less risk of unintended data collection from trackers that a team did not mean to enable.
 
 ## Developing the package
 
