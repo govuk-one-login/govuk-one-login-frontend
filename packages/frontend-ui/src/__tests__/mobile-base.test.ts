@@ -1,7 +1,8 @@
 import { getByText } from "@testing-library/dom";
 import "@testing-library/jest-dom";
 import { axe, toHaveNoViolations } from "jest-axe";
-import { renderTemplate } from "../test/jestHelper";
+import { renderTemplate, nunjucksEnv } from "../test/jestHelper";
+import translations from "../../locales/en/translation.json";
 
 expect.extend(toHaveNoViolations);
 
@@ -29,9 +30,22 @@ describe("Mobile base template", () => {
   });
 
   describe("Mobile base accessibility", () => {
+    let originalTranslationStub = nunjucksEnv.getFilter("translate");
+
+    // Override translation stub to ensure elements have text content
+    beforeAll(() => {
+      nunjucksEnv.addFilter("translate", (key: string) => key);
+    });
+
+    // replace translation stub
+    afterAll(() => {
+      nunjucksEnv.addFilter("translate", originalTranslationStub);
+    });
+
     it("has no accessibility violations", async () => {
       const renderedComponent = renderTemplate("mobile/mobile-base.njk", {
         displayBanner: false,
+        translations: { translation: translations },
       });
       const results = await axe(renderedComponent.documentElement.outerHTML);
       expect(results).toHaveNoViolations();
