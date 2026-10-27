@@ -32,6 +32,17 @@
   {{ 'general.serviceNameTitle' | translate }}
 {% endblock %}
 
+{% block skipLink %}
+  {{ govukSkipLink({
+    text: translations.translation.skipLink.title,
+    href: "#main-content",
+    attributes: {
+      "role": "button",
+      "aria-label": translations.translation.skipLink.title
+    }
+  }) }}
+{% endblock %}
+
 {% block bodyStart %}
   {% block frontendUiCookieBanner %}
     {{ frontendUiCookieBanner({
