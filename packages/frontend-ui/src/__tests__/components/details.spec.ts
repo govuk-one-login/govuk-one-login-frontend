@@ -24,7 +24,7 @@ describe("hmpoDetails", () => {
   it("renders with text", async () => {
     const $ = render({
       component: "details",
-      params: { text: "my text <br>" },
+      params: { text: "my text <br>", summaryText: "My Heading" },
     });
 
     const $component = $("div");
@@ -36,7 +36,7 @@ describe("hmpoDetails", () => {
   it("renders with html", async () => {
     const $ = render({
       component: "details",
-      params: { html: "my text <br>" },
+      params: { html: "my text <br>", summaryText: "My Heading" },
     });
 
     const $component = $("div");
@@ -48,7 +48,7 @@ describe("hmpoDetails", () => {
   it("renders with caller", async () => {
     const $ = render({
       component: "details",
-      params: { html: "my text <br>" },
+      params: { html: "my text <br>", summaryText: "My Heading" },
       caller: "<br>caller text<br>",
     });
 
