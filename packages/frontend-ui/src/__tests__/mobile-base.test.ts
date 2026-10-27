@@ -1,8 +1,8 @@
 import { getByText } from "@testing-library/dom";
 import "@testing-library/jest-dom";
 import { axe, toHaveNoViolations } from "jest-axe";
-import { renderTemplate, nunjucksEnv } from "../test/jestHelper";
 import translations from "../../locales/en/translation.json";
+import { nunjucksEnv, renderTemplate } from "../test/jestHelper";
 
 expect.extend(toHaveNoViolations);
 
@@ -30,7 +30,7 @@ describe("Mobile base template", () => {
   });
 
   describe("Mobile base accessibility", () => {
-    let originalTranslationStub = nunjucksEnv.getFilter("translate");
+    const originalTranslationStub = nunjucksEnv.getFilter("translate");
 
     // Override translation stub to ensure elements have text content
     beforeAll(() => {
