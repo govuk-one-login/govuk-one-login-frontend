@@ -1,9 +1,12 @@
 import { getByText } from "@testing-library/dom";
+import { axe, toHaveNoViolations } from "jest-axe";
 import { JSDOM } from "jsdom";
 // @ts-ignore warning for non-rootDir import
 import { initialiseProgressButtons } from "../../frontend-src/progress-button/progress-button";
 // import "@testing-library/vi-dom";
 import { nunjucksEnv } from "../test/jestHelper";
+
+expect.extend(toHaveNoViolations);
 
 describe("Progress Button", () => {
   /**
@@ -50,5 +53,30 @@ describe("Progress Button", () => {
     getByText(document.body, "Continue").click();
 
     expect(mock).toHaveBeenCalledTimes(1); // Ensure form submission handler was called only once
+  });
+
+  it("has no accessibility violations", async () => {
+    const output = nunjucksEnv.renderString(
+      `
+      {% from "progress-button/macro.njk" import frontendUiProgressButton %}
+      <body>
+        <main>
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+              <h1 class="govuk-heading-l">Test Progress Button</h1>
+              <form method="post" action="/api/test-submit-button" novalidate>
+                {{ frontendUiProgressButton({
+                  translations: { text: "Continue", waitingText: "Wait", longWaitingText: "Still waiting..."},
+                  errorPage: "/error"
+                }) }}
+              </form>
+            </div>
+          </div>
+        </main>
+      </body>`,
+      {},
+    );
+    const results = await axe(output);
+    expect(results).toHaveNoViolations();
   });
 });
