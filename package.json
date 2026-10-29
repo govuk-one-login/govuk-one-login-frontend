@@ -99,6 +99,7 @@
     "url": "https://github.com/govuk-one-login/govuk-one-login-frontend"
   },
   "dependencies": {
-    "@rollup/plugin-replace": "^6.0.3"
+    "@rollup/plugin-replace": "^6.0.3",
+    "hmpo-components": "^8.0.5"
   }
 }
