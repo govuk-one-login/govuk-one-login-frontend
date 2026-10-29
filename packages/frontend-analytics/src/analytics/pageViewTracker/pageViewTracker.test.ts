@@ -428,6 +428,39 @@ describe("Persisting taxonomy level values", () => {
       "persisted from previous page",
     );
   });
+
+  test("trackOnPageLoad does not throw and still pushes event when localStorage is null", () => {
+    const originalLocalStorage = window.localStorage;
+    Object.defineProperty(window, "localStorage", {
+      configurable: true,
+      value: null,
+    });
+
+    try {
+      const instance = new PageViewTracker(getOptions());
+      expect(() =>
+        instance.trackOnPageLoad(
+          getParameters({
+            taxonomy_level2: "persisted from previous page",
+          }),
+        ),
+      ).not.toThrow();
+
+      expect(pushToDataLayer.pushToDataLayer).toHaveBeenCalledWith(
+        expect.objectContaining({
+          event: "page_view_ga4",
+          page_view: expect.objectContaining({
+            taxonomy_level2: "persisted from previous page",
+          }),
+        }),
+      );
+    } finally {
+      Object.defineProperty(window, "localStorage", {
+        configurable: true,
+        value: originalLocalStorage,
+      });
+    }
+  });
 });
 
 describe("reason field", () => {
