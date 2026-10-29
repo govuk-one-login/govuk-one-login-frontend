@@ -1,0 +1,93 @@
+{# This is a lift and shift from HMPO components as a temporary measure to complete the migration. #}
+{# TODO: Integrate into identity-base-page #}
+
+{% extends "govuk/template.njk" %}
+
+{% set hmpoPageKey = hmpoPageKey or ( options.route | camelcase ) or "default" %}
+{% set hmpoTitle = hmpoTitle or translate(hmpoTitleKey or "pages." + hmpoPageKey + ".title") %}
+{% set govukServiceName = translate(govukServiceNameKey or "govuk.serviceName") %}
+{% set assetPath = assetPath | default(assetsPath) | default("/public") %}
+
+{% block head %}
+    <!--[if lte IE 8]><link href="{{assetPath}}/stylesheets/{{ applicationStyleSheetIE8 | default("application-ie8.css") }}" rel="stylesheet" type="text/css" /><![endif]-->
+    <!--[if gt IE 8]><!--><link href="{{assetPath}}/stylesheets/{{ applicationStyleSheet | default("application.css") }}" media="all" rel="stylesheet" type="text/css" /><!--<![endif]-->
+{% endblock %}
+
+{% block pageTitle %}
+    {{ (translate("govuk.error", { default: "Error" }) + ": ") if errorlist.length }}{{ hmpoTitle | safe }} {{ "– " + govukServiceName | safe if govukServiceName }} – GOV.UK
+{% endblock %}
+
+{% from "govuk/components/skip-link/macro.njk" import govukSkipLink %}
+{% block govukSkipLink %}
+    {{ govukSkipLink({
+        href: '#main-content',
+        text: translate("govuk.skipLink")
+    }) }}
+{% endblock %}
+
+{% block headerStart %}
+    {% block cookieBanner %}
+        {% from "hmpo-cookie-banner/macro.njk" import hmpoCookieBanner %}
+        {{ hmpoCookieBanner({
+            html: translate("govuk.cookieBanner")
+        }) }}
+    {% endblock %}
+{% endblock %}
+
+{% block govukHeader %}
+    {{ govukHeader({
+        assetsPath: assetPath + '/images',
+        homepageUrl: govukHomePage or "https://gov.uk",
+        containerClasses: "govuk-width-container"
+    }) }}
+{% endblock %}
+
+{% block govukServiceNavigation %}
+    {% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+    {{ govukServiceNavigation({
+        navigation: govukNavigation,
+        serviceName: govukServiceName,
+        serviceUrl: govukServiceUrl or "/"
+    }) }}
+{% endblock %}
+
+{% block containerStart %}
+    {% block backLink %}
+        {% if backLink %}
+            {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+            <span id="back">{{ govukBackLink({
+                text: translate("govuk.backLink"),
+                href: backLink
+            }) }}</span>
+        {% endif %}
+    {% endblock %}
+{% endblock %}
+
+{% block content %}
+    {% if errorlist.length %}
+        {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+        {{ govukErrorSummary({
+            classes: "error-summary",
+            titleText: translate("govuk.errorSummaryTitle"),
+            errorList: hmpoGetErrorSummary(ctx)
+        }) }}
+    {% endif %}
+    {% block hmpoContent %}
+        <div class="govuk-grid-row">
+            <div class="{{ gridColumn | default('govuk-grid-column-two-thirds') }}">
+                {% block mainContent %}
+                    <h1 id="header" {% if hmpoH1Class %}class="{{ hmpoH1Class }}" {% endif %}data-page="{{hmpoPageKey}}">{{ translate("pages." + hmpoPageKey + ".h1", { default: hmpoTitle }) | safe }}</h1>
+                    {% block mainContentBody %}
+                        {% from "hmpo-html/macro.njk" import hmpoHtml %}
+                        {{ hmpoHtml(translate("pages." + hmpoPageKey + ".content", { default: [] })) }}
+                    {% endblock %}
+                {% endblock %}
+            </div>
+        </div>
+    {% endblock %}
+{% endblock %}
+
+{% block bodyEnd %}
+    <script type="module" src="{{assetPath}}/javascripts/{{ applicationJavascript | default("application.js") }}"></script>
+    {% block scripts %}{% endblock %}
+{% endblock %}
