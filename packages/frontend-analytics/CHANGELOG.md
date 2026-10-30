@@ -1,3 +1,13 @@
+## 4.2.4 (2026-10-30)
+
+### 🩹 Fixes
+
+- **DFC-1519:** handle missing localStorage gracefully ([#516](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/516))
+
+### ❤️ Thank You
+
+- Nick Heal @nickhealGDS
+
 ## 4.2.3 (2026-10-14)
 
 ### 🚀 Features
