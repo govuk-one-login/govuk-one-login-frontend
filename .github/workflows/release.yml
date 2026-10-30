@@ -108,19 +108,38 @@ jobs:
         id: version
         if: ${{ github.ref == 'refs/heads/main' || contains(github.ref, '@v') }}
         run: |
+          set -o pipefail
+          # Capture the Nx output (also echoed to the log via tee) so we can read
+          # the planned version from it. We must NOT read it back from
+          # package.json, because on a --dry-run Nx only previews the bump and
+          # never writes the new version to disk - so package.json would still
+          # hold the current (already-released) version, and the changelog step
+          # would then be asked to generate an entry for a version that already
+          # exists and report "no changes detected".
           if [ "${{ steps.channel.outputs.is_channel }}" = "true" ]; then
             npx nx release version prerelease \
               --preid=${{ steps.channel.outputs.name }} \
               --projects=${{ github.event.inputs.target }} \
               ${{ github.event.inputs.first_release == 'true' && '--first-release' || '' }} \
-              ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
+              ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }} \
+              2>&1 | tee version-output.log
           else
             npx nx release version ${{ github.event.inputs.increment }} \
               --projects=${{ github.event.inputs.target }} \
               ${{ github.event.inputs.first_release == 'true' && '--first-release' || '' }} \
-              ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
+              ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }} \
+              2>&1 | tee version-output.log
           fi
-          NEW_VERSION="$(node -p "require('./packages/${{ steps.pkg.outputs.dir }}/package.json').version")"
+          # Nx prints a line like:
+          #   <project> ✍  New version 4.2.4 written to manifest: packages/.../package.json
+          # This is emitted on both real and dry runs and for both standard and
+          # prerelease/channel bumps, so it is the reliable source of truth.
+          NEW_VERSION="$(sed 's/\x1b\[[0-9;]*m//g' version-output.log \
+            | grep -oE 'New version [^ ]+ written' | head -n1 | awk '{print $3}')"
+          if [ -z "$NEW_VERSION" ]; then
+            echo "::error::Could not resolve the new version from nx release version output" >&2
+            exit 1
+          fi
           echo "number=$NEW_VERSION" >> "$GITHUB_OUTPUT"
           echo "Resolved version for changelog: $NEW_VERSION"
         env:
