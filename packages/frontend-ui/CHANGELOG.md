@@ -1,3 +1,13 @@
+## 5.3.8 (2026-11-02)
+
+### 🚀 Features
+
+- Migrate hmpo-template into frontend-ui ([#529](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/529))
+
+### ❤️ Thank You
+
+- Sam Bunce
+
 ## 5.3.7 (2026-11-02)
 
 ### 🚀 Features
