@@ -1,0 +1,61 @@
+{% macro field(ctx, fieldName, isPageHeading) %}
+    {%- set fields = ctx().options.fields %}
+    {%- set field = fields[fieldName] %}
+    {%- set labelClass = field.label.classes | default("govuk-label--s" if field.group else "govuk-label--m") %}
+    {%- set legendClass = field.fieldset.legend.classes | default("govuk-fieldset__legend--s" if field.group else "govuk-fieldset__legend--m") %}
+
+    {%- if field.type == "radios" %}
+        {% from "frontend-ui/build/components/radios/macro.njk" import radios %}
+        {% set component = radios %}
+    {%- elif field.type == "checkboxes" %}
+        {% from "frontend-ui/build/components/checkboxes/macro.njk" import checkboxes %}
+        {% set component = checkboxes %}
+        {% set labelClass = null %}
+    {%- elif field.type == "text" or field.type == "email" %}
+        {% from "frontend-ui/build/components/text/macro.njk" import text %}
+        {% set component = text %}
+    {%- elif field.type == "date" %}
+        {% from "frontend-ui/build/components/date/macro.njk" import date %}
+        {% set component = date %}
+    {%- elif field.type == "select" %}
+        {% from "frontend-ui/build/components/select/macro.njk" import select %}
+        {% set component = select %}
+    {%- endif %}
+
+    {%- if component %}
+        {%- set conditionals = {} %}
+        {%- set groupedFields = "" %}
+
+        {%- for subFieldName, subField in fields %}
+            {%- if subField.dependent.field == fieldName %}
+                {%- set existing = conditionals[subField.dependent.value].html %}
+                {%- set html %}
+                    {{ existing | safe }}
+                    {{ field(ctx, subFieldName)}}
+                {%- endset %}
+                {%- set conditionals = conditionals | add(subField.dependent.value, { html: html }) %}
+            {%- elif subField.group == fieldName %}
+                {%- set groupedFields %}
+                    {{ groupedFields | safe }}
+                    {{ field(ctx, subFieldName)}}
+                {% endset %}
+            {% endif %}
+        {%- endfor %}
+
+        {{ component(ctx, {
+            id: fieldName,
+            isPageHeading: isPageHeading,
+            label: {
+                classes: labelClass
+            } if labelClass and not isPageHeading else undefined,
+            fieldset: {
+                legend: { classes: legendClass }
+            } if legendClass and not isPageHeading else undefined,
+            conditionals: conditionals,
+            html: groupedFields if groupedFields else undefined
+        } | filter(null)) }}
+    {%- endif %}
+
+    {% from "frontend-ui/build/components/html/macro.njk" import html %}
+    {{ html(ctx().translate("fields." + fieldName + ".content", { default: [] })) }}
+{% endmacro %}
