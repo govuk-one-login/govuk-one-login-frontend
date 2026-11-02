@@ -1,3 +1,13 @@
+## 5.3.7 (2026-11-02)
+
+### 🚀 Features
+
+- **DFC-1413:** Bake frontend-analytics package number into events ([#510](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/510))
+
+### ❤️ Thank You
+
+- Sam Bunce
+
 ## 5.3.6 (2026-10-13)
 
 ### 🚀 Features
