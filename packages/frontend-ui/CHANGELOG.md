@@ -1,3 +1,13 @@
+## 5.3.9 (2026-11-03)
+
+### 🩹 Fixes
+
+- re-separate hmpo templates ([#530](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/530))
+
+### ❤️ Thank You
+
+- Sam Bunce
+
 ## 5.3.8 (2026-11-02)
 
 ### 🚀 Features
