@@ -503,7 +503,7 @@ Then("The dataLayer includes the form change event", async function () {
     event_name: "form_change_response",
     type: "undefined",
     url: "http://localhost:3000/organisation-type?edit=true",
-    text: "change",
+    text: "change organisationtype",
     section: "what is your organisation type?",
     action: "change response",
     external: "false",
