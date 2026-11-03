@@ -1,15 +1,11 @@
-{% extends "govuk/template.njk" %}
+{% extends "frontend-ui/build/components/bases/identity/hmpo-template.njk" %}
 
 {% from "frontend-ui/build/components/form/macro.njk" import form %}
 {% from "frontend-ui/build/components/submit/macro.njk" import submit %}
 {% from "frontend-ui/build/components/field/macro.njk" import field %}
 
 {# make default page key #}
-{% set hmpoPageKey = hmpoPageKey or ( options.route | camelcase ) or "default" %}
-{% set hmpoTitle = hmpoTitle or translate(hmpoTitleKey or "pages." + hmpoPageKey + ".title") %}
-{% set govukServiceName = translate(govukServiceNameKey or "govuk.serviceName") %}
-{% set assetPath = assetPath | default(assetsPath) | default("/public") %}
-
+{% set hmpoPageKey = hmpoPageKey or ( options.route | camelcase ) %}
 
 {# find the top most question fields #}
 {% set topLevelFields = [] %}
@@ -30,100 +26,23 @@
     ] %}
 {% endif %}
 
-{% block head %}
-    <!--[if lte IE 8]><link href="{{assetPath}}/stylesheets/{{ applicationStyleSheetIE8 | default("application-ie8.css") }}" rel="stylesheet" type="text/css" /><![endif]-->
-    <!--[if gt IE 8]><!--><link href="{{assetPath}}/stylesheets/{{ applicationStyleSheet | default("application.css") }}" media="all" rel="stylesheet" type="text/css" /><!--<![endif]-->
-{% endblock %}
-
-
-{% block pageTitle %}
-    {{ (translate("govuk.error", { default: "Error" }) + ": ") if errorlist.length }}{{ hmpoTitle | safe }} {{ "– " + govukServiceName | safe if govukServiceName }} – GOV.UK
-{% endblock %}
-
-{% from "govuk/components/skip-link/macro.njk" import govukSkipLink %}
-{% block govukSkipLink %}
-    {{ govukSkipLink({
-        href: '#main-content',
-        text: translate("govuk.skipLink")
-    }) }}
-{% endblock %}
-
-{% block headerStart %}
-    {% block cookieBanner %}
-        {% from "frontend-ui/build/components/cookie-banner/macro.njk" import frontendUiCookieBanner %}
-        {{ frontendUiCookieBanner({
-            html: translate("govuk.cookieBanner")
-        }) }}
-    {% endblock %}
-{% endblock %}
-
-{% block govukHeader %}
-    {{ govukHeader({
-        assetsPath: assetPath + '/images',
-        homepageUrl: govukHomePage or "https://gov.uk",
-        containerClasses: "govuk-width-container"
-    }) }}
-{% endblock %}
-
-{% block govukServiceNavigation %}
-    {% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
-    {{ govukServiceNavigation({
-        navigation: govukNavigation,
-        serviceName: govukServiceName,
-        serviceUrl: govukServiceUrl or "/"
-    }) }}
-{% endblock %}
-
-{% block containerStart %}
-    {% block backLink %}
-        {% if backLink %}
-            {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
-            <span id="back">{{ govukBackLink({
-                text: translate("govuk.backLink"),
-                href: backLink
-            }) }}</span>
-        {% endif %}
-    {% endblock %}
-{% endblock %}
-
-{% block content %}
-    {% if errorlist.length %}
-        {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
-        {{ govukErrorSummary({
-            classes: "error-summary",
-            titleText: translate("govuk.errorSummaryTitle"),
-            errorList: hmpoGetErrorSummary(ctx)
-        }) }}
+{% block mainContent %}
+    {% if not isPageHeading %}
+        {{ super() }}
     {% endif %}
-    {% block hmpoContent %}
-        <div class="govuk-grid-row">
-            <div class="{{ gridColumn | default('govuk-grid-column-two-thirds') }}">                
-                {% block mainContent %}
-                    {% if not isPageHeading %}
-                        {{ super() }}
-                    {% endif %}
 
-                    {% call form(ctx) %}
-                        {% for fieldName in topLevelFields %}
-                            {{ field(ctx, fieldName, isPageHeading) }}
-                            {% set isPageHeading = false %}
-                        {% endfor %}
+    {% call form(ctx) %}
+        {% for fieldName in topLevelFields %}
+            {{ field(ctx, fieldName, isPageHeading) }}
+            {% set isPageHeading = false %}
+        {% endfor %}
 
-                        {% block innerContent %}
-                        {% endblock %}
+        {% block innerContent %}
+        {% endblock %}
 
-                        {% block submitButton %}
-                            {{ submit(ctx) }}
-                        {% endblock %}
-                    {% endcall %}
+        {% block submitButton %}
+            {{ submit(ctx) }}
+        {% endblock %}
+    {% endcall %}
 
-                {% endblock %}
-            </div>
-        </div>
-    {% endblock %}
-{% endblock %}
-
-{% block bodyEnd %}
-    <script type="module" src="{{assetPath}}/javascripts/{{ applicationJavascript | default("application.js") }}"></script>
-    {% block scripts %}{% endblock %}
 {% endblock %}
