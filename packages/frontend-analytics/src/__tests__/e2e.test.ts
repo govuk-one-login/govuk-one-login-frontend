@@ -31,7 +31,11 @@ async function renderTemplate() {
   dom.window.DI = window.DI;
   dom.window.DI.appInit(
     {},
-    { enableGa4Tracking: true, isDataSensitive: false },
+    {
+      enableGa4Tracking: true,
+      isDataSensitive: false,
+      enablePageViewTracking: true,
+    },
   );
   await new Promise(process.nextTick);
   return dom;

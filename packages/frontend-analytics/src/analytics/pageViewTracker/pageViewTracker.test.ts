@@ -171,7 +171,7 @@ describe("pageViewTracker", () => {
   test("constructor sets default values correctly", () => {
     const defaultInstance = new PageViewTracker({});
     expect(defaultInstance.enableGa4Tracking).toBe(false);
-    expect(defaultInstance.enablePageViewTracking).toBe(true);
+    expect(defaultInstance.enablePageViewTracking).toBe(false);
     expect(defaultInstance.eventName).toBe("page_view_ga4");
     expect(defaultInstance.organisations).toBe("<OT1056>");
     expect(defaultInstance.primary_publishing_organisation).toBe(

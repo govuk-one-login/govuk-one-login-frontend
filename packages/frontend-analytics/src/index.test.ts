@@ -37,7 +37,14 @@ describe("appInit", () => {
       </div> 
     `;
 
-    window.DI.appInit({}, { enableGa4Tracking: true, isDataSensitive: false });
+    window.DI.appInit(
+      {},
+      {
+        enableGa4Tracking: true,
+        isDataSensitive: false,
+        enableFormResponseTracking: true,
+      },
+    );
 
     document.dispatchEvent(action);
 

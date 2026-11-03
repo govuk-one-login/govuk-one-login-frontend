@@ -25,12 +25,12 @@ function appInit(
     isPageDataSensitive: true,
     enableGa4Tracking: false,
     enableUaTracking: false,
-    enableFormChangeTracking: true,
-    enableFormErrorTracking: true,
-    enableFormResponseTracking: true,
-    enableNavigationTracking: true,
-    enablePageViewTracking: true,
-    enableSelectContentTracking: true,
+    enableFormChangeTracking: false,
+    enableFormErrorTracking: false,
+    enableFormResponseTracking: false,
+    enableNavigationTracking: false,
+    enablePageViewTracking: false,
+    enableSelectContentTracking: false,
     logLevel: "info",
   });
 
