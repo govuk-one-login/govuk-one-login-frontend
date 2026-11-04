@@ -1,3 +1,18 @@
+## 4.2.5-rc-1.0 (2026-11-04)
+
+### 🚀 Features
+
+- **1414:** changing of analytics flags to default false ([#513](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/513))
+
+### 🩹 Fixes
+
+- **1341:** use closest() in navigation tracker to prevent non-link cl… ([#461](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/461))
+- **1337:** removed hardcoded value for form change event ([#457](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/457))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+
 ## 4.2.4 (2026-10-30)
 
 ### 🩹 Fixes
