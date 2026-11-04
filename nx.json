@@ -24,7 +24,10 @@
     "projectsRelationship": "independent",
     "version": {
       "conventionalCommits": true,
-      "updateDependents": "never"
+      "updateDependents": "never",
+      "versionActionsOptions": {
+      "installArgs": "--legacy-peer-deps"
+    }
     }
   },
   "targets": {
