@@ -20,6 +20,12 @@ This package has peer dependencies on the Event Catalogue packages, which are di
 npm install @govuk-one-login/event-catalogue @govuk-one-login/event-catalogue-schemas
 ```
 
+To enable the faster precompiled validation path (see [Validation performance](#validation-performance)), also install the optional validators package:
+
+```bash
+npm install @govuk-one-login/event-catalogue-typescript-validators
+```
+
 ## API
 
 ### `createEvent(type, entity)`
@@ -39,17 +45,19 @@ Use this when you want compile-time safety that your event shape is correct, wit
 
 ### `validateEvent(event)`
 
-Validates an event at runtime against its JSON schema from the Event Catalogue. Returns `true` if valid, `false` otherwise. Logs errors if validation fails.
+Validates an event at runtime against its JSON schema from the Event Catalogue. Returns a `Promise<boolean>` that resolves to `true` if valid, `false` otherwise. Logs errors if validation fails.
 
 ```ts
 import { validateEvent } from "@govuk-one-login/event-catalogue-utils";
 
-if (validateEvent(event)) {
+if (await validateEvent(event)) {
   // event is valid
 }
 ```
 
 Use this when you receive an event from an external source and need to verify it before processing.
+
+> **Async:** `validateEvent` is asynchronous because it may lazily load a precompiled validator for the specific event (see [Validation performance](#validation-performance)). Remember to `await` it.
 
 ### `sendEventToSQS(event, queueUrl, options?)`
 
@@ -63,17 +71,17 @@ await sendEventToSQS(event, process.env.TXMA_QUEUE_URL);
 
 ### `sendToTXMA(type, entity, queueUrl, options?)`
 
-The primary function for most use cases. Combines `createEvent`, `validateEvent`, and `sendEventToSQS` into a single call.
+The primary function for most use cases. Combines `createEvent`, `validateEvent`, and `sendEventToSQS` into a single call. Returns a `Promise` that resolves once the event has been sent.
 
 ```ts
 import { sendToTXMA } from "@govuk-one-login/event-catalogue-utils";
 
-sendToTXMA("AUTH_AUTH_CODE_ISSUED", event, process.env.TXMA_QUEUE_URL);
+await sendToTXMA("AUTH_AUTH_CODE_ISSUED", event, process.env.TXMA_QUEUE_URL);
 ```
 
 ### `customSendToTXMA(queueUrl, options)`
 
-Curries the `sendToTXMA` function with a queue URL and (optional) `logParams` to provide a reusable simple send-to-TXMA function, which does not need to be passed config every time
+Curries the `sendToTXMA` function with a queue URL and (optional) `logParams` to provide a reusable simple send-to-TXMA function, which does not need to be passed config every time. The returned function is asynchronous and returns the `sendToTXMA` promise.
 
 ```ts
 import { customSendToTXMA } from "@govuk-one-login/event-catalogue-utils";
@@ -83,7 +91,7 @@ const sendEvent = customSendToTXMA(process.env.TXMA_QUEUE_URL, {
   logParams: ["user_id"],
 });
 
-sendEvent("AUTH_AUTH_CODE_ISSUED", event);
+await sendEvent("AUTH_AUTH_CODE_ISSUED", event);
 ```
 
 ## Options
@@ -92,3 +100,25 @@ sendEvent("AUTH_AUTH_CODE_ISSUED", event);
 |--------|------|-------------|
 | `sqsClient` | `SQSClient` | A custom AWS SQS client. Defaults to a memoized client in `eu-west-2`. |
 | `logParams` | `string[]` | Keys to extract from the event and include in the success log message. |
+
+## Validation performance
+
+`validateEvent` (and therefore `sendToTXMA`) supports two validation modes. It picks the fastest one available automatically — you do not need to configure anything.
+
+### Fast path — precompiled validators (recommended)
+
+If the optional `@govuk-one-login/event-catalogue-typescript-validators` package is installed, `validateEvent` lazily imports the single precompiled validator for the incoming event and runs it directly. This means:
+
+- **No AJV schema compilation at runtime** — the cost of compilation is paid at the validators package's build time, not in your service. This is especially valuable for Lambda cold starts.
+- **Only the validator you need is loaded** — each event has its own self-contained validator module, so bundlers load just the one(s) your service actually validates rather than the whole catalogue.
+- **No AJV dependency for validation** — the AJV runtime is inlined into each precompiled validator, so there is no risk of an AJV version clash.
+
+This path is fully automatic. There is **no `postinstall` step** and no build step required in your service — it works as long as `@govuk-one-login/event-catalogue-typescript-validators` is installed and ships a validator for the event.
+
+### Fallback path — runtime compilation
+
+If the validators package is **not** installed, or does **not** ship a precompiled validator for an event (for example, a schema that could not be precompiled), `validateEvent` falls back to compiling the JSON schema at runtime with AJV (with `ajv-formats` registered so `format` keywords such as `uri` and `date-time` are supported). Behaviour is equivalent to the fast path; only the first validation of each event pays the one-off compilation cost (AJV caches the compiled validator per schema for the lifetime of the process). The AJV runtime and the schemas catalogue are loaded lazily, only on the first fallback, so the fast path carries none of their import cost.
+
+No action is required to use the fallback — it is the default when precompiled validators are absent, so the package works whether or not the validators package is installed.
+
+> Maintainers: the precompiled validators are produced by a generator that runs as part of the private `@govuk-one-login/event-catalogue` build and published as `@govuk-one-login/event-catalogue-typescript-validators`. See [`tools/README.md`](./tools/README.md) for background.
