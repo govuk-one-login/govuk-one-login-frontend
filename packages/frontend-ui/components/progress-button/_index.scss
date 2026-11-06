@@ -39,6 +39,12 @@
   opacity: 1 !important;
 }
 
+.govuk-button--progress-noscript {
+  border: #f3f3f3 3px solid;
+  padding: 15px 12px;
+  margin-bottom: 12px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .govuk-button.govuk-button--progress-loading::before {
     display: none;

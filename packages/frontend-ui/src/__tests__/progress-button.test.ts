@@ -55,6 +55,43 @@ describe("Progress Button", () => {
     expect(mock).toHaveBeenCalledTimes(1); // Ensure form submission handler was called only once
   });
 
+  test.each([
+    {
+      name: "anchor variant",
+      params: `{ href: "/next", translations: { text: "Continue", waitingText: "Wait", longWaitingText: "Still waiting...", noJavascriptMessage: "It can take up to 10 seconds to continue." }, errorPage: "/error" }`,
+    },
+    {
+      name: "button variant",
+      params: `{ translations: { text: "Continue", waitingText: "Wait", longWaitingText: "Still waiting...", noJavascriptMessage: "It can take up to 10 seconds to continue." }, errorPage: "/error" }`,
+    },
+  ])(
+    "noscript message is CSP-safe (no inline style) and uses the namespaced class - $name",
+    ({ params }) => {
+      const output = nunjucksEnv.renderString(
+        `
+      {% from "progress-button/macro.njk" import frontendUiProgressButton %}
+      {{ frontendUiProgressButton(${params}) }}`,
+        {},
+      );
+      const dom = new JSDOM(output);
+      const document = dom.window.document;
+
+      // CSP-safe: no inline <style> element is rendered
+      expect(document.querySelectorAll("style").length).toBe(0);
+
+      // Old collision-prone class is gone
+      expect(document.querySelector(".noscript")).toBeNull();
+
+      // Namespaced box is present and still carries the message
+      const box = document.querySelector(".govuk-button--progress-noscript");
+      expect(box).not.toBeNull();
+      expect(box?.classList.contains("govuk-body")).toBe(true);
+      expect(box?.textContent?.trim()).toBe(
+        "It can take up to 10 seconds to continue.",
+      );
+    },
+  );
+
   it("has no accessibility violations", async () => {
     const output = nunjucksEnv.renderString(
       `
