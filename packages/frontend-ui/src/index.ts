@@ -11,8 +11,6 @@ import { addGlobals } from "./lib/globals";
 
 export { middleware as localsMiddleware } from "./lib/locals";
 
-// Unused in current components - will be included or removed when others are migrated
-// import mixins from "./lib/mixins";
 import type { Environment } from "nunjucks";
 
 export * from "./lib";
