@@ -1,15 +1,4 @@
 {% set progressButton = params.translations %}
-<noscript>
-  <style>
-    .noscript {
-      border: #F3F3F3 3px solid;
-      padding-top: 28px;
-      padding-left: 12px;
-      padding-right: 12px;
-      margin-bottom: 12px;
-    }
-  </style>
-</noscript>
 
 {%- set classNames = "govuk-button govuk-button--progress" -%}
 
@@ -58,7 +47,7 @@ treat it as an interactive element - without this it will be
 
 {%- if element == 'a' %}
   <noscript>
-    <div class="noscript govuk-body">
+    <div class="govuk-button--progress-noscript govuk-body">
       {{ progressButton.noJavascriptMessage }}
     </div>
   </noscript>
@@ -76,7 +65,7 @@ treat it as an interactive element - without this it will be
 
 {%- elseif element == 'button' %}
   <noscript>
-    <div class="noscript govuk-body">
+    <div class="govuk-button--progress-noscript govuk-body">
       {{ progressButton.noJavascriptMessage }}
     </div>
   </noscript>
@@ -94,7 +83,7 @@ treat it as an interactive element - without this it will be
 
 {%- elseif element == 'input' %}
   <noscript>
-    <div class="noscript govuk-body">
+    <div class="govuk-button--progress-noscript govuk-body">
       {{ progressButton.noJavascriptMessage }}
     </div>
   </noscript>
