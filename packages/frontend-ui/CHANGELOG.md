@@ -1,3 +1,19 @@
+## 5.3.10 (2026-11-06)
+
+### 🚀 Features
+
+- added mixins exports ([#535](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/535))
+- **1414:** changing of analytics flags to default false ([#513](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/513))
+
+### 🩹 Fixes
+
+- **DFC-1520:** update padding to be be 7 Spacing units on desktop (40… ([#532](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/532))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+- ryantennyson-gds
+
 ## 5.3.9 (2026-11-03)
 
 ### 🩹 Fixes
