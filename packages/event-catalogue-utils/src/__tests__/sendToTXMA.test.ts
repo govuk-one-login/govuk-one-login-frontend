@@ -3,8 +3,8 @@ import { customSendToTXMA, sendToTXMA } from "../";
 import type { EventKey } from "../types";
 
 const createEventMock = vi.fn((_: string, entity: object) => entity);
-const validateEventMock = vi.fn().mockReturnValue(true);
-const sendEventToSQSMock = vi.fn();
+const validateEventMock = vi.fn().mockResolvedValue(true);
+const sendEventToSQSMock = vi.fn().mockResolvedValue(undefined);
 const loggerMock = vi.fn();
 
 vi.mock("../createEvent", () => ({
@@ -38,8 +38,8 @@ describe("sendEventToSQS", () => {
     loggerMock.mockClear();
   });
 
-  it("should send a valid event to the given SQS URL (default client)", () => {
-    sendToTXMA(newEvent.event_name, newEvent, "test.queue.url");
+  it("should send a valid event to the given SQS URL (default client)", async () => {
+    await sendToTXMA(newEvent.event_name, newEvent, "test.queue.url");
     expect(createEventMock).toHaveBeenCalledWith(
       newEvent.event_name,
       expect.objectContaining(newEvent),
@@ -55,13 +55,13 @@ describe("sendEventToSQS", () => {
     expect(loggerMock).not.toHaveBeenCalled();
   });
 
-  it("should send a valid event to the given SQS URL (custom client)", () => {
+  it("should send a valid event to the given SQS URL (custom client)", async () => {
     const mockSQSClient = {};
 
     const customSendFn = customSendToTXMA("alt.queue.url", {
       sqsClient: mockSQSClient as unknown as SQSClient,
     });
-    customSendFn(newEvent.event_name, newEvent);
+    await customSendFn(newEvent.event_name, newEvent);
 
     expect(createEventMock).toHaveBeenCalledWith(
       newEvent.event_name,
@@ -78,9 +78,9 @@ describe("sendEventToSQS", () => {
     expect(loggerMock).not.toHaveBeenCalled();
   });
 
-  it("should still send an invalid event to the given SQS URL and log a warning", () => {
-    validateEventMock.mockReturnValueOnce(false);
-    sendToTXMA(newEvent.event_name, newEvent, "test.queue.url");
+  it("should still send an invalid event to the given SQS URL and log a warning", async () => {
+    validateEventMock.mockResolvedValueOnce(false);
+    await sendToTXMA(newEvent.event_name, newEvent, "test.queue.url");
 
     expect(createEventMock).toHaveBeenCalledWith(
       newEvent.event_name,
