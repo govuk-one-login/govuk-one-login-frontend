@@ -3,12 +3,9 @@ import {
   getLogger,
   setCustomLogger,
 } from "@govuk-one-login/frontend-logger";
-import debugLib from "debug";
 import type { Application, NextFunction, Request, Response } from "express";
 import nunjucks from "nunjucks";
 import type { TranslateFn } from "./types";
-
-const debug = debugLib("govuk:components:locals");
 
 const getGTM = (req: Request, res: Response, next: NextFunction): void => {
   res.locals.ga4ContainerId = req.app.get("APP.GTM.GA4_CONTAINER_ID");
@@ -107,7 +104,7 @@ function middleware(
     if (value.indexOf("{{") === -1 && value.indexOf("{%") === -1) return value;
     let tmpl: nunjucks.Template;
     if (!opts!.noCache && renderCache.has(value)) {
-      debug("get render cache item ", { path, value });
+      console.debug("locals: get render cache item ", { path, value });
       tmpl = renderCache.get(value)!;
     } else {
       tmpl = new nunjucks.Template(
@@ -117,7 +114,7 @@ function middleware(
       );
       if (!opts!.noCache) {
         renderCache.set(value, tmpl);
-        debug("set render cache item ", {
+        console.debug("locals: set render cache item ", {
           path,
           value,
           newSize: renderCache.size,

@@ -1,7 +1,3 @@
-import debugLib from "debug";
-
-const debug = debugLib("govuk:components:globals");
-
 import deepCloneMerge from "deep-clone-merge";
 import type { Environment as NunjucksEnvironment } from "nunjucks";
 import _ from "underscore";
@@ -210,7 +206,7 @@ const globals = {
       return item;
     });
 
-    debug("hmpoGetItems", params, value, items);
+    console.debug("globals: hmpoGetItems", params, value, items);
     return items;
   },
 
@@ -235,7 +231,7 @@ const globals = {
         if (optional && !options.html) return undefined;
       }
     }
-    debug("hmpoGetOptions", params, type, options);
+    console.debug("globals: hmpoGetOptions", params, type, options);
     return options;
   },
 
@@ -249,7 +245,12 @@ const globals = {
     const contentKey = `fields.${params.contentKey || params.id}`;
     const key = `${contentKey}.${fieldKey}`;
     const translation = translate(key, { self: !optional });
-    debug("hmpoTranslateExtraFieldContent", params, fieldKey, translation);
+    console.debug(
+      "globals: hmpoTranslateExtraFieldContent",
+      params,
+      fieldKey,
+      translation,
+    );
     return translation === `[${key}]` ? undefined : translation;
   },
 
@@ -348,7 +349,7 @@ const globals = {
       visuallyHiddenText: translate("govuk.error"),
       text: globals.hmpoBuildErrorMessage(ctx, error),
     };
-    debug("hmpoGetError", params, error, govukError);
+    console.debug("globals: hmpoGetError", params, error, govukError);
     return govukError;
   },
 
@@ -362,13 +363,13 @@ const globals = {
         text: globals.hmpoBuildErrorMessage(ctx, error, true),
       });
     }
-    debug("hmpoGetErrorSummary", errors, errorSummary);
+    console.debug("globals: hmpoGetErrorSummary", errors, errorSummary);
     return errorSummary;
   },
 };
 
 const addGlobals = (env: NunjucksEnvironment) => {
-  debug("adding globals");
+  console.debug("globals: adding globals");
   for (const name in globals) {
     env.addGlobal(name, (globals as Record<string, unknown>)[name]);
   }

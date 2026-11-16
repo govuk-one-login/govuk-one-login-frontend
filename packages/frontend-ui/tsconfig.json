@@ -1,7 +1,15 @@
 {
-  "include": ["./src"],
-  "exclude": ["./**/__tests__/**"],
-  "references": [{ "path": "./tsconfig.test.json" }],
+  "include": [
+    "./src"
+  ],
+  "exclude": [
+    "./**/__tests__/**"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.test.json"
+    }
+  ],
   "compilerOptions": {
     /* Basic Options */
     // "incremental": true,                   /* Enable incremental compilation */
@@ -52,7 +60,6 @@
     ] /* List of folders to include type definitions from. */,
     "types": [
       "bytes",
-      "debug",
       "node",
       "nunjucks"
     ] /* Type declaration files to be included in compilation. */,
