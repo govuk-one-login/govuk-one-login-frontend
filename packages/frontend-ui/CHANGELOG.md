@@ -1,3 +1,13 @@
+## 5.3.11 (2026-11-17)
+
+### 🩹 Fixes
+
+- **DFC-1551:** fix progress button noscript styling ([#534](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/534))
+
+### ❤️ Thank You
+
+- Nick Heal @nickhealGDS
+
 ## 5.3.10 (2026-11-06)
 
 ### 🚀 Features
