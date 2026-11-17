@@ -75,7 +75,16 @@ export const pushToDataLayer = (
   window.dataLayer = window.dataLayer || [];
 
   try {
-    window.dataLayer.push(stripPIIFromEvent(event));
+    const sanitisedEvent = stripPIIFromEvent(event);
+
+    /**
+     * Stringify used here to "take a snapshot",
+     * because otherwise object data can get manipulated/lost
+     * on page transitions in browser.
+     */
+    logger.debug(JSON.stringify(sanitisedEvent));
+
+    window.dataLayer.push(sanitisedEvent);
   } catch (err) {
     logger.error("Error in pushToDataLayer", err);
   }
