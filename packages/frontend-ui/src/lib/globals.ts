@@ -1,6 +1,5 @@
-import deepCloneMerge from "deep-clone-merge";
 import type { Environment as NunjucksEnvironment } from "nunjucks";
-import _ from "underscore";
+import _ from "lodash";
 import type {
   Context,
   FieldError,
@@ -44,7 +43,7 @@ const globals = {
   },
 
   merge(...src: Array<object | undefined>) {
-    return _.pick(deepCloneMerge(...src), (v) => v !== undefined);
+    return _.pickBy(_.merge({}, ...src), (v) => v !== undefined);
   },
 
   set(obj: { [key: string]: unknown }, key: string, value: unknown) {
@@ -62,15 +61,15 @@ const globals = {
     const mergedItems: { items?: FieldItem[] } = {};
     if (options?.items && params?.items) {
       const indexedParamItems = _.isArray(params.items)
-        ? _.indexBy(params.items, "value")
+        ? _.keyBy(params.items, "value")
         : params.items;
       mergedItems.items = options.items.map((i) => {
         if (typeof i !== "object") i = { value: i };
-        const r = deepCloneMerge(i, indexedParamItems[i.value]) as FieldItem;
+        const r = _.merge(i, indexedParamItems[i.value]) as FieldItem;
         return r;
       });
     }
-    return deepCloneMerge(...base, options, params, mergedItems);
+    return _.merge({}, ...base, options, params, mergedItems);
   },
 
   hmpoGetValidator(_ctx: Context, params: Params, type: Params["validate"]) {

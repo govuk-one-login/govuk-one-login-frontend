@@ -1,6 +1,6 @@
 import type { NextFunction, Response } from "express";
 import moment from "moment";
-import _ from "underscore";
+import _ from "lodash";
 import type {
   DateField,
   FieldError,
@@ -14,10 +14,10 @@ export default (Controller: FormController) =>
   class extends Controller {
     configure(req: FormRequest, res: Response, next: NextFunction) {
       req.form.options.dateFields = _.keys(
-        _.pick(
+        _.pickBy(
           req.form.options.fields,
           (field: DateField) =>
-            field.validate === "date" || _.contains(field.validate, "date"),
+            field.validate === "date" || _.includes(field.validate, "date"),
         ),
       );
 
@@ -30,7 +30,7 @@ export default (Controller: FormController) =>
 
     configureDateField(req: FormRequest, fieldName: string) {
       const dateField = req.form.options.fields[fieldName];
-      const required = _.contains(dateField.validate, "required");
+      const required = _.includes(dateField.validate, "required");
 
       DATE_PARTS.forEach((part) => {
         // get any existing date part field options
@@ -155,12 +155,12 @@ export default (Controller: FormController) =>
       fieldName: string,
       errors: Record<string, FieldError>,
     ) {
-      const fieldErrors = _.pick(
+      const fieldErrors = _.pickBy(
         errors,
         (error, key) => key !== fieldName && error.errorGroup === fieldName,
       );
 
-      const requiredErrors = _.pick(
+      const requiredErrors = _.pickBy(
         fieldErrors,
         (error) => error!.type === "required",
       );
@@ -190,7 +190,7 @@ export default (Controller: FormController) =>
 
       if (!req.form.values[fieldName]) return;
 
-      const numericErrors = _.pick(
+      const numericErrors = _.pickBy(
         fieldErrors,
         (error) => error!.type === "numeric",
       );

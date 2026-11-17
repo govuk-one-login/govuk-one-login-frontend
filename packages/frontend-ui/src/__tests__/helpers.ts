@@ -1,7 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
 import * as cheerio from "cheerio";
-import deepCloneMerge from "deep-clone-merge";
 import nunjucks from "nunjucks";
 // @ts-expect-error
 import { filters } from "../lib/filters.ts";
@@ -11,6 +10,7 @@ import { filters } from "../lib/filters.ts";
 // intercept, allowing us to get the real (unmocked) modules.
 // @ts-expect-error — vitest resolves .ts imports but tsc may complain
 import { globals } from "../lib/globals.ts";
+import _ from "lodash";
 
 // ---------- utilities ----------
 
@@ -63,7 +63,7 @@ export const cleanHtml = (
 };
 
 /**
- * Loads locale data from a file or directory, merging results with deep-clone-merge.
+ * Loads locale data from a file or directory, merging results with lodash merge.
  */
 const loadLocale = (
   p: string,
@@ -106,7 +106,7 @@ const loadLocale = (
   parts.pop();
   if (parts[0] === "default") parts.shift();
   while (parts.length) data = { [parts.pop()!]: data };
-  return deepCloneMerge(stack, data);
+  return _.merge(structuredClone(stack), structuredClone(data));
 };
 
 /**
@@ -143,8 +143,8 @@ const renderer = (
 
   let locale: Record<string, unknown> | undefined;
   if (locales) {
-    const loaded = locales.map((l) => loadLocale(l));
-    locale = deepCloneMerge(...loaded);
+    const loaded = locales.map((l) => structuredClone(loadLocale(l)));
+    locale = _.merge({}, ...loaded);
   }
 
   const render = (

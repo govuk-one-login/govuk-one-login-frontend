@@ -43,7 +43,6 @@
     "@types/nunjucks": "^3.2.6",
     "@types/overload-protection": "^1.2.4",
     "@types/supertest": "6.0.3",
-    "@types/underscore": "^1.13.0",
     "@vitest/coverage-v8": "^4.1.2",
     "axe-core": "^4.11.0",
     "canvas": "^3.2.0",
@@ -51,7 +50,6 @@
     "chai-subset": "^1.6.0",
     "cheerio": "^1.0.0",
     "clean-css": "^5.3.3",
-    "deep-clone-merge": "^1.5.5",
     "express": "^5.2.1",
     "fast-glob": "^3.3.3",
     "helmet": "^8.1.0",
@@ -74,7 +72,6 @@
     "tslib": "2.8.1",
     "tsx": "4.22.4",
     "typescript": "5.8.2",
-    "underscore": "^1.13.8",
     "vitest": "^4.1.12",
     "vitest-axe": "^0.1.0",
     "wait-on": "^9.0.10"
