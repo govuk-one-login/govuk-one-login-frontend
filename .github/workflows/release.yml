@@ -17,6 +17,7 @@ on:
           - "@govuk-one-login/frontend-asset-loader"
           - "@govuk-one-login/frontend-device-intelligence"
           - "@govuk-one-login/frontend-logger"
+          - "@govuk-one-login/overload-protection"
 
       increment:
         description: "Increment"

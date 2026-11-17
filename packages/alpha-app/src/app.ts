@@ -32,10 +32,10 @@ import {
 } from "@govuk-one-login/event-catalogue-utils";
 import type { TLogLevel } from "@govuk-one-login/frontend-logger";
 import { frontendVitalSignsInit } from "@govuk-one-login/frontend-vital-signs";
+import overloadProtection from "@govuk-one-login/overload-protection";
 import i18next from "i18next";
 import Backend from "i18next-fs-backend";
 import * as i18nextMiddleware from "i18next-http-middleware";
-import overloadProtection from "overload-protection";
 import { cspNonce } from "./config/csp";
 import {
   setContentId,
@@ -105,10 +105,8 @@ app.get("/api/test-event-validation", (_req, res) => {
   res.json({ status: "COMPLETED" });
 });
 
-const protect = overloadProtection("express", {
-  production: process.env.NODE_ENV === "production",
+const protect = overloadProtection({
   maxEventLoopDelay: 400,
-  logging: logger.warn,
 });
 app.use(protect);
 const port = 3000;
