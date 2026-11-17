@@ -1,3 +1,18 @@
+## 0.4.1 (2026-11-17)
+
+### 🚀 Features
+
+- use precompiled validators ([#533](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/533))
+- updated package hoisting and vulnerabilities patching ([#504](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/504))
+- **DFC-1170:** Convert alpha-app to typescript ([#448](https://github.com/govuk-one-login/govuk-one-login-frontend/pull/448))
+
+### ❤️ Thank You
+
+- DavidMcMichael-GDS
+- Nick Heal @nickhealGDS
+- nickhealGDS
+- Sam Bunce
+
 ## 0.4.0 (2026-06-18)
 
 ### 🚀 Features
