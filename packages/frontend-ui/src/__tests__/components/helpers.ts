@@ -1,4 +1,3 @@
-import { cleanHtml } from "hmpo-nunjucks-test";
 import { axe, toHaveNoViolations } from "jest-axe";
 import { JSDOM } from "jsdom";
 
