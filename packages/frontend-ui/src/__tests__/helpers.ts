@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import * as cheerio from "cheerio";
+import _ from "lodash";
 import nunjucks from "nunjucks";
 // @ts-expect-error
 import { filters } from "../lib/filters.ts";
@@ -10,7 +11,6 @@ import { filters } from "../lib/filters.ts";
 // intercept, allowing us to get the real (unmocked) modules.
 // @ts-expect-error — vitest resolves .ts imports but tsc may complain
 import { globals } from "../lib/globals.ts";
-import _ from "lodash";
 
 // ---------- utilities ----------
 

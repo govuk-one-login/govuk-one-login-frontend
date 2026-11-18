@@ -1,5 +1,5 @@
-import type { Environment as NunjucksEnvironment } from "nunjucks";
 import _ from "lodash";
+import type { Environment as NunjucksEnvironment } from "nunjucks";
 import type {
   Context,
   FieldError,
