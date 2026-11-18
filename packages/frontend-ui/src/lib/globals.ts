@@ -1,10 +1,5 @@
-import debugLib from "debug";
-
-const debug = debugLib("govuk:components:globals");
-
-import deepCloneMerge from "deep-clone-merge";
+import _ from "lodash";
 import type { Environment as NunjucksEnvironment } from "nunjucks";
-import _ from "underscore";
 import type {
   Context,
   FieldError,
@@ -48,7 +43,7 @@ const globals = {
   },
 
   merge(...src: Array<object | undefined>) {
-    return _.pick(deepCloneMerge(...src), (v) => v !== undefined);
+    return _.pickBy(_.merge({}, ...src), (v) => v !== undefined);
   },
 
   set(obj: { [key: string]: unknown }, key: string, value: unknown) {
@@ -66,15 +61,15 @@ const globals = {
     const mergedItems: { items?: FieldItem[] } = {};
     if (options?.items && params?.items) {
       const indexedParamItems = _.isArray(params.items)
-        ? _.indexBy(params.items, "value")
+        ? _.keyBy(params.items, "value")
         : params.items;
       mergedItems.items = options.items.map((i) => {
         if (typeof i !== "object") i = { value: i };
-        const r = deepCloneMerge(i, indexedParamItems[i.value]) as FieldItem;
+        const r = _.merge(i, indexedParamItems[i.value]) as FieldItem;
         return r;
       });
     }
-    return deepCloneMerge(...base, options, params, mergedItems);
+    return _.merge({}, ...base, options, params, mergedItems);
   },
 
   hmpoGetValidator(_ctx: Context, params: Params, type: Params["validate"]) {
@@ -210,7 +205,7 @@ const globals = {
       return item;
     });
 
-    debug("hmpoGetItems", params, value, items);
+    console.debug("globals: hmpoGetItems", params, value, items);
     return items;
   },
 
@@ -235,7 +230,7 @@ const globals = {
         if (optional && !options.html) return undefined;
       }
     }
-    debug("hmpoGetOptions", params, type, options);
+    console.debug("globals: hmpoGetOptions", params, type, options);
     return options;
   },
 
@@ -249,7 +244,12 @@ const globals = {
     const contentKey = `fields.${params.contentKey || params.id}`;
     const key = `${contentKey}.${fieldKey}`;
     const translation = translate(key, { self: !optional });
-    debug("hmpoTranslateExtraFieldContent", params, fieldKey, translation);
+    console.debug(
+      "globals: hmpoTranslateExtraFieldContent",
+      params,
+      fieldKey,
+      translation,
+    );
     return translation === `[${key}]` ? undefined : translation;
   },
 
@@ -348,7 +348,7 @@ const globals = {
       visuallyHiddenText: translate("govuk.error"),
       text: globals.hmpoBuildErrorMessage(ctx, error),
     };
-    debug("hmpoGetError", params, error, govukError);
+    console.debug("globals: hmpoGetError", params, error, govukError);
     return govukError;
   },
 
@@ -362,13 +362,13 @@ const globals = {
         text: globals.hmpoBuildErrorMessage(ctx, error, true),
       });
     }
-    debug("hmpoGetErrorSummary", errors, errorSummary);
+    console.debug("globals: hmpoGetErrorSummary", errors, errorSummary);
     return errorSummary;
   },
 };
 
 const addGlobals = (env: NunjucksEnvironment) => {
-  debug("adding globals");
+  console.debug("globals: adding globals");
   for (const name in globals) {
     env.addGlobal(name, (globals as Record<string, unknown>)[name]);
   }

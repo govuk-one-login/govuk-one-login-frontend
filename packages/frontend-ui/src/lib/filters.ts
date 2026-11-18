@@ -1,12 +1,8 @@
-import debugLib from "debug";
-import type { Environment as NunjucksEnvironment } from "nunjucks";
-import type { FilterCondition, TranslateFn } from "./types";
-
-const debug = debugLib("govuk:components:filters");
-
 import { posix as path } from "node:path";
 import bytes from "bytes";
 import moment from "moment";
+import type { Environment as NunjucksEnvironment } from "nunjucks";
+import type { FilterCondition, TranslateFn } from "./types";
 
 type GlobalThis = {
   ctx: {
@@ -214,7 +210,7 @@ const filters = {
 };
 
 const addFilters = (env: NunjucksEnvironment) => {
-  debug("adding filters");
+  console.debug("filters: adding filters");
   for (const name in filters)
     env.addFilter(
       name,
