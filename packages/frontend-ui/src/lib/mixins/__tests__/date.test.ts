@@ -88,7 +88,6 @@ describe("Date Mixin", () => {
   });
 
   it("exports a function", () => {
-    // @ts-ignore - toBeTypeOf is a valid vitest matcher, blocked by jest-axe pulling in @types/jest
     expect(DateMixin).toBeTypeOf("function");
   });
 
