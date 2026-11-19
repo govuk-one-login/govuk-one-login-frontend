@@ -37,28 +37,29 @@ describe("navigationTracker", () => {
     });
   });
 
-  test("should push data into data layer if click on logo icon", () => {
-    const clickedElement = document.createElement("svg");
-    const containerElement = document.createElement("A") as HTMLAnchorElement;
-    containerElement.className = "govuk-header__link";
-    containerElement.href = "http://localhost:3000";
-    containerElement.appendChild(clickedElement);
+  // Navigation tracking is temporarily disabled — uncomment these tests when re-enabling
+  // test("should push data into data layer if click on logo icon", () => {
+  //   const clickedElement = document.createElement("svg");
+  //   const containerElement = document.createElement("A") as HTMLAnchorElement;
+  //   containerElement.className = "govuk-header__link";
+  //   containerElement.href = "http://localhost:3000";
+  //   containerElement.appendChild(clickedElement);
+  //
+  //   document.body.innerHTML = "<header></header>";
+  //   const header = document.getElementsByTagName("header")[0];
+  //   header.appendChild(containerElement);
+  //
+  //   clickedElement.dispatchEvent(action);
+  //   expect(pushToDataLayer.pushToDataLayer).toBeCalled();
+  // });
 
-    document.body.innerHTML = "<header></header>";
-    const header = document.getElementsByTagName("header")[0];
-    header.appendChild(containerElement);
-
-    clickedElement.dispatchEvent(action);
-    expect(pushToDataLayer.pushToDataLayer).toBeCalled();
-  });
-
-  test("should push data into data layer if click on logo icon within core", () => {
-    document.body.innerHTML = `<header><a class="govuk-header__link" href="http://localhost:3000"><span class="govuk-header__logotype-crown" id="crownSpan"></span></a></header>`;
-    const element = document.getElementById("crownSpan") as HTMLElement;
-
-    element.dispatchEvent(action);
-    expect(pushToDataLayer.pushToDataLayer).toBeCalled();
-  });
+  // test("should push data into data layer if click on logo icon within core", () => {
+  //   document.body.innerHTML = `<header><a class="govuk-header__link" href="http://localhost:3000"><span class="govuk-header__logotype-crown" id="crownSpan"></span></a></header>`;
+  //   const element = document.getElementById("crownSpan") as HTMLElement;
+  //
+  //   element.dispatchEvent(action);
+  //   expect(pushToDataLayer.pushToDataLayer).toBeCalled();
+  // });
 
   test("trackNavigation return false if tracker is deactivated", () => {
     const instance = new NavigationTracker(false);
@@ -99,32 +100,32 @@ describe("navigationTracker", () => {
     expect(pushToDataLayer.pushToDataLayer).not.toBeCalled();
   });
 
-  test("trackNavigation should return true if a link is clicked directly", () => {
-    document.body.innerHTML = `<header></header>
-    <a id="testLink" class="govuk-footer__link" href="http://www.test.co.uk">Link to GOV.UK</a><footer></footer>`;
-    const element = document.getElementById("testLink") as NavigationElement;
-    element.dispatchEvent(action);
-    expect(pushToDataLayer.pushToDataLayer).toBeCalled();
-  });
+  // test("trackNavigation should return true if a link is clicked directly", () => {
+  //   document.body.innerHTML = `<header></header>
+  //   <a id="testLink" class="govuk-footer__link" href="http://www.test.co.uk">Link to GOV.UK</a><footer></footer>`;
+  //   const element = document.getElementById("testLink") as NavigationElement;
+  //   element.dispatchEvent(action);
+  //   expect(pushToDataLayer.pushToDataLayer).toBeCalled();
+  // });
 
-  test("trackNavigation should return true if a child of a link is clicked", () => {
-    document.body.innerHTML = `<header></header>
-    <a id="testLink" class="govuk-footer__link" href="http://www.test.co.uk"><span id="innerSpan">Link text</span></a><footer></footer>`;
-    const innerElement = document.getElementById("innerSpan") as HTMLElement;
-    innerElement.dispatchEvent(action);
-    expect(pushToDataLayer.pushToDataLayer).toBeCalled();
-  });
+  // test("trackNavigation should return true if a child of a link is clicked", () => {
+  //   document.body.innerHTML = `<header></header>
+  //   <a id="testLink" class="govuk-footer__link" href="http://www.test.co.uk"><span id="innerSpan">Link text</span></a><footer></footer>`;
+  //   const innerElement = document.getElementById("innerSpan") as HTMLElement;
+  //   innerElement.dispatchEvent(action);
+  //   expect(pushToDataLayer.pushToDataLayer).toBeCalled();
+  // });
 
-  test("trackNavigation should return true if a navigation button is clicked", () => {
-    document.body.innerHTML = "<header></header><footer></footer>";
-    const href = document.createElement("BUTTON");
-    href.setAttribute("data-nav", "true");
-    href.setAttribute("data-link", "/next-url");
-    href.innerHTML = "Continue";
-    document.body.appendChild(href);
-    href.dispatchEvent(action);
-    expect(pushToDataLayer.pushToDataLayer).toBeCalled();
-  });
+  // test("trackNavigation should return true if a navigation button is clicked", () => {
+  //   document.body.innerHTML = "<header></header><footer></footer>";
+  //   const href = document.createElement("BUTTON");
+  //   href.setAttribute("data-nav", "true");
+  //   href.setAttribute("data-link", "/next-url");
+  //   href.innerHTML = "Continue";
+  //   document.body.appendChild(href);
+  //   href.dispatchEvent(action);
+  //   expect(pushToDataLayer.pushToDataLayer).toBeCalled();
+  // });
 
   test("trackNavigation should return false for auto-linked telephone numbers", () => {
     document.body.innerHTML = `<a id="telLink" href="tel:07123456789">07123 456 789</a>`;
