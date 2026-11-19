@@ -1,7 +1,5 @@
-import { axe, toHaveNoViolations } from "jest-axe";
-import { render } from "../test/jestHelper";
-
-expect.extend(toHaveNoViolations);
+import { render } from "../test/testHelper";
+import { expectComponentToHaveNoAxeViolations } from "./components/helpers";
 
 describe("skipLink Component", () => {
   const mockTranslations = {
@@ -12,7 +10,6 @@ describe("skipLink Component", () => {
     const renderedComponent = render("skip-link", "frontendUiSkipLink", {
       translations: mockTranslations,
     });
-    const results = await axe(renderedComponent.documentElement.outerHTML);
-    expect(results).toHaveNoViolations();
+    await expectComponentToHaveNoAxeViolations(renderedComponent);
   });
 });

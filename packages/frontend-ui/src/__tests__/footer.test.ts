@@ -1,10 +1,8 @@
-import { axe, toHaveNoViolations } from "jest-axe";
 import { JSDOM } from "jsdom";
 import cyTranslations from "../../locales/cy/translation.json";
 import enTranslations from "../../locales/en/translation.json";
-import { nunjucksEnv } from "../test/jestHelper";
-
-expect.extend(toHaveNoViolations);
+import { nunjucksEnv } from "../test/testHelper";
+import { expectComponentToHaveNoAxeViolations } from "./components/helpers";
 
 function renderFooter(footerTranslations: typeof enTranslations.footer) {
   const macroString = `{% from "footer/macro.njk" import frontendUiFooter %}{{ frontendUiFooter(macroArg) }}`;
@@ -19,9 +17,7 @@ describe("Footer Component", () => {
   describe("accessibility", () => {
     it("has no accessibility violations", async () => {
       const document = renderFooter(enTranslations.footer);
-      const html = document.documentElement.outerHTML;
-      const results = await axe(html);
-      expect(results).toHaveNoViolations();
+      await expectComponentToHaveNoAxeViolations(document);
     });
   });
 

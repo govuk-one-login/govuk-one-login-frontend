@@ -19,7 +19,7 @@ vi.mock("../../lib/filters", async (importOriginal) => {
   };
 });
 
-describe("hmpoCheckboxes", () => {
+describe("checkboxes", () => {
   let locals: {
     options: {
       fields: Record<string, { items?: unknown[]; validate?: string }>;

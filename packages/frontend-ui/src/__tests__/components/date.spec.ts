@@ -20,7 +20,7 @@ vi.mock("../../lib/filters", async (importOriginal) => {
 import { cleanHtml, render, renderWithLocale } from "../helpers";
 import { expectComponentToHaveNoAxeViolations } from "./helpers";
 
-describe("hmpoDate", () => {
+describe("date", () => {
   let locals: {
     options: { fields: Record<string, { validate?: string }> };
   };
