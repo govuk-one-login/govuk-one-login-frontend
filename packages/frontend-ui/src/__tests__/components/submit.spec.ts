@@ -20,7 +20,7 @@ vi.mock("../../lib/filters", async (importOriginal) => {
 import { render } from "../helpers";
 import { expectComponentToHaveNoAxeViolations } from "./helpers";
 
-describe("hmpoSubmit", () => {
+describe("submit", () => {
   let locals: Record<string, unknown>;
 
   beforeEach(() => {

@@ -20,7 +20,7 @@ vi.mock("../../lib/filters", async (importOriginal) => {
 import { render } from "../helpers";
 import { expectComponentToHaveNoAxeViolations } from "./helpers";
 
-describe("hmpoSelect", () => {
+describe("select", () => {
   let locals: {
     options: {
       fields: Record<string, { validate?: string; items?: string[] }>;

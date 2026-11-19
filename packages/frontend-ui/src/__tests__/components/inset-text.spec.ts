@@ -20,7 +20,7 @@ vi.mock("../../lib/filters", async (importOriginal) => {
 import { cleanHtml, render } from "../helpers";
 import { expectComponentToHaveNoAxeViolations } from "./helpers";
 
-describe("hmpoInsetText", () => {
+describe("insetText", () => {
   it("renders with text", async () => {
     const $ = render({
       component: "insetText",

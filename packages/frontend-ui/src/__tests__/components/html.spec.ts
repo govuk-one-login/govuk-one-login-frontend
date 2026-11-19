@@ -20,7 +20,7 @@ vi.mock("../../lib/filters", async (importOriginal) => {
 import { cleanHtml, render } from "../helpers";
 import { expectComponentToHaveNoAxeViolations } from "./helpers";
 
-describe("hmpoHtml", () => {
+describe("html", () => {
   it("renders string paragraph", async () => {
     const html = "Single <b>string</b>";
     const $ = render({ component: "html", params: html });
