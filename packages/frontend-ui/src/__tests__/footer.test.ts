@@ -1,7 +1,7 @@
 import { JSDOM } from "jsdom";
 import cyTranslations from "../../locales/cy/translation.json";
 import enTranslations from "../../locales/en/translation.json";
-import { nunjucksEnv } from "../test/jestHelper";
+import { nunjucksEnv } from "../test/testHelper";
 import { expectComponentToHaveNoAxeViolations } from "./components/helpers";
 
 function renderFooter(footerTranslations: typeof enTranslations.footer) {

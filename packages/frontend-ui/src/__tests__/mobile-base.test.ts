@@ -1,7 +1,7 @@
 import { getByText } from "@testing-library/dom";
 import "@testing-library/jest-dom/vitest";
 import translations from "../../locales/en/translation.json";
-import { nunjucksEnv, renderTemplate } from "../test/jestHelper";
+import { nunjucksEnv, renderTemplate } from "../test/testHelper";
 import { expectComponentToHaveNoAxeViolations } from "./components/helpers";
 
 describe("Mobile base template", () => {

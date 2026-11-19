@@ -3,7 +3,7 @@ import { JSDOM } from "jsdom";
 // @ts-ignore warning for non-rootDir import
 import { initialiseProgressButtons } from "../../frontend-src/progress-button/progress-button";
 // import "@testing-library/vi-dom";
-import { nunjucksEnv } from "../test/jestHelper";
+import { nunjucksEnv } from "../test/testHelper";
 import { expectComponentToHaveNoAxeViolations } from "./components/helpers";
 
 describe("Progress Button", () => {

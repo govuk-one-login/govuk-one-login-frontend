@@ -1,4 +1,4 @@
-import { render } from "../test/jestHelper";
+import { render } from "../test/testHelper";
 import { expectComponentToHaveNoAxeViolations } from "./components/helpers";
 
 describe("languageSelect Component", () => {
