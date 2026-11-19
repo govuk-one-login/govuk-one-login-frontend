@@ -45,7 +45,10 @@ describe("Mobile base template", () => {
         displayBanner: false,
         translations: { translation: translations },
       });
-      expectComponentToHaveNoAxeViolations(renderedComponent);
+      expectComponentToHaveNoAxeViolations(renderedComponent, {
+        wrapBody: false,
+        wrapMain: false,
+      });
     });
   });
 });

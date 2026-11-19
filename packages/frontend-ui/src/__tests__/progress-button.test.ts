@@ -111,6 +111,9 @@ describe("Progress Button", () => {
       </body>`,
       {},
     );
-    expectComponentToHaveNoAxeViolations(output);
+    expectComponentToHaveNoAxeViolations(output, {
+      wrapMain: false,
+      wrapBody: false,
+    });
   });
 });
