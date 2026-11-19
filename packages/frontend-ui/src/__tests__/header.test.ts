@@ -1,7 +1,5 @@
-import { axe, toHaveNoViolations } from "jest-axe";
 import { render } from "../test/jestHelper";
-
-expect.extend(toHaveNoViolations);
+import { expectComponentToHaveNoAxeViolations } from "./components/helpers";
 
 describe("Header accessibility", () => {
   const mockParams = {
@@ -24,7 +22,6 @@ describe("Header accessibility", () => {
     const renderedComponent = render("header", "frontendUiHeader", {
       params: mockParams,
     });
-    const results = await axe(renderedComponent.documentElement.outerHTML);
-    expect(results).toHaveNoViolations();
+    await expectComponentToHaveNoAxeViolations(renderedComponent);
   });
 });

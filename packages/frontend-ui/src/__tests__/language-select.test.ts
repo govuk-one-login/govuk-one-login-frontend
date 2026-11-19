@@ -1,7 +1,5 @@
-import { axe, toHaveNoViolations } from "jest-axe";
 import { render } from "../test/jestHelper";
-
-expect.extend(toHaveNoViolations);
+import { expectComponentToHaveNoAxeViolations } from "./components/helpers";
 
 describe("languageSelect Component", () => {
   const mockParams = {
@@ -26,8 +24,7 @@ describe("languageSelect Component", () => {
       "frontendUiLanguageSelect",
       { params: mockParams },
     );
-    const results = await axe(renderedComponent.documentElement.outerHTML);
-    expect(results).toHaveNoViolations();
+    await expectComponentToHaveNoAxeViolations(renderedComponent);
   });
 
   it("has no accessibility violations when only translations are provided", async () => {
@@ -45,7 +42,6 @@ describe("languageSelect Component", () => {
         params: mockParamsWithTranslations,
       },
     );
-    const results = await axe(renderedComponent.documentElement.outerHTML);
-    expect(results).toHaveNoViolations();
+    await expectComponentToHaveNoAxeViolations(renderedComponent);
   });
 });

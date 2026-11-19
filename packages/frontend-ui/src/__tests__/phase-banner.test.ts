@@ -1,7 +1,5 @@
-import { axe, toHaveNoViolations } from "jest-axe";
 import { render } from "../test/jestHelper";
-
-expect.extend(toHaveNoViolations);
+import { expectComponentToHaveNoAxeViolations } from "./components/helpers";
 
 describe("phaseBanner Component", () => {
   const mockParams = {
@@ -20,8 +18,7 @@ describe("phaseBanner Component", () => {
       translations: mockParams,
       url: mockUrl,
     });
-    const results = await axe(renderedComponent.documentElement.outerHTML);
-    expect(results).toHaveNoViolations();
+    await expectComponentToHaveNoAxeViolations(renderedComponent);
   });
 
   it("has no accessibility violations with all params", async () => {
@@ -29,8 +26,7 @@ describe("phaseBanner Component", () => {
       translations: mockParams,
       url: mockUrl,
     });
-    const results = await axe(renderedComponent.documentElement.outerHTML);
-    expect(results).toHaveNoViolations();
+    await expectComponentToHaveNoAxeViolations(renderedComponent);
   });
 
   it("has no accessibility violations with contactUrl param", async () => {
@@ -43,7 +39,6 @@ describe("phaseBanner Component", () => {
       translations: contactUrlOnlyParams,
       url: mockUrl,
     });
-    const results = await axe(renderedComponent.documentElement.outerHTML);
-    expect(results).toHaveNoViolations();
+    await expectComponentToHaveNoAxeViolations(renderedComponent);
   });
 });
