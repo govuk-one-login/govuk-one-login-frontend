@@ -1,0 +1,26 @@
+{
+  "name": "@govuk-one-login/overload-protection",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/overload-protection",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "biome check packages/overload-protection/index.js packages/overload-protection/index.d.ts"
+      }
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "biome format --write packages/overload-protection/index.js packages/overload-protection/index.d.ts"
+      }
+    },
+    "format:check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "biome format packages/overload-protection/index.js packages/overload-protection/index.d.ts"
+      }
+    }
+  }
+}
