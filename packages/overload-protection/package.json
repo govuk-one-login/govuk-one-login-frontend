@@ -1,0 +1,40 @@
+{
+  "name": "@govuk-one-login/overload-protection",
+  "version": "0.0.1",
+  "description": "Express load shedding middleware for GOV.UK One Login frontends. Fork of overload-protection with no runtime dependencies.",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "vitest --run --coverage"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "LICENSE",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "govuk-one-login",
+    "load shedding",
+    "overload protection",
+    "503",
+    "express"
+  ],
+  "author": "DI Frontend Capability Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/govuk-one-login/govuk-one-login-frontend.git",
+    "directory": "packages/overload-protection"
+  },
+  "bugs": {
+    "url": "https://github.com/govuk-one-login/govuk-one-login-frontend/issues"
+  },
+  "homepage": "https://github.com/govuk-one-login/govuk-one-login-frontend/tree/main/packages/overload-protection#readme"
+}
