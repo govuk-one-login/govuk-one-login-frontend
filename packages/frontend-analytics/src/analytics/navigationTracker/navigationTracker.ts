@@ -110,6 +110,7 @@ export class NavigationTracker {
     if (!this.enableNavigationTracking) {
       return false;
     }
-    return true;
+    // Navigation tracking is temporarily disabled — change to `return true` to re-enable
+    return false;
   }
 }
