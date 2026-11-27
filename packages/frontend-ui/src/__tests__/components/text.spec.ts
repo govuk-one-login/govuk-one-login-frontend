@@ -34,7 +34,7 @@ interface Locals {
   translate?: Mock;
 }
 
-describe("hmpoText", () => {
+describe("text", () => {
   let locals: Locals;
 
   beforeEach(() => {

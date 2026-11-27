@@ -1,7 +1,5 @@
-import { axe, toHaveNoViolations } from "jest-axe";
-import { render } from "../test/jestHelper";
-
-expect.extend(toHaveNoViolations);
+import { render } from "../test/testHelper";
+import { expectComponentToHaveNoAxeViolations } from "./components/helpers";
 
 describe("cookieBanner Component", () => {
   const mockParams = {
@@ -37,7 +35,6 @@ describe("cookieBanner Component", () => {
         activeLanguage: mockParams.activeLanguage,
       },
     );
-    const results = await axe(renderedComponent.documentElement.outerHTML);
-    expect(results).toHaveNoViolations();
+    await expectComponentToHaveNoAxeViolations(renderedComponent);
   });
 });
